@@ -11,9 +11,37 @@
 <meta name="theme-color" content="#143C3F">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23143C3F'/%3E%3Cpath d='M10 55 Q25 40 40 55 T70 55 T100 55' stroke='%236FA695' stroke-width='6' fill='none'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23143C3F'/%3E%3Cpath d='M10 55 Q25 40 40 55 T70 55 T100 55' stroke='%236FA695' stroke-width='6' fill='none'/%3E%3C/svg%3E">
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-database-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js" onerror="this.dataset.failed='1'"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-database-compat.js" onerror="this.dataset.failed='1'"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js" onerror="this.dataset.failed='1'"></script>
+<script>
+  function loadScript(src){
+    return new Promise((resolve, reject)=>{
+      const s = document.createElement('script');
+      s.src = src; s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+  async function ensureFirebaseLoaded(){
+    if(typeof firebase !== 'undefined') return;
+    const v = '10.13.2';
+    const files = ['firebase-app-compat.js','firebase-database-compat.js','firebase-auth-compat.js'];
+    for(const f of files){
+      await loadScript(`https://cdn.jsdelivr.net/npm/firebase@${v}/${f}`);
+    }
+  }
+</script>
+<script>
+  window.addEventListener('error', function(e){
+    var el = document.getElementById('loginError');
+    if(!el) return;
+    if(typeof firebase === 'undefined'){
+      el.textContent = 'Firebase konnte nicht geladen werden — prüft Werbeblocker/Firewall/DNS-Filter für gstatic.com, oder testet in einem anderen Browser.';
+    } else {
+      el.textContent = 'Fehler beim Start: ' + (e.message || 'unbekannt');
+    }
+  });
+</script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
@@ -312,27 +340,4 @@ nav.bottom{
       <datalist id="roomSuggestions"></datalist>
       <div id="cleanList"></div>
       <div id="cleanEmpty" class="empty" style="display:none;"><b>Kein Putzplan</b>Fügt eure ersten wiederkehrenden Aufgaben hinzu.</div>
-      <button class="done-toggle" id="cleanHistoryToggle" style="display:none;"></button>
-      <div id="cleanHistory" class="history-list" style="display:none;"></div>
-    </section>
-
-    <!-- EXPENSES -->
-    <section class="panel" data-panel="expenses">
-      <div class="balance-card">
-        <div class="label">Gesamtstand</div>
-        <div class="amount" id="balanceText">—</div>
-      </div>
-      <div class="chips proj-chips-row" id="expMonthChips" style="margin-bottom:10px;"></div>
-      <div class="balance-card" id="monthStats" style="display:none; margin-bottom:16px;"></div>
-      <div class="add-row">
-        <input type="text" id="expDesc" placeholder="Wofür?" maxlength="80">
-      </div>
-      <div class="add-row">
-        <input type="text" id="expAmount" inputmode="decimal" placeholder="Betrag in €" style="max-width:130px;">
-        <div class="chips" id="expPayer" style="margin:0; flex:1;">
-          <button class="chip selected" data-val="Mulian">Mulian</button>
-          <button class="chip" data-val="Clarisse">Clarisse</button>
-        </div>
-      </div>
-      <div class="add-row">
-       
+      <bu

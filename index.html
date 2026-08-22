@@ -200,6 +200,29 @@ main{ flex:1; padding:18px 20px 10px; }
 .empty b{ display:block; font-family:'Fraunces', serif; font-size:1.05rem; color:var(--ink); margin-bottom:6px; font-weight:600;}
 
 .done-toggle{ background:none; border:none; color:var(--muted); font-size:.8rem; margin:14px 0 8px; cursor:pointer; padding:0; }
+.side-menu-item{ display:block; width:100%; text-align:left; background:none; border:none; color:#EAF3EF; font-family:'Inter'; font-size:.95rem; font-weight:500; padding:14px 22px; cursor:pointer; }
+.side-menu-item:hover, .side-menu-item:focus-visible{ background:#1D4E4F; outline:none; }
+.side-menu-item.active{ background:#1D4E4F; color:#fff; font-weight:600; }
+
+.cal-grid{ display:grid; grid-template-columns:repeat(7,1fr); gap:4px; }
+.cal-dow{ text-align:center; font-size:.68rem; color:var(--muted); font-weight:600; padding-bottom:4px; }
+.cal-day{ aspect-ratio:1; border-radius:10px; border:1px solid var(--line); background:var(--card); display:flex; flex-direction:column; align-items:center; justify-content:flex-start; padding:4px 2px 2px; cursor:pointer; font-size:.8rem; color:var(--ink); position:relative; }
+.cal-day.other-month{ opacity:.32; }
+.cal-day.today{ border-color:var(--tide-mid); border-width:1.6px; }
+.cal-day.selected{ background:var(--tide-mid); color:#fff; }
+.cal-day.selected .cal-dots span{ background:#fff !important; }
+.cal-dots{ display:flex; gap:2px; flex-wrap:wrap; justify-content:center; margin-top:auto; padding-bottom:3px; }
+.cal-dots span{ width:5px; height:5px; border-radius:50%; display:block; }
+.cal-nav{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.cal-nav button{ background:var(--card); border:1px solid var(--line); border-radius:10px; width:36px; height:36px; font-size:1rem; color:var(--tide-deep); cursor:pointer; }
+.cal-nav .label{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--tide-deep); }
+.cal-layer-chip{ display:inline-flex; align-items:center; gap:6px; }
+.cal-layer-dot{ width:9px; height:9px; border-radius:50%; display:inline-block; }
+.day-detail{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px 18px; margin-top:14px; }
+.day-detail h4{ font-family:'Fraunces',serif; font-size:1rem; margin:0 0 10px; color:var(--tide-deep); }
+.day-detail-row{ display:flex; gap:10px; align-items:flex-start; padding:7px 0; border-bottom:1px solid var(--line); font-size:.85rem; }
+.day-detail-row:last-child{ border-bottom:none; }
+.day-detail-row .dot{ width:8px; height:8px; border-radius:50%; margin-top:5px; flex-shrink:0; }
 .clear-btn{ background:none; border:1px solid var(--line); color:var(--muted); border-radius:10px; padding:8px 14px; font-size:.8rem; cursor:pointer; margin-top:14px; }
 .clear-btn:hover{ border-color:var(--coral); color:var(--coral); }
 
@@ -257,7 +280,12 @@ nav.bottom{
 <div id="app" class="app" style="display:none;">
   <header class="top">
     <div class="brand">
-      <h1>Gezeiten</h1>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <button id="menuBtn" type="button" aria-label="Menü" style="background:none; border:none; padding:4px; cursor:pointer; color:var(--tide-deep);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <h1>Gezeiten</h1>
+      </div>
       <div style="display:flex; gap:6px;">
         <button id="notifyBtn" class="whoami" type="button" title="Benachrichtigungen">🔔</button>
         <button id="whoamiBtn" class="whoami"></button>
@@ -314,7 +342,7 @@ nav.bottom{
         <input type="text" id="shopInput" placeholder="Auf die Liste setzen…" maxlength="120">
         <button class="add-btn" id="shopAdd">+</button>
       </div>
-      <div class="chips" id="shopCategory">
+      <div class="chips" id="shopCategory" style="display:none;">
         <button class="chip selected" data-val="Supermarkt">Supermarkt</button>
         <button class="chip" data-val="Drogeriemarkt">Drogerie</button>
         <button class="chip" data-val="Apotheke">Apotheke</button>
@@ -394,6 +422,35 @@ nav.bottom{
       <div id="photoEmpty" class="empty" style="display:none;"><b>Noch keine Bilder</b>Teilt euer erstes Bild des Tages.</div>
     </section>
 
+    <!-- CALENDAR -->
+    <section class="panel" data-panel="calendar">
+      <div class="chips" id="calLayers" style="margin-bottom:16px;">
+        <button class="chip cal-layer-chip selected" data-layer="tasks" type="button"><span class="cal-layer-dot" style="background:#2D7A73;"></span>Aufgaben</button>
+        <button class="chip cal-layer-chip selected" data-layer="cleaning" type="button"><span class="cal-layer-dot" style="background:#C68A3B;"></span>Putzplan</button>
+        <button class="chip cal-layer-chip selected" data-layer="tide" type="button"><span class="cal-layer-dot" style="background:#4C7EA8;"></span>Gezeiten</button>
+        <button class="chip cal-layer-chip selected" data-layer="period" type="button"><span class="cal-layer-dot" style="background:#A65B7C;"></span>Periode</button>
+      </div>
+      <div class="cal-nav">
+        <button id="calPrev" type="button" aria-label="Vorheriger Monat">‹</button>
+        <span class="label" id="calMonthLabel"></span>
+        <button id="calNext" type="button" aria-label="Nächster Monat">›</button>
+      </div>
+      <div class="cal-grid" id="calDowRow"></div>
+      <div class="cal-grid" id="calGrid" style="margin-top:4px;"></div>
+      <div class="day-detail" id="dayDetail"></div>
+      <button class="clear-btn" id="periodAddToggle" type="button" style="width:100%; text-align:center; margin-top:16px;">+ Periode eintragen</button>
+      <div id="periodAddForm" style="display:none; margin-top:12px;">
+        <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Start</div>
+        <input type="date" id="periodStart" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:10px; font-family:'Inter'; font-size:.9rem;">
+        <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Ende (optional)</div>
+        <input type="date" id="periodEnd" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:12px; font-family:'Inter'; font-size:.9rem;">
+        <button id="periodSave" type="button" class="btn-wide" style="margin:0;">Speichern</button>
+      </div>
+      <div style="font-size:.72rem; color:var(--muted); margin-top:16px; line-height:1.5;">
+        Gezeiten: amtliche BSH-Vorhersage für den Pegel Dagebüll (nächstgelegener Referenzpegel zur Hamburger Hallig, © BSH, CC BY 4.0) — keine Ersatz für die offizielle Prüfung vor Wattwanderungen. Periode/fruchtbare Tage: rechnerische Schätzung auf Kalenderbasis, keine medizinische oder verhütungssichere Methode.
+      </div>
+    </section>
+
     <div id="statusMsg" class="status"></div>
   </main>
 
@@ -426,6 +483,17 @@ nav.bottom{
     <div class="lightbox-meta" id="lightboxMeta"></div>
     <button class="clear-btn" id="lightboxDelete" type="button" style="display:none; border-color:#C1543D66; color:#C1543D;">Löschen</button>
   </div>
+</div>
+
+<div id="sideMenuOverlay" style="display:none; position:fixed; inset:0; background:rgba(10,20,18,.5); z-index:60;"></div>
+<div id="sideMenu" style="position:fixed; top:0; left:0; bottom:0; width:78%; max-width:300px; background:var(--tide-deep); z-index:61; transform:translateX(-100%); transition:transform .22s ease; padding:24px 0; overflow-y:auto;">
+  <div style="padding:0 22px 20px; font-family:'Fraunces',serif; font-weight:600; font-size:1.3rem; color:#EAF3EF; border-bottom:1px solid #2C4E4C; margin-bottom:8px;">Gezeiten</div>
+  <button class="side-menu-item" data-tab="tasks" type="button">📋 Aufgaben</button>
+  <button class="side-menu-item" data-tab="shopping" type="button">🛒 Einkauf</button>
+  <button class="side-menu-item" data-tab="cleaning" type="button">🧹 Putzplan</button>
+  <button class="side-menu-item" data-tab="expenses" type="button">💶 Ausgaben</button>
+  <button class="side-menu-item" data-tab="calendar" type="button">📅 Kalender</button>
+  <button class="side-menu-item" data-tab="photos" type="button">📷 Bilder</button>
 </div>
 
 <div id="taskModal" class="lightbox" style="display:none; background:rgba(20,32,30,.55); align-items:flex-end; padding:0;">
@@ -495,7 +563,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const auth = firebase.auth();
 
-const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6' };
+const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8' };
 const FREQ_LABELS = { '1':'täglich', '4':'2× pro Woche', '7':'wöchentlich', '14':'alle 2 Wochen', '30':'monatlich', '60':'alle 2 Monate', '90':'alle 3 Monate' };
 const PROJECT_COLORS = ['#2D7A73','#C68A3B','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A'];
 const ROOM_COLORS = ['#2D7A73','#C68A3B','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A','#B5652E','#3E7CA6'];
@@ -519,6 +587,20 @@ const FACTS_BY_DATE = {
   '12-01': { title:'Rosa Parks verweigert ihren Sitzplatz', year:'1955',
     blurb:'Die Näherin und NAACP-Aktivistin Rosa Parks weigerte sich in Montgomery, Alabama, für einen weißen Fahrgast ihren Bussitz zu räumen. Ihre Festnahme löste den 381 Tage dauernden Busboykott aus und machte sie zur Symbolfigur der US-Bürgerrechtsbewegung.' }
 };
+const QUOTES_FACTS = [
+  { person:'James Baldwin', role:'Schriftsteller & Essayist', quote:'Nicht alles, dem man sich stellt, lässt sich ändern. Aber nichts lässt sich ändern, dem man sich nicht stellt.',
+    context:'aus dem Essay „As Much Truth as One Can Bear", New York Times Book Review, 1962' },
+  { person:'Audre Lorde', role:'Schriftstellerin & Bürgerrechtlerin', quote:'Dein Schweigen wird dich nicht schützen.',
+    context:'aus „The Transformation of Silence into Language and Action", 1977' },
+  { person:'Toni Morrison', role:'Schriftstellerin, Literaturnobelpreis 1993', quote:'Wenn du fliegen willst, musst du den Ballast loslassen, der dich runterzieht.',
+    context:'wiederkehrendes Motiv in Interviews und ihrem Werk' },
+  { person:'Nina Simone', role:'Musikerin & Bürgerrechtlerin', quote:'Die Pflicht einer Künstlerin ist es, meiner Meinung nach, die Zeit zu spiegeln, in der sie lebt.',
+    context:'aus verschiedenen Interviews der 1960er Jahre' },
+  { person:'Maya Angelou', role:'Schriftstellerin & Bürgerrechtlerin', quote:'Es gibt keine größere Qual, als eine unerzählte Geschichte in sich zu tragen.',
+    context:'aus „I Know Why the Caged Bird Sings", 1969' },
+  { person:'bell hooks', role:'Autorin & Kulturkritikerin', quote:'In dem Moment, in dem wir uns für die Liebe entscheiden, beginnen wir, uns gegen Herrschaft zu bewegen.',
+    context:'aus „All About Love: New Visions", 2000' }
+];
 const CULTURE_FACTS = [
   { artist:'Francisco Goya', title:'Der 3. Mai 1808', year:'1814',
     file:'Tres_de_Mayo_by_Goya.jpg',
@@ -591,6 +673,13 @@ let activeProject = 'all';
 let activeExpenseMonth = 'all';
 let activeRoom = 'all';
 let activeShopFilter = 'all';
+let calMonth = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+let calSelected = new Date();
+let calLayers = { tasks:true, cleaning:true, tide:true, period:true };
+let periods = [];
+let tideStationId = null;
+let tideByDate = {};
+let tideStationLabel = '';
 let taskDoneOpen = false;
 let cleanHistoryOpen = false;
 
@@ -694,6 +783,9 @@ function renderDailyFact(){
   const today = new Date();
   const dateFact = FACTS_BY_DATE[todayKey(today)];
   const img = $('#dailyFactImg');
+  img.onclick = null;
+  img.style.cursor = 'default';
+
   if(dateFact){
     img.style.display = 'none';
     img.removeAttribute('src');
@@ -702,14 +794,35 @@ function renderDailyFact(){
     $('#dailyFactBlurb').textContent = dateFact.blurb;
     return;
   }
-  const idx = dayOfYear(today) % CULTURE_FACTS.length;
-  const f = CULTURE_FACTS[idx];
-  $('#dailyFactTitle').textContent = `${f.title} (${f.year})`;
-  $('#dailyFactMeta').textContent = f.artist;
-  $('#dailyFactBlurb').textContent = f.blurb;
-  img.onerror = () => { img.style.display = 'none'; };
-  img.onload = () => { img.style.display = 'block'; };
-  img.src = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f.file)}?width=200`;
+
+  const pool = CULTURE_FACTS.length + QUOTES_FACTS.length;
+  const idx = dayOfYear(today) % pool;
+
+  if(idx < CULTURE_FACTS.length){
+    const f = CULTURE_FACTS[idx];
+    $('#dailyFactTitle').textContent = `${f.title} (${f.year})`;
+    $('#dailyFactMeta').textContent = f.artist;
+    $('#dailyFactBlurb').textContent = f.blurb;
+    const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f.file)}?width=800`;
+    img.onerror = () => { img.style.display = 'none'; };
+    img.onload = () => { img.style.display = 'block'; };
+    img.src = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f.file)}?width=200`;
+    img.style.cursor = 'zoom-in';
+    img.onclick = (e) => {
+      e.stopPropagation();
+      $('#lightboxImg').src = url;
+      $('#lightboxMeta').textContent = `${f.artist} — ${f.title} (${f.year})`;
+      $('#lightboxDelete').style.display = 'none';
+      $('#lightbox').style.display = 'flex';
+    };
+  } else {
+    const q = QUOTES_FACTS[idx - CULTURE_FACTS.length];
+    img.style.display = 'none';
+    img.removeAttribute('src');
+    $('#dailyFactTitle').textContent = `„${q.quote}"`;
+    $('#dailyFactMeta').textContent = `${q.person} · ${q.role}`;
+    $('#dailyFactBlurb').textContent = q.context;
+  }
 }
 $('#dailyFactCard').addEventListener('click', ()=>{
   const b = $('#dailyFactBlurb');
@@ -748,15 +861,223 @@ $('#whoamiBtn').addEventListener('click', async ()=>{
 });
 
 /* ---------- Tabs ---------- */
+function switchToTab(name){
+  $$('.tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===name));
+  $$('.panel').forEach(p=>p.classList.toggle('active', p.dataset.panel===name));
+  $$('.side-menu-item').forEach(b=>b.classList.toggle('active', b.dataset.tab===name));
+  $('#tidePath').setAttribute('stroke', TAB_ACCENT[name] || '#2D7A73');
+  document.documentElement.style.setProperty('--accent', TAB_ACCENT[name] || '#2D7A73');
+  if(name==='calendar') renderCalendar();
+}
 $$('.tab').forEach(tab=>{
-  tab.addEventListener('click', ()=>{
-    $$('.tab').forEach(t=>t.classList.remove('active'));
-    tab.classList.add('active');
-    $$('.panel').forEach(p=>p.classList.remove('active'));
-    $(`.panel[data-panel="${tab.dataset.tab}"]`).classList.add('active');
-    $('#tidePath').setAttribute('stroke', TAB_ACCENT[tab.dataset.tab]);
-    document.documentElement.style.setProperty('--accent', TAB_ACCENT[tab.dataset.tab]);
+  tab.addEventListener('click', ()=> switchToTab(tab.dataset.tab));
+});
+
+/* ---------- Side menu drawer ---------- */
+function openSideMenu(){
+  $('#sideMenu').style.transform = 'translateX(0)';
+  $('#sideMenuOverlay').style.display = 'block';
+}
+function closeSideMenu(){
+  $('#sideMenu').style.transform = 'translateX(-100%)';
+  $('#sideMenuOverlay').style.display = 'none';
+}
+$('#menuBtn').addEventListener('click', openSideMenu);
+$('#sideMenuOverlay').addEventListener('click', closeSideMenu);
+$$('.side-menu-item').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    switchToTab(btn.dataset.tab);
+    closeSideMenu();
   });
+});
+
+/* ---------- Calendar ---------- */
+function pad2(n){ return String(n).padStart(2,'0'); }
+function dateKey(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
+function parseDateKey(s){ const p = s.split('-').map(Number); return new Date(p[0], p[1]-1, p[2]); }
+
+function cleaningDueDates(){
+  const set = new Set();
+  cleaning.forEach(c=>{
+    const due = c.lastDone ? new Date(c.lastDone + c.freqDays*86400000) : new Date();
+    set.add(dateKey(due));
+  });
+  return set;
+}
+function getSortedPeriods(){ return [...periods].sort((a,b)=>a.startDate.localeCompare(b.startDate)); }
+function avgCycleLength(){
+  const sorted = getSortedPeriods();
+  if(sorted.length<2) return 28;
+  const diffs = [];
+  for(let i=1;i<sorted.length;i++){
+    diffs.push(Math.round((parseDateKey(sorted[i].startDate) - parseDateKey(sorted[i-1].startDate))/86400000));
+  }
+  const avg = diffs.reduce((a,b)=>a+b,0)/diffs.length;
+  return Math.round(avg) || 28;
+}
+function predictNextPeriod(){
+  const sorted = getSortedPeriods();
+  if(sorted.length===0) return null;
+  const last = sorted[sorted.length-1];
+  const cycle = avgCycleLength();
+  const predictedStart = new Date(parseDateKey(last.startDate).getTime() + cycle*86400000);
+  return { predictedStart, cycle };
+}
+function periodInfoForDate(ds){
+  for(const p of periods){
+    if(ds >= p.startDate && (p.endDate ? ds <= p.endDate : ds === p.startDate)) return { type:'logged' };
+  }
+  const pred = predictNextPeriod();
+  if(pred){
+    for(let i=0;i<5;i++){
+      if(dateKey(new Date(pred.predictedStart.getTime() + i*86400000)) === ds) return { type:'predicted-period' };
+    }
+    const ovulation = new Date(pred.predictedStart.getTime() - 14*86400000);
+    const fertileStart = new Date(ovulation.getTime() - 5*86400000).getTime();
+    const fertileEnd = new Date(ovulation.getTime() + 1*86400000).getTime();
+    const t = parseDateKey(ds).getTime();
+    if(t >= fertileStart && t <= fertileEnd) return { type:'fertile' };
+  }
+  return null;
+}
+function calDotsForDate(ds){
+  let dots = '';
+  if(calLayers.tasks && tasks.some(t=>t.dueDate===ds)) dots += `<span style="background:#2D7A73;"></span>`;
+  if(calLayers.cleaning && cleaningDueDates().has(ds)) dots += `<span style="background:#C68A3B;"></span>`;
+  if(calLayers.tide && tideByDate[ds]) dots += `<span style="background:#4C7EA8;"></span>`;
+  if(calLayers.period && periodInfoForDate(ds)) dots += `<span style="background:#A65B7C;"></span>`;
+  return dots;
+}
+function renderCalendarGrid(){
+  const year = calMonth.getFullYear(), month = calMonth.getMonth();
+  $('#calMonthLabel').textContent = calMonth.toLocaleDateString('de-DE', {month:'long', year:'numeric'});
+  $('#calDowRow').innerHTML = ['Mo','Di','Mi','Do','Fr','Sa','So'].map(n=>`<div class="cal-dow">${n}</div>`).join('');
+  const firstOfMonth = new Date(year, month, 1);
+  const startOffset = (firstOfMonth.getDay() + 6) % 7;
+  const gridStart = new Date(year, month, 1 - startOffset);
+  const todayStr = dateKey(new Date());
+  const selectedStr = dateKey(calSelected);
+  let html = '';
+  for(let i=0;i<42;i++){
+    const d = new Date(gridStart.getFullYear(), gridStart.getMonth(), gridStart.getDate()+i);
+    const ds = dateKey(d);
+    const cls = ['cal-day'];
+    if(d.getMonth()!==month) cls.push('other-month');
+    if(ds===todayStr) cls.push('today');
+    if(ds===selectedStr) cls.push('selected');
+    html += `<button type="button" class="${cls.join(' ')}" data-date="${ds}">${d.getDate()}<span class="cal-dots">${calDotsForDate(ds)}</span></button>`;
+  }
+  $('#calGrid').innerHTML = html;
+  $$('#calGrid .cal-day').forEach(btn=>{
+    btn.onclick = ()=>{ calSelected = parseDateKey(btn.dataset.date); renderCalendarGrid(); renderDayDetail(); };
+  });
+}
+function renderDayDetail(){
+  const ds = dateKey(calSelected);
+  const label = calSelected.toLocaleDateString('de-DE', {weekday:'long', day:'2-digit', month:'long'});
+  let rows = '';
+  if(calLayers.tasks){
+    tasks.filter(t=>t.dueDate===ds).forEach(t=>{
+      rows += `<div class="day-detail-row"><span class="dot" style="background:#2D7A73;"></span><div><b>${escapeHtml(t.text)}</b>${t.dueTime?' · '+t.dueTime:''}<br><span style="color:var(--muted);">Aufgabe · ${t.assignee}</span></div></div>`;
+    });
+  }
+  if(calLayers.cleaning){
+    cleaning.forEach(c=>{
+      const due = c.lastDone ? new Date(c.lastDone + c.freqDays*86400000) : new Date();
+      if(dateKey(due)===ds){
+        rows += `<div class="day-detail-row"><span class="dot" style="background:#C68A3B;"></span><div><b>${escapeHtml(c.text)}</b><br><span style="color:var(--muted);">Putzplan${c.room?' · '+escapeHtml(c.room):''} · ${c.assignee}</span></div></div>`;
+      }
+    });
+  }
+  if(calLayers.tide && tideByDate[ds]){
+    tideByDate[ds].forEach(ev=>{
+      rows += `<div class="day-detail-row"><span class="dot" style="background:#4C7EA8;"></span><div><b>${ev.event==='HW'?'Hochwasser':'Niedrigwasser'} ${ev.time}</b><br><span style="color:var(--muted);">${ev.heightM} m ü. Pegelnull${ev.deviation?' ('+ev.deviation+' ggü. Mittel)':''} · Pegel ${escapeHtml(tideStationLabel||'')}</span></div></div>`;
+    });
+  }
+  if(calLayers.period){
+    const info = periodInfoForDate(ds);
+    if(info){
+      const t = info.type==='logged' ? 'Periode' : info.type==='predicted-period' ? 'Periode (Schätzung)' : 'Fruchtbare Tage (Schätzung)';
+      rows += `<div class="day-detail-row"><span class="dot" style="background:#A65B7C;"></span><div><b>${t}</b></div></div>`;
+    }
+  }
+  $('#dayDetail').innerHTML = `<h4>${label}</h4>` + (rows || `<div style="color:var(--muted); font-size:.85rem;">Nichts an diesem Tag.</div>`);
+}
+function stripDiacritics(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
+let tideLastFetch = 0;
+async function ensureTideData(){
+  if(!calLayers.tide) return;
+  const now = Date.now();
+  if(tideByDate && Object.keys(tideByDate).length && (now - tideLastFetch) < 6*3600*1000) return;
+  try{
+    if(!tideStationId){
+      tideStationId = localStorage.getItem('tide-station-id');
+      tideStationLabel = localStorage.getItem('tide-station-label') || '';
+    }
+    if(!tideStationId){
+      const res = await fetch('https://gdi.bsh.de/ldproxy/rest/services/WaterLevelForecast/collections/waterlevelforecastdata/items?f=json');
+      const data = await res.json();
+      const CANDIDATES = ['dagebull','husum','wittdun','hornum'];
+      let found = null;
+      for(const cand of CANDIDATES){
+        found = data.features.find(f=>stripDiacritics(f.properties.gauge_label).includes(cand));
+        if(found) break;
+      }
+      if(found){
+        tideStationId = found.id;
+        tideStationLabel = found.properties.gauge_label;
+        localStorage.setItem('tide-station-id', tideStationId);
+        localStorage.setItem('tide-station-label', tideStationLabel);
+      }
+    }
+    if(tideStationId){
+      const res2 = await fetch(`https://gdi.bsh.de/ldproxy/rest/services/WaterLevelForecast/collections/waterlevelforecastdata/items/${tideStationId}?f=json`);
+      const d2 = await res2.json();
+      const events = (d2.properties && d2.properties.high_water_low_water) || [];
+      const byDate = {};
+      events.forEach(ev=>{
+        const dt = new Date(ev.event_timestamp);
+        const ds = dateKey(dt);
+        const val = ev.forecast_value!==undefined ? ev.forecast_value : parseInt(ev.tidal_prediction_value);
+        if(!byDate[ds]) byDate[ds] = [];
+        byDate[ds].push({ event:ev.event, time:`${pad2(dt.getHours())}:${pad2(dt.getMinutes())}`, heightM:(val/100).toFixed(2), deviation:ev.forecast_deviation||'' });
+      });
+      tideByDate = byDate;
+      tideLastFetch = now;
+    }
+  }catch(e){
+    console.warn('Gezeitendaten nicht abrufbar', e);
+  }
+  renderCalendarGrid();
+  renderDayDetail();
+}
+function renderCalendar(){
+  $$('#calLayers .cal-layer-chip').forEach(c=>c.classList.toggle('selected', calLayers[c.dataset.layer]));
+  renderCalendarGrid();
+  renderDayDetail();
+  ensureTideData();
+}
+$$('#calLayers .cal-layer-chip').forEach(c=>{
+  c.addEventListener('click', ()=>{ calLayers[c.dataset.layer] = !calLayers[c.dataset.layer]; renderCalendar(); });
+});
+$('#calPrev').addEventListener('click', ()=>{ calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth()-1, 1); renderCalendarGrid(); renderDayDetail(); });
+$('#calNext').addEventListener('click', ()=>{ calMonth = new Date(calMonth.getFullYear(), calMonth.getMonth()+1, 1); renderCalendarGrid(); renderDayDetail(); });
+$('#periodAddToggle').addEventListener('click', ()=>{
+  const f = $('#periodAddForm');
+  const open = f.style.display==='block';
+  f.style.display = open ? 'none' : 'block';
+  $('#periodAddToggle').textContent = open ? '+ Periode eintragen' : 'Formular schließen';
+});
+$('#periodSave').addEventListener('click', async ()=>{
+  const start = $('#periodStart').value;
+  if(!start){ setStatus('Bitte Startdatum angeben', true); return; }
+  const end = $('#periodEnd').value || null;
+  periods.unshift({ id:uid(), startDate:start, endDate:end, loggedBy:identity, createdAt:Date.now() });
+  $('#periodStart').value=''; $('#periodEnd').value='';
+  $('#periodAddForm').style.display='none';
+  $('#periodAddToggle').textContent='+ Periode eintragen';
+  renderCalendar();
+  await storageSet('household-periods', JSON.stringify(periods), true);
 });
 
 /* ---------- Load all (Firebase, with live sync) ---------- */
@@ -820,11 +1141,15 @@ function notifyCleaningCompletions(oldList, newList){
     }
   });
 }
+function refreshCalendarIfActive(){
+  const panel = document.querySelector('.panel[data-panel="calendar"]');
+  if(panel && panel.classList.contains('active')){ renderCalendarGrid(); renderDayDetail(); }
+}
 function attachLiveSync(){
   db.ref('tasks').on('value', snap=>{
     const v = snap.val() || [];
     notifyNewItems(tasks, v, 'addedBy', t=>`📋 Neue Aufgabe: ${t.text}`);
-    tasks = v; renderTasks();
+    tasks = v; renderTasks(); refreshCalendarIfActive();
   });
   db.ref('shopping').on('value', snap=>{
     const v = snap.val() || [];
@@ -839,7 +1164,7 @@ function attachLiveSync(){
   db.ref('cleaning').on('value', snap=>{
     const v = (snap.val() || []).map(c=>{ if(!c.history) c.history=[]; return c; });
     notifyCleaningCompletions(cleaning, v);
-    cleaning = v; renderCleaning();
+    cleaning = v; renderCleaning(); refreshCalendarIfActive();
   });
   db.ref('projects').on('value', snap=>{
     const v = snap.val();
@@ -850,6 +1175,10 @@ function attachLiveSync(){
     const v = snap.val() || [];
     notifyNewItems(photos, v, 'by', p=>`📷 ${p.by} hat ein Foto geteilt`);
     photos = v; renderPhotos();
+  });
+  db.ref('periods').on('value', snap=>{
+    periods = snap.val() || [];
+    refreshCalendarIfActive();
   });
   setTimeout(()=>{ liveSyncPrimed = true; }, 2500);
 }
@@ -1136,6 +1465,10 @@ $$('#shopCategory .chip').forEach(c=>c.addEventListener('click', ()=>{
 }));
 $('#shopAdd').addEventListener('click', addShop);
 $('#shopInput').addEventListener('keydown', e=>{ if(e.key==='Enter') addShop(); });
+$('#shopInput').addEventListener('focus', ()=>{ $('#shopCategory').style.display = 'flex'; });
+$('#shopInput').addEventListener('blur', ()=>{
+  setTimeout(()=>{ if(!$('#shopInput').value.trim()) $('#shopCategory').style.display = 'none'; }, 150);
+});
 async function addShop(){
   const input = $('#shopInput');
   const text = input.value.trim();

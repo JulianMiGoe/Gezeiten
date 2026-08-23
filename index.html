@@ -424,11 +424,15 @@ nav.bottom{
 
     <!-- CALENDAR -->
     <section class="panel" data-panel="calendar">
-      <div class="chips" id="calLayers" style="margin-bottom:16px;">
+      <div class="chips" id="calLayers" style="margin-bottom:10px;">
         <button class="chip cal-layer-chip selected" data-layer="tasks" type="button"><span class="cal-layer-dot" style="background:#2D7A73;"></span>Aufgaben</button>
         <button class="chip cal-layer-chip selected" data-layer="cleaning" type="button"><span class="cal-layer-dot" style="background:#C68A3B;"></span>Putzplan</button>
         <button class="chip cal-layer-chip selected" data-layer="tide" type="button"><span class="cal-layer-dot" style="background:#4C7EA8;"></span>Gezeiten</button>
         <button class="chip cal-layer-chip selected" data-layer="period" type="button"><span class="cal-layer-dot" style="background:#A65B7C;"></span>Periode</button>
+      </div>
+      <div style="display:flex; align-items:center; gap:8px; margin-bottom:14px;">
+        <div id="tideStatus" style="font-size:.75rem; color:var(--muted); flex:1;">Gezeiten: lädt…</div>
+        <button id="tideReload" type="button" title="Neu laden" style="background:var(--card); border:1px solid var(--line); border-radius:8px; width:30px; height:30px; font-size:.9rem; cursor:pointer; color:var(--tide-mid); flex-shrink:0;">🔄</button>
       </div>
       <div class="cal-nav">
         <button id="calPrev" type="button" aria-label="Vorheriger Monat">‹</button>
@@ -1005,10 +1009,16 @@ function renderDayDetail(){
 }
 function stripDiacritics(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
 let tideLastFetch = 0;
-async function ensureTideData(){
-  if(!calLayers.tide) return;
+function setTideStatus(msg){ const el = $('#tideStatus'); if(el) el.textContent = msg; }
+async function ensureTideData(force){
+  if(!calLayers.tide) { setTideStatus('Gezeiten-Ebene ausgeblendet'); return; }
   const now = Date.now();
-  if(tideByDate && Object.keys(tideByDate).length && (now - tideLastFetch) < 6*3600*1000) return;
+  if(!force && tideByDate && Object.keys(tideByDate).length && (now - tideLastFetch) < 6*3600*1000){
+    setTideStatus(`Gezeiten: Pegel ${tideStationLabel || '?'} (zuletzt geladen ${new Date(tideLastFetch).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'})})`);
+    return;
+  }
+  if(force){ tideStationId = null; localStorage.removeItem('tide-station-id'); localStorage.removeItem('tide-station-label'); }
+  setTideStatus('Gezeiten: suche Pegel …');
   try{
     if(!tideStationId){
       tideStationId = localStorage.getItem('tide-station-id');
@@ -1016,11 +1026,12 @@ async function ensureTideData(){
     }
     if(!tideStationId){
       const res = await fetch('https://gdi.bsh.de/ldproxy/rest/services/WaterLevelForecast/collections/waterlevelforecastdata/items?f=json');
+      if(!res.ok) throw new Error(`Pegelliste: HTTP ${res.status}`);
       const data = await res.json();
       const CANDIDATES = ['dagebull','husum','wittdun','hornum'];
       let found = null;
       for(const cand of CANDIDATES){
-        found = data.features.find(f=>stripDiacritics(f.properties.gauge_label).includes(cand));
+        found = (data.features||[]).find(f=>stripDiacritics(f.properties.gauge_label).includes(cand));
         if(found) break;
       }
       if(found){
@@ -1028,29 +1039,37 @@ async function ensureTideData(){
         tideStationLabel = found.properties.gauge_label;
         localStorage.setItem('tide-station-id', tideStationId);
         localStorage.setItem('tide-station-label', tideStationLabel);
+      } else {
+        setTideStatus(`Gezeiten: kein passender Pegel in ${(data.features||[]).length} BSH-Stationen gefunden`);
+        renderCalendarGrid(); renderDayDetail();
+        return;
       }
     }
-    if(tideStationId){
-      const res2 = await fetch(`https://gdi.bsh.de/ldproxy/rest/services/WaterLevelForecast/collections/waterlevelforecastdata/items/${tideStationId}?f=json`);
-      const d2 = await res2.json();
-      const events = (d2.properties && d2.properties.high_water_low_water) || [];
-      const byDate = {};
-      events.forEach(ev=>{
-        const dt = new Date(ev.event_timestamp);
-        const ds = dateKey(dt);
-        const val = ev.forecast_value!==undefined ? ev.forecast_value : parseInt(ev.tidal_prediction_value);
-        if(!byDate[ds]) byDate[ds] = [];
-        byDate[ds].push({ event:ev.event, time:`${pad2(dt.getHours())}:${pad2(dt.getMinutes())}`, heightM:(val/100).toFixed(2), deviation:ev.forecast_deviation||'' });
-      });
-      tideByDate = byDate;
-      tideLastFetch = now;
-    }
+    setTideStatus(`Gezeiten: lade Vorhersage für ${tideStationLabel} …`);
+    const res2 = await fetch(`https://gdi.bsh.de/ldproxy/rest/services/WaterLevelForecast/collections/waterlevelforecastdata/items/${tideStationId}?f=json`);
+    if(!res2.ok) throw new Error(`Pegeldaten: HTTP ${res2.status}`);
+    const d2 = await res2.json();
+    const events = (d2.properties && d2.properties.high_water_low_water) || [];
+    const byDate = {};
+    events.forEach(ev=>{
+      const dt = new Date(ev.event_timestamp);
+      const ds = dateKey(dt);
+      const val = ev.forecast_value!==undefined ? ev.forecast_value : parseInt(ev.tidal_prediction_value);
+      if(!byDate[ds]) byDate[ds] = [];
+      byDate[ds].push({ event:ev.event, time:`${pad2(dt.getHours())}:${pad2(dt.getMinutes())}`, heightM:(val/100).toFixed(2), deviation:ev.forecast_deviation||'' });
+    });
+    tideByDate = byDate;
+    tideLastFetch = now;
+    const total = Object.values(byDate).reduce((a,arr)=>a+arr.length,0);
+    setTideStatus(`Gezeiten: Pegel ${tideStationLabel} · ${total} Termine geladen`);
   }catch(e){
     console.warn('Gezeitendaten nicht abrufbar', e);
+    setTideStatus(`Gezeiten nicht erreichbar (${e.message || 'Netzwerkfehler'}) — evtl. blockiert ein Werbeblocker/DNS-Filter gdi.bsh.de`);
   }
   renderCalendarGrid();
   renderDayDetail();
 }
+$('#tideReload').addEventListener('click', ()=> ensureTideData(true));
 function renderCalendar(){
   $$('#calLayers .cal-layer-chip').forEach(c=>c.classList.toggle('selected', calLayers[c.dataset.layer]));
   renderCalendarGrid();

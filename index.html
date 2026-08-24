@@ -457,14 +457,19 @@ nav.bottom{
 
     <!-- LIBRARY -->
     <section class="panel" data-panel="library">
+      <div class="chips" id="shelfPicker" style="margin-bottom:14px;">
+        <button class="chip selected" data-val="owned" type="button">📚 Bibliothek</button>
+        <button class="chip" data-val="wishlist" type="button">✨ Wunschliste</button>
+      </div>
       <div class="add-row">
-        <input type="text" id="isbnInput" placeholder="ISBN eingeben oder scannen…" inputmode="numeric" style="flex:1;">
+        <input type="text" id="isbnInput" placeholder="ISBN oder Titel eingeben…" style="flex:1;">
         <button class="add-btn" id="isbnSearchBtn" type="button">🔍</button>
       </div>
       <button class="clear-btn" id="scanBtn" type="button" style="width:100%; text-align:center; margin:0 0 14px; display:none;">📷 Barcode scannen</button>
       <div id="libStatus" style="font-size:.78rem; color:var(--muted); margin:-4px 0 14px; min-height:1.1em;"></div>
+      <div class="chips proj-chips-row" id="bookCategoryChips" style="margin-bottom:14px;"></div>
       <div class="photo-grid" id="libraryGrid"></div>
-      <div id="libraryEmpty" class="empty" style="display:none;"><b>Noch keine Bücher</b>ISBN eingeben oder mit der Kamera scannen — Buchdaten kommen von Google Books.</div>
+      <div id="libraryEmpty" class="empty" style="display:none;"></div>
     </section>
 
     <div id="statusMsg" class="status"></div>
@@ -538,6 +543,14 @@ nav.bottom{
       <button class="chip" data-val="lese" type="button">Lese gerade</button>
       <button class="chip" data-val="gelesen" type="button">Gelesen</button>
     </div>
+    <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Regal</div>
+    <div class="chips" id="bmShelf">
+      <button class="chip" data-val="owned" type="button">📚 Bibliothek</button>
+      <button class="chip" data-val="wishlist" type="button">✨ Wunschliste</button>
+    </div>
+    <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Kategorie</div>
+    <input type="text" id="bmCategory" list="bmCategorySuggestions" placeholder="z. B. Krimi, Sachbuch, Vorlesen…" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:14px; font-family:'Inter'; font-size:.9rem; background:var(--card); color:var(--ink);">
+    <datalist id="bmCategorySuggestions"></datalist>
     <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Notizen</div>
     <textarea id="bmNotes" rows="4" placeholder="Gedanken, Zitate…" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; font-family:'Inter'; font-size:.9rem; margin-bottom:18px; resize:vertical; background:var(--card); color:var(--ink);"></textarea>
     <div style="display:flex; gap:10px;">
@@ -1217,28 +1230,44 @@ function setLibStatus(msg, isErr){
    "Bibliothek" → "Books API" suchen → aktivieren → "Anmeldedaten" →
    "Anmeldedaten erstellen" → "API-Schlüssel" */
 const GOOGLE_BOOKS_API_KEY = 'AIzaSyAlR51sz87yAcrfpVa-hRKvr8piC6rttRI';
-async function searchISBN(raw){
-  const clean = (raw || '').replace(/[^0-9Xx]/g, '');
-  if(!clean){ setLibStatus('Bitte eine ISBN eingeben', true); return; }
-  if(books.some(b=>b.isbn===clean)){ setLibStatus('Dieses Buch ist schon in der Bibliothek', true); return; }
+let activeShelf = 'owned';
+let activeBookCategory = 'all';
+
+async function fetchGoogleBooks(query, attempt){
+  attempt = attempt || 1;
+  const keyParam = GOOGLE_BOOKS_API_KEY ? `&key=${GOOGLE_BOOKS_API_KEY}` : '';
+  const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}${keyParam}`);
+  if((res.status===503 || res.status===429) && attempt<3){
+    setLibStatus(`Google-Server kurz überlastet, Versuch ${attempt+1}/3 …`);
+    await new Promise(r=>setTimeout(r, 700*attempt));
+    return fetchGoogleBooks(query, attempt+1);
+  }
+  if(!res.ok) throw new Error(`HTTP ${res.status}${res.status===503?' — Google-Server weiterhin überlastet, gleich nochmal versuchen':''}`);
+  return res.json();
+}
+function getBookCategories(shelf){
+  return [...new Set(books.filter(b=>(b.shelf||'owned')===shelf && b.category).map(b=>b.category))].sort((a,b)=>a.localeCompare(b,'de'));
+}
+async function searchBook(raw){
+  const text = (raw || '').trim();
+  if(!text){ setLibStatus('Bitte ISBN oder Titel eingeben', true); return; }
+  const digitsOnly = text.replace(/[^0-9Xx]/g, '');
+  const looksLikeIsbn = digitsOnly.length >= 10 && digitsOnly.length >= text.replace(/[\s-]/g,'').length - 1;
+  if(looksLikeIsbn && books.some(b=>b.isbn===digitsOnly)){ setLibStatus('Dieses Buch ist schon vorhanden', true); return; }
   setLibStatus('Suche Buch …');
   try{
-    const keyParam = GOOGLE_BOOKS_API_KEY ? `&key=${GOOGLE_BOOKS_API_KEY}` : '';
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${clean}${keyParam}`);
-    if(res.status===429) throw new Error('429 — Tageslimit für anonyme Anfragen erreicht. Eigenen Google Books API-Key eintragen (kostenlos, kein Bezahlkonto nötig) oder später erneut versuchen.');
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    if(!data.items || !data.items.length){
-      setLibStatus('Kein Buch zu dieser ISBN gefunden', true);
-      return;
-    }
+    const query = looksLikeIsbn ? `isbn:${digitsOnly}` : encodeURIComponent(text);
+    const data = await fetchGoogleBooks(query);
+    if(!data.items || !data.items.length){ setLibStatus('Kein Buch gefunden', true); return; }
     const info = data.items[0].volumeInfo || {};
+    const isbnFromInfo = (info.industryIdentifiers || []).find(i=>i.type==='ISBN_13' || i.type==='ISBN_10');
     const book = {
-      id: uid(), isbn: clean,
+      id: uid(),
+      isbn: looksLikeIsbn ? digitsOnly : (isbnFromInfo ? isbnFromInfo.identifier : ''),
       title: info.title || 'Ohne Titel',
       author: (info.authors || []).join(', ') || 'Unbekannt',
       cover: info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || '') : '',
-      status: 'ungelesen', notes: '', addedBy: identity, createdAt: Date.now()
+      status: 'ungelesen', category: '', shelf: activeShelf, notes: '', addedBy: identity, createdAt: Date.now()
     };
     books.unshift(book);
     $('#isbnInput').value = '';
@@ -1249,8 +1278,13 @@ async function searchISBN(raw){
     setLibStatus(`Suche fehlgeschlagen: ${e.message}`, true);
   }
 }
-$('#isbnSearchBtn').addEventListener('click', ()=> searchISBN($('#isbnInput').value));
-$('#isbnInput').addEventListener('keydown', e=>{ if(e.key==='Enter') searchISBN($('#isbnInput').value); });
+$('#isbnSearchBtn').addEventListener('click', ()=> searchBook($('#isbnInput').value));
+$('#isbnInput').addEventListener('keydown', e=>{ if(e.key==='Enter') searchBook($('#isbnInput').value); });
+$$('#shelfPicker .chip').forEach(c=>c.addEventListener('click', ()=>{
+  activeShelf = c.dataset.val;
+  activeBookCategory = 'all';
+  renderLibrary();
+}));
 
 let scannerStream = null;
 let scannerLoopId = null;
@@ -1274,7 +1308,7 @@ async function openScanner(){
           const val = codes[0].rawValue;
           closeScanner();
           $('#isbnInput').value = val;
-          searchISBN(val);
+          searchBook(val);
           return;
         }
       }catch(_){}
@@ -1304,9 +1338,30 @@ function libraryItemHTML(b){
     <span style="position:absolute; top:5px; right:5px; width:9px; height:9px; border-radius:50%; background:${statusColor}; border:1.5px solid #fff;"></span>
   </button>`;
 }
+function renderBookCategoryChips(){
+  const cats = getBookCategories(activeShelf);
+  let html = `<button class="chip proj-chip ${activeBookCategory==='all'?'selected':''}" data-val="all" type="button">Alle</button>`;
+  html += cats.map(c=>`<button class="chip proj-chip ${activeBookCategory===c?'selected':''}" data-val="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
+  $('#bookCategoryChips').innerHTML = html;
+  $$('#bookCategoryChips .proj-chip').forEach(b=>{ b.onclick = ()=>{ activeBookCategory = b.dataset.val; renderLibrary(); }; });
+}
 function renderLibrary(){
-  $('#libraryGrid').innerHTML = books.map(libraryItemHTML).join('');
-  $('#libraryEmpty').style.display = books.length===0 ? 'block' : 'none';
+  $$('#shelfPicker .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===activeShelf));
+  renderBookCategoryChips();
+  const shelfBooks = books.filter(b=>(b.shelf||'owned')===activeShelf);
+  const filtered = shelfBooks.filter(b=>activeBookCategory==='all' || b.category===activeBookCategory);
+  $('#libraryGrid').innerHTML = filtered.map(libraryItemHTML).join('');
+  const emptyEl = $('#libraryEmpty');
+  if(filtered.length===0){
+    emptyEl.style.display = 'block';
+    if(shelfBooks.length===0){
+      emptyEl.innerHTML = activeShelf==='wishlist'
+        ? '<b>Wunschliste ist leer</b>Fügt Bücher hinzu, die ihr in Zukunft lesen wollt.'
+        : '<b>Noch keine Bücher</b>ISBN eingeben, Titel suchen oder mit der Kamera scannen.';
+    } else {
+      emptyEl.innerHTML = '<b>Nichts in dieser Kategorie</b>Wählt „Alle" oder eine andere Kategorie.';
+    }
+  } else { emptyEl.style.display = 'none'; }
   $$('#libraryGrid .photo-thumb').forEach(btn=>{ btn.onclick = ()=> openBookModal(btn.dataset.id); });
 }
 function openBookModal(id){
@@ -1316,8 +1371,11 @@ function openBookModal(id){
   $('#bmCover').src = b.cover || '';
   $('#bmTitle').textContent = b.title;
   $('#bmAuthor').textContent = b.author;
-  $('#bmIsbn').textContent = `ISBN ${b.isbn}`;
+  $('#bmIsbn').textContent = b.isbn ? `ISBN ${b.isbn}` : '';
   $$('#bmStatus .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===b.status));
+  $$('#bmShelf .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===(b.shelf||'owned')));
+  $('#bmCategory').value = b.category || '';
+  $('#bmCategorySuggestions').innerHTML = getBookCategories(b.shelf||'owned').map(c=>`<option value="${escapeHtml(c)}"></option>`).join('');
   $('#bmNotes').value = b.notes || '';
   $('#bookModal').style.display = 'flex';
 }
@@ -1325,18 +1383,22 @@ function closeBookModal(){ $('#bookModal').style.display = 'none'; currentBookMo
 $('#bookModalClose').addEventListener('click', closeBookModal);
 $('#bookModal').addEventListener('click', e=>{ if(e.target.id==='bookModal') closeBookModal(); });
 $$('#bmStatus .chip').forEach(c=>c.addEventListener('click', ()=>{ $$('#bmStatus .chip').forEach(x=>x.classList.remove('selected')); c.classList.add('selected'); }));
+$$('#bmShelf .chip').forEach(c=>c.addEventListener('click', ()=>{ $$('#bmShelf .chip').forEach(x=>x.classList.remove('selected')); c.classList.add('selected'); }));
 $('#bmSave').addEventListener('click', async ()=>{
   const b = books.find(x=>x.id===currentBookModalId);
   if(!b) return;
   const statusChip = $('#bmStatus .chip.selected');
   b.status = statusChip ? statusChip.dataset.val : 'ungelesen';
+  const shelfChip = $('#bmShelf .chip.selected');
+  b.shelf = shelfChip ? shelfChip.dataset.val : 'owned';
+  b.category = $('#bmCategory').value.trim();
   b.notes = $('#bmNotes').value.trim();
   closeBookModal();
   renderLibrary();
   await storageSet('household-books', JSON.stringify(books), true);
 });
 $('#bmDelete').addEventListener('click', async ()=>{
-  if(!confirm('Buch aus der Bibliothek entfernen?')) return;
+  if(!confirm('Buch entfernen?')) return;
   books = books.filter(x=>x.id!==currentBookModalId);
   closeBookModal();
   renderLibrary();

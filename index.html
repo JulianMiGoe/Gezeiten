@@ -343,11 +343,11 @@ nav.bottom{
         <button class="add-btn" id="shopAdd">+</button>
       </div>
       <div class="chips" id="shopCategory" style="display:none;">
-        <button class="chip selected" data-val="Supermarkt">Supermarkt</button>
-        <button class="chip" data-val="Drogeriemarkt">Drogerie</button>
-        <button class="chip" data-val="Apotheke">Apotheke</button>
-        <button class="chip" data-val="Asia Markt">Asia Markt</button>
-        <button class="chip" data-val="Sonstiges">Sonstiges</button>
+        <button class="chip selected" data-val="Supermarkt" style="background:#2D7A73;border-color:#2D7A73;color:#fff;">Supermarkt</button>
+        <button class="chip" data-val="Drogeriemarkt" style="color:#C68A3B;border-color:#C68A3B55;">Drogerie</button>
+        <button class="chip" data-val="Apotheke" style="color:#C1543D;border-color:#C1543D55;">Apotheke</button>
+        <button class="chip" data-val="Asia Markt" style="color:#7C6FA6;border-color:#7C6FA655;">Asia Markt</button>
+        <button class="chip" data-val="Sonstiges" style="color:#5C6E68;border-color:#5C6E6855;">Sonstiges</button>
       </div>
       <div id="shopList"></div>
       <div id="shopEmpty" class="empty" style="display:none;"><b>Liste ist leer</b>Was braucht ihr als Nächstes?</div>
@@ -455,6 +455,18 @@ nav.bottom{
       </div>
     </section>
 
+    <!-- LIBRARY -->
+    <section class="panel" data-panel="library">
+      <div class="add-row">
+        <input type="text" id="isbnInput" placeholder="ISBN eingeben oder scannen…" inputmode="numeric" style="flex:1;">
+        <button class="add-btn" id="isbnSearchBtn" type="button">🔍</button>
+      </div>
+      <button class="clear-btn" id="scanBtn" type="button" style="width:100%; text-align:center; margin:0 0 14px; display:none;">📷 Barcode scannen</button>
+      <div id="libStatus" style="font-size:.78rem; color:var(--muted); margin:-4px 0 14px; min-height:1.1em;"></div>
+      <div class="photo-grid" id="libraryGrid"></div>
+      <div id="libraryEmpty" class="empty" style="display:none;"><b>Noch keine Bücher</b>ISBN eingeben oder mit der Kamera scannen — Buchdaten kommen von Google Books.</div>
+    </section>
+
     <div id="statusMsg" class="status"></div>
   </main>
 
@@ -498,6 +510,41 @@ nav.bottom{
   <button class="side-menu-item" data-tab="expenses" type="button">💶 Ausgaben</button>
   <button class="side-menu-item" data-tab="calendar" type="button">📅 Kalender</button>
   <button class="side-menu-item" data-tab="photos" type="button">📷 Bilder</button>
+  <button class="side-menu-item" data-tab="library" type="button">📚 Bibliothek</button>
+  <div style="padding:16px 22px 8px; font-size:.75rem; color:#B9CFC7; text-transform:uppercase; letter-spacing:.06em; border-top:1px solid #2C4E4C; margin-top:8px;">Farbschema</div>
+  <div id="themeSwatches" style="display:flex; gap:10px; padding:8px 22px 20px; flex-wrap:wrap;"></div>
+</div>
+
+<div id="scannerOverlay" class="lightbox" style="display:none;">
+  <button class="lightbox-close" id="scannerClose" type="button" aria-label="schließen">✕</button>
+  <video id="scannerVideo" autoplay playsinline muted style="width:100%; max-width:400px; border-radius:12px; background:#000;"></video>
+  <div class="lightbox-meta" id="scannerStatus">Richte die Kamera auf den Barcode…</div>
+</div>
+
+<div id="bookModal" class="lightbox" style="display:none; background:rgba(20,32,30,.55); align-items:flex-end; padding:0;">
+  <div style="background:var(--foam); width:100%; max-width:520px; border-radius:20px 20px 0 0; padding:22px 20px calc(22px + env(safe-area-inset-bottom)); max-height:88vh; overflow-y:auto;">
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:16px; gap:14px;">
+      <img id="bmCover" style="width:70px; height:100px; object-fit:cover; border-radius:8px; background:var(--line); flex-shrink:0;" alt="">
+      <div style="flex:1; min-width:0;">
+        <div id="bmTitle" style="font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--ink);"></div>
+        <div id="bmAuthor" style="font-size:.85rem; color:var(--muted); margin-top:2px;"></div>
+        <div id="bmIsbn" style="font-size:.72rem; color:var(--muted); margin-top:4px;"></div>
+      </div>
+      <button id="bookModalClose" type="button" style="background:none; border:none; font-size:1.3rem; color:var(--muted); cursor:pointer; flex-shrink:0;">✕</button>
+    </div>
+    <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Status</div>
+    <div class="chips" id="bmStatus">
+      <button class="chip" data-val="ungelesen" type="button">Ungelesen</button>
+      <button class="chip" data-val="lese" type="button">Lese gerade</button>
+      <button class="chip" data-val="gelesen" type="button">Gelesen</button>
+    </div>
+    <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Notizen</div>
+    <textarea id="bmNotes" rows="4" placeholder="Gedanken, Zitate…" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; font-family:'Inter'; font-size:.9rem; margin-bottom:18px; resize:vertical; background:var(--card); color:var(--ink);"></textarea>
+    <div style="display:flex; gap:10px;">
+      <button id="bmDelete" type="button" class="clear-btn" style="flex:1; text-align:center; margin:0;">Entfernen</button>
+      <button id="bmSave" type="button" class="btn-wide" style="flex:2; margin:0;">Speichern</button>
+    </div>
+  </div>
 </div>
 
 <div id="taskModal" class="lightbox" style="display:none; background:rgba(20,32,30,.55); align-items:flex-end; padding:0;">
@@ -568,10 +615,17 @@ const db = firebase.database();
 const auth = firebase.auth();
 
 const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8' };
+const THEMES = {
+  gezeiten: { label:'Gezeiten', deep:'#143C3F', mid:'#2D7A73', foam:'#F3F6F4', card:'#FFFFFF', line:'#DCE6E1', ink:'#16211F', muted:'#5C6E68', sage:'#6FA695', amber:'#C68A3B', coral:'#C1543D', violet:'#7C6FA6', tide:'#4C7EA8' },
+  duenen:   { label:'Dünen',    deep:'#4A3B2A', mid:'#C17A4E', foam:'#FAF6EF', card:'#FFFFFF', line:'#E8DCC8', ink:'#2E2418', muted:'#8A7A63', sage:'#9C9463', amber:'#D4A24C', coral:'#B85C4A', violet:'#8C6E8F', tide:'#5B8AA3' },
+  nacht:    { label:'Nacht',    deep:'#0A1614', mid:'#4FB8A8', foam:'#10201E', card:'#172826', line:'#26403C', ink:'#E8F0EE', muted:'#7FA096', sage:'#6FA695', amber:'#D9A65C', coral:'#E07A65', violet:'#A594C9', tide:'#6FA0C9' },
+  moos:     { label:'Moos',     deep:'#1F3320', mid:'#4C7A4E', foam:'#F2F5EE', card:'#FFFFFF', line:'#DDE5D6', ink:'#1E2A1C', muted:'#6B7A66', sage:'#7FA66F', amber:'#B98A3E', coral:'#B0553F', violet:'#77698C', tide:'#4E7A93' }
+};
 const FREQ_LABELS = { '1':'täglich', '4':'2× pro Woche', '7':'wöchentlich', '14':'alle 2 Wochen', '30':'monatlich', '60':'alle 2 Monate', '90':'alle 3 Monate' };
 const PROJECT_COLORS = ['#2D7A73','#C68A3B','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A'];
 const ROOM_COLORS = ['#2D7A73','#C68A3B','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A','#B5652E','#3E7CA6'];
 const CATEGORY_ORDER = ['Supermarkt','Drogeriemarkt','Apotheke','Asia Markt','Sonstiges'];
+const CATEGORY_COLORS = { 'Supermarkt':'#2D7A73', 'Drogeriemarkt':'#C68A3B', 'Apotheke':'#C1543D', 'Asia Markt':'#7C6FA6', 'Sonstiges':'#5C6E68' };
 const MONTH_NAMES = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 const FACTS_BY_DATE = {
   '01-15': { title:'Ermordung von Rosa Luxemburg und Karl Liebknecht', year:'1919',
@@ -684,6 +738,8 @@ let periods = [];
 let tideStationId = null;
 let tideByDate = {};
 let tideStationLabel = '';
+let books = [];
+let currentBookModalId = null;
 let taskDoneOpen = false;
 let cleanHistoryOpen = false;
 
@@ -872,6 +928,7 @@ function switchToTab(name){
   $('#tidePath').setAttribute('stroke', TAB_ACCENT[name] || '#2D7A73');
   document.documentElement.style.setProperty('--accent', TAB_ACCENT[name] || '#2D7A73');
   if(name==='calendar') renderCalendar();
+  if(name==='library') renderLibrary();
 }
 $$('.tab').forEach(tab=>{
   tab.addEventListener('click', ()=> switchToTab(tab.dataset.tab));
@@ -894,6 +951,44 @@ $$('.side-menu-item').forEach(btn=>{
     closeSideMenu();
   });
 });
+
+/* ---------- Theme ---------- */
+function applyTheme(key){
+  const t = THEMES[key] || THEMES.gezeiten;
+  const root = document.documentElement.style;
+  root.setProperty('--tide-deep', t.deep);
+  root.setProperty('--tide-mid', t.mid);
+  root.setProperty('--foam', t.foam);
+  root.setProperty('--card', t.card);
+  root.setProperty('--line', t.line);
+  root.setProperty('--ink', t.ink);
+  root.setProperty('--muted', t.muted);
+  root.setProperty('--sage', t.sage);
+  root.setProperty('--amber', t.amber);
+  root.setProperty('--coral', t.coral);
+  root.setProperty('--violet', t.violet);
+  TAB_ACCENT.tasks = t.mid; TAB_ACCENT.shopping = t.amber; TAB_ACCENT.cleaning = t.sage;
+  TAB_ACCENT.expenses = t.coral; TAB_ACCENT.photos = t.violet; TAB_ACCENT.calendar = t.tide; TAB_ACCENT.library = t.violet;
+  const activeTab = document.querySelector('.tab.active');
+  const name = activeTab ? activeTab.dataset.tab : 'tasks';
+  const pathEl = $('#tidePath');
+  if(pathEl) pathEl.setAttribute('stroke', TAB_ACCENT[name] || t.mid);
+  root.setProperty('--accent', TAB_ACCENT[name] || t.mid);
+  localStorage.setItem('theme', key);
+}
+function renderThemeSwatches(){
+  const current = localStorage.getItem('theme') || 'gezeiten';
+  $('#themeSwatches').innerHTML = Object.keys(THEMES).map(key=>{
+    const t = THEMES[key];
+    const ring = key===current ? `box-shadow:0 0 0 2px #10201E, 0 0 0 4px ${t.mid};` : 'box-shadow:none;';
+    return `<button class="theme-swatch" data-theme="${key}" type="button" title="${t.label}" style="width:36px; height:36px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg, ${t.deep} 50%, ${t.mid} 50%); ${ring}"></button>`;
+  }).join('');
+  $$('.theme-swatch').forEach(b=>{
+    b.onclick = ()=>{ applyTheme(b.dataset.theme); renderThemeSwatches(); };
+  });
+}
+applyTheme(localStorage.getItem('theme') || 'gezeiten');
+renderThemeSwatches();
 
 /* ---------- Calendar ---------- */
 function pad2(n){ return String(n).padStart(2,'0'); }
@@ -1010,6 +1105,21 @@ function renderDayDetail(){
 function stripDiacritics(s){ return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase(); }
 let tideLastFetch = 0;
 function setTideStatus(msg){ const el = $('#tideStatus'); if(el) el.textContent = msg; }
+async function fetchJsonViaProxy(url){
+  const proxies = [
+    `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`,
+    `https://corsproxy.io/?url=${encodeURIComponent(url)}`
+  ];
+  let lastErr;
+  for(const p of proxies){
+    try{
+      const res = await fetch(p);
+      if(!res.ok) throw new Error(`HTTP ${res.status}`);
+      return await res.json();
+    }catch(e){ lastErr = e; }
+  }
+  throw lastErr || new Error('Alle Proxys fehlgeschlagen');
+}
 async function ensureTideData(force){
   if(!calLayers.tide) { setTideStatus('Gezeiten-Ebene ausgeblendet'); return; }
   const now = Date.now();
@@ -1025,9 +1135,7 @@ async function ensureTideData(force){
       tideStationLabel = localStorage.getItem('tide-station-label') || '';
     }
     if(!tideStationId){
-      const res = await fetch('https://gdi.bsh.de/ldproxy/rest/services/WaterLevelForecast/collections/waterlevelforecastdata/items?f=json');
-      if(!res.ok) throw new Error(`Pegelliste: HTTP ${res.status}`);
-      const data = await res.json();
+      const data = await fetchJsonViaProxy('https://gdi.bsh.de/ldproxy/rest/services/WaterLevelForecast/collections/waterlevelforecastdata/items?f=json');
       const CANDIDATES = ['dagebull','husum','wittdun','hornum'];
       let found = null;
       for(const cand of CANDIDATES){
@@ -1046,9 +1154,7 @@ async function ensureTideData(force){
       }
     }
     setTideStatus(`Gezeiten: lade Vorhersage für ${tideStationLabel} …`);
-    const res2 = await fetch(`https://gdi.bsh.de/ldproxy/rest/services/WaterLevelForecast/collections/waterlevelforecastdata/items/${tideStationId}?f=json`);
-    if(!res2.ok) throw new Error(`Pegeldaten: HTTP ${res2.status}`);
-    const d2 = await res2.json();
+    const d2 = await fetchJsonViaProxy(`https://gdi.bsh.de/ldproxy/rest/services/WaterLevelForecast/collections/waterlevelforecastdata/items/${tideStationId}?f=json`);
     const events = (d2.properties && d2.properties.high_water_low_water) || [];
     const byDate = {};
     events.forEach(ev=>{
@@ -1097,6 +1203,137 @@ $('#periodSave').addEventListener('click', async ()=>{
   $('#periodAddToggle').textContent='+ Periode eintragen';
   renderCalendar();
   await storageSet('household-periods', JSON.stringify(periods), true);
+});
+
+/* ---------- Library ---------- */
+function setLibStatus(msg, isErr){
+  const el = $('#libStatus');
+  if(!el) return;
+  el.textContent = msg || '';
+  el.style.color = isErr ? 'var(--coral)' : 'var(--muted)';
+}
+async function searchISBN(raw){
+  const clean = (raw || '').replace(/[^0-9Xx]/g, '');
+  if(!clean){ setLibStatus('Bitte eine ISBN eingeben', true); return; }
+  if(books.some(b=>b.isbn===clean)){ setLibStatus('Dieses Buch ist schon in der Bibliothek', true); return; }
+  setLibStatus('Suche Buch …');
+  try{
+    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${clean}`);
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if(!data.items || !data.items.length){
+      setLibStatus('Kein Buch zu dieser ISBN gefunden', true);
+      return;
+    }
+    const info = data.items[0].volumeInfo || {};
+    const book = {
+      id: uid(), isbn: clean,
+      title: info.title || 'Ohne Titel',
+      author: (info.authors || []).join(', ') || 'Unbekannt',
+      cover: info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || '') : '',
+      status: 'ungelesen', notes: '', addedBy: identity, createdAt: Date.now()
+    };
+    books.unshift(book);
+    $('#isbnInput').value = '';
+    setLibStatus(`„${book.title}" hinzugefügt`);
+    renderLibrary();
+    await storageSet('household-books', JSON.stringify(books), true);
+  }catch(e){
+    setLibStatus(`Suche fehlgeschlagen: ${e.message}`, true);
+  }
+}
+$('#isbnSearchBtn').addEventListener('click', ()=> searchISBN($('#isbnInput').value));
+$('#isbnInput').addEventListener('keydown', e=>{ if(e.key==='Enter') searchISBN($('#isbnInput').value); });
+
+let scannerStream = null;
+let scannerLoopId = null;
+if('BarcodeDetector' in window){
+  const sb = $('#scanBtn');
+  if(sb) sb.style.display = 'block';
+}
+async function openScanner(){
+  $('#scannerOverlay').style.display = 'flex';
+  $('#scannerStatus').textContent = 'Richte die Kamera auf den Barcode…';
+  try{
+    scannerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode:'environment' } });
+    const video = $('#scannerVideo');
+    video.srcObject = scannerStream;
+    const detector = new BarcodeDetector({ formats:['ean_13','ean_8'] });
+    const loop = async ()=>{
+      if(!scannerStream) return;
+      try{
+        const codes = await detector.detect(video);
+        if(codes.length){
+          const val = codes[0].rawValue;
+          closeScanner();
+          $('#isbnInput').value = val;
+          searchISBN(val);
+          return;
+        }
+      }catch(_){}
+      scannerLoopId = requestAnimationFrame(loop);
+    };
+    loop();
+  }catch(e){
+    $('#scannerStatus').textContent = 'Kamera nicht verfügbar: ' + e.message;
+  }
+}
+function closeScanner(){
+  $('#scannerOverlay').style.display = 'none';
+  if(scannerLoopId) cancelAnimationFrame(scannerLoopId);
+  if(scannerStream){ scannerStream.getTracks().forEach(t=>t.stop()); scannerStream = null; }
+}
+$('#scanBtn').addEventListener('click', openScanner);
+$('#scannerClose').addEventListener('click', closeScanner);
+
+function libraryItemHTML(b){
+  const cover = b.cover
+    ? `<img src="${b.cover}" alt="" style="width:100%;height:100%;object-fit:cover;">`
+    : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;background:var(--foam);">📕</div>`;
+  const statusColor = b.status==='gelesen' ? '#6FA695' : b.status==='lese' ? '#C68A3B' : '#B7C4BF';
+  return `<button class="photo-thumb" data-id="${b.id}" type="button" style="aspect-ratio:2/3;">
+    ${cover}
+    <span class="who">${escapeHtml(b.title)}</span>
+    <span style="position:absolute; top:5px; right:5px; width:9px; height:9px; border-radius:50%; background:${statusColor}; border:1.5px solid #fff;"></span>
+  </button>`;
+}
+function renderLibrary(){
+  $('#libraryGrid').innerHTML = books.map(libraryItemHTML).join('');
+  $('#libraryEmpty').style.display = books.length===0 ? 'block' : 'none';
+  $$('#libraryGrid .photo-thumb').forEach(btn=>{ btn.onclick = ()=> openBookModal(btn.dataset.id); });
+}
+function openBookModal(id){
+  const b = books.find(x=>x.id===id);
+  if(!b) return;
+  currentBookModalId = id;
+  $('#bmCover').src = b.cover || '';
+  $('#bmTitle').textContent = b.title;
+  $('#bmAuthor').textContent = b.author;
+  $('#bmIsbn').textContent = `ISBN ${b.isbn}`;
+  $$('#bmStatus .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===b.status));
+  $('#bmNotes').value = b.notes || '';
+  $('#bookModal').style.display = 'flex';
+}
+function closeBookModal(){ $('#bookModal').style.display = 'none'; currentBookModalId = null; }
+$('#bookModalClose').addEventListener('click', closeBookModal);
+$('#bookModal').addEventListener('click', e=>{ if(e.target.id==='bookModal') closeBookModal(); });
+$$('#bmStatus .chip').forEach(c=>c.addEventListener('click', ()=>{ $$('#bmStatus .chip').forEach(x=>x.classList.remove('selected')); c.classList.add('selected'); }));
+$('#bmSave').addEventListener('click', async ()=>{
+  const b = books.find(x=>x.id===currentBookModalId);
+  if(!b) return;
+  const statusChip = $('#bmStatus .chip.selected');
+  b.status = statusChip ? statusChip.dataset.val : 'ungelesen';
+  b.notes = $('#bmNotes').value.trim();
+  closeBookModal();
+  renderLibrary();
+  await storageSet('household-books', JSON.stringify(books), true);
+});
+$('#bmDelete').addEventListener('click', async ()=>{
+  if(!confirm('Buch aus der Bibliothek entfernen?')) return;
+  books = books.filter(x=>x.id!==currentBookModalId);
+  closeBookModal();
+  renderLibrary();
+  await storageSet('household-books', JSON.stringify(books), true);
 });
 
 /* ---------- Load all (Firebase, with live sync) ---------- */
@@ -1198,6 +1435,11 @@ function attachLiveSync(){
   db.ref('periods').on('value', snap=>{
     periods = snap.val() || [];
     refreshCalendarIfActive();
+  });
+  db.ref('books').on('value', snap=>{
+    const v = snap.val() || [];
+    notifyNewItems(books, v, 'addedBy', b=>`📚 Neues Buch: ${b.title}`);
+    books = v; renderLibrary();
   });
   setTimeout(()=>{ liveSyncPrimed = true; }, 2500);
 }
@@ -1479,8 +1721,14 @@ $('#tmExportICS').addEventListener('click', ()=>{
 
 /* ---------- Shopping ---------- */
 $$('#shopCategory .chip').forEach(c=>c.addEventListener('click', ()=>{
-  $$('#shopCategory .chip').forEach(x=>x.classList.remove('selected'));
+  $$('#shopCategory .chip').forEach(x=>{
+    const col = CATEGORY_COLORS[x.dataset.val] || '#5C6E68';
+    x.classList.remove('selected');
+    x.style.cssText = `color:${col};border-color:${col}55;`;
+  });
+  const col = CATEGORY_COLORS[c.dataset.val] || '#5C6E68';
   c.classList.add('selected');
+  c.style.cssText = `background:${col};border-color:${col};color:#fff;`;
 }));
 $('#shopAdd').addEventListener('click', addShop);
 $('#shopInput').addEventListener('keydown', e=>{ if(e.key==='Enter') addShop(); });
@@ -1509,7 +1757,8 @@ async function deleteShop(id){
 }
 function shopItemHTML(s, showCategory){
   const cat = CATEGORY_ORDER.includes(s.category) ? s.category : 'Sonstiges';
-  const tag = showCategory ? `<span class="tag">${escapeHtml(cat)}</span>` : '';
+  const color = CATEGORY_COLORS[cat] || 'var(--muted)';
+  const tag = showCategory ? `<span class="tag" style="background:${color}22;color:${color};">${escapeHtml(cat)}</span>` : '';
   return `<li class="item ${s.done?'done':''}" data-id="${s.id}">
     <button class="check" aria-label="erledigt">${checkSvg()}</button>
     <span class="item-text">${escapeHtml(s.text)}</span>
@@ -1519,7 +1768,12 @@ function shopItemHTML(s, showCategory){
 }
 function renderShopFilterChips(){
   let html = `<button class="chip proj-chip ${activeShopFilter==='all'?'selected':''}" data-val="all">Alle</button>`;
-  html += CATEGORY_ORDER.map(cat=>`<button class="chip proj-chip ${activeShopFilter===cat?'selected':''}" data-val="${escapeHtml(cat)}">${escapeHtml(cat)}</button>`).join('');
+  html += CATEGORY_ORDER.map(cat=>{
+    const color = CATEGORY_COLORS[cat] || 'var(--muted)';
+    const sel = activeShopFilter===cat;
+    const style = sel ? `background:${color};border-color:${color};color:#fff;` : `color:${color};border-color:${color}55;`;
+    return `<button class="chip proj-chip" data-val="${escapeHtml(cat)}" style="${style}">${escapeHtml(cat)}</button>`;
+  }).join('');
   $('#shopFilterChips').innerHTML = html;
   $$('#shopFilterChips .proj-chip').forEach(b=>{ b.onclick = ()=>{ activeShopFilter = b.dataset.val; renderShopping(); }; });
 }

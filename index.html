@@ -465,7 +465,13 @@ nav.bottom{
         <input type="text" id="isbnInput" placeholder="ISBN oder Titel eingeben…" style="flex:1;">
         <button class="add-btn" id="isbnSearchBtn" type="button">🔍</button>
       </div>
-      <button class="clear-btn" id="scanBtn" type="button" style="width:100%; text-align:center; margin:0 0 14px; display:none;">📷 Barcode scannen</button>
+      <button class="clear-btn" id="scanBtn" type="button" style="width:100%; text-align:center; margin:0 0 10px; display:none;">📷 Barcode scannen</button>
+      <button class="clear-btn" id="manualAddToggle" type="button" style="width:100%; text-align:center; margin:0 0 14px;">✏️ Manuell hinzufügen</button>
+      <div id="manualAddForm" style="display:none; margin-bottom:14px;">
+        <input type="text" id="manualTitle" placeholder="Titel" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:10px; font-family:'Inter'; font-size:.9rem;">
+        <input type="text" id="manualAuthor" placeholder="Autor:in (optional)" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:10px; font-family:'Inter'; font-size:.9rem;">
+        <button id="manualAddSave" type="button" class="btn-wide" style="margin:0;">Hinzufügen</button>
+      </div>
       <div id="libStatus" style="font-size:.78rem; color:var(--muted); margin:-4px 0 14px; min-height:1.1em;"></div>
       <div class="chips proj-chips-row" id="bookCategoryChips" style="margin-bottom:14px;"></div>
       <div class="photo-grid" id="libraryGrid"></div>
@@ -549,8 +555,7 @@ nav.bottom{
       <button class="chip" data-val="wishlist" type="button">✨ Wunschliste</button>
     </div>
     <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Kategorie</div>
-    <input type="text" id="bmCategory" list="bmCategorySuggestions" placeholder="z. B. Krimi, Sachbuch, Vorlesen…" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:14px; font-family:'Inter'; font-size:.9rem; background:var(--card); color:var(--ink);">
-    <datalist id="bmCategorySuggestions"></datalist>
+    <div class="chips" id="bmCategory"></div>
     <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Notizen</div>
     <textarea id="bmNotes" rows="4" placeholder="Gedanken, Zitate…" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; font-family:'Inter'; font-size:.9rem; margin-bottom:18px; resize:vertical; background:var(--card); color:var(--ink);"></textarea>
     <div style="display:flex; gap:10px;">
@@ -1231,6 +1236,7 @@ function setLibStatus(msg, isErr){
    "Anmeldedaten erstellen" → "API-Schlüssel" */
 const GOOGLE_BOOKS_API_KEY = 'AIzaSyAlR51sz87yAcrfpVa-hRKvr8piC6rttRI';
 let activeShelf = 'owned';
+const BOOK_CATEGORIES = ['Klassiker','Krimi','Sachbuch','Feminismus','Kommunismus','Anti-Rassismus','Musik','Französisch','Spanisch','Griechisch','Deutsch','Englisch','Fachbuch','Kinderbuch','Kunst'];
 let activeBookCategory = 'all';
 
 async function fetchGoogleBooks(query, attempt){
@@ -1364,6 +1370,16 @@ function renderLibrary(){
   } else { emptyEl.style.display = 'none'; }
   $$('#libraryGrid .photo-thumb').forEach(btn=>{ btn.onclick = ()=> openBookModal(btn.dataset.id); });
 }
+function renderCategoryChipsInModal(selectedCat){
+  $('#bmCategory').innerHTML = BOOK_CATEGORIES.map(c=>`<button class="chip ${c===selectedCat?'selected':''}" data-val="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
+  $$('#bmCategory .chip').forEach(b=>{
+    b.onclick = ()=>{
+      const wasSelected = b.classList.contains('selected');
+      $$('#bmCategory .chip').forEach(x=>x.classList.remove('selected'));
+      if(!wasSelected) b.classList.add('selected');
+    };
+  });
+}
 function openBookModal(id){
   const b = books.find(x=>x.id===id);
   if(!b) return;
@@ -1374,8 +1390,7 @@ function openBookModal(id){
   $('#bmIsbn').textContent = b.isbn ? `ISBN ${b.isbn}` : '';
   $$('#bmStatus .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===b.status));
   $$('#bmShelf .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===(b.shelf||'owned')));
-  $('#bmCategory').value = b.category || '';
-  $('#bmCategorySuggestions').innerHTML = getBookCategories(b.shelf||'owned').map(c=>`<option value="${escapeHtml(c)}"></option>`).join('');
+  renderCategoryChipsInModal(b.category || '');
   $('#bmNotes').value = b.notes || '';
   $('#bookModal').style.display = 'flex';
 }
@@ -1391,9 +1406,30 @@ $('#bmSave').addEventListener('click', async ()=>{
   b.status = statusChip ? statusChip.dataset.val : 'ungelesen';
   const shelfChip = $('#bmShelf .chip.selected');
   b.shelf = shelfChip ? shelfChip.dataset.val : 'owned';
-  b.category = $('#bmCategory').value.trim();
+  const catChip = $('#bmCategory .chip.selected');
+  b.category = catChip ? catChip.dataset.val : '';
   b.notes = $('#bmNotes').value.trim();
   closeBookModal();
+  renderLibrary();
+  await storageSet('household-books', JSON.stringify(books), true);
+});
+$('#manualAddToggle').addEventListener('click', ()=>{
+  const f = $('#manualAddForm');
+  const open = f.style.display==='block';
+  f.style.display = open ? 'none' : 'block';
+  $('#manualAddToggle').textContent = open ? '✏️ Manuell hinzufügen' : 'Formular schließen';
+  if(!open) $('#manualTitle').focus();
+});
+$('#manualAddSave').addEventListener('click', async ()=>{
+  const title = $('#manualTitle').value.trim();
+  if(!title){ setLibStatus('Bitte einen Titel eingeben', true); return; }
+  const author = $('#manualAuthor').value.trim() || 'Unbekannt';
+  const book = { id:uid(), isbn:'', title, author, cover:'', status:'ungelesen', category:'', shelf:activeShelf, notes:'', addedBy:identity, createdAt:Date.now() };
+  books.unshift(book);
+  $('#manualTitle').value = ''; $('#manualAuthor').value = '';
+  $('#manualAddForm').style.display = 'none';
+  $('#manualAddToggle').textContent = '✏️ Manuell hinzufügen';
+  setLibStatus(`„${title}" hinzugefügt`);
   renderLibrary();
   await storageSet('household-books', JSON.stringify(books), true);
 });

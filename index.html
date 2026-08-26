@@ -457,14 +457,60 @@ nav.bottom{
 
     <!-- LIBRARY -->
     <section class="panel" data-panel="library">
+      <div class="chips" id="shelfPicker" style="margin-bottom:14px;">
+        <button class="chip selected" data-val="owned" type="button">📚 Bibliothek</button>
+        <button class="chip" data-val="wishlist" type="button">✨ Wunschliste</button>
+        <button class="chip" data-val="stats" type="button">📊 Statistik</button>
+      </div>
       <div class="add-row">
-        <input type="text" id="isbnInput" placeholder="ISBN eingeben oder scannen…" inputmode="numeric" style="flex:1;">
+        <input type="text" id="isbnInput" placeholder="ISBN oder Titel eingeben…" style="flex:1;">
         <button class="add-btn" id="isbnSearchBtn" type="button">🔍</button>
       </div>
-      <button class="clear-btn" id="scanBtn" type="button" style="width:100%; text-align:center; margin:0 0 14px; display:none;">📷 Barcode scannen</button>
+      <button class="clear-btn" id="scanBtn" type="button" style="width:100%; text-align:center; margin:0 0 10px; display:none;">📷 Barcode scannen</button>
+      <button class="clear-btn" id="manualAddToggle" type="button" style="width:100%; text-align:center; margin:0 0 14px;">✏️ Manuell hinzufügen</button>
+      <div id="manualAddForm" style="display:none; margin-bottom:14px;">
+        <input type="text" id="manualTitle" placeholder="Titel" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:10px; font-family:'Inter'; font-size:.9rem;">
+        <input type="text" id="manualAuthor" placeholder="Autor:in (optional)" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:10px; font-family:'Inter'; font-size:.9rem;">
+        <button id="manualAddSave" type="button" class="btn-wide" style="margin:0;">Hinzufügen</button>
+      </div>
       <div id="libStatus" style="font-size:.78rem; color:var(--muted); margin:-4px 0 14px; min-height:1.1em;"></div>
+      <div class="chips proj-chips-row" id="bookCategoryChips" style="margin-bottom:14px;"></div>
       <div class="photo-grid" id="libraryGrid"></div>
-      <div id="libraryEmpty" class="empty" style="display:none;"><b>Noch keine Bücher</b>ISBN eingeben oder mit der Kamera scannen — Buchdaten kommen von Google Books.</div>
+      <div id="libraryEmpty" class="empty" style="display:none;"></div>
+      <div id="libraryStats" style="display:none;"></div>
+    </section>
+
+    <!-- LEARN -->
+    <section class="panel" data-panel="learn">
+      <div class="chips" id="learnViewPicker" style="margin-bottom:16px;">
+        <button class="chip selected" data-val="today" type="button">Heute</button>
+        <button class="chip" data-val="archive" type="button">⭐ Archiv</button>
+        <button class="chip" data-val="all" type="button">Alle Themen</button>
+      </div>
+
+      <div id="learnTodayView">
+        <div class="balance-card">
+          <div class="label" id="learnTodayLabel">Prozess des Tages</div>
+          <div id="learnTodayTitle" style="font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; color:var(--ink); margin-top:4px;"></div>
+          <div id="learnTodayMeta" style="font-size:.78rem; color:var(--muted); margin-top:4px;"></div>
+          <div id="learnTodaySummary" style="font-size:.88rem; color:var(--ink); margin-top:10px; line-height:1.5;"></div>
+        </div>
+        <div id="learnTodayBody" style="margin-top:16px;"></div>
+        <div style="display:flex; gap:10px; margin-top:16px;">
+          <button id="learnArchiveBtn" type="button" class="clear-btn" style="flex:1; text-align:center; margin:0;">⭐ Archivieren</button>
+          <button id="learnShuffleBtn" type="button" class="clear-btn" style="flex:1; text-align:center; margin:0;">🔀 Anderes Thema</button>
+        </div>
+      </div>
+
+      <div id="learnArchiveView" style="display:none;">
+        <div id="learnArchiveList"></div>
+        <div id="learnArchiveEmpty" class="empty" style="display:none;"><b>Archiv ist leer</b>Tippt beim Thema des Tages auf „Archivieren", um es hier zu sammeln.</div>
+      </div>
+
+      <div id="learnAllView" style="display:none;">
+        <div class="chips proj-chips-row" id="learnCatChips" style="margin-bottom:14px;"></div>
+        <div id="learnAllList"></div>
+      </div>
     </section>
 
     <div id="statusMsg" class="status"></div>
@@ -511,6 +557,7 @@ nav.bottom{
   <button class="side-menu-item" data-tab="calendar" type="button">📅 Kalender</button>
   <button class="side-menu-item" data-tab="photos" type="button">📷 Bilder</button>
   <button class="side-menu-item" data-tab="library" type="button">📚 Bibliothek</button>
+  <button class="side-menu-item" data-tab="learn" type="button">🔬 Lernen</button>
   <div style="padding:16px 22px 8px; font-size:.75rem; color:#B9CFC7; text-transform:uppercase; letter-spacing:.06em; border-top:1px solid #2C4E4C; margin-top:8px;">Farbschema</div>
   <div id="themeSwatches" style="display:flex; gap:10px; padding:8px 22px 20px; flex-wrap:wrap;"></div>
 </div>
@@ -538,6 +585,13 @@ nav.bottom{
       <button class="chip" data-val="lese" type="button">Lese gerade</button>
       <button class="chip" data-val="gelesen" type="button">Gelesen</button>
     </div>
+    <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Regal</div>
+    <div class="chips" id="bmShelf">
+      <button class="chip" data-val="owned" type="button">📚 Bibliothek</button>
+      <button class="chip" data-val="wishlist" type="button">✨ Wunschliste</button>
+    </div>
+    <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Kategorie</div>
+    <div class="chips" id="bmCategory"></div>
     <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Notizen</div>
     <textarea id="bmNotes" rows="4" placeholder="Gedanken, Zitate…" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; font-family:'Inter'; font-size:.9rem; margin-bottom:18px; resize:vertical; background:var(--card); color:var(--ink);"></textarea>
     <div style="display:flex; gap:10px;">
@@ -614,7 +668,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const auth = firebase.auth();
 
-const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8' };
+const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8', learn:'#6FA695' };
 const THEMES = {
   gezeiten: { label:'Gezeiten', deep:'#143C3F', mid:'#2D7A73', foam:'#F3F6F4', card:'#FFFFFF', line:'#DCE6E1', ink:'#16211F', muted:'#5C6E68', sage:'#6FA695', amber:'#C68A3B', coral:'#C1543D', violet:'#7C6FA6', tide:'#4C7EA8' },
   duenen:   { label:'Dünen',    deep:'#4A3B2A', mid:'#C17A4E', foam:'#FAF6EF', card:'#FFFFFF', line:'#E8DCC8', ink:'#2E2418', muted:'#8A7A63', sage:'#9C9463', amber:'#D4A24C', coral:'#B85C4A', violet:'#8C6E8F', tide:'#5B8AA3' },
@@ -645,6 +699,273 @@ const FACTS_BY_DATE = {
   '12-01': { title:'Rosa Parks verweigert ihren Sitzplatz', year:'1955',
     blurb:'Die Näherin und NAACP-Aktivistin Rosa Parks weigerte sich in Montgomery, Alabama, für einen weißen Fahrgast ihren Bussitz zu räumen. Ihre Festnahme löste den 381 Tage dauernden Busboykott aus und machte sie zur Symbolfigur der US-Bürgerrechtsbewegung.' }
 };
+const LEARN_TOPICS = [
+{ id:'lichtreaktion', title:'Photosynthese: Die Lichtreaktion', cat:'Stoffwechsel', level:'Abitur',
+  summary:'Wie Thylakoidmembranen Lichtenergie in ATP und NADPH umwandeln.',
+  sections:[
+    {h:'Ort und Ausgangslage', t:'Die Lichtreaktion läuft in den Thylakoidmembranen der Chloroplasten ab. Dort sitzen zwei Photosysteme (PS II und PS I), benannt nach der Reihenfolge ihrer Entdeckung — durchlaufen werden sie aber in der Reihenfolge II → I.'},
+    {h:'Der lineare Elektronentransport', t:'Licht trifft auf die Antennenpigmente von PS II und wird zum Reaktionszentrum P680 geleitet. Ein Elektron wird auf ein höheres Energieniveau gehoben und abgegeben. Die entstandene Lücke füllt PS II durch Wasserspaltung (Photolyse): 2 H₂O → 4 H⁺ + 4 e⁻ + O₂. Der freigesetzte Sauerstoff ist ein Nebenprodukt — genau der, den wir atmen.'},
+    {h:'Protonengradient und ATP', t:'Die Elektronen wandern über Plastochinon, den Cytochrom-b6f-Komplex und Plastocyanin zu PS I. Dabei werden Protonen aus dem Stroma in den Thylakoidinnenraum gepumpt. Es entsteht ein Protonengradient, der die ATP-Synthase antreibt (Chemiosmose) — das ist derselbe Mechanismus wie in der Atmungskette der Mitochondrien.'},
+    {h:'NADPH-Bildung', t:'An PS I (P700) wird das Elektron erneut durch Licht angeregt und über Ferredoxin auf NADP⁺ übertragen: NADP⁺ + 2 e⁻ + H⁺ → NADPH. ATP und NADPH sind die beiden Produkte, die die Dunkelreaktion braucht.'},
+    {h:'Typische Prüfungsfalle', t:'„Dunkelreaktion" heißt nicht, dass sie im Dunkeln stattfindet — sie braucht nur kein Licht direkt, ist aber auf die Produkte der Lichtreaktion angewiesen und läuft deshalb tagsüber. Besser: lichtunabhängige Reaktion.'}
+  ]},
+
+{ id:'calvin', title:'Photosynthese: Der Calvin-Zyklus', cat:'Stoffwechsel', level:'Abitur',
+  summary:'CO₂-Fixierung im Stroma — in drei Phasen zum Zucker.',
+  sections:[
+    {h:'Phase 1: Fixierung', t:'Das Enzym RuBisCO (Ribulose-1,5-bisphosphat-Carboxylase/Oxygenase) hängt CO₂ an den C5-Körper Ribulose-1,5-bisphosphat. Das entstehende C6-Molekül zerfällt sofort in zwei C3-Körper (3-Phosphoglycerat). RuBisCO gilt als das häufigste Protein der Erde.'},
+    {h:'Phase 2: Reduktion', t:'Unter Verbrauch von ATP und NADPH aus der Lichtreaktion wird 3-Phosphoglycerat zu Glycerinaldehyd-3-phosphat (GAP) reduziert. GAP ist das eigentliche Produkt — aus zwei GAP kann Glucose gebaut werden.'},
+    {h:'Phase 3: Regeneration', t:'Der Großteil des GAP wird unter ATP-Verbrauch zurück zu Ribulose-1,5-bisphosphat umgebaut, damit der Zyklus weiterlaufen kann. Von sechs GAP verlässt nur eines den Zyklus als Gewinn.'},
+    {h:'Die Schwäche der RuBisCO', t:'RuBisCO kann statt CO₂ auch O₂ binden — dann läuft die Photorespiration ab, die Energie kostet und keinen Zucker liefert. Bei Hitze und geschlossenen Spaltöffnungen (wenig CO₂, viel O₂ in der Zelle) wird das zum Problem. C4- und CAM-Pflanzen haben genau dafür Umgehungsstrategien entwickelt.'}
+  ]},
+
+{ id:'c4-cam', title:'C4- und CAM-Pflanzen', cat:'Ökologie', level:'Abitur',
+  summary:'Zwei evolutionäre Antworten auf Hitze, Trockenheit und Photorespiration.',
+  sections:[
+    {h:'Das Problem', t:'Bei Hitze schließen Pflanzen ihre Spaltöffnungen, um Wasser zu sparen. Dann sinkt der CO₂-Gehalt in der Zelle, der O₂-Gehalt steigt — RuBisCO läuft vermehrt in die Photorespiration. Der Photosyntheseertrag bricht ein.'},
+    {h:'C4-Strategie: räumliche Trennung', t:'Mais, Zuckerrohr und Hirse fixieren CO₂ zuerst in den Mesophyllzellen mit dem Enzym PEP-Carboxylase, das eine viel höhere CO₂-Affinität hat als RuBisCO und nicht von O₂ gestört wird. Das entstehende C4-Molekül (Oxalacetat → Malat) wird in die Bündelscheidenzellen transportiert und dort wieder zu CO₂ freigesetzt — direkt vor der RuBisCO, in hoher Konzentration.'},
+    {h:'CAM-Strategie: zeitliche Trennung', t:'Kakteen und andere Sukkulenten öffnen ihre Spaltöffnungen nur nachts, wenn es kühl und feucht ist. Das CO₂ wird als Malat in der Vakuole gespeichert und tagsüber bei geschlossenen Spaltöffnungen wieder freigesetzt (CAM = Crassulacean Acid Metabolism).'},
+    {h:'Ökologische Einordnung', t:'Beide Wege kosten zusätzliche Energie, lohnen sich also nur unter Trockenstress. In gemäßigten, feuchten Klimaten sind C3-Pflanzen konkurrenzfähiger — ein schönes Beispiel für Kosten-Nutzen-Abwägung in der Evolution und ein beliebtes Argumentationsthema im Abitur.'}
+  ]},
+
+{ id:'glykolyse', title:'Glykolyse', cat:'Stoffwechsel', level:'Abitur',
+  summary:'Der universelle erste Schritt des Glucoseabbaus — im Cytoplasma, ohne Sauerstoff.',
+  sections:[
+    {h:'Bilanz', t:'Glucose (C6) wird in zehn Enzymschritten zu zwei Molekülen Pyruvat (C3) abgebaut. Netto entstehen 2 ATP und 2 NADH + H⁺.'},
+    {h:'Investitions- und Ertragsphase', t:'Zuerst werden 2 ATP investiert, um Glucose zu phosphorylieren und zu destabilisieren. Erst danach wird geerntet: 4 ATP entstehen durch Substratkettenphosphorylierung. Netto also +2 ATP.'},
+    {h:'Warum das evolutionär bedeutsam ist', t:'Die Glykolyse läuft bei praktisch allen Lebewesen ab — von Bakterien bis zum Menschen — und benötigt keinen Sauerstoff. Das gilt als starkes Indiz dafür, dass sie sehr früh entstand, als die Erdatmosphäre noch sauerstofffrei war.'},
+    {h:'Wie es weitergeht', t:'Mit Sauerstoff: Pyruvat wandert ins Mitochondrium, wird zu Acetyl-CoA und geht in den Citratzyklus. Ohne Sauerstoff: Gärung — beim Menschen zu Lactat, bei Hefe zu Ethanol und CO₂. Die Gärung liefert kein zusätzliches ATP, sondern dient nur der Regeneration von NAD⁺, damit die Glykolyse weiterlaufen kann. Dieser Punkt wird häufig falsch verstanden.'}
+  ]},
+
+{ id:'citratzyklus', title:'Citratzyklus', cat:'Stoffwechsel', level:'Abitur',
+  summary:'Die Drehscheibe des Stoffwechsels in der Mitochondrienmatrix.',
+  sections:[
+    {h:'Einstieg', t:'Pyruvat wird bei der oxidativen Decarboxylierung zu Acetyl-CoA umgebaut (dabei entstehen CO₂ und NADH). Acetyl-CoA (C2) verbindet sich mit Oxalacetat (C4) zu Citrat (C6) — Namensgeber des Zyklus.'},
+    {h:'Bilanz pro Durchlauf', t:'3 NADH, 1 FADH₂, 1 GTP (≈ ATP) und 2 CO₂. Pro Glucose läuft der Zyklus zweimal, da zwei Pyruvat entstanden sind.'},
+    {h:'Wo bleibt der Sauerstoff?', t:'Im Citratzyklus wird kein O₂ verbraucht. Trotzdem läuft er nur unter aeroben Bedingungen — weil die Reduktionsäquivalente NADH und FADH₂ sonst nicht regeneriert werden können. Der Sauerstoff wird erst am Ende der Atmungskette gebraucht. Das ist eine klassische Verständnisfrage.'},
+    {h:'Drehscheibenfunktion', t:'Der Zyklus verarbeitet nicht nur Kohlenhydrate: Auch Fettsäuren (über β-Oxidation zu Acetyl-CoA) und Aminosäuren münden ein. Umgekehrt werden Zwischenprodukte für Biosynthesen abgezweigt (amphiboler Stoffwechsel).'}
+  ]},
+
+{ id:'atmungskette', title:'Atmungskette und Chemiosmose', cat:'Stoffwechsel', level:'Abitur',
+  summary:'Wie aus NADH ein Protonengradient und daraus ATP wird.',
+  sections:[
+    {h:'Der Elektronenfluss', t:'NADH und FADH₂ geben ihre Elektronen an die Komplexe der inneren Mitochondrienmembran ab. Die Elektronen wandern über Ubichinon und Cytochrom c ein Energiegefälle hinab, bis sie am Komplex IV auf Sauerstoff übertragen werden: ½ O₂ + 2 e⁻ + 2 H⁺ → H₂O.'},
+    {h:'Protonengradient', t:'Die frei werdende Energie pumpt Protonen aus der Matrix in den Intermembranraum. Es entsteht ein elektrochemischer Gradient — die protonenmotorische Kraft.'},
+    {h:'ATP-Synthase', t:'Die Protonen strömen durch die ATP-Synthase zurück in die Matrix und treiben deren Rotor an. Pro Glucose entstehen so insgesamt etwa 30–32 ATP. Peter Mitchells chemiosmotische Theorie (Nobelpreis 1978) war zunächst hochumstritten — heute Lehrbuchwissen.'},
+    {h:'Entkoppler', t:'Substanzen wie Dinitrophenol machen die Membran durchlässig für Protonen: Der Gradient bricht zusammen, die Energie wird als Wärme frei statt als ATP gebunden. Genau das macht das körpereigene Protein Thermogenin im braunen Fettgewebe — die Wärmequelle von Säuglingen und Winterschläfern.'}
+  ]},
+
+{ id:'enzymkinetik', title:'Enzyme und Enzymkinetik', cat:'Stoffwechsel', level:'Abitur',
+  summary:'Substratspezifität, Michaelis-Menten und Hemmungstypen.',
+  sections:[
+    {h:'Wirkprinzip', t:'Enzyme senken die Aktivierungsenergie einer Reaktion, ohne selbst verbraucht zu werden. Sie verschieben nicht das Gleichgewicht, sondern beschleunigen nur seine Einstellung — auch das ist eine häufige Prüfungsfalle.'},
+    {h:'Spezifität', t:'Substratspezifität (welches Substrat gebunden wird) und Wirkungsspezifität (welche Reaktion katalysiert wird) sind zu unterscheiden. Das starre Schlüssel-Schloss-Modell wurde durch das Induced-Fit-Modell abgelöst: Das aktive Zentrum passt sich beim Binden an.'},
+    {h:'Michaelis-Menten', t:'Bei steigender Substratkonzentration nähert sich die Reaktionsgeschwindigkeit asymptotisch der Maximalgeschwindigkeit vmax (Sättigung, alle Enzyme belegt). Der Km-Wert ist die Substratkonzentration bei halber vmax und ein Maß für die Affinität: kleiner Km = hohe Affinität.'},
+    {h:'Hemmungstypen im Diagramm', t:'Kompetitive Hemmung: Der Hemmstoff konkurriert um das aktive Zentrum — vmax bleibt gleich, Km steigt (durch mehr Substrat überwindbar). Nicht-kompetitive Hemmung: Bindung an anderer Stelle verformt das Enzym — vmax sinkt, Km bleibt. Diese Unterscheidung im Diagramm zu erkennen, ist eine Standardaufgabe.'},
+    {h:'Allosterie', t:'Endprodukthemmung: Das Produkt eines Stoffwechselwegs hemmt ein frühes Enzym der Kette — elegante Selbstregulation, die Überproduktion verhindert.'}
+  ]},
+
+{ id:'mitose-meiose', title:'Mitose und Meiose im Vergleich', cat:'Genetik', level:'Abitur',
+  summary:'Identische Kopien versus genetische Vielfalt.',
+  sections:[
+    {h:'Mitose', t:'Aus einer diploiden Zelle entstehen zwei genetisch identische diploide Tochterzellen. Ablauf: Prophase (Chromosomen kondensieren), Metaphase (Anordnung in der Äquatorialebene), Anaphase (Trennung der Chromatiden), Telophase (neue Kernhüllen). Dient Wachstum und Regeneration.'},
+    {h:'Meiose I — der entscheidende Unterschied', t:'Hier trennen sich die homologen Chromosomen, nicht die Chromatiden. Die Zellzahl bleibt bei zwei, aber der Chromosomensatz wird halbiert (Reduktionsteilung). In der Prophase I lagern sich homologe Chromosomen als Tetraden zusammen.'},
+    {h:'Zwei Quellen der Vielfalt', t:'Erstens Crossing-over in der Prophase I: Homologe Chromosomen tauschen Abschnitte aus. Zweitens die zufällige Verteilung der väterlichen und mütterlichen Chromosomen in der Metaphase I — beim Menschen ergeben 23 Chromosomenpaare allein dadurch 2²³ ≈ 8,4 Millionen Kombinationen.'},
+    {h:'Meiose II', t:'Verläuft mechanisch wie eine Mitose: Die Chromatiden werden getrennt. Ergebnis insgesamt: vier haploide, genetisch unterschiedliche Zellen.'}
+  ]},
+
+{ id:'replikation', title:'DNA-Replikation', cat:'Genetik', level:'Abitur',
+  summary:'Semikonservativ, antiparallel und deshalb asymmetrisch.',
+  sections:[
+    {h:'Semikonservatives Prinzip', t:'Jeder Tochterstrang besteht aus einem alten und einem neuen Strang. Das Meselson-Stahl-Experiment (1958) mit schwerem Stickstoff ¹⁵N belegte dies — ein Klassiker der Experimentinterpretation im Abitur.'},
+    {h:'Der Ablauf', t:'Die Helicase trennt den Doppelstrang. Die Primase legt kurze RNA-Primer. Die DNA-Polymerase III verlängert ausschließlich in 5′→3′-Richtung — daraus folgt alles Weitere.'},
+    {h:'Leit- und Folgestrang', t:'Weil die beiden Stränge antiparallel liegen, kann nur einer kontinuierlich synthetisiert werden (Leitstrang). Der andere entsteht in kurzen Okazaki-Fragmenten (Folgestrang), die später von der Ligase verknüpft werden. Diese Asymmetrie ist die direkte Folge der Polymerase-Richtung — genau diese Kausalität wird gern abgefragt.'},
+    {h:'Korrekturlesen', t:'Die Polymerase besitzt eine Exonuklease-Aktivität und korrigiert falsch eingebaute Nukleotide. Die Fehlerrate sinkt dadurch auf etwa 1 zu 10⁹ Basenpaaren — bemerkenswert präzise, aber nicht perfekt: Genau diese Restfehler liefern das Rohmaterial der Evolution.'}
+  ]},
+
+{ id:'proteinbiosynthese', title:'Proteinbiosynthese: Transkription und Translation', cat:'Genetik', level:'Abitur',
+  summary:'Vom Gen zum Protein — und was Eukaryoten anders machen.',
+  sections:[
+    {h:'Transkription', t:'Die RNA-Polymerase bindet am Promotor und schreibt den codogenen Strang in mRNA um. Statt Thymin wird Uracil eingebaut. Die mRNA entspricht dem nicht-codogenen Strang (mit U statt T).'},
+    {h:'Prozessierung bei Eukaryoten', t:'Die prä-mRNA wird bearbeitet: 5′-Cap und Poly-A-Schwanz werden angehängt, Introns herausgeschnitten und Exons verknüpft (Spleißen). Durch alternatives Spleißen kann ein Gen mehrere verschiedene Proteine liefern — ein Grund, warum der Mensch mit rund 20.000 Genen deutlich mehr Proteine bildet.'},
+    {h:'Translation', t:'Am Ribosom liest die tRNA die mRNA in Dreierschritten (Codons). Jede tRNA trägt ein Anticodon und die passende Aminosäure. Die Ribosomen besitzen drei Bindungsstellen (A, P, E), über die die tRNAs weitergereicht werden, während die Peptidkette wächst.'},
+    {h:'Eigenschaften des genetischen Codes', t:'Er ist degeneriert (mehrere Codons pro Aminosäure), universell (bei fast allen Lebewesen gleich — starkes Argument für gemeinsame Abstammung), kommafrei und nicht überlappend. Die Degeneriertheit puffert Punktmutationen ab: Eine stille Mutation ändert das Protein nicht.'}
+  ]},
+
+{ id:'lac-operon', title:'Genregulation: Das lac-Operon', cat:'Genetik', level:'Abitur',
+  summary:'Wie E. coli nur dann Lactose verwertet, wenn es sich lohnt.',
+  sections:[
+    {h:'Aufbau', t:'Das Operon umfasst Promotor, Operator und drei Strukturgene (lacZ, lacY, lacA) für den Lactoseabbau. Ein separates Regulatorgen (lacI) codiert den Repressor.'},
+    {h:'Substratinduktion', t:'Ohne Lactose bindet der Repressor am Operator und blockiert die RNA-Polymerase — die Gene sind aus. Ist Lactose vorhanden, bindet Allolactose an den Repressor, verändert dessen Konformation, er löst sich vom Operator: Die Gene werden abgelesen. Ein Musterbeispiel für Ressourceneffizienz.'},
+    {h:'Katabolitrepression', t:'Was oft fehlt: Selbst mit Lactose läuft das Operon nur schwach, solange Glucose verfügbar ist. Erst wenn Glucose knapp wird, steigt cAMP, bindet an das CAP-Protein, und dieses verstärkt die Transkription massiv. E. coli verwertet also bevorzugt Glucose — die Diauxie-Wachstumskurve mit ihren zwei Phasen zeigt das eindrücklich.'},
+    {h:'Gegenstück', t:'Beim trp-Operon (Tryptophansynthese) läuft es umgekehrt: Endprodukt-Repression. Ist genug Tryptophan da, aktiviert es den Repressor und schaltet die Synthese ab. Induktion versus Repression sicher unterscheiden zu können, ist prüfungsrelevant.'}
+  ]},
+
+{ id:'aktionspotential', title:'Das Aktionspotential', cat:'Neurobiologie', level:'Abitur',
+  summary:'Alles-oder-nichts: Wie eine Nervenzelle Information codiert.',
+  sections:[
+    {h:'Ruhepotential', t:'Etwa −70 mV, aufrechterhalten durch die Natrium-Kalium-Pumpe (3 Na⁺ raus, 2 K⁺ rein, unter ATP-Verbrauch) und die hohe Kaliumdurchlässigkeit der Membran im Ruhezustand.'},
+    {h:'Depolarisation', t:'Erreicht ein Reiz den Schwellenwert (ca. −55 mV), öffnen spannungsgesteuerte Na⁺-Kanäle. Na⁺ strömt ein, das Potential steigt bis etwa +30 mV. Positive Rückkopplung: Der Einstrom öffnet weitere Kanäle — daher das Alles-oder-nichts-Prinzip.'},
+    {h:'Repolarisation und Hyperpolarisation', t:'Die Na⁺-Kanäle inaktivieren, K⁺-Kanäle öffnen sich verzögert. K⁺ strömt aus, das Potential fällt und schießt kurz unter das Ruhepotential (Hyperpolarisation), bevor sich alles normalisiert.'},
+    {h:'Refraktärzeit und Codierung', t:'Während der absoluten Refraktärzeit ist kein neues Aktionspotential auslösbar. Das erzwingt die Einbahnrichtung der Erregung und begrenzt die Frequenz. Wichtig: Die Reizstärke wird nicht über die Amplitude codiert (die ist immer gleich), sondern über die Frequenz der Aktionspotentiale — Frequenzcodierung.'},
+    {h:'Saltatorische Erregungsleitung', t:'An myelinisierten Axonen springt die Erregung von Schnürring zu Schnürring. Das erhöht die Leitungsgeschwindigkeit auf bis zu 120 m/s und spart Energie. Bei Multipler Sklerose wird genau diese Myelinschicht angegriffen.'}
+  ]},
+
+{ id:'synapse', title:'Die chemische Synapse', cat:'Neurobiologie', level:'Abitur',
+  summary:'Signalübertragung, Verrechnung und die Angriffspunkte von Giften.',
+  sections:[
+    {h:'Übertragungsschritte', t:'Das Aktionspotential erreicht das Endknöpfchen und öffnet spannungsgesteuerte Ca²⁺-Kanäle. Der Calciumeinstrom lässt Vesikel mit der präsynaptischen Membran verschmelzen; Transmitter werden in den synaptischen Spalt ausgeschüttet, diffundieren und binden an Rezeptoren der postsynaptischen Membran.'},
+    {h:'Erregend oder hemmend', t:'Öffnen sich Na⁺-Kanäle, entsteht ein erregendes postsynaptisches Potential (EPSP). Öffnen sich Cl⁻- oder K⁺-Kanäle, ein hemmendes (IPSP) — die Zelle wird hyperpolarisiert und schwerer erregbar.'},
+    {h:'Verrechnung', t:'Ein einzelnes EPSP reicht meist nicht. Räumliche Summation: mehrere Synapsen gleichzeitig. Zeitliche Summation: eine Synapse in schneller Folge. Am Axonhügel wird verrechnet, ob der Schwellenwert erreicht wird — die eigentliche Rechenleistung des Neurons.'},
+    {h:'Pharmakologie als Aufgabentyp', t:'Beliebte Aufgaben geben ein Gift vor und fragen nach der Wirkung. Beispiele: Curare blockiert Acetylcholinrezeptoren (Lähmung), Nervengase hemmen die Acetylcholinesterase (Dauererregung, Krampf), Botulinumtoxin verhindert die Vesikelfusion. Wer die Schrittfolge kennt, kann jede solche Aufgabe herleiten.'}
+  ]},
+
+{ id:'hardy-weinberg', title:'Hardy-Weinberg-Gleichgewicht', cat:'Evolution', level:'Abitur',
+  summary:'Das Nullmodell der Populationsgenetik — und warum es fast nie gilt.',
+  sections:[
+    {h:'Die Formeln', t:'Allelfrequenzen: p + q = 1. Genotypfrequenzen: p² + 2pq + q² = 1, wobei p² die homozygot Dominanten, 2pq die Heterozygoten und q² die homozygot Rezessiven sind.'},
+    {h:'Die fünf Bedingungen', t:'Sehr große Population, keine Selektion, keine Mutation, keine Migration, zufällige Paarung. Sind alle erfüllt, ändern sich die Allelfrequenzen von Generation zu Generation nicht.'},
+    {h:'Wozu ein Modell, das nie zutrifft?', t:'Genau darin liegt der Nutzen: Weicht eine reale Population vom erwarteten Verhältnis ab, weiß man, dass mindestens ein Evolutionsfaktor wirkt. Das Modell ist ein Messinstrument, kein Naturgesetz — dieser Gedanke ist die eigentliche Erkenntnis.'},
+    {h:'Rechenbeispiel', t:'Tritt eine rezessive Erbkrankheit bei 1 von 10.000 auf, ist q² = 0,0001, also q = 0,01 und p = 0,99. Die Heterozygotenhäufigkeit 2pq ≈ 0,0198 — knapp 2 % der Bevölkerung sind Träger, ohne es zu wissen. Dieser Kontrast zwischen seltener Krankheit und häufigen Trägern verblüfft die meisten Schüler:innen.'}
+  ]},
+
+{ id:'artbildung', title:'Artbildung', cat:'Evolution', level:'Abitur',
+  summary:'Wie aus einer Art zwei werden — allopatrisch und sympatrisch.',
+  sections:[
+    {h:'Der Artbegriff', t:'Biologisch: Individuen, die sich unter natürlichen Bedingungen fruchtbar fortpflanzen können. Das Konzept hat Grenzen — bei rein ungeschlechtlicher Vermehrung, bei Fossilien und bei Ringspezies versagt es.'},
+    {h:'Allopatrische Artbildung', t:'Eine geografische Barriere (Fluss, Gebirge, Meeresspiegelanstieg) trennt eine Population. Durch unterschiedliche Selektionsdrücke, Mutation und Gendrift entwickeln sich die Teilpopulationen auseinander. Fällt die Barriere später weg, sind sie reproduktiv isoliert. Darwinfinken sind das Standardbeispiel.'},
+    {h:'Sympatrische Artbildung', t:'Ohne räumliche Trennung, etwa durch Polyploidisierung bei Pflanzen (sofortige Isolation, da Kreuzungen unfruchtbar sind) oder durch Spezialisierung auf verschiedene Wirte oder Nischen. Die Buntbarsche ostafrikanischer Seen gelten als eindrucksvolles Beispiel.'},
+    {h:'Isolationsmechanismen', t:'Präzygotisch (unterschiedliche Paarungszeiten, Balzverhalten, mechanische Inkompatibilität) verhindern die Befruchtung. Postzygotisch (Nachkommen nicht lebensfähig oder steril, wie beim Maultier) wirken danach. Präzygotische Mechanismen sind evolutionär „günstiger", weil keine Ressourcen verschwendet werden.'}
+  ]},
+
+{ id:'stickstoffkreislauf', title:'Der Stickstoffkreislauf', cat:'Mikrobiologie', level:'Vertiefung',
+  summary:'Warum Leben von einer Handvoll Bakteriengruppen abhängt.',
+  sections:[
+    {h:'Das Ausgangsproblem', t:'Die Atmosphäre besteht zu 78 % aus N₂ — aber die Dreifachbindung ist so stabil, dass kein Tier und keine Pflanze sie spalten kann. Nur bestimmte Prokaryoten schaffen das.'},
+    {h:'Stickstofffixierung', t:'Das Enzym Nitrogenase reduziert N₂ zu Ammonium. Es wird bereits von Spuren von Sauerstoff irreversibel zerstört — Cyanobakterien lösen das mit spezialisierten Heterocysten, Knöllchenbakterien (Rhizobium) in Leguminosenwurzeln durch das sauerstoffbindende Leghämoglobin. Eine bemerkenswerte Symbiose: Die Pflanze liefert Kohlenhydrate und ein sauerstoffarmes Milieu, das Bakterium Stickstoff.'},
+    {h:'Nitrifikation', t:'Zwei Gruppen chemolithotropher Bakterien arbeiten nacheinander: Ammonium → Nitrit (Nitrosomonas), Nitrit → Nitrat (Nitrobacter). Beide gewinnen daraus Energie. Nitrat ist die von Pflanzen bevorzugt aufgenommene Form.'},
+    {h:'Denitrifikation', t:'Unter Sauerstoffmangel nutzen Bakterien Nitrat als Elektronenakzeptor und geben N₂ (oder das starke Treibhausgas N₂O) an die Atmosphäre ab. Damit schließt sich der Kreis. In Böden und Sedimenten hängt das Verhältnis der Prozesse stark vom Sauerstoffangebot ab.'},
+    {h:'Anthropogene Störung', t:'Das Haber-Bosch-Verfahren fixiert heute industriell etwa so viel Stickstoff wie alle natürlichen Prozesse zusammen. Folgen: Nitratbelastung des Grundwassers und Eutrophierung von Gewässern — ein hervorragender Aufhänger für Ökologie-Diskussionen.'}
+  ]},
+
+{ id:'redoxzonierung', title:'Redoxzonierung in Böden und Sedimenten', cat:'Mikrobiologie', level:'Vertiefung',
+  summary:'Warum Mikroorganismen eine strenge Reihenfolge einhalten.',
+  sections:[
+    {h:'Das Prinzip', t:'Mikroorganismen nutzen den Elektronenakzeptor, der am meisten Energie liefert. Ist der aufgebraucht, übernimmt die nächste Gruppe. Daraus entsteht in wassergesättigten Böden und Sedimenten eine räumliche Abfolge mit der Tiefe.'},
+    {h:'Die Abfolge', t:'Sauerstoff (aerobe Atmung) → Nitrat (Denitrifikation) → Mangan(IV) → Eisen(III) → Sulfat (Sulfatreduktion) → CO₂ (Methanogenese). Jeder Schritt liefert weniger Energie pro umgesetztem Kohlenstoff als der vorherige.'},
+    {h:'Konkurrenz um Substrat', t:'Sulfatreduzierer und Methanogene konkurrieren um dieselben Substrate (vor allem Wasserstoff und Acetat). Solange Sulfat verfügbar ist, unterdrücken die Sulfatreduzierer die Methanogenese — sie sind energetisch überlegen. Deshalb produzieren marine Sedimente mit reichlich Sulfat aus dem Meerwasser deutlich weniger Methan als Süßwassermoore.'},
+    {h:'Anwendung', t:'Die Redoxzonierung erklärt, warum Reisfelder und Feuchtgebiete bedeutende Methanquellen sind, während gut durchlüftete Böden Methan sogar oxidieren können. Für Klimafragen ist das zentral — und ein Thema, an dem sich Mikrobiologie, Chemie und Ökologie sauber verknüpfen lassen.'}
+  ]},
+
+{ id:'methanogenese', title:'Methanogenese', cat:'Mikrobiologie', level:'Vertiefung',
+  summary:'Der letzte Schritt des anaeroben Abbaus — und eine Klimafrage.',
+  sections:[
+    {h:'Wer macht das?', t:'Ausschließlich Archaeen, nicht Bakterien. Sie sind strikt anaerob und reagieren empfindlich auf Sauerstoff. Ihr Stoffwechsel gilt als sehr ursprünglich.'},
+    {h:'Zwei Hauptwege', t:'Hydrogenotroph: CO₂ + 4 H₂ → CH₄ + 2 H₂O. Acetoklastisch: Acetat wird gespalten zu CH₄ + CO₂. In Süßwassersystemen dominiert oft der acetoklastische Weg, in marinen und tieferen Schichten der hydrogenotrophe.'},
+    {h:'Ökologische Einbettung', t:'Methanogene stehen am Ende einer Nahrungskette aus gärenden und syntrophen Bakterien, die komplexe organische Substanz vorverdauen. Ohne die Methanogenen, die Wasserstoff laufend entfernen, würden die vorgelagerten Schritte thermodynamisch zum Erliegen kommen — Interspezies-Wasserstofftransfer, ein schönes Beispiel für obligate mikrobielle Kooperation.'},
+    {h:'Gegenspieler', t:'Methanotrophe Bakterien oxidieren Methan wieder, sobald es in sauerstoffhaltige Zonen aufsteigt. Ein großer Teil des produzierten Methans erreicht die Atmosphäre nie. Wie viel durchkommt, hängt stark von Wasserstand, Temperatur und Pflanzenbewuchs ab — Pflanzen können Methan über ihr Durchlüftungsgewebe direkt nach oben leiten und die Oxidationszone umgehen.'}
+  ]},
+
+{ id:'bakterienwachstum', title:'Bakterielles Wachstum', cat:'Mikrobiologie', level:'Vertiefung',
+  summary:'Die Wachstumskurve und was sie über Grenzen verrät.',
+  sections:[
+    {h:'Vier Phasen', t:'Lag-Phase (Anpassung, keine Vermehrung), exponentielle Phase (Teilung in konstanten Intervallen), stationäre Phase (Neubildung = Absterben, Substrat wird knapp), Absterbephase.'},
+    {h:'Exponentielles Wachstum', t:'N = N₀ · 2ⁿ, wobei n die Zahl der Generationen ist. E. coli teilt sich unter Optimalbedingungen etwa alle 20 Minuten. Rein rechnerisch entstünde daraus in zwei Tagen mehr Biomasse als die Erde wiegt — genau deshalb kann exponentielles Wachstum in der Realität nie lange anhalten. Ein starkes Argument, das sich auf Populationsökologie übertragen lässt.'},
+    {h:'Begrenzende Faktoren', t:'Substratmangel, Anreicherung toxischer Stoffwechselprodukte, pH-Verschiebung, Platzmangel. Das führt direkt zum logistischen Wachstumsmodell und zur Kapazitätsgrenze K.'},
+    {h:'Methodischer Hinweis', t:'Die optische Dichte misst alle Zellen, auch tote. Lebendkeimzahlbestimmung über Ausplattieren misst nur teilungsfähige. In der stationären Phase gehen beide Kurven auseinander — ein guter Anlass, über Messmethoden und ihre Aussagegrenzen zu sprechen.'}
+  ]},
+
+{ id:'antibiotikaresistenz', title:'Antibiotikaresistenz', cat:'Mikrobiologie', level:'Abitur',
+  summary:'Evolution in Echtzeit — mit unmittelbarer gesellschaftlicher Relevanz.',
+  sections:[
+    {h:'Woher Resistenzen kommen', t:'Nicht durch Anpassung an das Antibiotikum: Mutationen entstehen zufällig und ungerichtet, auch ohne Antibiotikum. Das Antibiotikum selektiert nur die bereits vorhandenen resistenten Zellen. Diese Unterscheidung — Selektion statt zielgerichteter Anpassung — ist der zentrale Denkfehler, den Schüler:innen fast immer machen.'},
+    {h:'Resistenzmechanismen', t:'Enzymatischer Abbau (β-Lactamasen spalten Penicillin), Veränderung der Zielstruktur, Effluxpumpen, verringerte Membranpermeabilität.'},
+    {h:'Horizontaler Gentransfer', t:'Resistenzgene liegen oft auf Plasmiden und werden durch Konjugation weitergegeben — auch über Artgrenzen hinweg. Anders als bei der vertikalen Vererbung breitet sich eine Resistenz so rasend schnell aus. Weitere Wege: Transformation (freie DNA) und Transduktion (über Phagen).'},
+    {h:'Konsequenz', t:'Unnötiger Antibiotikaeinsatz und abgebrochene Therapien erhöhen den Selektionsdruck. Das Thema verbindet Evolutionsbiologie, Mikrobiologie und Medizin — und eignet sich gut, um zu zeigen, dass Evolution keine graue Theorie ist.'}
+  ]},
+
+{ id:'nische', title:'Ökologische Nische und Konkurrenz', cat:'Ökologie', level:'Abitur',
+  summary:'Warum zwei Arten nicht dasselbe tun können.',
+  sections:[
+    {h:'Nischenbegriff', t:'Die ökologische Nische ist kein Ort, sondern die Gesamtheit der Umweltansprüche und Beziehungen einer Art — ein n-dimensionaler Raum aus Temperatur, Nahrung, Feuchtigkeit, Tageszeit und weiteren Faktoren. Die häufige Gleichsetzung mit „Lebensraum" ist falsch.'},
+    {h:'Fundamental und realisiert', t:'Die fundamentale Nische umfasst alle theoretisch möglichen Bedingungen, die realisierte Nische das, was unter Konkurrenzdruck tatsächlich genutzt wird. Sie ist meist kleiner — Konkurrenz verengt sie.'},
+    {h:'Konkurrenzausschlussprinzip', t:'Zwei Arten mit identischer Nische können nicht dauerhaft koexistieren; die konkurrenzstärkere verdrängt die andere. Gauses Experimente mit Pantoffeltierchen sind das Standardbeispiel. In der Natur führt das zu Konkurrenzvermeidung: Einnischung, unterschiedliche Aktivitätszeiten oder Nahrungsgrößen.'},
+    {h:'Toleranzkurven', t:'Jede Art hat für jeden Faktor ein Optimum sowie Minimum und Maximum. Euryöke Arten tolerieren breite Schwankungen, stenöke sind spezialisiert — Letztere eignen sich als Bioindikatoren, weil sie empfindlich auf Veränderungen reagieren.'}
+  ]},
+
+{ id:'lotka-volterra', title:'Räuber-Beute-Beziehungen', cat:'Ökologie', level:'Abitur',
+  summary:'Die Lotka-Volterra-Regeln und ihre Grenzen.',
+  sections:[
+    {h:'Regel 1: Periodische Schwankungen', t:'Räuber- und Beutepopulationen schwanken zeitversetzt. Steigt die Beute, folgt der Räuber verzögert; die zunehmende Prädation drückt die Beute wieder, worauf der Räuber einbricht. Die Räuberkurve läuft der Beutekurve phasenverschoben hinterher.'},
+    {h:'Regel 2: Konstante Mittelwerte', t:'Über längere Zeiträume bleiben die Durchschnittsgrößen beider Populationen etwa gleich, sofern die Bedingungen konstant sind.'},
+    {h:'Regel 3: Störung', t:'Werden beide Populationen gleichermaßen dezimiert, erholt sich die Beutepopulation schneller. Praktische Konsequenz: Insektizide können Schädlinge langfristig fördern, weil deren natürliche Feinde langsamer zurückkommen — ein starkes Argumentationsbeispiel.'},
+    {h:'Modellkritik', t:'Das Modell nimmt an, dass es nur eine Beute- und eine Räuberart gibt, keine Zuwanderung, keine anderen begrenzenden Faktoren. Reale Nahrungsnetze sind komplexer, und häufig begrenzt die Nahrungsverfügbarkeit die Beute stärker als der Räuber. Das Lernziel ist nicht nur das Modell, sondern die Fähigkeit, seine Voraussetzungen zu prüfen.'}
+  ]},
+
+{ id:'sukzession', title:'Sukzession', cat:'Ökologie', level:'Abitur',
+  summary:'Wie sich Lebensgemeinschaften über die Zeit ablösen.',
+  sections:[
+    {h:'Primär und sekundär', t:'Primärsukzession beginnt auf lebensfreiem Substrat (Gletschervorfeld, Lavafeld, Düne) ohne Boden. Sekundärsukzession setzt nach einer Störung auf vorhandenem Boden ein (Brachfläche, Waldbrand) und läuft deutlich schneller ab.'},
+    {h:'Typischer Verlauf', t:'Pionierarten sind meist r-Strategen: kurzlebig, hohe Vermehrungsrate, gute Ausbreitung, anspruchslos. Sie verändern den Standort — Bodenbildung, Beschattung, Nährstoffanreicherung — und schaffen damit die Bedingungen für ihre eigenen Nachfolger, oft K-Strategen: langlebig, konkurrenzstark, wenige Nachkommen.'},
+    {h:'Klimaxstadium', t:'Ein relativ stabiler Endzustand im Gleichgewicht mit dem Klima, in Mitteleuropa meist Buchenwald. Die moderne Ökologie sieht das kritischer: Durch regelmäßige Störungen entstehen eher Mosaike verschiedener Stadien als ein statischer Endpunkt.'},
+    {h:'Diversität im Verlauf', t:'Die Artenvielfalt ist häufig in mittleren Sukzessionsstadien am höchsten, nicht im Klimaxstadium — dort dominieren wenige konkurrenzstarke Arten. Das ist ein guter Anlass, die verbreitete Gleichsetzung von „reif" und „artenreich" zu hinterfragen.'}
+  ]},
+
+{ id:'oekosystem-energiefluss', title:'Energiefluss und Stoffkreisläufe', cat:'Ökologie', level:'Abitur',
+  summary:'Warum Energie fließt, Stoffe aber kreisen.',
+  sections:[
+    {h:'Der grundlegende Unterschied', t:'Stoffe zirkulieren im Ökosystem (Kohlenstoff, Stickstoff, Phosphor), Energie dagegen durchfließt es einmalig: Sie tritt als Sonnenlicht ein und verlässt das System als Wärme. Deshalb braucht jedes Ökosystem eine dauernde Energiezufuhr, aber keine dauernde Stoffzufuhr.'},
+    {h:'Trophieebenen', t:'Produzenten (autotroph) → Primärkonsumenten → Sekundärkonsumenten → usw., dazu Destruenten, die auf allen Ebenen ansetzen und Mineralstoffe wieder verfügbar machen.'},
+    {h:'Die 10-Prozent-Regel', t:'Von einer Trophieebene zur nächsten gelangen nur etwa 10 % der Energie. Der Rest geht in Atmung, Wärme und nicht verwertete Biomasse. Daraus folgt zwingend, dass Nahrungsketten selten mehr als vier bis fünf Glieder haben — und dass pflanzliche Ernährung energetisch effizienter ist als tierische. Ein Argument, das sich sauber aus dem Modell ableiten lässt.'},
+    {h:'Ökologische Pyramiden', t:'Die Energiepyramide steht immer auf der Spitze der Produzenten. Biomassepyramiden können umgekehrt sein — etwa im Meer, wo kurzlebiges Phytoplankton eine kleine stehende Biomasse hat, aber sehr hohe Produktionsrate. Bestandsgröße und Umsatzrate zu unterscheiden, ist hier der Schlüssel.'}
+  ]},
+
+{ id:'salzwiese', title:'Ökosystem Salzwiese', cat:'Ökologie', level:'Vertiefung',
+  summary:'Zonierung, Salzstress und Kohlenstoffspeicherung im Wattenmeer.',
+  sections:[
+    {h:'Zonierung', t:'Salzwiesen zeigen eine ausgeprägte Zonierung entlang des Überflutungsgradienten: Quellerzone (täglich überflutet), untere Salzwiese (Andelgras), obere Salzwiese (Rotschwingel, Strandaster). Der begrenzende Faktor ist die Überflutungshäufigkeit — ein Lehrbuchbeispiel für abiotische Faktoren als Strukturgeber.'},
+    {h:'Anpassungen an Salzstress', t:'Halophyten begegnen dem osmotischen Problem unterschiedlich: Sukkulenz und Verdünnung (Queller), Salzausscheidung über Drüsen (Strandflieder), Salzabgabe über absterbende Blätter, oder Anreicherung kompatibler Solute im Cytoplasma, die den Zellstoffwechsel nicht stören.'},
+    {h:'Wurzelraum und Sauerstoff', t:'Der Boden ist wassergesättigt und damit weitgehend sauerstofffrei. Viele Halophyten besitzen ein Durchlüftungsgewebe (Aerenchym), das Sauerstoff zu den Wurzeln leitet. Ein Teil diffundiert in den Boden und schafft dort oxidierte Mikrozonen — mit deutlichen Folgen für die mikrobiellen Prozesse in unmittelbarer Wurzelnähe.'},
+    {h:'Blue Carbon', t:'Salzwiesen speichern pro Fläche außergewöhnlich viel Kohlenstoff, weil organisches Material unter Sauerstoffmangel nur langsam abgebaut wird und laufend Sediment aufwächst. Zugleich ist die Methanbildung durch das sulfatreiche Meerwasser gedämpft — die Sulfatreduzierer verdrängen die Methanogenen. Eine Verbindung von Zonierung, Redoxchemie und Klimarelevanz, die sich gut als komplexe Aufgabe eignet.'}
+  ]},
+
+{ id:'pcr', title:'PCR und Gelelektrophorese', cat:'Methoden', level:'Abitur',
+  summary:'DNA vervielfältigen und sichtbar machen.',
+  sections:[
+    {h:'PCR-Zyklus', t:'Denaturierung bei etwa 95 °C (Stränge trennen sich), Annealing bei 50–65 °C (Primer binden), Elongation bei 72 °C (Taq-Polymerase verlängert). Nach n Zyklen liegen theoretisch 2ⁿ Kopien vor — 30 Zyklen ergeben über eine Milliarde.'},
+    {h:'Warum Taq?', t:'Die Polymerase stammt aus Thermus aquaticus, einem Bakterium heißer Quellen. Sie übersteht die Denaturierungsschritte, ohne zu denaturieren. Ohne diesen Fund aus der Extremophilen-Forschung müsste man nach jedem Zyklus neues Enzym zugeben — ein schönes Beispiel dafür, wie Grundlagenforschung unerwartet anwendbar wird.'},
+    {h:'Gelelektrophorese', t:'DNA ist durch die Phosphatgruppen negativ geladen und wandert im elektrischen Feld zum Pluspol. Das Agarosegel wirkt als Molekularsieb: kurze Fragmente wandern schneller und weiter. Über einen Größenstandard lassen sich die Fragmentlängen bestimmen.'},
+    {h:'Anwendung: genetischer Fingerabdruck', t:'Ausgewertet werden nicht-codierende Bereiche mit variabler Wiederholungszahl (STRs). Da die Wiederholungszahl individuell stark variiert, entsteht ein charakteristisches Bandenmuster. Bei Abstammungsgutachten muss jede Bande des Kindes bei einem der Elternteile vorkommen — eine typische Auswertungsaufgabe.'}
+  ]},
+
+{ id:'crispr', title:'CRISPR/Cas9', cat:'Methoden', level:'Vertiefung',
+  summary:'Vom bakteriellen Immunsystem zur Genschere.',
+  sections:[
+    {h:'Ursprung', t:'CRISPR ist ein adaptives Immunsystem von Bakterien und Archaeen gegen Viren. Abschnitte der Virus-DNA werden ins eigene Genom eingebaut und dienen bei erneutem Befall als Erkennungsvorlage — eine Art molekulares Gedächtnis.'},
+    {h:'Funktionsweise', t:'Eine guide-RNA führt das Enzym Cas9 zu einer passenden DNA-Sequenz. Cas9 schneidet beide Stränge. Die Zelle repariert den Bruch entweder fehleranfällig (das Gen wird ausgeschaltet) oder, bei Vorgabe einer Reparaturvorlage, gezielt mit neuer Sequenz.'},
+    {h:'Warum es die Forschung verändert hat', t:'Ältere Verfahren erforderten für jedes Ziel ein neu konstruiertes Protein. Bei CRISPR genügt es, eine kurze RNA auszutauschen — schnell, günstig und in fast jedem Labor umsetzbar. Doudna und Charpentier erhielten dafür 2020 den Chemie-Nobelpreis.'},
+    {h:'Ethische Dimension', t:'Somatische Eingriffe betreffen nur die behandelte Person; Eingriffe in die Keimbahn werden vererbt. Off-Target-Effekte sind ein reales technisches Risiko. Das Thema eignet sich hervorragend für eine Erörterung, weil sich naturwissenschaftliche Präzision und ethische Abwägung sauber trennen und dann verbinden lassen.'}
+  ]},
+
+{ id:'immunsystem', title:'Spezifische Immunantwort', cat:'Humanbiologie', level:'Abitur',
+  summary:'Humoral und zellulär — und warum Impfung funktioniert.',
+  sections:[
+    {h:'Unspezifisch versus spezifisch', t:'Die angeborene Abwehr (Barrieren, Makrophagen, Entzündung) wirkt sofort und breit. Die spezifische Abwehr ist langsamer, dafür zielgenau und lernfähig.'},
+    {h:'Humorale Antwort', t:'B-Lymphozyten erkennen ein Antigen, werden mit Hilfe von T-Helferzellen aktiviert und differenzieren zu Plasmazellen, die Antikörper produzieren. Antikörper markieren Erreger, verklumpen sie und machen Toxine unschädlich — sie wirken außerhalb der Zellen.'},
+    {h:'Zelluläre Antwort', t:'T-Killerzellen erkennen körpereigene Zellen, die auf ihrem MHC-I-Komplex fremde Peptide präsentieren, und leiten deren Apoptose ein. Das ist entscheidend gegen Viren und Tumorzellen, die sich im Zellinneren dem Antikörperzugriff entziehen.'},
+    {h:'Gedächtnis und Impfung', t:'Nach der Erstinfektion bleiben Gedächtniszellen zurück. Beim Zweitkontakt erfolgt die Antwort schneller, stärker und mit höherer Antikörperaffinität — das erklärt den Kurvenvergleich Primär-/Sekundärantwort, eine Standardabbildung. Aktive Immunisierung baut dieses Gedächtnis auf; passive Immunisierung (fertige Antikörper) wirkt sofort, aber kurz und ohne Gedächtnis.'}
+  ]},
+
+{ id:'blutzucker', title:'Regulation des Blutzuckerspiegels', cat:'Humanbiologie', level:'Abitur',
+  summary:'Negative Rückkopplung am Musterbeispiel.',
+  sections:[
+    {h:'Die beiden Hormone', t:'Insulin (β-Zellen der Langerhans-Inseln) senkt den Blutzucker: Es fördert die Glucoseaufnahme in Muskel- und Fettzellen und die Speicherung als Glykogen. Glucagon (α-Zellen) hebt ihn: Es fördert den Glykogenabbau in der Leber.'},
+    {h:'Regelkreis', t:'Ein klassischer negativer Rückkopplungskreis: Der Sollwert liegt bei etwa 80–120 mg/dl. Abweichungen werden erfasst, die Gegenregulation eingeleitet, und die Wirkung wirkt auf den Messwert zurück. Sich Regler, Stellglied und Regelgröße klar zuzuordnen, ist die eigentliche Übung.'},
+    {h:'Diabetes Typ 1 und 2', t:'Typ 1: Autoimmune Zerstörung der β-Zellen, Insulinmangel — Insulingabe ist notwendig. Typ 2: Die Zielzellen sprechen zunehmend schlechter auf Insulin an (Insulinresistenz), oft bei zunächst normaler oder erhöhter Insulinproduktion. Die Unterscheidung Mangel versus Resistenz ist der zentrale Punkt.'},
+    {h:'Nachweis und Alltagsbezug', t:'Glucose im Urin tritt auf, wenn die Nierenschwelle überschritten wird — daher der historische Name „Diabetes mellitus", honigsüßer Durchfluss. Der HbA1c-Wert zeigt den mittleren Blutzucker der letzten Wochen, weil Glucose langsam und irreversibel an Hämoglobin bindet.'}
+  ]}
+];
+
 const QUOTES_FACTS = [
   { person:'James Baldwin', role:'Schriftsteller & Essayist', quote:'Nicht alles, dem man sich stellt, lässt sich ändern. Aber nichts lässt sich ändern, dem man sich nicht stellt.',
     context:'aus dem Essay „As Much Truth as One Can Bear", New York Times Book Review, 1962' },
@@ -929,6 +1250,7 @@ function switchToTab(name){
   document.documentElement.style.setProperty('--accent', TAB_ACCENT[name] || '#2D7A73');
   if(name==='calendar') renderCalendar();
   if(name==='library') renderLibrary();
+  if(name==='learn') renderLearn();
 }
 $$('.tab').forEach(tab=>{
   tab.addEventListener('click', ()=> switchToTab(tab.dataset.tab));
@@ -968,7 +1290,7 @@ function applyTheme(key){
   root.setProperty('--coral', t.coral);
   root.setProperty('--violet', t.violet);
   TAB_ACCENT.tasks = t.mid; TAB_ACCENT.shopping = t.amber; TAB_ACCENT.cleaning = t.sage;
-  TAB_ACCENT.expenses = t.coral; TAB_ACCENT.photos = t.violet; TAB_ACCENT.calendar = t.tide; TAB_ACCENT.library = t.violet;
+  TAB_ACCENT.expenses = t.coral; TAB_ACCENT.photos = t.violet; TAB_ACCENT.calendar = t.tide; TAB_ACCENT.library = t.violet; TAB_ACCENT.learn = t.sage;
   const activeTab = document.querySelector('.tab.active');
   const name = activeTab ? activeTab.dataset.tab : 'tasks';
   const pathEl = $('#tidePath');
@@ -1212,38 +1534,168 @@ function setLibStatus(msg, isErr){
   el.textContent = msg || '';
   el.style.color = isErr ? 'var(--coral)' : 'var(--muted)';
 }
-async function searchISBN(raw){
-  const clean = (raw || '').replace(/[^0-9Xx]/g, '');
-  if(!clean){ setLibStatus('Bitte eine ISBN eingeben', true); return; }
-  if(books.some(b=>b.isbn===clean)){ setLibStatus('Dieses Buch ist schon in der Bibliothek', true); return; }
+/* Trag hier deinen kostenlosen Google Books API-Key ein (kein Bezahlkonto nötig):
+   console.cloud.google.com → Projekt "gezeiten-2e0f6" → "APIs & Dienste" →
+   "Bibliothek" → "Books API" suchen → aktivieren → "Anmeldedaten" →
+   "Anmeldedaten erstellen" → "API-Schlüssel" */
+const GOOGLE_BOOKS_API_KEY = 'AIzaSyAlR51sz87yAcrfpVa-hRKvr8piC6rttRI';
+let activeShelf = 'owned';
+const BOOK_CATEGORIES = ['Klassiker','Krimi','Sachbuch','Feminismus','Kommunismus','Anti-Rassismus','Musik','Französisch','Spanisch','Griechisch','Deutsch','Englisch','Fachbuch','Kinderbuch','Kunst','Weitere'];
+let activeBookCategory = 'all';
+
+/* Google liefert Cover-Links teils als http:// — die blockiert der Browser
+   auf einer https-Seite. Deshalb umschreiben und Bildqualität hochsetzen. */
+function normalizeCover(url){
+  if(!url) return '';
+  return url.replace(/^http:\/\//i, 'https://').replace('&edge=curl','').replace('zoom=1','zoom=2');
+}
+function isbn13to10(isbn13){
+  if(!/^97[89]\d{10}$/.test(isbn13)) return '';
+  const core = isbn13.slice(3,12);
+  let sum = 0;
+  for(let i=0;i<9;i++) sum += (10-i) * parseInt(core[i]);
+  const check = (11 - (sum % 11)) % 11;
+  return core + (check===10 ? 'X' : String(check));
+}
+function isbn10to13(isbn10){
+  if(!/^\d{9}[\dXx]$/.test(isbn10)) return '';
+  const core = '978' + isbn10.slice(0,9);
+  let sum = 0;
+  for(let i=0;i<12;i++) sum += parseInt(core[i]) * (i%2===0 ? 1 : 3);
+  return core + String((10 - (sum % 10)) % 10);
+}
+const CATEGORY_KEYWORDS = {
+  'Krimi':['crime','detective','mystery','thriller','krimi'],
+  'Kinderbuch':['juvenile','children','kinder','picture book'],
+  'Kunst':['art','kunst','photography','design','architecture'],
+  'Musik':['music','musik'],
+  'Feminismus':['feminism','feminist','women','gender'],
+  'Kommunismus':['communism','marx','socialism','sozialismus','kommunismus'],
+  'Anti-Rassismus':['racism','race relations','antiracis','postcolonial','civil rights'],
+  'Fachbuch':['science','mathematics','technology','medical','engineering','biology','physics','chemistry','computers','law','economics'],
+  'Klassiker':['classics','literary collections'],
+  'Sachbuch':['history','philosophy','political science','biography','social science','psychology','nature','religion','business']
+};
+const LANG_CATEGORY = { de:'Deutsch', en:'Englisch', fr:'Französisch', es:'Spanisch', el:'Griechisch' };
+function autoCategory(info){
+  const cats = (info.categories || []).join(' ').toLowerCase();
+  if(cats){
+    for(const [label, keys] of Object.entries(CATEGORY_KEYWORDS)){
+      if(keys.some(k=>cats.includes(k))) return label;
+    }
+  }
+  const lang = LANG_CATEGORY[(info.language || '').toLowerCase()];
+  if(lang) return lang;
+  return 'Weitere';
+}
+async function fetchGoogleBooks(query, attempt){
+  attempt = attempt || 1;
+  const keyParam = GOOGLE_BOOKS_API_KEY ? `&key=${GOOGLE_BOOKS_API_KEY}` : '';
+  const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${query}${keyParam}`);
+  if((res.status===503 || res.status===429) && attempt<3){
+    setLibStatus(`Google-Server kurz überlastet, Versuch ${attempt+1}/3 …`);
+    await new Promise(r=>setTimeout(r, 700*attempt));
+    return fetchGoogleBooks(query, attempt+1);
+  }
+  if(!res.ok) throw new Error(`HTTP ${res.status}${res.status===503?' — Google-Server weiterhin überlastet, gleich nochmal versuchen':''}`);
+  return res.json();
+}
+/* Zweite Quelle: Open Library. JSON-Endpunkt ist nicht CORS-freundlich,
+   deshalb über denselben Proxy wie die Gezeitendaten. */
+async function fetchOpenLibrary(isbn){
+  const data = await fetchJsonViaProxy(`https://openlibrary.org/api/books?bibkeys=ISBN:${isbn}&format=json&jscmd=data`);
+  const entry = data[`ISBN:${isbn}`];
+  if(!entry) return null;
+  return {
+    title: entry.title || 'Ohne Titel',
+    author: (entry.authors || []).map(a=>a.name).join(', ') || 'Unbekannt',
+    cover: entry.cover ? (entry.cover.medium || entry.cover.small || '') : '',
+    categories: (entry.subjects || []).map(s=>s.name || s)
+  };
+}
+function getBookCategories(shelf){
+  return [...new Set(books.filter(b=>(b.shelf||'owned')===shelf).map(b=>b.category || 'Weitere'))].sort((a,b)=>a.localeCompare(b,'de'));
+}
+async function searchBook(raw){
+  const text = (raw || '').trim();
+  if(!text){ setLibStatus('Bitte ISBN oder Titel eingeben', true); return; }
+  let digitsOnly = text.replace(/[^0-9Xx]/g, '');
+  /* Barcodes tragen manchmal einen 5-stelligen Zusatz (Preiscode) — abschneiden */
+  if(digitsOnly.length===18 && /^97[89]/.test(digitsOnly)) digitsOnly = digitsOnly.slice(0,13);
+  const looksLikeIsbn = /^(\d{9}[\dXx]|97[89]\d{10})$/.test(digitsOnly);
+  if(looksLikeIsbn && books.some(b=>b.isbn===digitsOnly)){ setLibStatus('Dieses Buch ist schon vorhanden', true); return; }
   setLibStatus('Suche Buch …');
   try{
-    const res = await fetch(`https://www.googleapis.com/books/v1/volumes?q=isbn:${clean}`);
-    if(!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    if(!data.items || !data.items.length){
-      setLibStatus('Kein Buch zu dieser ISBN gefunden', true);
+    let info = null;
+    let usedIsbn = looksLikeIsbn ? digitsOnly : '';
+
+    if(looksLikeIsbn){
+      /* ISBN-10 und ISBN-13 sind unterschiedliche Schreibweisen desselben Buchs —
+         Google kennt mal die eine, mal die andere. Beide probieren. */
+      const variants = [digitsOnly];
+      const alt = digitsOnly.length===13 ? isbn13to10(digitsOnly) : isbn10to13(digitsOnly);
+      if(alt) variants.push(alt);
+      for(const v of variants){
+        const data = await fetchGoogleBooks(`isbn:${v}`);
+        if(data.items && data.items.length){ info = data.items[0].volumeInfo || {}; usedIsbn = digitsOnly; break; }
+      }
+      if(!info){
+        setLibStatus('Bei Google nicht gefunden — versuche Open Library …');
+        for(const v of variants){
+          try{
+            const ol = await fetchOpenLibrary(v);
+            if(ol){ info = ol; usedIsbn = digitsOnly; break; }
+          }catch(_){}
+        }
+      }
+    } else {
+      const data = await fetchGoogleBooks(encodeURIComponent(text));
+      if(data.items && data.items.length){
+        info = data.items[0].volumeInfo || {};
+        const ident = (info.industryIdentifiers || []).find(i=>i.type==='ISBN_13') || (info.industryIdentifiers || []).find(i=>i.type==='ISBN_10');
+        usedIsbn = ident ? ident.identifier : '';
+      }
+    }
+
+    if(!info){
+      setLibStatus('Kein Buch gefunden — mit „Manuell hinzufügen" selbst eintragen', true);
       return;
     }
-    const info = data.items[0].volumeInfo || {};
+
+    let cover = normalizeCover(info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || '') : (info.cover || ''));
+    /* Kein Cover von der Quelle? Open Library liefert Cover direkt als Bild-URL. */
+    if(!cover && usedIsbn) cover = `https://covers.openlibrary.org/b/isbn/${usedIsbn}-M.jpg?default=false`;
+
     const book = {
-      id: uid(), isbn: clean,
+      id: uid(), isbn: usedIsbn,
       title: info.title || 'Ohne Titel',
-      author: (info.authors || []).join(', ') || 'Unbekannt',
-      cover: info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || '') : '',
-      status: 'ungelesen', notes: '', addedBy: identity, createdAt: Date.now()
+      author: info.author || (info.authors || []).join(', ') || 'Unbekannt',
+      cover,
+      status: 'ungelesen', category: autoCategory(info), shelf: activeShelf,
+      notes: '', addedBy: identity, createdAt: Date.now()
     };
     books.unshift(book);
     $('#isbnInput').value = '';
-    setLibStatus(`„${book.title}" hinzugefügt`);
+    setLibStatus(`„${book.title}" hinzugefügt (${book.category})`);
     renderLibrary();
     await storageSet('household-books', JSON.stringify(books), true);
   }catch(e){
     setLibStatus(`Suche fehlgeschlagen: ${e.message}`, true);
   }
 }
-$('#isbnSearchBtn').addEventListener('click', ()=> searchISBN($('#isbnInput').value));
-$('#isbnInput').addEventListener('keydown', e=>{ if(e.key==='Enter') searchISBN($('#isbnInput').value); });
+$('#isbnSearchBtn').addEventListener('click', ()=> searchBook($('#isbnInput').value));
+$('#isbnInput').addEventListener('keydown', e=>{ if(e.key==='Enter') searchBook($('#isbnInput').value); });
+$$('#shelfPicker .chip').forEach(c=>c.addEventListener('click', ()=>{
+  activeShelf = c.dataset.val;
+  activeBookCategory = 'all';
+  const addUI = activeShelf==='stats' ? 'none' : '';
+  ['isbnInput','isbnSearchBtn'].forEach(id=>{ const el=$('#'+id); if(el) el.parentElement.style.display = addUI==='none' ? 'none' : 'flex'; });
+  $('#manualAddToggle').style.display = addUI==='none' ? 'none' : 'block';
+  $('#manualAddForm').style.display = 'none';
+  const sb = $('#scanBtn');
+  if(sb && 'BarcodeDetector' in window) sb.style.display = addUI==='none' ? 'none' : 'block';
+  renderLibrary();
+}));
 
 let scannerStream = null;
 let scannerLoopId = null;
@@ -1267,7 +1719,7 @@ async function openScanner(){
           const val = codes[0].rawValue;
           closeScanner();
           $('#isbnInput').value = val;
-          searchISBN(val);
+          searchBook(val);
           return;
         }
       }catch(_){}
@@ -1288,7 +1740,7 @@ $('#scannerClose').addEventListener('click', closeScanner);
 
 function libraryItemHTML(b){
   const cover = b.cover
-    ? `<img src="${b.cover}" alt="" style="width:100%;height:100%;object-fit:cover;">`
+    ? `<img src="${b.cover}" alt="" style="width:100%;height:100%;object-fit:cover;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"><div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;font-size:1.8rem;background:var(--foam);position:absolute;inset:0;">📕</div>`
     : `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;background:var(--foam);">📕</div>`;
   const statusColor = b.status==='gelesen' ? '#6FA695' : b.status==='lese' ? '#C68A3B' : '#B7C4BF';
   return `<button class="photo-thumb" data-id="${b.id}" type="button" style="aspect-ratio:2/3;">
@@ -1297,10 +1749,116 @@ function libraryItemHTML(b){
     <span style="position:absolute; top:5px; right:5px; width:9px; height:9px; border-radius:50%; background:${statusColor}; border:1.5px solid #fff;"></span>
   </button>`;
 }
+function renderBookCategoryChips(){
+  const cats = getBookCategories(activeShelf);
+  let html = `<button class="chip proj-chip ${activeBookCategory==='all'?'selected':''}" data-val="all" type="button">Alle</button>`;
+  html += cats.map(c=>`<button class="chip proj-chip ${activeBookCategory===c?'selected':''}" data-val="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
+  $('#bookCategoryChips').innerHTML = html;
+  $$('#bookCategoryChips .proj-chip').forEach(b=>{ b.onclick = ()=>{ activeBookCategory = b.dataset.val; renderLibrary(); }; });
+}
+function statBarHTML(label, count, total, color){
+  const pct = total ? Math.round(count/total*100) : 0;
+  return `<div style="margin-bottom:10px;">
+    <div style="display:flex; justify-content:space-between; font-size:.82rem; margin-bottom:3px;">
+      <span>${escapeHtml(label)}</span><span style="color:var(--muted); font-family:'IBM Plex Mono',monospace;">${count}</span>
+    </div>
+    <div style="height:7px; background:var(--foam); border-radius:4px; overflow:hidden;">
+      <div style="height:100%; width:${pct}%; background:${color}; border-radius:4px;"></div>
+    </div>
+  </div>`;
+}
+function renderLibraryStats(){
+  const owned = books.filter(b=>(b.shelf||'owned')==='owned');
+  const wish = books.filter(b=>b.shelf==='wishlist');
+  const gelesen = owned.filter(b=>b.status==='gelesen').length;
+  const lese = owned.filter(b=>b.status==='lese').length;
+  const ungelesen = owned.filter(b=>b.status!=='gelesen' && b.status!=='lese').length;
+
+  const catCounts = {};
+  owned.forEach(b=>{ const c = b.category || 'Weitere'; catCounts[c] = (catCounts[c]||0)+1; });
+  const sortedCats = Object.entries(catCounts).sort((a,b)=>b[1]-a[1]);
+
+  const authorCounts = {};
+  owned.forEach(b=>{ if(b.author && b.author!=='Unbekannt') authorCounts[b.author] = (authorCounts[b.author]||0)+1; });
+  const topAuthors = Object.entries(authorCounts).sort((a,b)=>b[1]-a[1]).slice(0,5).filter(a=>a[1]>1);
+
+  const palette = ['#2D7A73','#C68A3B','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A','#B5652E','#3E7CA6','#6FA695','#C1543D'];
+
+  let html = `<div class="balance-card" style="margin-bottom:14px;">
+    <div class="label">Sammlung</div>
+    <div style="display:flex; gap:24px; margin-top:8px;">
+      <div><div style="font-family:'IBM Plex Mono',monospace; font-size:1.5rem; color:var(--ink);">${owned.length}</div><div style="font-size:.75rem; color:var(--muted);">Bücher</div></div>
+      <div><div style="font-family:'IBM Plex Mono',monospace; font-size:1.5rem; color:var(--ink);">${wish.length}</div><div style="font-size:.75rem; color:var(--muted);">Wunschliste</div></div>
+      <div><div style="font-family:'IBM Plex Mono',monospace; font-size:1.5rem; color:var(--ink);">${sortedCats.length}</div><div style="font-size:.75rem; color:var(--muted);">Kategorien</div></div>
+    </div>
+  </div>`;
+
+  if(owned.length){
+    const pctGelesen = Math.round(gelesen/owned.length*100);
+    html += `<div class="balance-card" style="margin-bottom:14px;">
+      <div class="label">Lesestand — ${pctGelesen}% gelesen</div>
+      <div style="margin-top:10px;">
+        ${statBarHTML('Gelesen', gelesen, owned.length, '#6FA695')}
+        ${statBarHTML('Lese gerade', lese, owned.length, '#C68A3B')}
+        ${statBarHTML('Ungelesen', ungelesen, owned.length, '#B7C4BF')}
+      </div>
+    </div>`;
+
+    html += `<div class="balance-card" style="margin-bottom:14px;">
+      <div class="label">Nach Kategorie</div>
+      <div style="margin-top:10px;">
+        ${sortedCats.map(([c,n],i)=>statBarHTML(c, n, owned.length, palette[i % palette.length])).join('')}
+      </div>
+    </div>`;
+
+    if(topAuthors.length){
+      html += `<div class="balance-card">
+        <div class="label">Meistvertretene Autor:innen</div>
+        <div style="margin-top:10px;">
+          ${topAuthors.map(([a,n])=>`<div style="display:flex; justify-content:space-between; font-size:.85rem; padding:5px 0; border-bottom:1px solid var(--line);"><span>${escapeHtml(a)}</span><span style="color:var(--muted); font-family:'IBM Plex Mono',monospace;">${n}</span></div>`).join('')}
+        </div>
+      </div>`;
+    }
+  }
+  $('#libraryStats').innerHTML = html;
+}
 function renderLibrary(){
-  $('#libraryGrid').innerHTML = books.map(libraryItemHTML).join('');
-  $('#libraryEmpty').style.display = books.length===0 ? 'block' : 'none';
+  $$('#shelfPicker .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===activeShelf));
+  const statsMode = activeShelf==='stats';
+  $('#libraryStats').style.display = statsMode ? 'block' : 'none';
+  $('#libraryGrid').style.display = statsMode ? 'none' : 'grid';
+  $('#bookCategoryChips').style.display = statsMode ? 'none' : 'flex';
+  if(statsMode){
+    $('#libraryEmpty').style.display = 'none';
+    renderLibraryStats();
+    return;
+  }
+  renderBookCategoryChips();
+  const shelfBooks = books.filter(b=>(b.shelf||'owned')===activeShelf);
+  const filtered = shelfBooks.filter(b=>activeBookCategory==='all' || (b.category||'Weitere')===activeBookCategory);
+  $('#libraryGrid').innerHTML = filtered.map(libraryItemHTML).join('');
+  const emptyEl = $('#libraryEmpty');
+  if(filtered.length===0){
+    emptyEl.style.display = 'block';
+    if(shelfBooks.length===0){
+      emptyEl.innerHTML = activeShelf==='wishlist'
+        ? '<b>Wunschliste ist leer</b>Fügt Bücher hinzu, die ihr in Zukunft lesen wollt.'
+        : '<b>Noch keine Bücher</b>ISBN eingeben, Titel suchen oder mit der Kamera scannen.';
+    } else {
+      emptyEl.innerHTML = '<b>Nichts in dieser Kategorie</b>Wählt „Alle" oder eine andere Kategorie.';
+    }
+  } else { emptyEl.style.display = 'none'; }
   $$('#libraryGrid .photo-thumb').forEach(btn=>{ btn.onclick = ()=> openBookModal(btn.dataset.id); });
+}
+function renderCategoryChipsInModal(selectedCat){
+  $('#bmCategory').innerHTML = BOOK_CATEGORIES.map(c=>`<button class="chip ${c===selectedCat?'selected':''}" data-val="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
+  $$('#bmCategory .chip').forEach(b=>{
+    b.onclick = ()=>{
+      const wasSelected = b.classList.contains('selected');
+      $$('#bmCategory .chip').forEach(x=>x.classList.remove('selected'));
+      if(!wasSelected) b.classList.add('selected');
+    };
+  });
 }
 function openBookModal(id){
   const b = books.find(x=>x.id===id);
@@ -1309,8 +1867,10 @@ function openBookModal(id){
   $('#bmCover').src = b.cover || '';
   $('#bmTitle').textContent = b.title;
   $('#bmAuthor').textContent = b.author;
-  $('#bmIsbn').textContent = `ISBN ${b.isbn}`;
+  $('#bmIsbn').textContent = b.isbn ? `ISBN ${b.isbn}` : '';
   $$('#bmStatus .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===b.status));
+  $$('#bmShelf .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===(b.shelf||'owned')));
+  renderCategoryChipsInModal(b.category || '');
   $('#bmNotes').value = b.notes || '';
   $('#bookModal').style.display = 'flex';
 }
@@ -1318,23 +1878,148 @@ function closeBookModal(){ $('#bookModal').style.display = 'none'; currentBookMo
 $('#bookModalClose').addEventListener('click', closeBookModal);
 $('#bookModal').addEventListener('click', e=>{ if(e.target.id==='bookModal') closeBookModal(); });
 $$('#bmStatus .chip').forEach(c=>c.addEventListener('click', ()=>{ $$('#bmStatus .chip').forEach(x=>x.classList.remove('selected')); c.classList.add('selected'); }));
+$$('#bmShelf .chip').forEach(c=>c.addEventListener('click', ()=>{ $$('#bmShelf .chip').forEach(x=>x.classList.remove('selected')); c.classList.add('selected'); }));
 $('#bmSave').addEventListener('click', async ()=>{
   const b = books.find(x=>x.id===currentBookModalId);
   if(!b) return;
   const statusChip = $('#bmStatus .chip.selected');
   b.status = statusChip ? statusChip.dataset.val : 'ungelesen';
+  const shelfChip = $('#bmShelf .chip.selected');
+  b.shelf = shelfChip ? shelfChip.dataset.val : 'owned';
+  const catChip = $('#bmCategory .chip.selected');
+  b.category = catChip ? catChip.dataset.val : '';
   b.notes = $('#bmNotes').value.trim();
   closeBookModal();
   renderLibrary();
   await storageSet('household-books', JSON.stringify(books), true);
 });
+$('#manualAddToggle').addEventListener('click', ()=>{
+  const f = $('#manualAddForm');
+  const open = f.style.display==='block';
+  f.style.display = open ? 'none' : 'block';
+  $('#manualAddToggle').textContent = open ? '✏️ Manuell hinzufügen' : 'Formular schließen';
+  if(!open) $('#manualTitle').focus();
+});
+$('#manualAddSave').addEventListener('click', async ()=>{
+  const title = $('#manualTitle').value.trim();
+  if(!title){ setLibStatus('Bitte einen Titel eingeben', true); return; }
+  const author = $('#manualAuthor').value.trim() || 'Unbekannt';
+  const book = { id:uid(), isbn:'', title, author, cover:'', status:'ungelesen', category:'Weitere', shelf:activeShelf, notes:'', addedBy:identity, createdAt:Date.now() };
+  books.unshift(book);
+  $('#manualTitle').value = ''; $('#manualAuthor').value = '';
+  $('#manualAddForm').style.display = 'none';
+  $('#manualAddToggle').textContent = '✏️ Manuell hinzufügen';
+  setLibStatus(`„${title}" hinzugefügt`);
+  renderLibrary();
+  await storageSet('household-books', JSON.stringify(books), true);
+});
 $('#bmDelete').addEventListener('click', async ()=>{
-  if(!confirm('Buch aus der Bibliothek entfernen?')) return;
+  if(!confirm('Buch entfernen?')) return;
   books = books.filter(x=>x.id!==currentBookModalId);
   closeBookModal();
   renderLibrary();
   await storageSet('household-books', JSON.stringify(books), true);
 });
+
+/* ---------- Learn ---------- */
+let learnView = 'today';
+let learnArchive = [];
+let learnOverrideId = null;
+let learnActiveCat = 'all';
+
+function todaysTopic(){
+  if(learnOverrideId){
+    const t = LEARN_TOPICS.find(x=>x.id===learnOverrideId);
+    if(t) return t;
+  }
+  return LEARN_TOPICS[dayOfYear(new Date()) % LEARN_TOPICS.length];
+}
+function topicBodyHTML(t){
+  return t.sections.map(s=>`
+    <div style="background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:10px;">
+      <div style="font-family:'Fraunces',serif; font-weight:600; font-size:.92rem; color:var(--tide-deep); margin-bottom:6px;">${escapeHtml(s.h)}</div>
+      <div style="font-size:.88rem; line-height:1.55; color:var(--ink);">${escapeHtml(s.t)}</div>
+    </div>`).join('');
+}
+function renderLearnToday(){
+  const t = todaysTopic();
+  $('#learnTodayLabel').textContent = learnOverrideId ? 'Ausgewähltes Thema' : 'Prozess des Tages';
+  $('#learnTodayTitle').textContent = t.title;
+  $('#learnTodayMeta').textContent = `${t.cat} · ${t.level}`;
+  $('#learnTodaySummary').textContent = t.summary;
+  $('#learnTodayBody').innerHTML = topicBodyHTML(t);
+  const archived = learnArchive.some(a=>a.topicId===t.id);
+  $('#learnArchiveBtn').textContent = archived ? '✓ Im Archiv' : '⭐ Archivieren';
+  $('#learnArchiveBtn').style.opacity = archived ? '.6' : '1';
+}
+function renderLearnArchive(){
+  const items = [...learnArchive].sort((a,b)=>b.archivedAt-a.archivedAt);
+  $('#learnArchiveEmpty').style.display = items.length===0 ? 'block' : 'none';
+  $('#learnArchiveList').innerHTML = items.map(a=>{
+    const t = LEARN_TOPICS.find(x=>x.id===a.topicId);
+    if(!t) return '';
+    return `<div class="item" style="flex-direction:column; align-items:stretch; gap:6px; margin-bottom:8px;">
+      <div style="display:flex; justify-content:space-between; gap:10px; align-items:flex-start;">
+        <button class="learn-open" data-id="${t.id}" type="button" style="background:none; border:none; text-align:left; padding:0; cursor:pointer; flex:1;">
+          <span style="font-family:'Fraunces',serif; font-weight:600; font-size:.95rem; color:var(--ink);">${escapeHtml(t.title)}</span>
+          <span style="display:block; font-size:.75rem; color:var(--muted); margin-top:2px;">${t.cat} · archiviert ${new Date(a.archivedAt).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit',year:'2-digit'})}</span>
+        </button>
+        <button class="learn-unarchive del" data-id="${t.id}" type="button" aria-label="aus Archiv entfernen">${trashSvg()}</button>
+      </div>
+    </div>`;
+  }).join('');
+  $$('#learnArchiveList .learn-open').forEach(b=>{ b.onclick = ()=>{ learnOverrideId = b.dataset.id; learnView='today'; renderLearn(); }; });
+  $$('#learnArchiveList .learn-unarchive').forEach(b=>{ b.onclick = ()=> unarchiveTopic(b.dataset.id); });
+}
+function renderLearnAll(){
+  const cats = [...new Set(LEARN_TOPICS.map(t=>t.cat))].sort((a,b)=>a.localeCompare(b,'de'));
+  let chips = `<button class="chip proj-chip ${learnActiveCat==='all'?'selected':''}" data-val="all" type="button">Alle</button>`;
+  chips += cats.map(c=>`<button class="chip proj-chip ${learnActiveCat===c?'selected':''}" data-val="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
+  $('#learnCatChips').innerHTML = chips;
+  $$('#learnCatChips .proj-chip').forEach(b=>{ b.onclick = ()=>{ learnActiveCat = b.dataset.val; renderLearnAll(); }; });
+
+  const list = LEARN_TOPICS.filter(t=>learnActiveCat==='all' || t.cat===learnActiveCat);
+  $('#learnAllList').innerHTML = list.map(t=>{
+    const archived = learnArchive.some(a=>a.topicId===t.id);
+    return `<button class="item learn-open" data-id="${t.id}" type="button" style="width:100%; text-align:left; flex-direction:column; align-items:stretch; gap:3px; margin-bottom:8px; cursor:pointer;">
+      <span style="font-family:'Fraunces',serif; font-weight:600; font-size:.95rem; color:var(--ink);">${escapeHtml(t.title)}${archived?' ⭐':''}</span>
+      <span style="font-size:.78rem; color:var(--muted);">${t.cat} · ${t.level}</span>
+      <span style="font-size:.82rem; color:var(--ink); margin-top:3px; line-height:1.45;">${escapeHtml(t.summary)}</span>
+    </button>`;
+  }).join('');
+  $$('#learnAllList .learn-open').forEach(b=>{ b.onclick = ()=>{ learnOverrideId = b.dataset.id; learnView='today'; renderLearn(); }; });
+}
+function renderLearn(){
+  $$('#learnViewPicker .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===learnView));
+  $('#learnTodayView').style.display = learnView==='today' ? 'block' : 'none';
+  $('#learnArchiveView').style.display = learnView==='archive' ? 'block' : 'none';
+  $('#learnAllView').style.display = learnView==='all' ? 'block' : 'none';
+  if(learnView==='today') renderLearnToday();
+  if(learnView==='archive') renderLearnArchive();
+  if(learnView==='all') renderLearnAll();
+}
+$$('#learnViewPicker .chip').forEach(c=>c.addEventListener('click', ()=>{
+  learnView = c.dataset.val;
+  if(learnView!=='today') learnOverrideId = null;
+  renderLearn();
+}));
+$('#learnShuffleBtn').addEventListener('click', ()=>{
+  const others = LEARN_TOPICS.filter(t=>t.id!==todaysTopic().id);
+  learnOverrideId = others[Math.floor(Math.random()*others.length)].id;
+  renderLearn();
+});
+$('#learnArchiveBtn').addEventListener('click', async ()=>{
+  const t = todaysTopic();
+  if(learnArchive.some(a=>a.topicId===t.id)) return;
+  learnArchive.unshift({ id:uid(), topicId:t.id, archivedAt:Date.now(), archivedBy:identity });
+  renderLearn();
+  await storageSet('household-learnArchive', JSON.stringify(learnArchive), true);
+});
+async function unarchiveTopic(topicId){
+  learnArchive = learnArchive.filter(a=>a.topicId!==topicId);
+  renderLearn();
+  await storageSet('household-learnArchive', JSON.stringify(learnArchive), true);
+}
 
 /* ---------- Load all (Firebase, with live sync) ---------- */
 async function loadAll(){
@@ -1377,7 +2062,9 @@ async function migrateNameIfNeeded(){
   ]);
 }
 let liveSyncPrimed = false;
+function notificationsOn(){ return localStorage.getItem('notificationsEnabled') === '1'; }
 function showNotification(body){
+  if(!notificationsOn()) return;
   if(!('Notification' in window) || Notification.permission !== 'granted') return;
   try{ new Notification('Gezeiten', { body }); }catch(e){}
 }
@@ -1441,13 +2128,39 @@ function attachLiveSync(){
     notifyNewItems(books, v, 'addedBy', b=>`📚 Neues Buch: ${b.title}`);
     books = v; renderLibrary();
   });
+  db.ref('learnArchive').on('value', snap=>{
+    learnArchive = snap.val() || [];
+    const p = document.querySelector('.panel[data-panel="learn"]');
+    if(p && p.classList.contains('active')) renderLearn();
+  });
   setTimeout(()=>{ liveSyncPrimed = true; }, 2500);
 }
+function updateNotifyBtn(){
+  const on = notificationsOn();
+  const btn = $('#notifyBtn');
+  btn.textContent = on ? '🔔' : '🔕';
+  btn.style.opacity = on ? '1' : '.5';
+  btn.title = on ? 'Benachrichtigungen an — zum Ausschalten tippen' : 'Benachrichtigungen aus — zum Einschalten tippen';
+}
 $('#notifyBtn').addEventListener('click', async ()=>{
+  if(notificationsOn()){
+    localStorage.setItem('notificationsEnabled','0');
+    updateNotifyBtn();
+    setStatus('Benachrichtigungen ausgeschaltet');
+    return;
+  }
   if(!('Notification' in window)){ setStatus('Benachrichtigungen werden hier nicht unterstützt', true); return; }
-  const perm = await Notification.requestPermission();
-  setStatus(perm==='granted' ? 'Benachrichtigungen aktiviert (nur solange die App offen ist)' : 'Benachrichtigungen nicht erlaubt', perm!=='granted');
+  let perm = Notification.permission;
+  if(perm !== 'granted') perm = await Notification.requestPermission();
+  if(perm === 'granted'){
+    localStorage.setItem('notificationsEnabled','1');
+    updateNotifyBtn();
+    setStatus('Benachrichtigungen an (solange die App offen ist)');
+  } else {
+    setStatus('Benachrichtigungen im Browser nicht erlaubt', true);
+  }
 });
+updateNotifyBtn();
 
 /* ---------- Tasks & Projects ---------- */
 $$('#taskAssignee .chip').forEach(c=>c.addEventListener('click', ()=>{

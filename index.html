@@ -45,7 +45,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
 
-:root{
+:root{--heading:#143C3F;
   --tide-deep:#143C3F;
   --tide-mid:#2D7A73;
   --foam:#F3F6F4;
@@ -89,7 +89,7 @@ body{
 /* ---------- Header ---------- */
 header.top{ padding:22px 20px 0; }
 .brand{ display:flex; align-items:baseline; justify-content:space-between; }
-.brand h1{ font-family:'Fraunces', serif; font-weight:600; font-size:1.5rem; margin:0; color:var(--tide-deep); }
+.brand h1{ font-family:'Fraunces', serif; font-weight:600; font-size:1.5rem; margin:0; color:var(--heading); }
 .whoami{ font-size:.78rem; color:var(--muted); background:var(--card); border:1px solid var(--line); padding:5px 10px; border-radius:20px; cursor:pointer; }
 .tideline{ margin-top:14px; width:100%; height:14px; display:block; }
 .tideline path{ transition:stroke .25s ease; }
@@ -132,7 +132,7 @@ main{ flex:1; padding:18px 20px 10px; }
 .proj-chip-add{ flex-shrink:0; border-style:dashed; }
 #projectHeader{ display:flex; justify-content:space-between; align-items:center; margin:0 0 14px; }
 #projectHeader .proj-title{ font-family:'Fraunces', serif; font-weight:600; font-size:1.05rem; }
-.group-header{ font-family:'Fraunces', serif; font-weight:600; font-size:.85rem; color:var(--tide-deep); margin:16px 0 8px; padding-left:2px; }
+.group-header{ font-family:'Fraunces', serif; font-weight:600; font-size:.85rem; color:var(--heading); margin:16px 0 8px; padding-left:2px; }
 .group-header:first-child{ margin-top:0; }
 .group-list{ margin-bottom:4px; }
 
@@ -200,6 +200,24 @@ main{ flex:1; padding:18px 20px 10px; }
 .empty b{ display:block; font-family:'Fraunces', serif; font-size:1.05rem; color:var(--ink); margin-bottom:6px; font-weight:600;}
 
 .done-toggle{ background:none; border:none; color:var(--muted); font-size:.8rem; margin:14px 0 8px; cursor:pointer; padding:0; }
+.modal-bg{ display:none; position:fixed; inset:0; background:rgba(20,32,30,.55); z-index:85; align-items:flex-end; justify-content:center; }
+.sheet{ background:var(--foam); width:100%; max-width:520px; border-radius:20px 20px 0 0; padding:22px 20px calc(22px + env(safe-area-inset-bottom)); max-height:88vh; overflow-y:auto; }
+.sheet-head{ display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:16px; }
+.sheet-title{ font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; color:var(--heading); }
+.sheet-close{ background:none; border:none; font-size:1.3rem; color:var(--muted); cursor:pointer; padding:4px; flex-shrink:0; }
+.field{ width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; font-family:'Inter'; font-size:.9rem; background:var(--card); color:var(--ink); margin-bottom:12px; }
+.field:focus{ outline:2px solid var(--accent); outline-offset:1px; border-color:transparent; }
+textarea.field{ resize:vertical; }
+.field-label{ font-size:.75rem; color:var(--muted); margin:0 0 6px 2px; }
+.share-toggle{ display:flex; align-items:center; gap:8px; font-size:.85rem; color:var(--ink); margin:2px 0 14px; cursor:pointer; }
+.share-toggle input{ width:18px; height:18px; accent-color:var(--accent); }
+.btn-wide:disabled, .clear-btn:disabled{ opacity:.45; cursor:default; }
+button.item{ font-family:inherit; color:inherit; }
+.guide-q{ font-family:'Fraunces',serif; font-weight:600; font-size:1.15rem; color:var(--ink); margin-bottom:6px; line-height:1.35; }
+.guide-hint{ font-size:.82rem; color:var(--muted); margin-bottom:16px; line-height:1.45; }
+.guide-opt{ display:block; width:100%; text-align:left; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:8px; cursor:pointer; font-family:'Inter'; font-size:.95rem; color:var(--ink); }
+.guide-opt small{ display:block; font-size:.78rem; color:var(--muted); margin-top:2px; }
+.guide-opt:hover, .guide-opt:focus-visible{ border-color:var(--accent); outline:none; }
 .side-menu-item{ display:block; width:100%; text-align:left; background:none; border:none; color:#EAF3EF; font-family:'Inter'; font-size:.95rem; font-weight:500; padding:14px 22px; cursor:pointer; }
 .side-menu-item:hover, .side-menu-item:focus-visible{ background:#1D4E4F; outline:none; }
 .side-menu-item.active{ background:#1D4E4F; color:#fff; font-weight:600; }
@@ -214,12 +232,12 @@ main{ flex:1; padding:18px 20px 10px; }
 .cal-dots{ display:flex; gap:2px; flex-wrap:wrap; justify-content:center; margin-top:auto; padding-bottom:3px; }
 .cal-dots span{ width:5px; height:5px; border-radius:50%; display:block; }
 .cal-nav{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
-.cal-nav button{ background:var(--card); border:1px solid var(--line); border-radius:10px; width:36px; height:36px; font-size:1rem; color:var(--tide-deep); cursor:pointer; }
-.cal-nav .label{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--tide-deep); }
+.cal-nav button{ background:var(--card); border:1px solid var(--line); border-radius:10px; width:36px; height:36px; font-size:1rem; color:var(--heading); cursor:pointer; }
+.cal-nav .label{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--heading); }
 .cal-layer-chip{ display:inline-flex; align-items:center; gap:6px; }
 .cal-layer-dot{ width:9px; height:9px; border-radius:50%; display:inline-block; }
 .day-detail{ background:var(--card); border:1px solid var(--line); border-radius:16px; padding:16px 18px; margin-top:14px; }
-.day-detail h4{ font-family:'Fraunces',serif; font-size:1rem; margin:0 0 10px; color:var(--tide-deep); }
+.day-detail h4{ font-family:'Fraunces',serif; font-size:1rem; margin:0 0 10px; color:var(--heading); }
 .day-detail-row{ display:flex; gap:10px; align-items:flex-start; padding:7px 0; border-bottom:1px solid var(--line); font-size:.85rem; }
 .day-detail-row:last-child{ border-bottom:none; }
 .day-detail-row .dot{ width:8px; height:8px; border-radius:50%; margin-top:5px; flex-shrink:0; }
@@ -281,7 +299,7 @@ nav.bottom{
   <header class="top">
     <div class="brand">
       <div style="display:flex; align-items:center; gap:10px;">
-        <button id="menuBtn" type="button" aria-label="Menü" style="background:none; border:none; padding:4px; cursor:pointer; color:var(--tide-deep);">
+        <button id="menuBtn" type="button" aria-label="Menü" style="background:none; border:none; padding:4px; cursor:pointer; color:var(--heading);">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
         <h1>Gezeiten</h1>
@@ -342,13 +360,7 @@ nav.bottom{
         <input type="text" id="shopInput" placeholder="Auf die Liste setzen…" maxlength="120">
         <button class="add-btn" id="shopAdd">+</button>
       </div>
-      <div class="chips" id="shopCategory" style="display:none;">
-        <button class="chip selected" data-val="Supermarkt" style="background:#2D7A73;border-color:#2D7A73;color:#fff;">Supermarkt</button>
-        <button class="chip" data-val="Drogeriemarkt" style="color:#C68A3B;border-color:#C68A3B55;">Drogerie</button>
-        <button class="chip" data-val="Apotheke" style="color:#C1543D;border-color:#C1543D55;">Apotheke</button>
-        <button class="chip" data-val="Asia Markt" style="color:#7C6FA6;border-color:#7C6FA655;">Asia Markt</button>
-        <button class="chip" data-val="Sonstiges" style="color:#5C6E68;border-color:#5C6E6855;">Sonstiges</button>
-      </div>
+      <div class="chips" id="shopCategory" style="display:none;"></div>
       <div id="shopList"></div>
       <div id="shopEmpty" class="empty" style="display:none;"><b>Liste ist leer</b>Was braucht ihr als Nächstes?</div>
       <button class="clear-btn" id="shopClear" style="display:none;">Erledigte löschen</button>
@@ -401,14 +413,17 @@ nav.bottom{
         <input type="text" id="expDesc" placeholder="Wofür?" maxlength="80">
       </div>
       <div class="add-row">
-        <input type="text" id="expAmount" inputmode="decimal" placeholder="Betrag in €" style="max-width:130px;">
-        <div class="chips" id="expPayer" style="margin:0; flex:1;">
-          <button class="chip selected" data-val="Julian">Julian</button>
-          <button class="chip" data-val="Clarisse">Clarisse</button>
-        </div>
+        <input type="text" id="expAmount" inputmode="decimal" placeholder="Betrag in €" style="max-width:140px;">
+        <input type="date" id="expDate" class="field" style="flex:1; min-width:0; margin:0;">
       </div>
+      <div class="field-label">Bezahlt von</div>
+      <div class="chips" id="expPayer">
+        <button class="chip selected" data-val="Julian" type="button">Julian</button>
+        <button class="chip" data-val="Clarisse" type="button">Clarisse</button>
+      </div>
+      <div id="expSplitBlock"></div>
       <div class="add-row">
-        <button class="add-btn" style="width:100%; border-radius:12px;" id="expAdd">Eintragen</button>
+        <button class="add-btn" style="width:100%; border-radius:12px;" id="expAdd" type="button">Eintragen</button>
       </div>
       <div id="expList"></div>
       <div id="expEmpty" class="empty" style="display:none;"><b>Noch keine Ausgaben</b>Trag eure erste gemeinsame Ausgabe ein.</div>
@@ -513,6 +528,58 @@ nav.bottom{
       </div>
     </section>
 
+    <!-- FEELINGS -->
+    <section class="panel" data-panel="feelings">
+      <div class="balance-card" id="feelToday"></div>
+      <div style="display:flex; gap:10px; margin-bottom:16px;">
+        <button id="feelGuideBtn" type="button" class="btn-wide" style="flex:1; margin:0;">🧭 Geführt herausfinden</button>
+        <button id="feelDirectToggle" type="button" class="clear-btn" style="flex:1; margin:0; text-align:center;">✍️ Direkt eintragen</button>
+      </div>
+      <div id="feelDirectForm" class="balance-card" style="display:none;">
+        <div class="field-label">Bereich</div>
+        <div class="chips" id="fdQuadrant"></div>
+        <div class="field-label">Gefühl</div>
+        <div class="chips" id="fdWords"></div>
+        <input type="text" id="fdCustomWord" class="field" placeholder="… oder eigenes Wort" maxlength="40">
+        <div class="field-label">Stärke</div>
+        <div class="chips" id="fdIntensity"></div>
+        <div class="field-label">Was würde dir guttun? (optional)</div>
+        <div class="chips" id="fdNeeds"></div>
+        <textarea id="fdNote" class="field" rows="2" placeholder="Anlass oder Gedanke (optional)"></textarea>
+        <label class="share-toggle"><input type="checkbox" id="fdShare" checked> <span id="fdShareLabel">Teilen</span></label>
+        <button id="fdSave" type="button" class="btn-wide" style="margin:0;">Speichern</button>
+      </div>
+      <div class="balance-card" id="feelWordOfDay"></div>
+      <div id="feelStrip"></div>
+      <div id="feelHistory"></div>
+    </section>
+
+    <!-- VAULT -->
+    <section class="panel" data-panel="vault">
+      <div id="vaultLocked">
+        <div class="balance-card" style="text-align:center; padding:26px 18px;">
+          <div style="font-size:2rem;">🔒</div>
+          <div id="vaultLockedTitle" style="font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; margin:8px 0 6px; color:var(--ink);"></div>
+          <div id="vaultLockedText" style="font-size:.85rem; color:var(--muted); line-height:1.5; margin-bottom:16px; text-align:left;"></div>
+          <input type="password" id="vaultPass" class="field" placeholder="Passphrase" autocomplete="off">
+          <input type="password" id="vaultPass2" class="field" placeholder="Passphrase wiederholen" autocomplete="off" style="display:none;">
+          <label class="share-toggle" id="vaultRememberRow" style="justify-content:center;"><input type="checkbox" id="vaultRemember"> Auf diesem Gerät entsperrt lassen</label>
+          <button id="vaultUnlockBtn" type="button" class="btn-wide" style="margin:0;">Entsperren</button>
+          <div id="vaultMsg" style="font-size:.8rem; margin-top:10px; min-height:1.1em;"></div>
+        </div>
+      </div>
+      <div id="vaultOpen" style="display:none;">
+        <div style="display:flex; gap:8px; margin-bottom:14px;">
+          <button id="vaultAddBtn" type="button" class="btn-wide" style="flex:2; margin:0;">+ Dokument</button>
+          <button id="vaultLockBtn" type="button" class="clear-btn" style="flex:1; margin:0; text-align:center;">🔒 Sperren</button>
+        </div>
+        <div class="chips proj-chips-row" id="vaultCatChips" style="margin-bottom:14px;"></div>
+        <div id="vaultList"></div>
+        <div id="vaultEmpty" class="empty" style="display:none;"></div>
+        <div style="font-size:.72rem; color:var(--muted); margin-top:16px; line-height:1.5;">Alle Inhalte werden auf dem Gerät mit AES-256 verschlüsselt, bevor sie gespeichert werden. Ohne eure Passphrase kann sie niemand lesen — auch nicht Google/Firebase.</div>
+      </div>
+    </section>
+
     <div id="statusMsg" class="status"></div>
   </main>
 
@@ -558,6 +625,8 @@ nav.bottom{
   <button class="side-menu-item" data-tab="photos" type="button">📷 Bilder</button>
   <button class="side-menu-item" data-tab="library" type="button">📚 Bibliothek</button>
   <button class="side-menu-item" data-tab="learn" type="button">🔬 Lernen</button>
+  <button class="side-menu-item" data-tab="feelings" type="button">💛 Gefühle</button>
+  <button class="side-menu-item" data-tab="vault" type="button">🗂️ Ablage</button>
   <div style="padding:16px 22px 8px; font-size:.75rem; color:#B9CFC7; text-transform:uppercase; letter-spacing:.06em; border-top:1px solid #2C4E4C; margin-top:8px;">Farbschema</div>
   <div id="themeSwatches" style="display:flex; gap:10px; padding:8px 22px 20px; flex-wrap:wrap;"></div>
 </div>
@@ -601,10 +670,105 @@ nav.bottom{
   </div>
 </div>
 
+<div id="catModal" class="modal-bg">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title" id="catModalTitle">Kategorien</span><button class="sheet-close" data-close="catModal" type="button" aria-label="schließen">✕</button></div>
+    <div id="catModalHint" style="font-size:.8rem; color:var(--muted); margin-bottom:12px;"></div>
+    <div id="catModalList"></div>
+    <div class="add-row" style="margin-top:14px;">
+      <input type="text" id="catNewName" placeholder="Neue Kategorie …" maxlength="30">
+      <button class="add-btn" id="catNewAdd" type="button">+</button>
+    </div>
+  </div>
+</div>
+
+<div id="shopItemModal" class="modal-bg">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title">Eintrag bearbeiten</span><button class="sheet-close" data-close="shopItemModal" type="button" aria-label="schließen">✕</button></div>
+    <input type="text" id="siText" class="field" maxlength="120">
+    <div class="field-label">Kategorie</div>
+    <div class="chips" id="siCategory"></div>
+    <div style="display:flex; gap:10px; margin-top:6px;">
+      <button id="siDelete" type="button" class="clear-btn" style="flex:1; margin:0; text-align:center;">Löschen</button>
+      <button id="siSave" type="button" class="btn-wide" style="flex:2; margin:0;">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<div id="expenseModal" class="modal-bg">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title">Ausgabe bearbeiten</span><button class="sheet-close" data-close="expenseModal" type="button" aria-label="schließen">✕</button></div>
+    <input type="text" id="emDesc" class="field" maxlength="80" placeholder="Wofür?">
+    <div style="display:flex; gap:8px;">
+      <input type="text" id="emAmount" class="field" inputmode="decimal" placeholder="Betrag" style="flex:1; min-width:0;">
+      <input type="date" id="emDate" class="field" style="flex:1; min-width:0;">
+    </div>
+    <div class="field-label">Bezahlt von</div>
+    <div class="chips" id="emPayer">
+      <button class="chip" data-val="Julian" type="button">Julian</button>
+      <button class="chip" data-val="Clarisse" type="button">Clarisse</button>
+    </div>
+    <div id="emSettleNote" style="display:none; font-size:.8rem; color:var(--muted); margin-bottom:12px;">Ausgleichszahlung — die Aufteilung ergibt sich automatisch.</div>
+    <div id="emSplitBlock"></div>
+    <div style="display:flex; gap:10px; margin-top:6px;">
+      <button id="emDelete" type="button" class="clear-btn" style="flex:1; margin:0; text-align:center;">Löschen</button>
+      <button id="emSave" type="button" class="btn-wide" style="flex:2; margin:0;">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<div id="feelGuideModal" class="modal-bg">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title">Gefühl herausfinden</span><button class="sheet-close" data-close="feelGuideModal" type="button" aria-label="schließen">✕</button></div>
+    <div id="fgProgress" style="display:flex; gap:5px; margin-bottom:18px;"></div>
+    <div id="fgBody"></div>
+  </div>
+</div>
+
+<div id="docModal" class="modal-bg">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title" id="docModalTitle">Dokument hinzufügen</span><button class="sheet-close" data-close="docModal" type="button" aria-label="schließen">✕</button></div>
+    <input type="text" id="dmTitle" class="field" maxlength="80" placeholder="Titel, z. B. Personalausweis">
+    <div class="field-label">Kategorie</div>
+    <div class="chips" id="dmCat"></div>
+    <div class="field-label">Gehört zu</div>
+    <div class="chips" id="dmOwner"></div>
+    <div class="field-label">Notizen &amp; Nummern</div>
+    <textarea id="dmNotes" class="field" rows="3" placeholder="z. B. Beitragsnummer, Vertragsnummer, gültig bis …"></textarea>
+    <div class="field-label">Dateien (Fotos oder PDF, max. 5)</div>
+    <div id="dmFileList"></div>
+    <div style="display:flex; gap:8px; margin-bottom:12px;">
+      <button id="dmPhotoBtn" type="button" class="clear-btn" style="flex:1; margin:0; text-align:center;">📷 Foto</button>
+      <button id="dmFileBtn" type="button" class="clear-btn" style="flex:1; margin:0; text-align:center;">📎 Datei / PDF</button>
+    </div>
+    <input type="file" id="dmPhotoInput" accept="image/*" capture="environment" style="display:none">
+    <input type="file" id="dmFileInput" accept="image/*,application/pdf" multiple style="display:none">
+    <div id="dmMsg" style="font-size:.8rem; color:var(--muted); min-height:1.1em; margin-bottom:8px;"></div>
+    <button id="dmSave" type="button" class="btn-wide" style="margin:0;">🔐 Verschlüsselt speichern</button>
+  </div>
+</div>
+
+<div id="docViewModal" class="modal-bg">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title" id="dvTitle"></span><button class="sheet-close" data-close="docViewModal" type="button" aria-label="schließen">✕</button></div>
+    <div id="dvMeta" style="font-size:.8rem; color:var(--muted); margin-bottom:12px;"></div>
+    <div id="dvNotesWrap" class="balance-card" style="display:none;">
+      <div class="label">Notizen &amp; Nummern</div>
+      <div id="dvNotes" style="white-space:pre-wrap; font-size:.9rem; margin-top:6px; line-height:1.5; color:var(--ink); -webkit-user-select:text; user-select:text;"></div>
+      <button id="dvCopy" type="button" class="clear-btn" style="margin-top:10px;">Kopieren</button>
+    </div>
+    <div id="dvFiles"></div>
+    <div style="display:flex; gap:10px; margin-top:14px;">
+      <button id="dvDelete" type="button" class="clear-btn" style="flex:1; margin:0; text-align:center;">Löschen</button>
+      <button id="dvEdit" type="button" class="btn-wide" style="flex:2; margin:0;">Bearbeiten</button>
+    </div>
+  </div>
+</div>
+
 <div id="taskModal" class="lightbox" style="display:none; background:rgba(20,32,30,.55); align-items:flex-end; padding:0;">
   <div style="background:var(--foam); width:100%; max-width:520px; border-radius:20px 20px 0 0; padding:22px 20px calc(22px + env(safe-area-inset-bottom)); max-height:88vh; overflow-y:auto;">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-      <span style="font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; color:var(--tide-deep);">Aufgabe</span>
+      <span style="font-family:'Fraunces',serif; font-weight:600; font-size:1.1rem; color:var(--heading);">Aufgabe</span>
       <button id="taskModalClose" type="button" style="background:none;border:none;font-size:1.3rem;color:var(--muted);cursor:pointer;">✕</button>
     </div>
     <input type="text" id="tmText" maxlength="120" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:12px 14px; font-family:'Inter'; font-size:1rem; margin-bottom:14px; background:var(--card); color:var(--ink);">
@@ -668,7 +832,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const auth = firebase.auth();
 
-const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8', learn:'#6FA695' };
+const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8', learn:'#6FA695', feelings:'#D9A534', vault:'#4C7EA8' };
 const THEMES = {
   gezeiten: { label:'Gezeiten', deep:'#143C3F', mid:'#2D7A73', foam:'#F3F6F4', card:'#FFFFFF', line:'#DCE6E1', ink:'#16211F', muted:'#5C6E68', sage:'#6FA695', amber:'#C68A3B', coral:'#C1543D', violet:'#7C6FA6', tide:'#4C7EA8' },
   duenen:   { label:'Dünen',    deep:'#4A3B2A', mid:'#C17A4E', foam:'#FAF6EF', card:'#FFFFFF', line:'#E8DCC8', ink:'#2E2418', muted:'#8A7A63', sage:'#9C9463', amber:'#D4A24C', coral:'#B85C4A', violet:'#8C6E8F', tide:'#5B8AA3' },
@@ -678,8 +842,8 @@ const THEMES = {
 const FREQ_LABELS = { '1':'täglich', '4':'2× pro Woche', '7':'wöchentlich', '14':'alle 2 Wochen', '30':'monatlich', '60':'alle 2 Monate', '90':'alle 3 Monate' };
 const PROJECT_COLORS = ['#2D7A73','#C68A3B','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A'];
 const ROOM_COLORS = ['#2D7A73','#C68A3B','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A','#B5652E','#3E7CA6'];
-const CATEGORY_ORDER = ['Supermarkt','Drogeriemarkt','Apotheke','Asia Markt','Sonstiges'];
-const CATEGORY_COLORS = { 'Supermarkt':'#2D7A73', 'Drogeriemarkt':'#C68A3B', 'Apotheke':'#C1543D', 'Asia Markt':'#7C6FA6', 'Sonstiges':'#5C6E68' };
+let CATEGORY_ORDER = ['Supermarkt','Drogeriemarkt','Apotheke','Asia Markt','Sonstiges'];
+let CATEGORY_COLORS = { 'Supermarkt':'#2D7A73', 'Drogeriemarkt':'#C68A3B', 'Apotheke':'#C1543D', 'Asia Markt':'#7C6FA6', 'Sonstiges':'#5C6E68' };
 const MONTH_NAMES = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
 const FACTS_BY_DATE = {
   '01-15': { title:'Ermordung von Rosa Luxemburg und Karl Liebknecht', year:'1919',
@@ -1251,6 +1415,8 @@ function switchToTab(name){
   if(name==='calendar') renderCalendar();
   if(name==='library') renderLibrary();
   if(name==='learn') renderLearn();
+  if(name==='feelings') renderFeelings();
+  if(name==='vault') renderVault();
 }
 $$('.tab').forEach(tab=>{
   tab.addEventListener('click', ()=> switchToTab(tab.dataset.tab));
@@ -1279,6 +1445,7 @@ function applyTheme(key){
   const t = THEMES[key] || THEMES.gezeiten;
   const root = document.documentElement.style;
   root.setProperty('--tide-deep', t.deep);
+  root.setProperty('--heading', key==='nacht' ? t.ink : t.deep);
   root.setProperty('--tide-mid', t.mid);
   root.setProperty('--foam', t.foam);
   root.setProperty('--card', t.card);
@@ -1290,7 +1457,7 @@ function applyTheme(key){
   root.setProperty('--coral', t.coral);
   root.setProperty('--violet', t.violet);
   TAB_ACCENT.tasks = t.mid; TAB_ACCENT.shopping = t.amber; TAB_ACCENT.cleaning = t.sage;
-  TAB_ACCENT.expenses = t.coral; TAB_ACCENT.photos = t.violet; TAB_ACCENT.calendar = t.tide; TAB_ACCENT.library = t.violet; TAB_ACCENT.learn = t.sage;
+  TAB_ACCENT.expenses = t.coral; TAB_ACCENT.photos = t.violet; TAB_ACCENT.calendar = t.tide; TAB_ACCENT.library = t.violet; TAB_ACCENT.learn = t.sage; TAB_ACCENT.feelings = t.amber; TAB_ACCENT.vault = t.tide;
   const activeTab = document.querySelector('.tab.active');
   const name = activeTab ? activeTab.dataset.tab : 'tasks';
   const pathEl = $('#tidePath');
@@ -1540,7 +1707,7 @@ function setLibStatus(msg, isErr){
    "Anmeldedaten erstellen" → "API-Schlüssel" */
 const GOOGLE_BOOKS_API_KEY = 'AIzaSyAlR51sz87yAcrfpVa-hRKvr8piC6rttRI';
 let activeShelf = 'owned';
-const BOOK_CATEGORIES = ['Klassiker','Krimi','Sachbuch','Feminismus','Kommunismus','Anti-Rassismus','Musik','Französisch','Spanisch','Griechisch','Deutsch','Englisch','Fachbuch','Kinderbuch','Kunst','Weitere'];
+let BOOK_CATEGORIES = ['Klassiker','Krimi','Sachbuch','Feminismus','Kommunismus','Anti-Rassismus','Musik','Französisch','Spanisch','Griechisch','Deutsch','Englisch','Fachbuch','Kinderbuch','Kunst','Weitere'];
 let activeBookCategory = 'all';
 
 /* Google liefert Cover-Links teils als http:// — die blockiert der Browser
@@ -1577,7 +1744,7 @@ const CATEGORY_KEYWORDS = {
   'Sachbuch':['history','philosophy','political science','biography','social science','psychology','nature','religion','business']
 };
 const LANG_CATEGORY = { de:'Deutsch', en:'Englisch', fr:'Französisch', es:'Spanisch', el:'Griechisch' };
-function autoCategory(info){
+function autoCategoryRaw(info){
   const cats = (info.categories || []).join(' ').toLowerCase();
   if(cats){
     for(const [label, keys] of Object.entries(CATEGORY_KEYWORDS)){
@@ -1588,6 +1755,7 @@ function autoCategory(info){
   if(lang) return lang;
   return 'Weitere';
 }
+function autoCategory(info){ const c = autoCategoryRaw(info); return BOOK_CATEGORIES.includes(c) ? c : 'Weitere'; }
 async function fetchGoogleBooks(query, attempt){
   attempt = attempt || 1;
   const keyParam = GOOGLE_BOOKS_API_KEY ? `&key=${GOOGLE_BOOKS_API_KEY}` : '';
@@ -1753,8 +1921,10 @@ function renderBookCategoryChips(){
   const cats = getBookCategories(activeShelf);
   let html = `<button class="chip proj-chip ${activeBookCategory==='all'?'selected':''}" data-val="all" type="button">Alle</button>`;
   html += cats.map(c=>`<button class="chip proj-chip ${activeBookCategory===c?'selected':''}" data-val="${escapeHtml(c)}" type="button">${escapeHtml(c)}</button>`).join('');
+  html += `<button class="chip proj-chip-add" id="bookCatGear" type="button">⚙︎ Kategorien</button>`;
   $('#bookCategoryChips').innerHTML = html;
   $$('#bookCategoryChips .proj-chip').forEach(b=>{ b.onclick = ()=>{ activeBookCategory = b.dataset.val; renderLibrary(); }; });
+  $('#bookCatGear').onclick = ()=> openCatModal('books');
 }
 function statBarHTML(label, count, total, color){
   const pct = total ? Math.round(count/total*100) : 0;
@@ -1937,7 +2107,7 @@ function todaysTopic(){
 function topicBodyHTML(t){
   return t.sections.map(s=>`
     <div style="background:var(--card); border:1px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:10px;">
-      <div style="font-family:'Fraunces',serif; font-weight:600; font-size:.92rem; color:var(--tide-deep); margin-bottom:6px;">${escapeHtml(s.h)}</div>
+      <div style="font-family:'Fraunces',serif; font-weight:600; font-size:.92rem; color:var(--heading); margin-bottom:6px;">${escapeHtml(s.h)}</div>
       <div style="font-size:.88rem; line-height:1.55; color:var(--ink);">${escapeHtml(s.t)}</div>
     </div>`).join('');
 }
@@ -2020,6 +2190,755 @@ async function unarchiveTopic(topicId){
   renderLearn();
   await storageSet('household-learnArchive', JSON.stringify(learnArchive), true);
 }
+
+/* ---------- Modal-Helfer ---------- */
+function showModal(id){ const m = document.getElementById(id); if(m) m.style.display = 'flex'; }
+function hideModal(id){ const m = document.getElementById(id); if(m) m.style.display = 'none'; }
+document.addEventListener('click', e=>{
+  const closer = e.target.closest ? e.target.closest('[data-close]') : null;
+  if(closer){ hideModal(closer.dataset.close); return; }
+  if(e.target.classList && e.target.classList.contains('modal-bg')) e.target.style.display = 'none';
+});
+
+/* ---------- Kategorien verwalten (Einkauf + Bücher) ---------- */
+const CAT_PALETTE = ['#2D7A73','#C68A3B','#C1543D','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A','#B5652E','#3E7CA6','#5C6E68'];
+let catModalType = 'shop';
+function cleanCatName(s){ return String(s||'').replace(/["<>]/g,'').replace(/\s+/g,' ').trim().slice(0,30); }
+function catFallback(type){ return type==='shop' ? 'Sonstiges' : 'Weitere'; }
+function catList(type){ return type==='shop' ? CATEGORY_ORDER : BOOK_CATEGORIES; }
+function shopCatOf(s){ return CATEGORY_ORDER.includes(s.category) ? s.category : 'Sonstiges'; }
+function applyCategorySettings(v){
+  if(v && Array.isArray(v.shop) && v.shop.length){
+    CATEGORY_ORDER = v.shop.map(x=>x && x.name).filter(Boolean);
+    const cols = {}; v.shop.forEach(x=>{ if(x && x.name) cols[x.name] = x.color || '#5C6E68'; });
+    CATEGORY_COLORS = cols;
+  }
+  if(v && Array.isArray(v.books) && v.books.length) BOOK_CATEGORIES = v.books.filter(Boolean);
+  if(!CATEGORY_ORDER.includes('Sonstiges')) CATEGORY_ORDER.push('Sonstiges');
+  if(!CATEGORY_COLORS['Sonstiges']) CATEGORY_COLORS['Sonstiges'] = '#5C6E68';
+  if(!BOOK_CATEGORIES.includes('Weitere')) BOOK_CATEGORIES.push('Weitere');
+}
+async function saveCategorySettings(){
+  await db.ref('settings/categories').set({
+    shop: CATEGORY_ORDER.map(n=>({ name:n, color:CATEGORY_COLORS[n] || '#5C6E68' })),
+    books: [...BOOK_CATEGORIES]
+  });
+}
+function refreshAfterCategoryChange(){
+  renderCatModal(); renderShopCategoryPicker(); renderShopping(); renderLibrary();
+}
+function openCatModal(type){ catModalType = type; $('#catNewName').value = ''; renderCatModal(); showModal('catModal'); }
+function renderCatModal(){
+  const type = catModalType, list = catList(type), fb = catFallback(type);
+  $('#catModalTitle').textContent = type==='shop' ? 'Einkaufs-Kategorien' : 'Buch-Kategorien';
+  $('#catModalHint').textContent = type==='shop'
+    ? 'Namen antippen zum Umbenennen, Farbpunkt antippen zum Umfärben. Beim Löschen wandern Einträge nach „Sonstiges".'
+    : 'Namen antippen zum Umbenennen. Beim Löschen wandern Bücher nach „Weitere".';
+  const count = n => type==='shop'
+    ? shopping.filter(s=>shopCatOf(s)===n).length
+    : books.filter(b=>(b.category||'Weitere')===n).length;
+  $('#catModalList').innerHTML = list.map(n=>{
+    const isFb = n===fb;
+    const col = CATEGORY_COLORS[n] || '#5C6E68';
+    const dot = type==='shop' ? `<button class="cat-color" data-name="${n}" type="button" aria-label="Farbe ändern" style="width:22px;height:22px;border-radius:50%;border:none;background:${col};cursor:pointer;flex-shrink:0;"></button>` : '';
+    return `<div class="item" style="margin-bottom:6px;padding:10px 12px;" data-name="${n}">
+      ${dot}
+      <span class="cat-name item-text" style="${isFb?'':'cursor:text;'}">${escapeHtml(n)}${isFb?' <span style="font-size:.72rem;color:var(--muted);">(Sammelkategorie)</span>':''}</span>
+      <span style="font-size:.75rem;color:var(--muted);font-family:'IBM Plex Mono',monospace;">${count(n)}</span>
+      ${isFb ? '<span style="width:24px;flex-shrink:0;"></span>' : `<button class="del cat-del" data-name="${n}" type="button" aria-label="löschen">${trashSvg()}</button>`}
+    </div>`;
+  }).join('');
+  $$('#catModalList .cat-name').forEach(sp=>{
+    const name = sp.closest('.item').dataset.name;
+    if(name===fb) return;
+    sp.onclick = ()=> inlineEdit(sp, name, v=>renameCategory(type, name, v));
+  });
+  $$('#catModalList .cat-del').forEach(b=>{ b.onclick = ()=> deleteCategory(type, b.dataset.name); });
+  $$('#catModalList .cat-color').forEach(b=>{
+    b.onclick = async ()=>{
+      const n = b.dataset.name;
+      const i = CAT_PALETTE.indexOf(CATEGORY_COLORS[n]);
+      CATEGORY_COLORS[n] = CAT_PALETTE[(i+1) % CAT_PALETTE.length];
+      refreshAfterCategoryChange();
+      await saveCategorySettings();
+    };
+  });
+}
+async function renameCategory(type, oldName, raw){
+  const newName = cleanCatName(raw);
+  const list = catList(type);
+  if(!newName || newName===oldName){ renderCatModal(); return; }
+  if(list.includes(newName)){ setStatus('Diese Kategorie gibt es schon', true); renderCatModal(); return; }
+  const idx = list.indexOf(oldName);
+  if(idx<0){ renderCatModal(); return; }
+  list[idx] = newName;
+  if(type==='shop'){
+    CATEGORY_COLORS[newName] = CATEGORY_COLORS[oldName] || '#5C6E68';
+    delete CATEGORY_COLORS[oldName];
+    shopping.forEach(s=>{ if(s.category===oldName) s.category = newName; });
+    if(activeShopFilter===oldName) activeShopFilter = newName;
+    if(shopAddCategory===oldName) shopAddCategory = newName;
+  } else {
+    books.forEach(b=>{ if(b.category===oldName) b.category = newName; });
+    if(activeBookCategory===oldName) activeBookCategory = newName;
+  }
+  refreshAfterCategoryChange();
+  await saveCategorySettings();
+  if(type==='shop') await storageSet('household-shopping', JSON.stringify(shopping), true);
+  else await storageSet('household-books', JSON.stringify(books), true);
+}
+async function deleteCategory(type, name){
+  const fb = catFallback(type);
+  if(name===fb) return;
+  if(!confirm(`Kategorie „${name}" löschen? Einträge darin wandern nach „${fb}".`)) return;
+  if(type==='shop'){
+    CATEGORY_ORDER = CATEGORY_ORDER.filter(n=>n!==name);
+    delete CATEGORY_COLORS[name];
+    shopping.forEach(s=>{ if(s.category===name) s.category = fb; });
+    if(activeShopFilter===name) activeShopFilter = 'all';
+    if(shopAddCategory===name) shopAddCategory = null;
+  } else {
+    BOOK_CATEGORIES = BOOK_CATEGORIES.filter(n=>n!==name);
+    books.forEach(b=>{ if(b.category===name) b.category = fb; });
+    if(activeBookCategory===name) activeBookCategory = 'all';
+  }
+  refreshAfterCategoryChange();
+  await saveCategorySettings();
+  if(type==='shop') await storageSet('household-shopping', JSON.stringify(shopping), true);
+  else await storageSet('household-books', JSON.stringify(books), true);
+}
+async function addCategory(){
+  const type = catModalType;
+  const name = cleanCatName($('#catNewName').value);
+  if(!name) return;
+  const list = catList(type);
+  if(list.includes(name)){ setStatus('Diese Kategorie gibt es schon', true); return; }
+  const fbIdx = list.indexOf(catFallback(type));
+  if(fbIdx>=0) list.splice(fbIdx, 0, name); else list.push(name);
+  if(type==='shop'){
+    const used = new Set(Object.values(CATEGORY_COLORS));
+    CATEGORY_COLORS[name] = CAT_PALETTE.find(c=>!used.has(c)) || CAT_PALETTE[list.length % CAT_PALETTE.length];
+  }
+  $('#catNewName').value = '';
+  refreshAfterCategoryChange();
+  await saveCategorySettings();
+}
+$('#catNewAdd').addEventListener('click', addCategory);
+$('#catNewName').addEventListener('keydown', e=>{ if(e.key==='Enter') addCategory(); });
+
+/* Einkaufseintrag nachträglich bearbeiten (Text + Kategorie) */
+let editingShopId = null, siCategory = null;
+function renderSiCategory(){
+  $('#siCategory').innerHTML = CATEGORY_ORDER.map(cat=>{
+    const col = CATEGORY_COLORS[cat] || '#5C6E68';
+    const sel = cat===siCategory;
+    const style = sel ? `background:${col};border-color:${col};color:#fff;` : `color:${col};border-color:${col}55;`;
+    return `<button class="chip" data-val="${cat}" type="button" style="${style}">${escapeHtml(cat)}</button>`;
+  }).join('');
+  $$('#siCategory .chip').forEach(c=>{ c.onclick = ()=>{ siCategory = c.dataset.val; renderSiCategory(); }; });
+}
+function openShopItemModal(id){
+  const s = shopping.find(x=>x.id===id);
+  if(!s) return;
+  editingShopId = id;
+  $('#siText').value = s.text;
+  siCategory = shopCatOf(s);
+  renderSiCategory();
+  showModal('shopItemModal');
+}
+$('#siSave').addEventListener('click', async ()=>{
+  const s = shopping.find(x=>x.id===editingShopId);
+  if(!s){ hideModal('shopItemModal'); return; }
+  const t = $('#siText').value.trim();
+  if(t) s.text = t;
+  s.category = siCategory;
+  hideModal('shopItemModal');
+  renderShopping();
+  await storageSet('household-shopping', JSON.stringify(shopping), true);
+});
+$('#siDelete').addEventListener('click', async ()=>{
+  hideModal('shopItemModal');
+  await deleteShop(editingShopId);
+});
+
+/* ---------- Gefühle ---------- */
+const FEEL_Q = {
+  gelb:  { label:'Viel Energie · angenehm', color:'#D9A534', words:[
+    ['begeistert','voller Schwung für etwas, das dich packt'],
+    ['freudig','hell und leicht — etwas Schönes ist passiert'],
+    ['aufgeregt','kribbelige Vorfreude auf etwas, das kommt'],
+    ['stolz','du hast etwas geschafft, das dir etwas bedeutet'],
+    ['neugierig','du willst etwas herausfinden oder ausprobieren'],
+    ['verspielt','Lust auf Albernheit und Leichtigkeit'],
+    ['inspiriert','Ideen sprudeln, du willst etwas erschaffen'],
+    ['zuversichtlich','du traust dir und der Lage etwas zu'],
+    ['verliebt','warm und aufgeregt, auf einen Menschen gerichtet'] ]},
+  rot:   { label:'Viel Energie · unangenehm', color:'#C1543D', words:[
+    ['wütend','eine Grenze wurde verletzt, du willst dagegenhalten'],
+    ['gereizt','Kleinigkeiten nerven schneller als sonst'],
+    ['frustriert','etwas klappt nicht, obwohl du dich bemühst'],
+    ['gestresst','zu viele Anforderungen, zu wenig Zeit'],
+    ['überfordert','so viel auf einmal, dass du nicht weißt, wo anfangen'],
+    ['ängstlich','etwas Bedrohliches könnte passieren'],
+    ['nervös','innere Unruhe vor etwas Ungewissem'],
+    ['eifersüchtig','Angst, etwas oder jemanden Wichtiges zu verlieren'],
+    ['angespannt','der Körper ist auf Alarm, auch ohne klaren Grund'] ]},
+  blau:  { label:'Wenig Energie · unangenehm', color:'#4C7EA8', words:[
+    ['traurig','etwas fehlt oder ist verloren gegangen'],
+    ['enttäuscht','eine Erwartung hat sich nicht erfüllt'],
+    ['einsam','du fühlst dich unverbunden — auch unter Menschen möglich'],
+    ['erschöpft','die Reserven sind leer'],
+    ['niedergeschlagen','schwer und gedämpft, wenig scheint möglich'],
+    ['verletzt','jemand hat dich getroffen, oft ohne es zu wollen'],
+    ['lustlos','nichts reizt dich gerade'],
+    ['schuldig','du glaubst, etwas falsch gemacht zu haben'],
+    ['beschämt','am liebsten würdest du dich verstecken'] ]},
+  gruen: { label:'Wenig Energie · angenehm', color:'#5B8C5A', words:[
+    ['ruhig','innerlich still, nichts drängt'],
+    ['entspannt','Körper und Kopf lassen locker'],
+    ['zufrieden','es ist gut so, wie es ist'],
+    ['dankbar','du nimmst bewusst etwas Gutes wahr'],
+    ['geborgen','du fühlst dich sicher und gehalten'],
+    ['gelassen','Dinge dürfen sein, ohne dass du sie ändern musst'],
+    ['erleichtert','eine Last ist abgefallen'],
+    ['liebevoll','warme Zuneigung, ganz ohne Aufregung'],
+    ['ausgeglichen','alles fühlt sich im Gleichgewicht an'] ]}
+};
+const FEEL_ORDER = ['gelb','rot','blau','gruen'];
+const FEEL_NEEDS = ['Ruhe','Nähe','Freiraum','Unterstützung','Anerkennung','Verständnis','Bewegung','Schlaf','Spaß','Klarheit','Sicherheit','Zeit für mich'];
+const FEEL_BODY = ['Kopf','Hals','Brust','Bauch','Schultern & Nacken','Hände','Ganzer Körper','Schwer zu sagen'];
+const FEEL_WORDS_DAY = [
+  ['wehmütig','Eine sanfte Traurigkeit über etwas Vergangenes, oft gemischt mit Zärtlichkeit dafür.'],
+  ['zerrissen','Zwei Wünsche ziehen gleichzeitig in entgegengesetzte Richtungen.'],
+  ['beklommen','Eine enge, stille Angst — oft ohne klaren Auslöser.'],
+  ['übermütig','So viel Freude, dass Vorsicht plötzlich keine Rolle mehr spielt.'],
+  ['ergriffen','Tief bewegt von etwas Schönem oder Bedeutsamem.'],
+  ['ratlos','Du willst handeln, weißt aber nicht wie.'],
+  ['beschwingt','Leicht und fröhlich, wie mit Rückenwind.'],
+  ['gekränkt','Im Selbstwert getroffen — meist von jemandem, der dir wichtig ist.'],
+  ['mulmig','Ein vages Unbehagen, dass etwas nicht ganz stimmt.'],
+  ['zärtlich','Sanfte, fürsorgliche Zuneigung.'],
+  ['rastlos','Getrieben, ohne zur Ruhe kommen zu können.'],
+  ['verlegen','Leicht unangenehm berührt, weil Aufmerksamkeit auf dir liegt.'],
+  ['hoffnungsvoll','Du rechnest damit, dass es besser wird.'],
+  ['ohnmächtig','Das Gefühl, nichts ausrichten zu können.'],
+  ['andächtig','Still und ehrfürchtig vor etwas, das größer ist als du.'],
+  ['sehnsüchtig','Starkes Verlangen nach etwas oder jemandem, das gerade fehlt.'],
+  ['versöhnlich','Bereit, einen Konflikt loszulassen.'],
+  ['genervt','Wiederholte Störung zehrt an der Geduld.'],
+  ['verunsichert','Der Boden unter deinen Überzeugungen wackelt.'],
+  ['aufgewühlt','Viele Gefühle gleichzeitig, noch ungeordnet.']
+];
+let feelings = [];
+let fd = { quadrant:null, word:null, intensity:3, needs:[] };
+let guide = null;
+function partnerName(){ return identity==='Julian' ? 'Clarisse' : 'Julian'; }
+function privateFeelings(){ try{ return JSON.parse(localStorage.getItem('feelings-private') || '[]'); }catch(e){ return []; } }
+function savePrivateFeelings(arr){ try{ localStorage.setItem('feelings-private', JSON.stringify(arr.slice(0,400))); }catch(e){} }
+function myFeelings(){ return [...feelings.filter(f=>f.by===identity), ...privateFeelings()].sort((a,b)=>b.at-a.at); }
+function partnerFeelings(){ return feelings.filter(f=>f.by===partnerName()).sort((a,b)=>b.at-a.at); }
+function intensityDots(n, color){
+  let s = '';
+  for(let i=1;i<=5;i++) s += `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:3px;background:${i<=n?color:'var(--line)'};"></span>`;
+  return s;
+}
+function feelEntryHTML(f, who, canDelete){
+  const q = FEEL_Q[f.quadrant] || FEEL_Q.gruen;
+  const priv = f.shared===false;
+  const del = canDelete ? `<button class="del feel-del" data-id="${f.id}" data-private="${priv?1:0}" type="button" aria-label="löschen">${trashSvg()}</button>` : '';
+  const body = (f.body && f.body.length) ? `<div style="font-size:.78rem;color:var(--muted);margin-top:3px;">spürbar: ${f.body.map(escapeHtml).join(', ')}</div>` : '';
+  const needs = (f.needs && f.needs.length) ? `<div style="font-size:.8rem;color:var(--muted);margin-top:3px;">braucht: ${f.needs.map(escapeHtml).join(', ')}</div>` : '';
+  const note = f.note ? `<div style="font-size:.86rem;margin-top:6px;line-height:1.45;color:var(--ink);">${escapeHtml(f.note)}</div>` : '';
+  return `<div style="border-left:4px solid ${q.color};padding:4px 0 4px 12px;margin:8px 0;display:flex;gap:8px;align-items:flex-start;">
+    <div style="flex:1;min-width:0;">
+      <div style="font-size:.74rem;color:var(--muted);">${escapeHtml(who)}${priv?' · 🔒 privat':''} · ${fmtDateTime(f.at)}</div>
+      <div style="font-family:'Fraunces',serif;font-weight:600;font-size:1.05rem;margin-top:2px;color:var(--ink);">${escapeHtml(f.word)}</div>
+      <div style="margin-top:4px;">${intensityDots(f.intensity||3, q.color)}</div>${body}${needs}${note}
+    </div>${del}
+  </div>`;
+}
+function bindFeelDeletes(scope){
+  $$(scope + ' .feel-del').forEach(b=>{
+    b.onclick = async ()=>{
+      if(!confirm('Eintrag löschen?')) return;
+      if(b.dataset.private==='1'){ savePrivateFeelings(privateFeelings().filter(x=>x.id!==b.dataset.id)); renderFeelings(); return; }
+      feelings = feelings.filter(x=>x.id!==b.dataset.id);
+      renderFeelings();
+      await storageSet('household-feelings', JSON.stringify(feelings), true);
+    };
+  });
+}
+function renderFeelStrip(){
+  const days = [];
+  for(let i=13;i>=0;i--){ const d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate()-i); days.push(d); }
+  const row = (label, entries)=>{
+    const cells = days.map(d=>{
+      const f = entries.find(e=>new Date(e.at).toDateString()===d.toDateString());
+      const col = f ? (FEEL_Q[f.quadrant]||FEEL_Q.gruen).color : 'transparent';
+      return `<span title="${f ? escapeHtml(f.word) : ''}" style="flex:1;aspect-ratio:1;max-width:18px;border-radius:50%;background:${col};border:1.5px solid ${f?col:'var(--line)'};"></span>`;
+    }).join('');
+    return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span style="width:62px;font-size:.78rem;color:var(--muted);flex-shrink:0;">${escapeHtml(label)}</span><div style="display:flex;gap:3px;flex:1;justify-content:space-between;">${cells}</div></div>`;
+  };
+  const legend = FEEL_ORDER.map(k=>`<span style="font-size:.7rem;color:var(--muted);display:flex;align-items:center;gap:4px;"><span style="width:8px;height:8px;border-radius:50%;background:${FEEL_Q[k].color};display:inline-block;"></span>${FEEL_Q[k].label}</span>`).join('');
+  $('#feelStrip').innerHTML = `<div class="balance-card"><div class="label" style="margin-bottom:10px;">Letzte 14 Tage</div>${row('Du', myFeelings())}${row(partnerName(), partnerFeelings())}<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px;">${legend}</div></div>`;
+}
+function renderFeelHistory(){
+  const all = [...myFeelings().map(f=>({f, who:'Du', mine:true})), ...partnerFeelings().map(f=>({f, who:partnerName(), mine:false}))]
+    .sort((a,b)=>b.f.at-a.f.at).slice(0,12);
+  $('#feelHistory').innerHTML = all.length
+    ? `<div class="balance-card"><div class="label">Verlauf</div>${all.map(x=>feelEntryHTML(x.f, x.who, x.mine)).join('')}</div>`
+    : '';
+  bindFeelDeletes('#feelHistory');
+}
+function renderFeelings(){
+  const today = new Date().toDateString();
+  const mine = myFeelings().find(f=>new Date(f.at).toDateString()===today);
+  const theirs = partnerFeelings().find(f=>new Date(f.at).toDateString()===today);
+  let html = `<div class="label">Heute</div>`;
+  html += mine ? feelEntryHTML(mine, 'Du', true) : `<div style="padding:8px 0;font-size:.9rem;color:var(--muted);">Du hast heute noch nichts eingetragen.</div>`;
+  html += `<div style="height:1px;background:var(--line);margin:8px 0;"></div>`;
+  html += theirs ? feelEntryHTML(theirs, partnerName(), false) : `<div style="padding:8px 0;font-size:.9rem;color:var(--muted);">${escapeHtml(partnerName())} hat heute noch nichts geteilt.</div>`;
+  $('#feelToday').innerHTML = html;
+  bindFeelDeletes('#feelToday');
+  const w = FEEL_WORDS_DAY[dayOfYear(new Date()) % FEEL_WORDS_DAY.length];
+  $('#feelWordOfDay').innerHTML = `<div class="label">Gefühlswort des Tages</div>
+    <div style="font-family:'Fraunces',serif;font-weight:600;font-size:1.1rem;margin-top:4px;color:var(--ink);">${w[0]}</div>
+    <div style="font-size:.88rem;margin-top:4px;line-height:1.45;color:var(--ink);">${w[1]}</div>
+    <div style="font-size:.75rem;color:var(--muted);margin-top:8px;line-height:1.45;">Je feiner man Gefühle unterscheiden kann, desto leichter lässt sich mit ihnen umgehen — und desto besser versteht man sich gegenseitig.</div>`;
+  $('#fdShareLabel').textContent = `Mit ${partnerName()} teilen`;
+  renderFeelStrip();
+  renderFeelHistory();
+}
+async function saveFeeling(data, share){
+  const entry = Object.assign({ id:uid(), by:identity, at:Date.now(), shared:!!share }, data);
+  if(share){
+    feelings.unshift(entry);
+    feelings = feelings.slice(0,600);
+    await storageSet('household-feelings', JSON.stringify(feelings), true);
+    setStatus(`Mit ${partnerName()} geteilt`);
+  } else {
+    const p = privateFeelings(); p.unshift(entry); savePrivateFeelings(p);
+    setStatus('Privat gespeichert (nur auf diesem Gerät)');
+  }
+}
+function renderFeelDirect(){
+  $('#fdQuadrant').innerHTML = FEEL_ORDER.map(k=>{
+    const q = FEEL_Q[k], sel = fd.quadrant===k;
+    const style = sel ? `background:${q.color};border-color:${q.color};color:#fff;` : `color:${q.color};border-color:${q.color}55;`;
+    return `<button class="chip" data-val="${k}" type="button" style="${style}">${q.label}</button>`;
+  }).join('');
+  $$('#fdQuadrant .chip').forEach(c=>{ c.onclick = ()=>{ fd.quadrant = c.dataset.val; fd.word = null; renderFeelDirect(); }; });
+  $('#fdWords').innerHTML = fd.quadrant
+    ? FEEL_Q[fd.quadrant].words.map(([w,d])=>`<button class="chip ${fd.word===w?'selected':''}" data-val="${w}" title="${d}" type="button">${w}</button>`).join('')
+    : `<span style="font-size:.8rem;color:var(--muted);">Erst einen Bereich wählen</span>`;
+  $$('#fdWords .chip').forEach(c=>{ c.onclick = ()=>{ fd.word = c.dataset.val; $('#fdCustomWord').value = ''; renderFeelDirect(); }; });
+  $('#fdIntensity').innerHTML = [1,2,3,4,5].map(n=>`<button class="chip ${fd.intensity===n?'selected':''}" data-val="${n}" type="button">${n}</button>`).join('');
+  $$('#fdIntensity .chip').forEach(c=>{ c.onclick = ()=>{ fd.intensity = parseInt(c.dataset.val); renderFeelDirect(); }; });
+  $('#fdNeeds').innerHTML = FEEL_NEEDS.map(n=>`<button class="chip ${fd.needs.includes(n)?'selected':''}" data-val="${n}" type="button">${n}</button>`).join('');
+  $$('#fdNeeds .chip').forEach(c=>{ c.onclick = ()=>{ const n = c.dataset.val; fd.needs = fd.needs.includes(n) ? fd.needs.filter(x=>x!==n) : [...fd.needs, n]; renderFeelDirect(); }; });
+}
+$('#feelDirectToggle').addEventListener('click', ()=>{
+  const f = $('#feelDirectForm'), open = f.style.display==='block';
+  f.style.display = open ? 'none' : 'block';
+  $('#feelDirectToggle').textContent = open ? '✍️ Direkt eintragen' : 'Schließen';
+  if(!open) renderFeelDirect();
+});
+$('#fdSave').addEventListener('click', async ()=>{
+  const word = $('#fdCustomWord').value.trim() || fd.word;
+  if(!fd.quadrant){ setStatus('Bitte zuerst einen Bereich wählen', true); return; }
+  if(!word){ setStatus('Bitte ein Gefühl wählen oder eintippen', true); return; }
+  await saveFeeling({ quadrant:fd.quadrant, word, intensity:fd.intensity, needs:[...fd.needs], body:[], note:$('#fdNote').value.trim() }, $('#fdShare').checked);
+  fd = { quadrant:null, word:null, intensity:3, needs:[] };
+  $('#fdCustomWord').value = ''; $('#fdNote').value = '';
+  $('#feelDirectForm').style.display = 'none';
+  $('#feelDirectToggle').textContent = '✍️ Direkt eintragen';
+  renderFeelings();
+});
+
+/* Geführter Trainer: Energie × Angenehm (Mood-Meter-Prinzip) → Körper → Wort → Bedürfnis → Ich-Satz */
+const GUIDE_STEPS = ['energy','pleasant','body','word','needs','finish'];
+function openGuide(){
+  guide = { step:0, energy:null, pleasant:null, body:[], word:null, needs:[], intensity:null, note:'', share:true };
+  renderGuide(); showModal('feelGuideModal');
+}
+function guideQuadrant(){ return guide.energy>=3 ? (guide.pleasant>=3 ? 'gelb' : 'rot') : (guide.pleasant>=3 ? 'gruen' : 'blau'); }
+function guideIntensity(){
+  const ex = ([1,4].includes(guide.energy)?1:0) + ([1,4].includes(guide.pleasant)?1:0);
+  return ex===2 ? 5 : ex===1 ? 4 : 3;
+}
+function guideOpt(val, label, sub){ return `<button class="guide-opt" data-val="${val}" type="button">${label}${sub?`<small>${sub}</small>`:''}</button>`; }
+function guideGo(delta){
+  guide.step = Math.max(0, Math.min(GUIDE_STEPS.length-1, guide.step + delta));
+  if(GUIDE_STEPS[guide.step]!=='finish') guide.intensity = null;
+  renderGuide();
+}
+function renderGuide(){
+  const step = GUIDE_STEPS[guide.step];
+  $('#fgProgress').innerHTML = GUIDE_STEPS.map((s,i)=>`<span style="flex:1;height:4px;border-radius:2px;background:${i<=guide.step?'var(--accent)':'var(--line)'};"></span>`).join('');
+  let h = '';
+  if(step==='energy'){
+    h = `<div class="guide-q">Wie viel Energie spürst du gerade in deinem Körper?</div>
+      <div class="guide-hint">Nicht überlegen, was du fühlen solltest — kurz nach innen spüren reicht.</div>
+      ${guideOpt(1,'Sehr wenig','schwer, müde, langsam')}${guideOpt(2,'Eher wenig','ruhig, gedämpft')}${guideOpt(3,'Eher viel','wach, in Bewegung')}${guideOpt(4,'Sehr viel','aufgedreht, unter Strom')}`;
+  } else if(step==='pleasant'){
+    h = `<div class="guide-q">Und wie fühlt sich das an?</div>
+      <div class="guide-hint">Unangenehm heißt nicht falsch — jedes Gefühl hat einen Grund.</div>
+      ${guideOpt(1,'Sehr unangenehm')}${guideOpt(2,'Eher unangenehm')}${guideOpt(3,'Eher angenehm')}${guideOpt(4,'Sehr angenehm')}`;
+  } else if(step==='body'){
+    h = `<div class="guide-q">Wo im Körper spürst du es am deutlichsten?</div>
+      <div class="guide-hint">Gefühle zeigen sich oft zuerst körperlich — als Enge, Wärme, Kribbeln oder Schwere. Mehrfachauswahl möglich.</div>
+      <div class="chips" id="fgBodyChips">${FEEL_BODY.map(b=>`<button class="chip ${guide.body.includes(b)?'selected':''}" data-val="${b}" type="button">${b}</button>`).join('')}</div>
+      <button id="fgNext" type="button" class="btn-wide">${guide.body.length?'Weiter':'Überspringen'}</button>`;
+  } else if(step==='word'){
+    const q = FEEL_Q[guideQuadrant()];
+    h = `<div class="guide-q">Welches Wort trifft es am besten?</div>
+      <div class="guide-hint">Bereich: <b style="color:${q.color};">${q.label}</b>. Lies kurz die Beschreibungen — oft passt eins überraschend genau.</div>
+      ${q.words.map(([w,d])=>guideOpt(w, w, d)).join('')}
+      <input type="text" id="fgCustom" class="field" placeholder="Keins passt? Eigenes Wort …" maxlength="40" style="margin-top:6px;">
+      <button id="fgCustomNext" type="button" class="clear-btn" style="width:100%;margin:0;text-align:center;">Eigenes Wort übernehmen</button>`;
+  } else if(step==='needs'){
+    h = `<div class="guide-q">Was würde dir jetzt guttun?</div>
+      <div class="guide-hint">Hinter Gefühlen stehen oft Bedürfnisse — erfüllte oder unerfüllte.</div>
+      <div class="chips" id="fgNeedChips">${FEEL_NEEDS.map(n=>`<button class="chip ${guide.needs.includes(n)?'selected':''}" data-val="${n}" type="button">${n}</button>`).join('')}</div>
+      <button id="fgNext" type="button" class="btn-wide">${guide.needs.length?'Weiter':'Überspringen'}</button>`;
+  } else {
+    const q = FEEL_Q[guideQuadrant()];
+    if(!guide.intensity) guide.intensity = guideIntensity();
+    const needsTxt = guide.needs.length ? ` und brauche gerade <b>${guide.needs.map(escapeHtml).join(', ')}</b>` : '';
+    h = `<div class="guide-q">Dein Satz für heute</div>
+      <div style="border-left:4px solid ${q.color};padding:10px 14px;background:var(--card);border-radius:0 12px 12px 0;font-size:1rem;line-height:1.5;margin-bottom:16px;color:var(--ink);">Ich fühle mich <b>${escapeHtml(guide.word)}</b>${needsTxt}.</div>
+      <div class="field-label">Wie stark?</div>
+      <div class="chips" id="fgIntensity">${[1,2,3,4,5].map(n=>`<button class="chip ${guide.intensity===n?'selected':''}" data-val="${n}" type="button">${n}</button>`).join('')}</div>
+      <textarea id="fgNote" class="field" rows="2" placeholder="Magst du dazuschreiben, woran es liegt? (optional)"></textarea>
+      <label class="share-toggle"><input type="checkbox" id="fgShare" ${guide.share?'checked':''}> Mit ${escapeHtml(partnerName())} teilen</label>
+      <button id="fgSave" type="button" class="btn-wide" style="margin:0;">Speichern</button>`;
+  }
+  if(guide.step>0) h += `<button id="fgBack" type="button" class="clear-btn" style="margin-top:14px;">← Zurück</button>`;
+  $('#fgBody').innerHTML = h;
+  $$('#fgBody .guide-opt').forEach(b=>{
+    b.onclick = ()=>{
+      const v = b.dataset.val;
+      if(step==='energy') guide.energy = parseInt(v);
+      else if(step==='pleasant') guide.pleasant = parseInt(v);
+      else if(step==='word') guide.word = v;
+      guideGo(1);
+    };
+  });
+  const next = $('#fgNext'); if(next) next.onclick = ()=>guideGo(1);
+  const back = $('#fgBack'); if(back) back.onclick = ()=>guideGo(-1);
+  $$('#fgBodyChips .chip').forEach(c=>{ c.onclick = ()=>{ const v = c.dataset.val; guide.body = guide.body.includes(v) ? guide.body.filter(x=>x!==v) : [...guide.body, v]; renderGuide(); }; });
+  $$('#fgNeedChips .chip').forEach(c=>{ c.onclick = ()=>{ const v = c.dataset.val; guide.needs = guide.needs.includes(v) ? guide.needs.filter(x=>x!==v) : [...guide.needs, v]; renderGuide(); }; });
+  const cn = $('#fgCustomNext'); if(cn) cn.onclick = ()=>{ const v = $('#fgCustom').value.trim(); if(!v) return; guide.word = v; guideGo(1); };
+  $$('#fgIntensity .chip').forEach(c=>{ c.onclick = ()=>{ guide.intensity = parseInt(c.dataset.val); renderGuide(); }; });
+  const note = $('#fgNote'); if(note){ note.value = guide.note; note.oninput = ()=>{ guide.note = note.value; }; }
+  const share = $('#fgShare'); if(share) share.onchange = ()=>{ guide.share = share.checked; };
+  const save = $('#fgSave');
+  if(save) save.onclick = async ()=>{
+    save.disabled = true;
+    await saveFeeling({ quadrant:guideQuadrant(), word:guide.word, intensity:guide.intensity, needs:[...guide.needs], body:[...guide.body], note:(guide.note||'').trim() }, guide.share);
+    hideModal('feelGuideModal');
+    renderFeelings();
+  };
+}
+$('#feelGuideBtn').addEventListener('click', openGuide);
+
+/* ---------- Ablage: Dokumententresor, Ende-zu-Ende verschlüsselt ----------
+   Schlüssel = PBKDF2(Passphrase, Salt, 310.000 Runden) → AES-256-GCM.
+   In Firebase liegen nur Salt, ein verschlüsselter Prüfwert und Chiffretexte. */
+const VAULT_CATS = ['Ausweise','Finanzen & Konten','Verträge','Versicherungen','Wohnung','Gesundheit','Behörden','Sonstiges'];
+const VAULT_ICONS = {'Ausweise':'🪪','Finanzen & Konten':'🏦','Verträge':'📝','Versicherungen':'🛡️','Wohnung':'🏠','Gesundheit':'🩺','Behörden':'🏛️','Sonstiges':'📄'};
+const VAULT_CHECK = 'gezeiten-vault-v1';
+let vaultMeta = null, vaultMetaLoaded = false, vaultKey = null, vaultTriedRemember = false;
+let vaultDocsEnc = [], vaultDocs = [], vaultActiveCat = 'all';
+let editingDocId = null, dmCat = 'Ausweise', dmOwner = 'Beide', dmPendingFiles = [], dmRemovedFids = [];
+let viewingDocId = null, vaultHiddenAt = 0;
+const vaultObjectUrls = [];
+const vTE = new TextEncoder(), vTD = new TextDecoder();
+function b64FromBytes(bytes){ let s = ''; const CH = 0x8000; for(let i=0;i<bytes.length;i+=CH){ s += String.fromCharCode.apply(null, bytes.subarray(i, i+CH)); } return btoa(s); }
+function bytesFromB64(b64){ const bin = atob(b64); const out = new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) out[i] = bin.charCodeAt(i); return out; }
+async function deriveVaultKey(pass, saltB64){
+  const base = await crypto.subtle.importKey('raw', vTE.encode(pass), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name:'PBKDF2', salt:bytesFromB64(saltB64), iterations:310000, hash:'SHA-256' }, base, { name:'AES-GCM', length:256 }, true, ['encrypt','decrypt']);
+}
+async function encBytes(key, bytes){
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name:'AES-GCM', iv }, key, bytes));
+  return { iv:b64FromBytes(iv), ct:b64FromBytes(ct) };
+}
+async function decBytes(key, o){ return new Uint8Array(await crypto.subtle.decrypt({ name:'AES-GCM', iv:bytesFromB64(o.iv) }, key, bytesFromB64(o.ct))); }
+async function encJSON(key, obj){ return encBytes(key, vTE.encode(JSON.stringify(obj))); }
+async function decJSON(key, o){ return JSON.parse(vTD.decode(await decBytes(key, o))); }
+function vaultPanelActive(){ const p = document.querySelector('.panel[data-panel="vault"]'); return !!(p && p.classList.contains('active')); }
+function setVaultMsg(msg, isErr){ const el = $('#vaultMsg'); el.textContent = msg || ''; el.style.color = isErr ? 'var(--coral)' : 'var(--muted)'; }
+function attrSafe(s){ return String(s||'').replace(/["<>&]/g, ''); }
+async function verifyVaultKey(key){ try{ const r = await decJSON(key, vaultMeta.check); return !!(r && r.ok===VAULT_CHECK); }catch(e){ return false; } }
+async function rememberVaultKey(key){ try{ const raw = new Uint8Array(await crypto.subtle.exportKey('raw', key)); localStorage.setItem('vault-key', b64FromBytes(raw)); }catch(e){} }
+async function tryRememberedVaultKey(){
+  const stored = localStorage.getItem('vault-key');
+  if(!stored || !vaultMeta) return false;
+  try{
+    const key = await crypto.subtle.importKey('raw', bytesFromB64(stored), { name:'AES-GCM' }, true, ['encrypt','decrypt']);
+    if(await verifyVaultKey(key)){ vaultKey = key; await decryptAllDocs(); return true; }
+  }catch(e){}
+  localStorage.removeItem('vault-key');
+  return false;
+}
+async function decryptAllDocs(){
+  const out = [];
+  for(const d of vaultDocsEnc){
+    if(!d || !d.enc) continue;
+    try{
+      const m = await decJSON(vaultKey, d.enc);
+      out.push(Object.assign({ id:d.id, createdAt:d.createdAt, addedBy:d.addedBy }, m, { files:m.files || [] }));
+    }catch(e){
+      out.push({ id:d.id, createdAt:d.createdAt, addedBy:d.addedBy, title:'(nicht lesbar)', category:'Sonstiges', owner:'', notes:'', files:[], broken:true });
+    }
+  }
+  vaultDocs = out;
+}
+function revokeVaultUrls(){ while(vaultObjectUrls.length) URL.revokeObjectURL(vaultObjectUrls.pop()); }
+function lockVault(){
+  vaultKey = null; vaultDocs = [];
+  localStorage.removeItem('vault-key');
+  hideModal('docModal'); hideModal('docViewModal'); revokeVaultUrls();
+  renderVault();
+}
+function showVaultInputs(show, setup){
+  $('#vaultPass').style.display = show ? 'block' : 'none';
+  $('#vaultPass2').style.display = (show && setup) ? 'block' : 'none';
+  $('#vaultRememberRow').style.display = show ? 'flex' : 'none';
+  $('#vaultUnlockBtn').style.display = show ? 'block' : 'none';
+}
+async function renderVault(){
+  const locked = $('#vaultLocked'), open = $('#vaultOpen');
+  if(!(window.crypto && crypto.subtle)){
+    locked.style.display = 'block'; open.style.display = 'none';
+    $('#vaultLockedTitle').textContent = 'Nicht verfügbar';
+    $('#vaultLockedText').textContent = 'Die Verschlüsselung braucht eine sichere Verbindung (https). Bitte die App über die github.io-Adresse öffnen.';
+    showVaultInputs(false); return;
+  }
+  if(!vaultMetaLoaded){
+    locked.style.display = 'block'; open.style.display = 'none';
+    $('#vaultLockedTitle').textContent = 'Ablage lädt …';
+    $('#vaultLockedText').textContent = '';
+    showVaultInputs(false); return;
+  }
+  if(!vaultKey && vaultMeta && !vaultTriedRemember){
+    vaultTriedRemember = true;
+    if(await tryRememberedVaultKey()) return renderVault();
+  }
+  if(!vaultKey){
+    const setup = !vaultMeta;
+    locked.style.display = 'block'; open.style.display = 'none';
+    $('#vaultLockedTitle').textContent = setup ? 'Tresor einrichten' : 'Ablage gesperrt';
+    $('#vaultLockedText').innerHTML = setup
+      ? 'Dokumente werden auf eurem Gerät <b>verschlüsselt</b>, bevor sie gespeichert werden. Legt eine gemeinsame Passphrase fest (mindestens 10 Zeichen, gern ein ganzer Satz) — ihr gebt sie auf jedem Gerät einmal ein.<br><br><b>Wichtig:</b> Ohne diese Passphrase sind die Dokumente nicht wiederherstellbar, von niemandem. Schreibt sie an einem sicheren Ort auf.'
+      : 'Gib eure gemeinsame Passphrase ein, um die Dokumente zu entschlüsseln.';
+    $('#vaultUnlockBtn').textContent = setup ? 'Tresor anlegen' : 'Entsperren';
+    showVaultInputs(true, setup);
+    return;
+  }
+  locked.style.display = 'none'; open.style.display = 'block';
+  renderVaultList();
+}
+$('#vaultUnlockBtn').addEventListener('click', async ()=>{
+  const pass = $('#vaultPass').value;
+  const btn = $('#vaultUnlockBtn');
+  if(!vaultMeta){
+    if(pass.length < 10){ setVaultMsg('Bitte mindestens 10 Zeichen verwenden', true); return; }
+    if(pass !== $('#vaultPass2').value){ setVaultMsg('Die beiden Eingaben stimmen nicht überein', true); return; }
+    btn.disabled = true; setVaultMsg('Richte Tresor ein …');
+    try{
+      const salt = b64FromBytes(crypto.getRandomValues(new Uint8Array(16)));
+      const key = await deriveVaultKey(pass, salt);
+      const meta = { v:1, salt, check: await encJSON(key, { ok:VAULT_CHECK }), createdAt:Date.now(), createdBy:identity };
+      const res = await db.ref('vault/meta').transaction(cur => cur ? undefined : meta);
+      if(!res.committed){ setVaultMsg('Der Tresor wurde gerade auf dem anderen Gerät angelegt — bitte mit dieser Passphrase entsperren.', true); btn.disabled = false; return; }
+      vaultMeta = res.snapshot.val(); vaultKey = key; vaultDocs = [];
+      if($('#vaultRemember').checked) await rememberVaultKey(key);
+      $('#vaultPass').value = ''; $('#vaultPass2').value = ''; setVaultMsg('');
+    }catch(e){ setVaultMsg('Einrichtung fehlgeschlagen: ' + e.message, true); }
+    btn.disabled = false; renderVault(); return;
+  }
+  if(!pass){ setVaultMsg('Bitte Passphrase eingeben', true); return; }
+  btn.disabled = true; setVaultMsg('Entschlüssele …');
+  try{
+    const key = await deriveVaultKey(pass, vaultMeta.salt);
+    if(!(await verifyVaultKey(key))){ setVaultMsg('Passphrase falsch', true); btn.disabled = false; return; }
+    vaultKey = key;
+    if($('#vaultRemember').checked) await rememberVaultKey(key);
+    await decryptAllDocs();
+    $('#vaultPass').value = ''; setVaultMsg('');
+  }catch(e){ setVaultMsg('Entsperren fehlgeschlagen: ' + e.message, true); }
+  btn.disabled = false; renderVault();
+});
+$('#vaultPass').addEventListener('keydown', e=>{ if(e.key==='Enter' && vaultMeta) $('#vaultUnlockBtn').click(); });
+$('#vaultLockBtn').addEventListener('click', lockVault);
+/* Ohne „entsperrt lassen": nach 5 Minuten im Hintergrund automatisch sperren */
+document.addEventListener('visibilitychange', ()=>{
+  if(document.hidden){ vaultHiddenAt = Date.now(); return; }
+  if(vaultKey && !localStorage.getItem('vault-key') && vaultHiddenAt && Date.now() - vaultHiddenAt > 5*60*1000) lockVault();
+});
+function renderVaultList(){
+  const present = new Set(vaultDocs.map(d=>d.category || 'Sonstiges'));
+  let chips = `<button class="chip proj-chip ${vaultActiveCat==='all'?'selected':''}" data-val="all" type="button">Alle</button>`;
+  chips += VAULT_CATS.filter(c=>present.has(c)).map(c=>`<button class="chip proj-chip ${vaultActiveCat===c?'selected':''}" data-val="${c}" type="button">${VAULT_ICONS[c]} ${c}</button>`).join('');
+  $('#vaultCatChips').innerHTML = chips;
+  $$('#vaultCatChips .proj-chip').forEach(b=>{ b.onclick = ()=>{ vaultActiveCat = b.dataset.val; renderVaultList(); }; });
+  const list = vaultDocs
+    .filter(d=>vaultActiveCat==='all' || (d.category||'Sonstiges')===vaultActiveCat)
+    .sort((a,b)=>(VAULT_CATS.indexOf(a.category) - VAULT_CATS.indexOf(b.category)) || String(a.title||'').localeCompare(String(b.title||''), 'de'));
+  $('#vaultList').innerHTML = list.map(d=>`<button class="item vault-doc" data-id="${d.id}" type="button" style="width:100%;text-align:left;margin-bottom:8px;cursor:pointer;">
+      <span style="font-size:1.4rem;flex-shrink:0;">${VAULT_ICONS[d.category] || '📄'}</span>
+      <span style="flex:1;min-width:0;">
+        <span style="display:block;font-weight:600;font-size:.95rem;color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(d.title || 'Ohne Titel')}</span>
+        <span style="display:block;font-size:.75rem;color:var(--muted);margin-top:2px;">${escapeHtml(d.owner || '')}${d.owner ? ' · ' : ''}${d.files.length} ${d.files.length===1 ? 'Datei' : 'Dateien'}${d.notes ? ' · 📝' : ''}</span>
+      </span>
+    </button>`).join('');
+  const empty = $('#vaultEmpty');
+  if(!list.length){
+    empty.style.display = 'block';
+    empty.innerHTML = vaultDocs.length ? '<b>Nichts in dieser Kategorie</b>' : '<b>Noch keine Dokumente</b>Fotografiert z. B. Ausweise oder legt Nummern wie die Rundfunkbeitrag-Beitragsnummer als Notiz ab.';
+  } else empty.style.display = 'none';
+  $$('#vaultList .vault-doc').forEach(b=>{ b.onclick = ()=> openDocView(b.dataset.id); });
+}
+function currentDocFiles(){
+  const d = editingDocId ? vaultDocs.find(x=>x.id===editingDocId) : null;
+  return d ? d.files.filter(f=>!dmRemovedFids.includes(f.fid)) : [];
+}
+function renderDmChips(){
+  $('#dmCat').innerHTML = VAULT_CATS.map(c=>`<button class="chip ${dmCat===c?'selected':''}" data-val="${c}" type="button">${VAULT_ICONS[c]} ${c}</button>`).join('');
+  $$('#dmCat .chip').forEach(b=>{ b.onclick = ()=>{ dmCat = b.dataset.val; renderDmChips(); }; });
+  $('#dmOwner').innerHTML = ['Julian','Clarisse','Beide'].map(o=>`<button class="chip ${dmOwner===o?'selected':''}" data-val="${o}" type="button">${o}</button>`).join('');
+  $$('#dmOwner .chip').forEach(b=>{ b.onclick = ()=>{ dmOwner = b.dataset.val; renderDmChips(); }; });
+}
+function renderDmFiles(){
+  const rows = [
+    ...currentDocFiles().map(f=>({ key:'e:'+f.fid, name:f.name, type:f.type, isNew:false })),
+    ...dmPendingFiles.map((f,i)=>({ key:'p:'+i, name:f.name || 'Foto', type:f.type, isNew:true }))
+  ];
+  $('#dmFileList').innerHTML = rows.map(r=>`<div class="item" style="margin-bottom:6px;padding:8px 12px;">
+      <span>${r.type==='application/pdf' ? '📄' : '🖼️'}</span>
+      <span style="flex:1;min-width:0;font-size:.85rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(r.name)}${r.isNew ? ' <span style="color:var(--muted);">(neu)</span>' : ''}</span>
+      <button class="del dm-rm" data-key="${r.key}" type="button" aria-label="entfernen">${trashSvg()}</button>
+    </div>`).join('');
+  $$('#dmFileList .dm-rm').forEach(b=>{
+    b.onclick = ()=>{
+      const [kind, v] = b.dataset.key.split(':');
+      if(kind==='e') dmRemovedFids.push(v); else dmPendingFiles.splice(parseInt(v), 1);
+      renderDmFiles();
+    };
+  });
+  const full = rows.length >= 5;
+  $('#dmPhotoBtn').disabled = full; $('#dmFileBtn').disabled = full;
+}
+function openDocModal(id){
+  editingDocId = id || null; dmPendingFiles = []; dmRemovedFids = [];
+  const d = id ? vaultDocs.find(x=>x.id===id) : null;
+  $('#docModalTitle').textContent = d ? 'Dokument bearbeiten' : 'Dokument hinzufügen';
+  $('#dmTitle').value = d ? (d.title || '') : '';
+  $('#dmNotes').value = d ? (d.notes || '') : '';
+  dmCat = d ? (d.category || 'Sonstiges') : 'Ausweise';
+  dmOwner = d ? (d.owner || 'Beide') : (identity || 'Beide');
+  $('#dmMsg').textContent = '';
+  renderDmChips(); renderDmFiles();
+  showModal('docModal');
+}
+function addPendingFiles(fileList){
+  $('#dmMsg').textContent = '';
+  for(const f of Array.from(fileList)){
+    if(currentDocFiles().length + dmPendingFiles.length >= 5){ $('#dmMsg').textContent = 'Maximal 5 Dateien pro Dokument'; break; }
+    const isImg = (f.type || '').startsWith('image/'), isPdf = f.type==='application/pdf';
+    if(!isImg && !isPdf){ $('#dmMsg').textContent = 'Nur Fotos oder PDFs möglich'; continue; }
+    if(isPdf && f.size > 4*1024*1024){ $('#dmMsg').textContent = `„${f.name}" ist zu groß (PDFs max. 4 MB)`; continue; }
+    dmPendingFiles.push(f);
+  }
+  renderDmFiles();
+}
+$('#vaultAddBtn').addEventListener('click', ()=> openDocModal(null));
+$('#dmPhotoBtn').addEventListener('click', ()=> $('#dmPhotoInput').click());
+$('#dmFileBtn').addEventListener('click', ()=> $('#dmFileInput').click());
+$('#dmPhotoInput').addEventListener('change', e=>{ addPendingFiles(e.target.files); e.target.value = ''; });
+$('#dmFileInput').addEventListener('change', e=>{ addPendingFiles(e.target.files); e.target.value = ''; });
+async function vaultFileToBytes(f){
+  if((f.type || '').startsWith('image/')){
+    const dataUrl = await compressImage(f, 1800, 0.85);
+    return { bytes:bytesFromB64(dataUrl.split(',')[1]), type:'image/jpeg', name:String(f.name || 'Foto').replace(/\.[^.]+$/, '') + '.jpg' };
+  }
+  const buf = f.arrayBuffer ? await f.arrayBuffer() : await new Promise((res, rej)=>{ const r = new FileReader(); r.onload = ()=>res(r.result); r.onerror = ()=>rej(r.error); r.readAsArrayBuffer(f); });
+  return { bytes:new Uint8Array(buf), type:f.type, name:f.name };
+}
+$('#dmSave').addEventListener('click', async ()=>{
+  if(!vaultKey){ hideModal('docModal'); renderVault(); return; }
+  const title = $('#dmTitle').value.trim();
+  if(!title){ $('#dmMsg').textContent = 'Bitte einen Titel eingeben'; return; }
+  const btn = $('#dmSave'); btn.disabled = true;
+  try{
+    const docId = editingDocId || uid();
+    const prev = editingDocId ? vaultDocs.find(d=>d.id===editingDocId) : null;
+    const files = currentDocFiles().slice();
+    for(const fid of dmRemovedFids) await db.ref(`vault/blobs/${docId}/${fid}`).remove();
+    for(let i=0;i<dmPendingFiles.length;i++){
+      $('#dmMsg').textContent = `Verschlüssele Datei ${i+1}/${dmPendingFiles.length} …`;
+      const { bytes, type, name } = await vaultFileToBytes(dmPendingFiles[i]);
+      const fid = uid();
+      await db.ref(`vault/blobs/${docId}/${fid}`).set(await encBytes(vaultKey, bytes));
+      files.push({ fid, name, type, size:bytes.length });
+    }
+    const enc = await encJSON(vaultKey, { title, category:dmCat, owner:dmOwner, notes:$('#dmNotes').value.trim(), files });
+    const entry = { id:docId, createdAt: prev ? prev.createdAt : Date.now(), updatedAt:Date.now(), addedBy: prev ? prev.addedBy : identity, enc };
+    const idx = vaultDocsEnc.findIndex(d=>d && d.id===docId);
+    if(idx>=0) vaultDocsEnc[idx] = entry; else vaultDocsEnc.unshift(entry);
+    await db.ref('vault/docs').set(vaultDocsEnc);
+    await decryptAllDocs();
+    hideModal('docModal'); renderVaultList();
+    setStatus('Verschlüsselt gespeichert');
+  }catch(e){ $('#dmMsg').textContent = 'Speichern fehlgeschlagen: ' + e.message; }
+  btn.disabled = false;
+});
+async function openDocView(id){
+  const d = vaultDocs.find(x=>x.id===id);
+  if(!d) return;
+  viewingDocId = id; revokeVaultUrls();
+  $('#dvTitle').textContent = d.title;
+  $('#dvMeta').textContent = `${VAULT_ICONS[d.category] || '📄'} ${d.category}${d.owner ? ' · ' + d.owner : ''} · hinzugefügt ${new Date(d.createdAt).toLocaleDateString('de-DE')}`;
+  $('#dvNotesWrap').style.display = d.notes ? 'block' : 'none';
+  $('#dvNotes').textContent = d.notes || '';
+  $('#dvFiles').innerHTML = d.files.map(f=>`<div class="dv-file" data-fid="${f.fid}" style="margin-bottom:10px;"><div style="font-size:.8rem;color:var(--muted);padding:10px;background:var(--card);border:1px solid var(--line);border-radius:12px;">🔐 Entschlüssele ${escapeHtml(f.name)} …</div></div>`).join('');
+  showModal('docViewModal');
+  for(const f of d.files){
+    const slot = document.querySelector(`#dvFiles .dv-file[data-fid="${f.fid}"]`);
+    if(!slot) continue;
+    try{
+      const snap = await db.ref(`vault/blobs/${d.id}/${f.fid}`).once('value');
+      if(!snap.exists()) throw new Error('fehlt');
+      const bytes = await decBytes(vaultKey, snap.val());
+      if(viewingDocId!==d.id) return;
+      const url = URL.createObjectURL(new Blob([bytes], { type:f.type }));
+      vaultObjectUrls.push(url);
+      slot.innerHTML = f.type.startsWith('image/')
+        ? `<img src="${url}" alt="" style="width:100%;border-radius:12px;display:block;border:1px solid var(--line);"><a href="${url}" download="${attrSafe(f.name)}" style="font-size:.78rem;color:var(--muted);display:inline-block;margin-top:4px;">Herunterladen</a>`
+        : `<a href="${url}" target="_blank" rel="noopener" class="clear-btn" style="display:block;text-align:center;margin:0;text-decoration:none;">📄 ${escapeHtml(f.name)} öffnen</a>`;
+    }catch(e){
+      slot.innerHTML = `<div style="font-size:.8rem;color:var(--coral);">${escapeHtml(f.name)}: konnte nicht entschlüsselt werden</div>`;
+    }
+  }
+}
+$('#dvCopy').addEventListener('click', async ()=>{
+  try{ await navigator.clipboard.writeText($('#dvNotes').textContent); setStatus('Kopiert'); }
+  catch(e){ setStatus('Kopieren nicht möglich', true); }
+});
+$('#dvEdit').addEventListener('click', ()=>{ const id = viewingDocId; hideModal('docViewModal'); revokeVaultUrls(); openDocModal(id); });
+$('#dvDelete').addEventListener('click', async ()=>{
+  const d = vaultDocs.find(x=>x.id===viewingDocId);
+  if(!d) return;
+  if(!confirm(`„${d.title}" endgültig löschen?`)) return;
+  await db.ref(`vault/blobs/${d.id}`).remove();
+  vaultDocsEnc = vaultDocsEnc.filter(x=>x && x.id!==d.id);
+  await db.ref('vault/docs').set(vaultDocsEnc);
+  await decryptAllDocs();
+  hideModal('docViewModal'); revokeVaultUrls(); renderVaultList();
+});
 
 /* ---------- Load all (Firebase, with live sync) ---------- */
 async function loadAll(){
@@ -2132,6 +3051,27 @@ function attachLiveSync(){
     learnArchive = snap.val() || [];
     const p = document.querySelector('.panel[data-panel="learn"]');
     if(p && p.classList.contains('active')) renderLearn();
+  });
+  db.ref('settings/categories').on('value', snap=>{
+    applyCategorySettings(snap.val());
+    renderShopCategoryPicker(); renderShopping(); renderLibrary();
+    if($('#catModal').style.display==='flex') renderCatModal();
+  });
+  db.ref('feelings').on('value', snap=>{
+    const v = snap.val() || [];
+    notifyNewItems(feelings, v, 'by', f=>`💛 ${f.by} fühlt sich heute ${f.word}`);
+    feelings = v;
+    const p = document.querySelector('.panel[data-panel="feelings"]');
+    if(p && p.classList.contains('active')) renderFeelings();
+  });
+  db.ref('vault/meta').on('value', snap=>{
+    vaultMeta = snap.val(); vaultMetaLoaded = true;
+    if(vaultPanelActive()) renderVault();
+  });
+  db.ref('vault/docs').on('value', async snap=>{
+    vaultDocsEnc = snap.val() || [];
+    if(vaultKey) await decryptAllDocs();
+    if(vaultPanelActive()) renderVault();
   });
   setTimeout(()=>{ liveSyncPrimed = true; }, 2500);
 }
@@ -2433,16 +3373,21 @@ $('#tmExportICS').addEventListener('click', ()=>{
 });
 
 /* ---------- Shopping ---------- */
-$$('#shopCategory .chip').forEach(c=>c.addEventListener('click', ()=>{
-  $$('#shopCategory .chip').forEach(x=>{
-    const col = CATEGORY_COLORS[x.dataset.val] || '#5C6E68';
-    x.classList.remove('selected');
-    x.style.cssText = `color:${col};border-color:${col}55;`;
+let shopAddCategory = null;
+function renderShopCategoryPicker(){
+  if(!shopAddCategory || !CATEGORY_ORDER.includes(shopAddCategory)) shopAddCategory = CATEGORY_ORDER[0];
+  $('#shopCategory').innerHTML = CATEGORY_ORDER.map(cat=>{
+    const col = CATEGORY_COLORS[cat] || '#5C6E68';
+    const sel = cat===shopAddCategory;
+    const style = sel ? `background:${col};border-color:${col};color:#fff;` : `color:${col};border-color:${col}55;`;
+    return `<button class="chip" data-val="${cat}" type="button" style="${style}">${escapeHtml(cat)}</button>`;
+  }).join('');
+  $$('#shopCategory .chip').forEach(c=>{
+    c.onmousedown = ev=>ev.preventDefault();
+    c.onclick = ()=>{ shopAddCategory = c.dataset.val; renderShopCategoryPicker(); };
   });
-  const col = CATEGORY_COLORS[c.dataset.val] || '#5C6E68';
-  c.classList.add('selected');
-  c.style.cssText = `background:${col};border-color:${col};color:#fff;`;
-}));
+}
+renderShopCategoryPicker();
 $('#shopAdd').addEventListener('click', addShop);
 $('#shopInput').addEventListener('keydown', e=>{ if(e.key==='Enter') addShop(); });
 $('#shopInput').addEventListener('focus', ()=>{ $('#shopCategory').style.display = 'flex'; });
@@ -2453,7 +3398,7 @@ async function addShop(){
   const input = $('#shopInput');
   const text = input.value.trim();
   if(!text) return;
-  const category = $('#shopCategory .chip.selected').dataset.val;
+  const category = (shopAddCategory && CATEGORY_ORDER.includes(shopAddCategory)) ? shopAddCategory : CATEGORY_ORDER[0];
   shopping.unshift({ id:uid(), text, done:false, addedBy:identity, category });
   input.value='';
   renderShopping();
@@ -2487,8 +3432,10 @@ function renderShopFilterChips(){
     const style = sel ? `background:${color};border-color:${color};color:#fff;` : `color:${color};border-color:${color}55;`;
     return `<button class="chip proj-chip" data-val="${escapeHtml(cat)}" style="${style}">${escapeHtml(cat)}</button>`;
   }).join('');
+  html += `<button class="chip proj-chip-add" id="shopCatGear" type="button">⚙︎ Kategorien</button>`;
   $('#shopFilterChips').innerHTML = html;
   $$('#shopFilterChips .proj-chip').forEach(b=>{ b.onclick = ()=>{ activeShopFilter = b.dataset.val; renderShopping(); }; });
+  $('#shopCatGear').onclick = ()=> openCatModal('shop');
 }
 function renderShopping(){
   renderShopFilterChips();
@@ -2505,7 +3452,7 @@ function renderShopping(){
   } else { emptyEl.style.display='none'; }
   $('#shopClear').style.display = shopping.some(s=>s.done) ? 'block' : 'none';
   bindListEvents('#shopList', toggleShop, deleteShop);
-  bindEditableText('#shopList', '.item-text', id=>shopping.find(s=>s.id===id), item=>item.text, editShopText);
+  $$('#shopList .item-text').forEach(sp=>{ sp.style.cursor = 'pointer'; sp.onclick = ()=> openShopItemModal(sp.closest('.item').dataset.id); });
 }
 async function editShopText(id, newVal){
   const s = shopping.find(x=>x.id===id);
@@ -2678,19 +3625,123 @@ function renderCleaningHistory(){
 $('#cleanHistoryToggle').addEventListener('click', ()=>{ cleanHistoryOpen = !cleanHistoryOpen; renderCleaningHistory(); });
 
 /* ---------- Expenses ---------- */
+/* Jede Ausgabe speichert julianPct = Anteil, den Julian an den Kosten trägt (Rest: Clarisse).
+   Alte Einträge ohne Wert gelten als 50/50. Saldo = was jemand bezahlt hat − sein eigener Anteil. */
 $$('#expPayer .chip').forEach(c=>c.addEventListener('click', ()=>{
   $$('#expPayer .chip').forEach(x=>x.classList.remove('selected'));
   c.classList.add('selected');
 }));
+$$('#emPayer .chip').forEach(c=>c.addEventListener('click', ()=>{
+  $$('#emPayer .chip').forEach(x=>x.classList.remove('selected'));
+  c.classList.add('selected');
+}));
 $('#expAdd').addEventListener('click', addExpense);
+let editingExpenseId = null;
+function fmtEUR(n){ return n.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €'; }
+function fmtPct(p){ return (Math.round(p*10)/10).toLocaleString('de-DE') + ' %'; }
+function parseAmount(s){ let t = String(s||'').trim().replace(/[\s€]/g, ''); if(t.includes(',')) t = t.replace(/\./g, '').replace(',', '.'); return parseFloat(t); }
+function isoFromTs(ts){ const d = new Date(ts); return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+function todayISO(){ return isoFromTs(Date.now()); }
+function tsFromISO(iso, keepTs){
+  if(!iso) return keepTs || Date.now();
+  if(keepTs && isoFromTs(keepTs)===iso) return keepTs;
+  if(!keepTs && iso===todayISO()) return Date.now();
+  const p = iso.split('-').map(Number);
+  return new Date(p[0], p[1]-1, p[2], 12, 0, 0).getTime();
+}
+function jPct(e){ return (typeof e.julianPct==='number' && !isNaN(e.julianPct)) ? e.julianPct : 50; }
+function sharesOf(e){ const j = e.amount * jPct(e) / 100; return { Julian:j, Clarisse:e.amount - j }; }
+function netBalance(list){ return list.reduce((n,e)=> n + (e.paidBy==='Julian' ? e.amount : 0) - sharesOf(e).Julian, 0); }
+function splitLabel(e){
+  if(e.isSettlement) return '';
+  const p = jPct(e);
+  if(p===50) return '50/50';
+  if(p===100) return 'nur für Julian';
+  if(p===0) return 'nur für Clarisse';
+  return `Julian ${fmtPct(p)} · Clarisse ${fmtPct(100-p)}`;
+}
+function splitBlockHTML(p){
+  return `<div class="field-label">Aufteilung</div>
+    <div class="chips" id="${p}Split">
+      <button class="chip" data-val="half" type="button">50 / 50</button>
+      <button class="chip" data-val="julian" type="button">Nur für Julian</button>
+      <button class="chip" data-val="clarisse" type="button">Nur für Clarisse</button>
+      <button class="chip" data-val="custom" type="button">Individuell</button>
+    </div>
+    <div id="${p}CustomRow" style="display:none; margin:-4px 0 14px;">
+      <div style="display:flex; gap:8px; align-items:center;">
+        <span style="font-size:.82rem; color:var(--muted); white-space:nowrap;">Anteil Julian</span>
+        <input type="text" id="${p}CustomVal" class="field" inputmode="decimal" placeholder="z. B. 70" style="margin:0; flex:1; min-width:0;">
+        <div class="chips" id="${p}CustomUnit" style="margin:0; flex-wrap:nowrap;">
+          <button class="chip" data-val="pct" type="button">%</button>
+          <button class="chip" data-val="eur" type="button">€</button>
+        </div>
+      </div>
+      <div id="${p}CustomHint" style="font-size:.78rem; color:var(--muted); margin-top:6px;"></div>
+    </div>`;
+}
+function splitPct(w){
+  if(w.mode==='half') return 50;
+  if(w.mode==='julian') return 100;
+  if(w.mode==='clarisse') return 0;
+  const v = parseAmount(document.getElementById(w.p+'CustomVal').value);
+  if(isNaN(v) || v<0) return null;
+  if(w.unit==='pct') return v<=100 ? v : null;
+  const amt = parseAmount(document.getElementById(w.p+'Amount').value);
+  if(!(amt>0) || v>amt) return null;
+  return v / amt * 100;
+}
+function syncSplit(w){
+  $$(`#${w.p}Split .chip`).forEach(c=>c.classList.toggle('selected', c.dataset.val===w.mode));
+  $$(`#${w.p}CustomUnit .chip`).forEach(c=>c.classList.toggle('selected', c.dataset.val===w.unit));
+  document.getElementById(w.p+'CustomRow').style.display = w.mode==='custom' ? 'block' : 'none';
+  if(w.mode!=='custom') return;
+  const hint = document.getElementById(w.p+'CustomHint');
+  const pct = splitPct(w), amt = parseAmount(document.getElementById(w.p+'Amount').value);
+  if(pct===null) hint.textContent = w.unit==='pct' ? 'Bitte einen Anteil zwischen 0 und 100 % eingeben' : 'Julians Anteil darf nicht größer als der Betrag sein';
+  else if(amt>0) hint.textContent = `→ Julian ${fmtEUR(amt*pct/100)} · Clarisse ${fmtEUR(amt*(100-pct)/100)}`;
+  else hint.textContent = `→ Julian ${fmtPct(pct)} · Clarisse ${fmtPct(100-pct)}`;
+}
+function makeSplitWidget(p){
+  const w = { p, mode:'half', unit:'pct' };
+  document.getElementById(p+'SplitBlock').innerHTML = splitBlockHTML(p);
+  $$(`#${p}Split .chip`).forEach(c=>{ c.onclick = ()=>{ w.mode = c.dataset.val; syncSplit(w); }; });
+  $$(`#${p}CustomUnit .chip`).forEach(c=>{
+    c.onclick = ()=>{
+      const valEl = document.getElementById(p+'CustomVal');
+      const amt = parseAmount(document.getElementById(p+'Amount').value), cur = parseAmount(valEl.value);
+      if(!isNaN(cur) && amt>0 && c.dataset.val!==w.unit){
+        const conv = c.dataset.val==='eur' ? cur/100*amt : cur/amt*100;
+        valEl.value = String(Math.round(conv*100)/100).replace('.', ',');
+      }
+      w.unit = c.dataset.val; syncSplit(w);
+    };
+  });
+  document.getElementById(p+'CustomVal').addEventListener('input', ()=>syncSplit(w));
+  document.getElementById(p+'Amount').addEventListener('input', ()=>syncSplit(w));
+  syncSplit(w);
+  return w;
+}
+function setSplitWidget(w, pct){
+  const valEl = document.getElementById(w.p+'CustomVal');
+  if(pct===50) w.mode = 'half';
+  else if(pct===100) w.mode = 'julian';
+  else if(pct===0) w.mode = 'clarisse';
+  else { w.mode = 'custom'; w.unit = 'pct'; valEl.value = String(Math.round(pct*100)/100).replace('.', ','); }
+  if(w.mode!=='custom') valEl.value = '';
+  syncSplit(w);
+}
 async function addExpense(){
   const desc = $('#expDesc').value.trim();
-  const amountRaw = $('#expAmount').value.trim().replace(',', '.');
-  const amount = parseFloat(amountRaw);
+  const amount = Math.round(parseAmount($('#expAmount').value)*100)/100;
   if(!desc || isNaN(amount) || amount<=0){ setStatus('Bitte Beschreibung und gültigen Betrag angeben', true); return; }
+  const pct = splitPct(expSplitW);
+  if(pct===null){ setStatus('Bitte die individuelle Aufteilung prüfen', true); return; }
   const paidBy = $('#expPayer .chip.selected').dataset.val;
-  expenses.unshift({ id:uid(), desc, amount, paidBy, createdAt:Date.now() });
-  $('#expDesc').value=''; $('#expAmount').value='';
+  expenses.unshift({ id:uid(), desc, amount, paidBy, julianPct:pct, createdAt:tsFromISO($('#expDate').value) });
+  expenses.sort((a,b)=>b.createdAt-a.createdAt);
+  $('#expDesc').value = ''; $('#expAmount').value = ''; $('#expDate').value = todayISO();
+  setSplitWidget(expSplitW, 50);
   activeExpenseMonth = 'all';
   renderExpenses();
   await storageSet('household-expenses', JSON.stringify(expenses), true);
@@ -2700,28 +3751,26 @@ async function deleteExpense(id){
   renderExpenses();
   await storageSet('household-expenses', JSON.stringify(expenses), true);
 }
-function fmtEUR(n){ return n.toLocaleString('de-DE', {minimumFractionDigits:2, maximumFractionDigits:2}) + ' €'; }
 function monthKeyOf(ts){ const d=new Date(ts); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0'); }
 function monthLabelOf(k){ const parts=k.split('-'); return `${MONTH_NAMES[parseInt(parts[1])-1]} ${parts[0]}`; }
 function monthLabelShort(k){ const parts=k.split('-'); return `${MONTH_NAMES[parseInt(parts[1])-1].slice(0,3)} ${parts[0].slice(2)}`; }
-function sumTotal(list){ return list.reduce((a,e)=>a+e.amount,0); }
+function sumTotal(list){ return list.filter(e=>!e.isSettlement).reduce((a,e)=>a+e.amount, 0); }
 function calcBalanceText(list){
-  const totalM = list.filter(e=>e.paidBy==='Julian').reduce((a,e)=>a+e.amount,0);
-  const totalC = list.filter(e=>e.paidBy==='Clarisse').reduce((a,e)=>a+e.amount,0);
-  const diff = totalM-totalC; const half=Math.abs(diff)/2;
   if(list.length===0) return '—';
-  if(Math.abs(diff)<0.01) return 'Ausgeglichen';
-  return diff>0 ? `Clarisse schuldet Julian ${fmtEUR(half)}` : `Julian schuldet Clarisse ${fmtEUR(half)}`;
+  const n = Math.round(netBalance(list)*100)/100;
+  if(Math.abs(n) < 0.01) return 'Ausgeglichen';
+  return n>0 ? `Clarisse schuldet Julian ${fmtEUR(n)}` : `Julian schuldet Clarisse ${fmtEUR(-n)}`;
 }
 function expenseItemHTML(e){
-  const settleTag = e.isSettlement ? `<span class="tag" style="background:var(--sage);color:#fff;">Ausgleich</span>` : '';
+  const settleTag = e.isSettlement ? `<span class="tag" style="background:var(--sage);color:#fff;">Ausgleich</span> ` : '';
+  const split = splitLabel(e);
   return `<li class="item" data-id="${e.id}">
-      <div class="expense-row">
+      <div class="expense-row" style="cursor:pointer;">
         <div class="expense-top">
           <span class="expense-desc">${escapeHtml(e.desc)}</span>
           <span class="expense-amount">${fmtEUR(e.amount)}</span>
         </div>
-        <span class="expense-meta">${settleTag} bezahlt von ${e.paidBy} · ${new Date(e.createdAt).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})}</span>
+        <span class="expense-meta">${settleTag}bezahlt von ${e.paidBy}${split ? ' · ' + split : ''} · ${new Date(e.createdAt).toLocaleDateString('de-DE',{day:'2-digit',month:'2-digit'})}</span>
       </div>
       <button class="del" aria-label="löschen">${trashSvg()}</button>
     </li>`;
@@ -2734,56 +3783,87 @@ function renderExpenseMonthChips(){
   $$('#expMonthChips .proj-chip').forEach(b=>{ b.onclick=()=>{ activeExpenseMonth=b.dataset.val; renderExpenses(); }; });
 }
 function renderExpenses(){
-  $('#balanceText').textContent = calcBalanceText(expenses);
+  const balText = calcBalanceText(expenses);
+  $('#balanceText').textContent = balText;
   const settleBtn = $('#settleBtn');
-  settleBtn.style.display = (expenses.length>0 && calcBalanceText(expenses)!=='Ausgeglichen') ? 'block' : 'none';
+  settleBtn.style.display = (expenses.length>0 && balText!=='Ausgeglichen') ? 'block' : 'none';
   settleBtn.onclick = settleUp;
   renderExpenseMonthChips();
   const filtered = activeExpenseMonth==='all' ? expenses : expenses.filter(e=>monthKeyOf(e.createdAt)===activeExpenseMonth);
-
   if(activeExpenseMonth==='all'){
     const groups = {};
-    filtered.forEach(e=>{ const k=monthKeyOf(e.createdAt); if(!groups[k]) groups[k]=[]; groups[k].push(e); });
+    filtered.forEach(e=>{ const k = monthKeyOf(e.createdAt); if(!groups[k]) groups[k] = []; groups[k].push(e); });
     const keys = Object.keys(groups).sort((a,b)=>b.localeCompare(a));
     $('#expList').innerHTML = keys.map(k=>{
       const list = groups[k];
       const header = `<div class="group-header" style="display:flex;justify-content:space-between;align-items:baseline;">${monthLabelOf(k)}<span style="font-family:'IBM Plex Mono',monospace;font-size:.78rem;color:var(--muted);font-weight:500;">${fmtEUR(sumTotal(list))}</span></div>`;
       return header + `<ul class="list group-list">${list.map(expenseItemHTML).join('')}</ul>`;
     }).join('');
-    $('#monthStats').style.display='none';
+    $('#monthStats').style.display = 'none';
   } else {
     $('#expList').innerHTML = `<ul class="list">${filtered.map(expenseItemHTML).join('')}</ul>`;
+    const sh = filtered.filter(e=>!e.isSettlement).reduce((a,e)=>{ const s = sharesOf(e); a.J += s.Julian; a.C += s.Clarisse; return a; }, {J:0, C:0});
     const stats = $('#monthStats');
-    stats.style.display='block';
-    stats.innerHTML = `<div class="label">${monthLabelOf(activeExpenseMonth)}</div><div class="amount" style="font-size:1rem;">${fmtEUR(sumTotal(filtered))} · ${calcBalanceText(filtered)}</div>`;
+    stats.style.display = 'block';
+    stats.innerHTML = `<div class="label">${monthLabelOf(activeExpenseMonth)}</div>
+      <div class="amount" style="font-size:1rem;">${fmtEUR(sumTotal(filtered))} ausgegeben</div>
+      <div style="font-size:.82rem;color:var(--muted);margin-top:6px;">Anteil Julian ${fmtEUR(sh.J)} · Anteil Clarisse ${fmtEUR(sh.C)}</div>
+      <div style="font-size:.82rem;margin-top:4px;color:var(--ink);">${calcBalanceText(filtered)}</div>`;
   }
   $('#expEmpty').style.display = expenses.length===0 ? 'block' : 'none';
   bindListEvents('#expList', null, deleteExpense);
-  bindEditableText('#expList', '.expense-desc', id=>expenses.find(e=>e.id===id), item=>item.desc, editExpenseDesc);
-  bindEditableText('#expList', '.expense-amount', id=>expenses.find(e=>e.id===id), item=>item.amount.toString().replace('.',','), editExpenseAmount);
-}
-async function editExpenseDesc(id, newVal){
-  const e = expenses.find(x=>x.id===id);
-  if(e && e.desc !== newVal){ e.desc = newVal; await storageSet('household-expenses', JSON.stringify(expenses), true); }
-  renderExpenses();
+  $$('#expList .expense-row').forEach(r=>{ r.onclick = ()=> openExpenseModal(r.closest('.item').dataset.id); });
 }
 async function settleUp(){
-  const totalM = expenses.filter(e=>e.paidBy==='Julian').reduce((a,e)=>a+e.amount,0);
-  const totalC = expenses.filter(e=>e.paidBy==='Clarisse').reduce((a,e)=>a+e.amount,0);
-  const diff = totalM - totalC;
-  if(Math.abs(diff) < 0.01) return;
-  const ower = diff > 0 ? 'Clarisse' : 'Julian';
-  const amount = Math.abs(diff);
-  expenses.unshift({ id:uid(), desc:'Schulden beglichen', amount, paidBy:ower, isSettlement:true, createdAt:Date.now() });
+  const n = Math.round(netBalance(expenses)*100)/100;
+  if(Math.abs(n) < 0.01) return;
+  const ower = n>0 ? 'Clarisse' : 'Julian';
+  const receiver = ower==='Clarisse' ? 'Julian' : 'Clarisse';
+  if(!confirm(`${ower} zahlt ${receiver} ${fmtEUR(Math.abs(n))} — als beglichen eintragen?`)) return;
+  expenses.unshift({ id:uid(), desc:'Schulden beglichen', amount:Math.abs(n), paidBy:ower, julianPct: receiver==='Julian' ? 100 : 0, isSettlement:true, createdAt:Date.now() });
   renderExpenses();
   await storageSet('household-expenses', JSON.stringify(expenses), true);
 }
-async function editExpenseAmount(id, newVal){
+function openExpenseModal(id){
   const e = expenses.find(x=>x.id===id);
-  const parsed = parseFloat(newVal.replace(',', '.'));
-  if(e && !isNaN(parsed) && parsed>0 && e.amount !== parsed){ e.amount = parsed; await storageSet('household-expenses', JSON.stringify(expenses), true); }
-  renderExpenses();
+  if(!e) return;
+  editingExpenseId = id;
+  $('#emDesc').value = e.desc;
+  $('#emAmount').value = String(e.amount).replace('.', ',');
+  $('#emDate').value = isoFromTs(e.createdAt);
+  $$('#emPayer .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===e.paidBy));
+  $('#emSplitBlock').style.display = e.isSettlement ? 'none' : 'block';
+  $('#emSettleNote').style.display = e.isSettlement ? 'block' : 'none';
+  setSplitWidget(emSplitW, jPct(e));
+  showModal('expenseModal');
 }
+$('#emSave').addEventListener('click', async ()=>{
+  const e = expenses.find(x=>x.id===editingExpenseId);
+  if(!e){ hideModal('expenseModal'); return; }
+  const desc = $('#emDesc').value.trim();
+  const amount = Math.round(parseAmount($('#emAmount').value)*100)/100;
+  if(!desc || isNaN(amount) || amount<=0){ setStatus('Bitte Beschreibung und gültigen Betrag angeben', true); return; }
+  if(!e.isSettlement){
+    const pct = splitPct(emSplitW);
+    if(pct===null){ setStatus('Bitte die individuelle Aufteilung prüfen', true); return; }
+    e.julianPct = pct;
+  }
+  e.desc = desc; e.amount = amount;
+  const payer = $('#emPayer .chip.selected'); if(payer) e.paidBy = payer.dataset.val;
+  e.createdAt = tsFromISO($('#emDate').value, e.createdAt);
+  expenses.sort((a,b)=>b.createdAt-a.createdAt);
+  hideModal('expenseModal');
+  renderExpenses();
+  await storageSet('household-expenses', JSON.stringify(expenses), true);
+});
+$('#emDelete').addEventListener('click', async ()=>{
+  if(!confirm('Ausgabe löschen?')) return;
+  hideModal('expenseModal');
+  await deleteExpense(editingExpenseId);
+});
+const expSplitW = makeSplitWidget('exp');
+const emSplitW = makeSplitWidget('em');
+$('#expDate').value = todayISO();
 
 /* ---------- Photos ---------- */
 function compressImage(file, maxDim=900, quality=0.62){

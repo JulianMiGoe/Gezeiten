@@ -259,6 +259,135 @@ button.item{ font-family:inherit; color:inherit; }
 .mq-label{ fill:var(--muted); font-size:11px; font-family:'Inter', sans-serif; }
 .sp-fig-link .mq-m{ cursor:pointer; pointer-events:all; }
 .sp-fig-sm .mq{ max-width:290px; }
+.spa{ margin:2px 0 12px; }
+.spa-stage{ position:relative; background:var(--foam); border-radius:14px; padding:8px 8px 4px; }
+.spa-tap{ cursor:pointer; }
+.spa-svg{ display:block; width:100%; height:auto; aspect-ratio:1.75; }
+.spa-play{ position:absolute; left:8px; top:8px; width:36px; height:36px; border-radius:50%; border:1px solid var(--line); background:var(--card); color:var(--ink); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; }
+.spa-play svg{ width:16px; height:16px; fill:currentColor; }
+.spa-play:focus-visible, .spa-th:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+.spa-strip{ display:grid; grid-template-columns:repeat(var(--n), minmax(0, 1fr)); gap:6px; margin-top:8px; }
+.spa-th{ display:flex; flex-direction:column; align-items:stretch; gap:3px; padding:4px 4px 5px; border:1.5px solid var(--line); border-radius:10px; background:var(--card); cursor:pointer; font-family:'Inter'; min-width:0; color:var(--ink); }
+.spa-th.on{ border-color:var(--coral); }
+.spa-lb{ font-size:.7rem; color:var(--muted); line-height:1.25; text-align:left; overflow:hidden; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; }
+.spa-lb b{ color:var(--ink); font-weight:600; margin-right:1px; }
+.spa-th.on .spa-lb{ color:var(--ink); }
+.spa-hint{ font-size:.78rem; color:var(--muted); margin-top:6px; text-align:center; }
+.rg-fig path, .rg-fig circle{ stroke:var(--mq-line, #A88B62); stroke-width:1.1; vector-effect:non-scaling-stroke; stroke-linejoin:round; }
+.rg-n path, .rg-n circle{ fill:var(--mq-wood, #EBDCC3); }
+.rg-f path, .rg-f circle{ fill:var(--mq-far, #D2B98F); }
+.rg-floor{ stroke:var(--muted); stroke-width:1.4; vector-effect:non-scaling-stroke; }
+.rg-wall{ stroke:var(--muted); stroke-width:2.5; vector-effect:non-scaling-stroke; }
+.spa-ico{ display:block; width:100%; height:100%; }
+.spa-ico .rg-fig path, .spa-ico .rg-fig circle{ stroke-width:.8; }
+.sp-ex-ico{ width:60px; height:44px; flex-shrink:0; align-self:center; background:var(--foam); border-radius:8px; padding:3px; box-sizing:border-box; }
+.rg-mat{ fill:var(--line); }
+.sp-entry-wk{ font-size:.68rem; color:var(--muted); border:1px solid var(--line); border-radius:20px; padding:1px 7px; white-space:nowrap; max-width:100%; overflow:hidden; text-overflow:ellipsis; }
+/* Trainings */
+.wk-card{ padding:14px 16px; }
+.wk-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+.wk-title{ font-family:'Fraunces', serif; font-weight:600; font-size:1.06rem; color:var(--heading); line-height:1.3; }
+.wk-edit{ width:36px; height:36px; border-radius:10px; border:1px solid var(--line); background:var(--card); color:var(--muted); cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; }
+.wk-edit:hover, .wk-edit:focus-visible{ color:var(--ink); border-color:var(--muted); }
+.wk-meta{ font-size:.78rem; color:var(--muted); line-height:1.45; margin:2px 0 6px; }
+.wk-list{ display:flex; flex-direction:column; margin-bottom:4px; }
+.wk-row{ display:flex; align-items:center; gap:10px; width:100%; padding:8px 0; border:none; border-top:1px solid var(--line); background:none; text-align:left; font-family:'Inter'; color:var(--ink); cursor:pointer; }
+.wk-row:first-child{ border-top:none; }
+.wk-ico{ width:52px; height:38px; }
+.wk-row-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; }
+.wk-row-name{ font-size:.9rem; font-weight:600; }
+.wk-row-plan{ font-size:.75rem; color:var(--muted); }
+.wk-row-last{ font-size:.77rem; color:var(--ink); }
+.wk-row-last.none{ color:var(--muted); font-style:italic; }
+.wk-quick{ display:flex; align-items:center; gap:10px; padding:8px 0; border-top:1px solid var(--line); }
+.balance-card .label + .wk-quick{ border-top:none; }
+.wk-quick-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; font-size:.9rem; color:var(--ink); }
+.wk-quick-main span{ font-size:.76rem; color:var(--muted); }
+.wk-play{ width:42px; height:42px; border-radius:50%; border:none; background:var(--accent); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; padding:0; }
+.wk-play svg{ width:18px; height:18px; fill:currentColor; margin-left:2px; }
+.wk-it{ display:flex; gap:10px; align-items:flex-start; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:10px; margin-bottom:8px; }
+.wk-it .wk-ico{ margin-top:2px; }
+.wk-it-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:6px; }
+.wk-it-name{ font-size:.9rem; font-weight:600; color:var(--ink); }
+.wk-mini{ display:flex; align-items:center; gap:6px; font-size:.8rem; color:var(--muted); }
+.wk-mini > span{ flex:0 0 7.6em; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.wk-mini b{ color:var(--ink); font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:.92rem; }
+.wk-mini button{ width:34px; height:32px; border-radius:9px; border:1px solid var(--line); background:var(--foam); color:var(--ink); font-size:1.05rem; line-height:1; cursor:pointer; flex-shrink:0; padding:0; }
+.wk-it-side{ display:flex; flex-direction:column; gap:4px; flex-shrink:0; }
+.wk-mv{ width:32px; height:30px; border-radius:9px; border:1px solid var(--line); background:var(--card); color:var(--muted); cursor:pointer; font-size:.88rem; padding:0; }
+.wk-mv:disabled{ opacity:.35; cursor:default; }
+.wk-mv[data-a="del"]:hover{ color:var(--coral); border-color:var(--coral); }
+.wk-pick-list{ max-height:46vh; overflow-y:auto; border:1px solid var(--line); border-radius:12px; background:var(--card); padding:0 10px; }
+.wk-pick{ display:flex; align-items:center; gap:10px; width:100%; padding:7px 0; border:none; border-top:1px solid var(--line); background:none; text-align:left; font-family:'Inter'; color:var(--ink); cursor:pointer; }
+.wk-pick:first-child{ border-top:none; }
+.wk-pick-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; }
+.wk-pick-name{ font-size:.88rem; font-weight:600; }
+.wk-pick-mus{ font-size:.74rem; color:var(--muted); }
+.wk-pick-add{ width:30px; height:30px; border-radius:50%; border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:1rem; color:var(--muted); flex-shrink:0; }
+.wk-pick.on .wk-pick-add{ background:var(--accent); border-color:var(--accent); color:#fff; }
+/* Training durchführen */
+.wr-banner{ display:flex; align-items:center; gap:12px; width:100%; text-align:left; background:var(--card); border:1.5px solid var(--coral); border-radius:16px; padding:12px 14px; margin-bottom:16px; cursor:pointer; font-family:'Inter'; color:var(--ink); }
+.wr-pulse{ width:10px; height:10px; border-radius:50%; background:var(--coral); flex-shrink:0; animation:wrpulse 1.6s ease-in-out infinite; }
+@keyframes wrpulse{ 0%,100%{ box-shadow:0 0 0 0 rgba(193,84,61,.45); } 50%{ box-shadow:0 0 0 7px rgba(193,84,61,0); } }
+.wr-banner-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; font-size:.9rem; }
+.wr-banner-main b{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.wr-banner-main > span{ font-size:.78rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+.wr-banner-go{ font-size:.84rem; font-weight:600; color:var(--coral); flex-shrink:0; }
+.wr-head{ position:sticky; top:0; z-index:6; background:var(--foam); margin:0 -20px 12px; padding:10px 20px; border-bottom:1px solid var(--line); }
+.wr-top{ display:flex; align-items:center; gap:8px; }
+.wr-titles{ flex:1; min-width:0; }
+.wr-name{ font-family:'Fraunces', serif; font-weight:600; font-size:1.05rem; color:var(--heading); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.wr-meta{ font-size:.78rem; color:var(--muted); font-variant-numeric:tabular-nums; }
+.wr-sound{ width:38px; height:38px; border-radius:10px; border:1px solid var(--line); background:var(--card); cursor:pointer; font-size:1rem; flex-shrink:0; padding:0; }
+.wr-fin{ height:38px; border-radius:10px; border:none; background:var(--accent); color:#fff; font-family:'Inter'; font-weight:600; font-size:.85rem; padding:0 14px; cursor:pointer; flex-shrink:0; }
+.wr-bar{ height:6px; border-radius:3px; background:var(--line); overflow:hidden; margin-top:9px; }
+.wr-bar i{ display:block; height:100%; background:var(--coral); border-radius:3px; transition:width .3s ease; }
+.wr-rest{ display:flex; align-items:center; gap:8px; margin-top:9px; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:6px 7px 6px 12px; font-size:.85rem; color:var(--muted); }
+.wr-rest[hidden]{ display:none; }
+.wr-rest b{ font-family:'IBM Plex Mono', monospace; font-size:1.1rem; color:var(--ink); font-weight:600; font-variant-numeric:tabular-nums; }
+.wr-sp{ flex:1; }
+.wr-rest button{ height:34px; border-radius:9px; border:1px solid var(--line); background:var(--foam); color:var(--ink); font-family:'Inter'; font-size:.8rem; padding:0 11px; cursor:pointer; }
+.wr-ex{ padding:14px; scroll-margin-top:150px; }
+.wr-ex.cur{ border-color:var(--coral); box-shadow:0 0 0 1px var(--coral); }
+.wr-ex.fin .wr-exhead, .wr-ex.fin .wr-sets{ opacity:.72; }
+.wr-exhead{ display:flex; gap:10px; align-items:center; }
+button.wr-ico.sp-ex-ico{ border:none; cursor:pointer; }
+.wr-exinfo{ flex:1; min-width:0; }
+.wr-exname{ font-weight:600; font-size:.95rem; color:var(--ink); }
+.wr-ok{ color:var(--sage); }
+.wr-last{ font-size:.8rem; color:var(--ink); margin-top:2px; }
+.wr-plan{ font-size:.74rem; color:var(--muted); }
+.wr-howbtn{ background:none; border:none; color:var(--muted); font-family:'Inter'; font-size:.75rem; text-decoration:underline; cursor:pointer; padding:4px 2px; flex-shrink:0; align-self:flex-start; }
+.wr-how{ margin-top:10px; }
+.wr-how[hidden]{ display:none; }
+.wr-how .spa{ margin:0 0 8px; }
+.wr-sets{ margin-top:8px; }
+.wr-set{ display:flex; align-items:center; gap:8px; padding:7px 0; border-top:1px solid var(--line); }
+.wr-setlab{ flex:1; min-width:0; display:flex; flex-direction:column; font-size:.82rem; color:var(--ink); line-height:1.25; }
+.wr-setlab b{ font-weight:600; }
+.wr-setlab span{ font-size:.7rem; color:var(--muted); }
+.wr-ctl{ flex:0 1 128px; min-width:110px; gap:4px; }
+.wr-ctl .sp-stepbtn{ width:34px; height:38px; border-radius:10px; font-size:1.1rem; }
+.wr-ctl .sp-stepbtn:disabled{ opacity:.35; cursor:default; }
+.wr-ctl input{ padding:8px 2px; font-size:1rem; }
+.wr-btn{ width:40px; height:40px; border-radius:50%; border:1.6px solid var(--line); background:var(--card); color:var(--ink); cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; padding:0; }
+.wr-btn svg{ width:16px; height:16px; fill:currentColor; }
+.wr-check svg{ width:18px; height:18px; fill:none; stroke:var(--muted); }
+.wr-set.done .wr-check{ background:var(--coral); border-color:var(--coral); }
+.wr-set.done .wr-check svg{ stroke:#fff; }
+.wr-set.done input{ color:var(--muted); }
+.wr-set.run input{ color:var(--coral); font-weight:700; }
+.wr-set.run .wr-timer{ background:var(--ink); border-color:var(--ink); color:var(--card); }
+.wr-setbtns{ display:flex; gap:8px; margin-top:6px; }
+.wr-mini{ background:none; border:1px dashed var(--line); color:var(--muted); border-radius:10px; padding:6px 12px; font-family:'Inter'; font-size:.78rem; cursor:pointer; }
+.wr-alldone{ text-align:center; font-family:'Fraunces', serif; font-weight:600; color:var(--heading); margin:2px 0 4px; }
+.wr-donecard{ border-color:var(--sage); }
+.wr-pb{ font-size:.85rem; color:var(--ink); margin-top:8px; }
+.wk-tplrow{ display:flex; align-items:center; gap:10px; width:100%; background:none; border:none; border-top:1px solid var(--line); padding:10px 0; font-family:'Inter'; color:var(--ink); text-align:left; cursor:pointer; }
+.balance-card .td-src + .wk-tplrow{ border-top:none; }
+.wk-tpl-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; font-size:.9rem; }
+.wk-tpl-main b{ font-weight:600; }
+.wk-tpl-main span{ font-size:.76rem; color:var(--muted); line-height:1.4; }
 .sp-legend{ font-size:.8rem; line-height:1.5; color:var(--ink); margin:8px 0 2px; }
 .sp-legend b{ font-weight:600; }
 .sp-sw{ display:inline-block; width:11px; height:11px; border-radius:3px; background:var(--coral); vertical-align:-1px; margin-right:6px; }
@@ -690,10 +819,13 @@ nav.bottom{
     <section class="panel" data-panel="sport">
       <div class="chips" id="spViewChips">
         <button class="chip selected" data-val="today" type="button">Heute</button>
+        <button class="chip" data-val="workouts" type="button">Trainings</button>
         <button class="chip" data-val="library" type="button">Übungen</button>
         <button class="chip" data-val="stats" type="button">Statistik</button>
       </div>
       <div id="spToday"></div>
+      <div id="spWorkouts" style="display:none;"></div>
+      <div id="spRun" style="display:none;"></div>
       <div id="spLibrary" style="display:none;">
         <div class="balance-card">
           <div id="spLibFig" class="sp-fig"></div>
@@ -883,11 +1015,13 @@ nav.bottom{
 <div id="spExModal" class="modal-bg">
   <div class="sheet">
     <div class="sheet-head"><span class="sheet-title" id="spExTitle"></span><button class="sheet-close" data-close="spExModal" type="button" aria-label="schließen">✕</button></div>
-    <div id="spExMeta" class="td-meta" style="margin-top:-10px;"></div>
+    <div id="spExMeta" class="td-meta" style="margin-top:-10px; margin-bottom:8px;"></div>
+    <div id="spExAnim" class="spa"></div>
+    <div id="spExHow" class="td-text" style="margin-top:0;"></div>
+    <div id="spExTip" class="td-src"></div>
+    <div class="sp-subhead">Beanspruchte Muskeln</div>
     <div id="spExFigure" class="sp-fig sp-fig-sm"></div>
     <div id="spExLegend"></div>
-    <div id="spExHow" class="td-text"></div>
-    <div id="spExTip" class="td-src"></div>
     <div class="balance-card" style="margin-top:14px;">
       <div class="label">Eintragen</div>
       <div class="sp-steps">
@@ -904,6 +1038,29 @@ nav.bottom{
       <button id="spSave" class="btn-wide" type="button" style="margin:0;">Eintragen</button>
     </div>
     <div id="spExProgress"></div>
+  </div>
+</div>
+
+<div id="wkModal" class="modal-bg">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title" id="wkTitle">Neues Training</span><button class="sheet-close" data-close="wkModal" type="button" aria-label="schließen">✕</button></div>
+    <input type="text" id="wkName" class="field" maxlength="40" placeholder="Name, z. B. Ganzkörper am Montag" aria-label="Name des Trainings" autocomplete="off">
+    <div class="field-label">Übungen</div>
+    <div id="wkItems"></div>
+    <button id="wkAddToggle" class="clear-btn" type="button" aria-controls="wkPicker" style="width:100%; text-align:center; margin:4px 0 0;">+ Übung hinzufügen</button>
+    <div id="wkPicker" style="display:none; margin-top:10px;">
+      <input type="search" id="wkSearch" class="field" placeholder="Übung oder Muskel suchen …" autocomplete="off" aria-label="Übung suchen" style="margin-bottom:8px;">
+      <div class="chips proj-chips-row" id="wkPickCats" style="margin-bottom:8px;"></div>
+      <div id="wkPickList" class="wk-pick-list"></div>
+    </div>
+    <div class="field-label" style="margin-top:16px;">Pause zwischen den Sätzen</div>
+    <div class="chips" id="wkRest"></div>
+    <div id="wkCover"></div>
+    <div id="wkMsg" role="alert" style="font-size:.8rem; color:var(--coral); min-height:1em; margin:6px 0 6px;"></div>
+    <div style="display:flex; gap:10px;">
+      <button id="wkDelete" type="button" class="clear-btn" style="flex:1; margin:0; text-align:center;">Löschen</button>
+      <button id="wkSave" type="button" class="btn-wide" style="flex:2; margin:0;">Speichern</button>
+    </div>
   </div>
 </div>
 
@@ -2174,6 +2331,7 @@ function applyTheme(key){
   root.setProperty('--mq-wood', key==='nacht' ? '#4A4338' : '#EBDCC3');
   root.setProperty('--mq-line', key==='nacht' ? '#9A8566' : '#A88B62');
   root.setProperty('--mq-joint', key==='nacht' ? '#5A5144' : '#DCC6A0');
+  root.setProperty('--mq-far', key==='nacht' ? '#37312A' : '#D2B98F');
   root.setProperty('--tide-mid', t.mid);
   root.setProperty('--foam', t.foam);
   root.setProperty('--card', t.card);
@@ -3957,6 +4115,526 @@ function sportFigureSVG(opts){
   };
   return `<svg class="mq mq-${opts.mode||'show'}" viewBox="22 8 356 428" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${opts.label ? String(opts.label).replace(/"/g,'') : 'Muskelfigur'}">${view('front', 0)}${view('back', 178)}</svg>`;
 }
+/* ---------- Sport: bewegliche Gliederpuppe für Bewegungsabläufe ----------
+   Winkel in Grad, mathematisch (0° = nach rechts, 90° = nach oben). Seitenansicht: Blick nach rechts.
+   Pose: { v:'side'|'front'|'top', t:Rumpf, h:Kopf, aA/aB:[Oberarm, Unterarm, Hand], lA/lB:[Oberschenkel, Unterschenkel, Fuß],
+           an:[Punkt, x, y] (Verankerung), fit:{pt, y|x, keys} (Winkel drehen, bis Punkt den Boden/die Wand berührt), sc:{} (Verkürzung) }
+   Seitenansicht: A = nahe Körperseite, B = ferne. Frontansicht: A = Betrachter links, B = rechts. */
+const RG_LEN = { torso:58, neck:6, uarm:30, farm:26, thigh:42, shin:40 };
+function rgDir(a){ const r = a * Math.PI / 180; return [Math.cos(r), Math.sin(r)]; }
+function rgAdd(p, a, len){ const d = rgDir(a); return [p[0] + d[0]*len, p[1] + d[1]*len]; }
+function rgRot(v, a){ const d = rgDir(a); return [v[0]*d[0] - v[1]*d[1], v[0]*d[1] + v[1]*d[0]]; }
+function rgPts(p){
+  const front = p.v !== 'side', sc = p.sc || {};
+  const t = p.t, h = p.h === undefined ? t : p.h;
+  const hip = [0, 0], tl = RG_LEN.torso * (sc.t === undefined ? 1 : sc.t);
+  const P = f=>rgAdd(hip, t, tl * f);
+  const sh = P(0.93);
+  const shA = front ? rgAdd(sh, t + 90, 18) : sh, shB = front ? rgAdd(sh, t - 90, 18) : sh;
+  const hpA = front ? rgAdd(hip, t + 90, 8.5) : hip, hpB = front ? rgAdd(hip, t - 90, 8.5) : hip;
+  const n0 = P(1.0), n1 = rgAdd(n0, h, RG_LEN.neck * (sc.h === undefined ? 1 : sc.h)), head = rgAdd(n1, h, 10.5 * (sc.h === undefined ? 1 : sc.h));
+  const arm = (s, a, k)=>{
+    const s0 = sc[k] || [1, 1];
+    const e = rgAdd(s, a[0], RG_LEN.uarm * s0[0]), w = rgAdd(e, a[1], RG_LEN.farm * s0[1]);
+    const hd = a[2] === undefined ? a[1] : a[2], hc = rgAdd(w, hd, 4.5);
+    return { s, e, w, hd, hc, palm:rgAdd(hc, hd - 90, 2.8), a };
+  };
+  const leg = (hp, l, k)=>{
+    const s0 = sc[k] || [1, 1];
+    const kn = rgAdd(hp, l[0], RG_LEN.thigh * s0[0]), an = rgAdd(kn, l[1], RG_LEN.shin * s0[1]);
+    const f = l[2] === undefined ? l[1] + 90 : l[2];
+    if(front){ const sole = rgAdd(an, l[1], 8.5); return { hp, kn, an, f, fc:rgAdd(an, l[1], 4.2), heel:sole, toe:sole, sole, l }; }
+    const heelC = rgRot([-4.5, -3.2], f), toeC = rgRot([12.5, -3.8], f);
+    const heel = [an[0] + heelC[0], an[1] + heelC[1]], toe = [an[0] + toeC[0], an[1] + toeC[1]];
+    /* Ferse/Zehe = tiefster Punkt der Fußform (Bodenkontakt) */
+    return { hp, kn, an, f, heelC:heel, toeC:toe, heel:[heel[0], heel[1] - 3.2], toe:[toe[0], toe[1] - 2.6], sole:rgAdd(an, f - 90, 6.4), l };
+  };
+  const A = arm(shA, p.aA, 'aA'), B = arm(shB, p.aB, 'aB'), LA = leg(hpA, p.lA, 'lA'), LB = leg(hpB, p.lB, 'lB');
+  return { p, front, t, h, P, hip, sh, shA, shB, n0, n1, head, A, B, LA, LB,
+    named:{ hip, sh, head, neck:n0,
+      elbowA:A.e, elbowB:B.e, wristA:A.w, wristB:B.w, palmA:A.palm, palmB:B.palm, handA:A.hc, handB:B.hc,
+      kneeA:LA.kn, kneeB:LB.kn, ankleA:LA.an, ankleB:LB.an, heelA:LA.heel, heelB:LB.heel, toeA:LA.toe, toeB:LB.toe, soleA:LA.sole, soleB:LB.sole,
+      hipA:hpA, hipB:hpB, seat:rgAdd(hip, t + 180, 10.5), butt:rgAdd(hip, t + 90, 10.5), hipfront:rgAdd(hip, t - 90, 10.5),
+      back:rgAdd(P(0.68), t + 90, 11.5), belly:rgAdd(P(0.62), t - 90, 11.5), crown:rgAdd(head, h, 11) } };
+}
+function rgShift(R, dx, dy){
+  const seen = new Set();
+  const m = q=>{ if(!q || seen.has(q)) return; seen.add(q); q[0] += dx; q[1] += dy; };
+  [R.hip, R.sh, R.shA, R.shB, R.n0, R.n1, R.head].forEach(m);
+  [R.A, R.B].forEach(X=>[X.s, X.e, X.w, X.hc, X.palm].forEach(m));
+  [R.LA, R.LB].forEach(L=>[L.hp, L.kn, L.an, L.fc, L.heel, L.toe, L.sole, L.heelC, L.toeC].forEach(m));
+  Object.values(R.named).forEach(m);
+  R.off = [dx, dy];
+  return R;
+}
+/* Tiefster Punkt der gezeichneten Formen: 'low' = Rumpf, Becken, Hals und Kopf; 'lowall' = alles inkl. Arme und Beine */
+function rgCapLow(a, b, ra, rb){ return Math.min(a[1] - ra, b[1] - rb); }
+function rgEllLow(c, rx, ry, ang){ const r = ang * Math.PI / 180; return c[1] - Math.sqrt(Math.pow(rx * Math.sin(r), 2) + Math.pow(ry * Math.cos(r), 2)); }
+function rgLow(R, all){
+  const P = R.P, w = R.front ? [13.5, 12.5, 10, 15.5, 17.5] : [10.5, 9.5, 7.5, 11.5, 10];
+  const arms = all===true || all==='arms', legs = all===true || all==='legs';
+  let m = Math.min(rgCapLow(P(-0.08), P(0.28), w[0], w[1]), rgCapLow(P(0.33), P(0.47), w[2], w[2]), rgCapLow(P(0.5), P(0.9), w[3], w[4]),
+    rgCapLow(R.n0, R.n1, 4, 4), rgEllLow(R.head, 11, R.front ? 9 : 8.5, R.h));
+  if(arms) [R.A, R.B].forEach(X=>{ m = Math.min(m, rgCapLow(X.s, X.e, 5, 4.3), rgCapLow(X.e, X.w, 4.2, 3.2), rgEllLow(X.hc, 5.2, 3.3, X.hd)); });
+  if(legs) [R.LA, R.LB].forEach(L=>{ m = Math.min(m, rgCapLow(L.hp, L.kn, 7.6, 5.8), rgCapLow(L.kn, L.an, 5.4, 3.7), R.front ? rgEllLow(L.fc, 4, 6, L.l[1]) : rgCapLow(L.heelC, L.toeC, 3.2, 2.6)); });
+  return m;
+}
+const RG_LOWS = { low:false, lowall:true, lowleg:'legs', lowarm:'arms' };
+/* Wert eines benannten Punkts; 'low'/'lowall' = tiefster Formpunkt (nur y) */
+function rgPtVal(R, pt, axis){
+  if(pt in RG_LOWS) return axis ? rgLow(R, RG_LOWS[pt]) : R.hip[0];
+  return R.named[pt][axis];
+}
+function rgAnchored(p){
+  const R = rgPts(p);
+  if(!p.an) return R;
+  const name = p.an[0];
+  if(name.indexOf('low')===0){
+    const parts = name.split(':'), ref = R.named[parts[1] || 'hip'];
+    return rgShift(R, p.an[1] - ref[0], p.an[2] - rgLow(R, RG_LOWS[parts[0]]));
+  }
+  const q = R.named[name];
+  return rgShift(R, p.an[1] - q[0], p.an[2] - q[1]);
+}
+const RG_KEYS = { body:['t','h','lA','lB'], body2:['t','h','lA01','lB01'], th:['t','h'], legs:['lA','lB'], legs2:['lA01','lB01'], lA:['lA'], lB:['lB'], lA2:['lA01'], lB2:['lB01'] };
+function rgRotKeys(p, keys, d){
+  const q = Object.assign({}, p);
+  (RG_KEYS[keys] || keys).forEach(k=>{
+    if(k==='t' || k==='h'){ if(k==='h' && q.h===undefined) return; q[k] = (q[k] === undefined ? q.t : q[k]) + d; return; }
+    const base = k.slice(0, 2), idx = k.length > 2 ? k.slice(2).split('').map(Number) : [0, 1, 2];
+    const arr = q[base].slice();
+    if(arr[2]===undefined && base[0]==='l' && idx.includes(2)) arr[2] = arr[1] + 90;
+    idx.forEach(i=>{ if(arr[i]!==undefined) arr[i] += d; });
+    q[base] = arr;
+  });
+  return q;
+}
+/* Dreht die angegebenen Winkel, bis ein Punkt eine Zielhöhe (y) oder Wandposition (x) erreicht */
+function rgSolve(p){
+  if(!p.fit) return p;
+  if(Array.isArray(p.fit)){
+    /* mehrere Bedingungen: abwechselnd lösen, bis alle erfüllt sind (Gauß-Seidel) */
+    let q = p;
+    for(let it=0; it<8; it++){
+      p.fit.forEach(f=>{ q = rgSolve1(Object.assign({}, q, { fit:f })); });
+      const R = rgAnchored(q);
+      if(p.fit.every(f=>{ const ax = f.x !== undefined ? 0 : 1; return Math.abs(rgPtVal(R, f.pt, ax) - (ax ? f.y : f.x)) < 0.05; })) break;
+    }
+    return Object.assign({}, q, { fit:p.fit });
+  }
+  return rgSolve1(p);
+}
+function rgSolve1(p){
+  const f = p.fit, axis = f.x !== undefined ? 0 : 1, target = axis ? f.y : f.x;
+  const g = d=>rgPtVal(rgAnchored(rgRotKeys(p, f.keys, d)), f.pt, axis) - target;
+  let best = null;
+  for(let s=0; s<=80 && best===null; s+=2){
+    for(const sgn of [1, -1]){
+      const a = sgn * s, b = sgn * (s + 2), ga = g(a), gb = g(b);
+      if(ga===0){ best = a; break; }
+      if(ga * gb < 0){ let lo = a, hi = b, glo = ga; for(let i=0;i<30;i++){ const mid = (lo + hi)/2, gm = g(mid); if(glo * gm <= 0) hi = mid; else { lo = mid; glo = gm; } } best = (lo + hi)/2; break; }
+    }
+  }
+  return best===null ? p : rgRotKeys(p, f.keys, best);
+}
+function rgResolve(p){ return rgAnchored(rgSolve(p)); }
+/* Zwischenpose: Winkel auf kürzestem Weg, Verankerung mitgeführt */
+function rgLerpAng(a, b, t){ const d = ((b - a + 540) % 360) - 180; return a + d * t; }
+function rgLerp(p, q, t){
+  const out = { v:p.v, t:rgLerpAng(p.t, q.t, t) };
+  out.h = rgLerpAng(p.h === undefined ? p.t : p.h, q.h === undefined ? q.t : q.h, t);
+  ['aA','aB','lA','lB'].forEach(k=>{
+    const a = p[k], b = q[k], n = Math.max(a.length, b.length), r = [];
+    for(let i=0;i<n;i++){
+      const ai = a[i] !== undefined ? a[i] : (k[0]==='l' && i===2 ? a[1] + 90 : (i===2 ? a[1] : 0));
+      const bi = b[i] !== undefined ? b[i] : (k[0]==='l' && i===2 ? b[1] + 90 : (i===2 ? b[1] : 0));
+      r.push(rgLerpAng(ai, bi, t));
+    }
+    out[k] = r;
+  });
+  if(p.sc || q.sc){
+    out.sc = {};
+    const ks = new Set([...Object.keys(p.sc || {}), ...Object.keys(q.sc || {})]);
+    ks.forEach(k=>{
+      const one = (k==='t' || k==='h') ? 1 : [1, 1];
+      const a = (p.sc || {})[k] !== undefined ? p.sc[k] : one, b = (q.sc || {})[k] !== undefined ? q.sc[k] : one;
+      out.sc[k] = Array.isArray(a) ? a.map((v,i)=>v + (b[i] - v) * t) : a + (b - a) * t;
+    });
+  }
+  if(p.an && q.an && p.an[0]===q.an[0]){
+    out.an = [p.an[0], p.an[1] + (q.an[1] - p.an[1]) * t, p.an[2] + (q.an[2] - p.an[2]) * t];
+    if(p.fit && q.fit && p.fit.pt===q.fit.pt) out.fit = Object.assign({}, p.fit, { y:p.fit.y !== undefined ? p.fit.y + (q.fit.y - p.fit.y) * t : undefined, x:p.fit.x !== undefined ? p.fit.x + (q.fit.x - p.fit.x) * t : undefined });
+    return out;
+  }
+  /* unterschiedliche Verankerung: Hüftposition beider Posen überblenden */
+  const ra = rgResolve(p).hip, rb = rgResolve(q).hip;
+  out.an = ['hip', ra[0] + (rb[0] - ra[0]) * t, ra[1] + (rb[1] - ra[1]) * t];
+  return out;
+}
+
+/* ---------- Zeichnen ---------- */
+function rgCap(a, b, ra, rb){ return mqCapsule(a[0], -a[1], b[0], -b[1], ra, rb); }
+function rgCirc(c, r){ return `<circle cx="${c[0].toFixed(1)}" cy="${(-c[1]).toFixed(1)}" r="${r}"/>`; }
+function rgEll(c, rx, ry, ang){ return mqEllipse(c[0], -c[1], rx, ry, -ang); }
+function rgSVG(R){
+  const front = R.front, side = !front;
+  const arm = (X, cls)=>`<g class="${cls}"><path d="${rgCap(X.s, X.e, 5, 4.3)}"/><path d="${rgCap(X.e, X.w, 4.2, 3.2)}"/><path d="${rgEll(X.hc, 5.2, 3.3, X.hd)}"/>${rgCirc(X.e, 3.9)}</g>`;
+  const leg = (L, cls)=>{
+    let s = `<g class="${cls}"><path d="${rgCap(L.hp, L.kn, 7.6, 5.8)}"/><path d="${rgCap(L.kn, L.an, 5.4, 3.7)}"/>`;
+    s += side ? `<path d="${rgCap(L.heelC, L.toeC, 3.2, 2.6)}"/>` : `<path d="${rgEll(L.fc, 4, 6, L.l[1])}"/>`;
+    return s + rgCirc(L.kn, 5) + rgCirc(L.an, 3) + `</g>`;
+  };
+  const P = R.P, t = R.t, w = front ? [13.5, 12.5, 10, 15.5, 17.5] : [10.5, 9.5, 7.5, 11.5, 10];
+  let torso = `<g class="rg-n"><path d="${rgCap(P(-0.08), P(0.28), w[0], w[1])}"/><path d="${rgCap(P(0.33), P(0.47), w[2], w[2])}"/><path d="${rgCap(P(0.5), P(0.9), w[3], w[4])}"/>`;
+  torso += `<path d="${rgCap(R.n0, R.n1, 4, 4)}"/><path d="${rgEll(R.head, 11, front ? 9 : 8.5, R.h)}"/>`;
+  if(side) torso += rgCirc(rgAdd(R.head, R.h - 90, 8.2), 2.1);
+  torso += `</g>`;
+  const joints = front ? `<g class="rg-n">${rgCirc(R.shA, 5.8)}${rgCirc(R.shB, 5.8)}</g>` : '';
+  if(side) return arm(R.B, 'rg-f') + leg(R.LB, 'rg-f') + torso + leg(R.LA, 'rg-n') + `<g class="rg-n">${rgCirc(R.sh, 5.6)}</g>` + arm(R.A, 'rg-n');
+  return leg(R.LA, 'rg-n') + leg(R.LB, 'rg-n') + torso + joints + arm(R.A, 'rg-n') + arm(R.B, 'rg-n');
+}
+/* ---------- Sport: Bewegungsabläufe (Schlüsselstellungen je Übung) ---------- */
+const anX = (b, o)=>Object.assign({}, b, o || {});
+const anPos = (p, pt)=>rgResolve(p).named[pt].slice();
+/* verankert eine Pose an einem Fußpunkt (Hüfte bleibt bei x = 0), optional angehoben */
+const anFloor = (p, pt, lift)=>{ const q = rgPts(anX(p, { an:null, fit:null })).named[pt]; return anX(p, { an:[pt, q[0], lift || 0] }); };
+/* Zweigelenk-IK: Ober-/Unterschenkelwinkel, damit das Sprunggelenk bei an liegt; bend +1 = Knie gegen den Uhrzeigersinn */
+const anIK = (hp, an, bend, l1, l2)=>{
+  l1 = l1 || RG_LEN.thigh; l2 = l2 || RG_LEN.shin;
+  const dx = an[0] - hp[0], dy = an[1] - hp[1], d = Math.max(Math.abs(l1 - l2) + 0.01, Math.min(Math.hypot(dx, dy), l1 + l2 - 0.01));
+  const base = Math.atan2(dy, dx), c = Math.acos((l1*l1 + d*d - l2*l2) / (2*l1*d)), th = base + bend * c;
+  const k = [hp[0] + l1*Math.cos(th), hp[1] + l1*Math.sin(th)];
+  return [th * 180 / Math.PI, Math.atan2(an[1] - k[1], an[0] - k[0]) * 180 / Math.PI];
+};
+/* Frontansicht mit festen Fußgelenken: Hüfte, Rumpf → Beinwinkel per IK (Knie nach außen); pin: welches Fußgelenk verankert */
+const anStanceF = o=>{
+  const t = o.t === undefined ? 90 : o.t, hip = o.hip;
+  const hpA = rgAdd(hip, t + 90, 8.5), hpB = rgAdd(hip, t - 90, 8.5);
+  const pin = o.pin || 'A', ank = pin==='A' ? o.ankA : o.ankB;
+  return { v:'front', t, h:o.h === undefined ? t : o.h, aA:o.aA, aB:o.aB, lA:anIK(hpA, o.ankA, -1), lB:anIK(hpB, o.ankB, 1), an:['ankle' + pin, ank[0], ank[1]] };
+};
+/* Hüfthöhe, bei der ein Bein (Seite A/B) fast gestreckt bis zum Fußgelenk reicht */
+const anHipY = (hx, t, ank, side)=>{ const off = rgAdd([hx, 0], t + (side==='A' ? 90 : -90), 8.5); return ank[1] + Math.sqrt(81.4*81.4 - Math.pow(ank[0] - off[0], 2)) - off[1]; };
+
+/* Grundstellungen — Seitenansicht, Blick nach rechts */
+const AN_ST = { v:'side', t:90, h:90, aA:[-93,-90,-90], aB:[-86,-84,-84], lA:[-90,-90,0], lB:[-90,-90,0], an:['heelA',0,0] };
+const AN_HP = { v:'side', t:20, h:22, aA:[-90,-90,0], aB:[-90,-90,0], lA:[200,200,290], lB:[200,200,290], an:['palmA',0,0], fit:{ pt:'toeA', y:0, keys:'body' } };
+const AN_FP = { v:'side', t:10, h:12, aA:[-90,0,0], aB:[-90,0,0], lA:[190,190,280], lB:[190,190,280], an:['elbowA',0,4.3], fit:{ pt:'toeA', y:0, keys:'body' } };
+const AN_SUPK = { v:'side', t:180, h:180, aA:[-12,-3,-3], aB:[-12,-3,-3], lA:[55,-62,0], lB:[55,-62,0], an:['low',0,0], fit:{ pt:'heelA', y:0, keys:'legs2' } };
+const AN_SUPF = { v:'side', t:180, h:180, aA:[-14,-4,-4], aB:[-14,-4,-4], lA:[-3,-3,87], lB:[-3,-3,87], an:['low',0,0] };
+const AN_PR = { v:'side', t:2, h:4, aA:[-4,-3,-3], aB:[-4,-3,-3], lA:[181,181,200], lB:[181,181,200], an:['low',0,0] };
+const AN_QD = { v:'side', t:0, h:6, aA:[-90,-90,0], aB:[-90,-90,0], lA:[-90,180,180], lB:[-90,180,180], an:['palmA',0,0], fit:{ pt:'kneeA', y:4.8, keys:'th' } };
+const AN_FS = anFloor({ v:'front', t:90, h:90, aA:[-97,-95], aB:[-83,-85], lA:[-93,-91], lB:[-87,-89] }, 'soleA');
+const AN_TOP = { v:'top', t:0, h:0, lA:[176,176], lB:[184,184], an:['hip',0,0] };
+/* abgeleitete Positionen */
+const AN_ST_TOE = anPos(AN_ST, 'toeA');
+const AN_SQ_DOWN = anX(AN_ST, { t:50, h:62, aA:[-2,-2,-2], aB:[-4,-4,-4], lA:[-8,-112,0], lB:[-8,-112,0] });
+const AN_BURPEE_CROUCH = anX(AN_ST, { t:40, h:28, aA:[-82,-86,0], aB:[-84,-88,0], lA:[2,-118,0], lB:[2,-118,0], an:['toeA', AN_ST_TOE[0], 0], fit:{ pt:'palmA', y:0, keys:'th' } });
+const AN_BURPEE_PALM = anPos(AN_BURPEE_CROUCH, 'palmA');
+const AN_HP_BURPEE = anX(AN_HP, { an:['palmA', AN_BURPEE_PALM[0], 0] });
+const AN_BURPEE_KICK = { v:'side', t:24, h:22, aA:[-88,-90,0], aB:[-88,-90,0], lA:[236,176,226], lB:[236,176,226], an:['palmA', AN_BURPEE_PALM[0], 0], fit:{ pt:'toeA', y:2.5, keys:'th' } };
+const AN_FOLD = anX(AN_ST, { t:-80, h:-86, aA:[-95,-95,0], aB:[-95,-95,0], lA:[-88,-92,0], lB:[-88,-92,0], fit:{ pt:'palmA', y:0, keys:'th' } });
+const AN_INCH_TOE = anPos(anX(AN_HP, { an:['palmA',0,0] }), 'toeA');
+const AN_HP_INCH = anX(AN_HP, { an:['palmA', AN_ST_TOE[0] - AN_INCH_TOE[0], 0] });
+const AN_FS_ANKA = anPos(AN_FS, 'ankleA'), AN_FS_ANKB = anPos(AN_FS, 'ankleB');
+const AN_FP_PALM = anPos(AN_FP, 'palmA');
+const AN_SUPK_SH = anPos(AN_SUPK, 'sh');
+const AN_SIDE = { v:'front', t:8, h:-15, aA:[182,178,178], aB:[0,0,0], lA:[183,183], lB:[183,183], an:['lowall',0,0] };
+/* Pike-Liegestütz: umgedrehtes V, Arme in Verlängerung des Rückens */
+const AN_PIKE_TOP = { v:'side', t:-48, h:-52, aA:[-50,-50,0], aB:[-50,-50,0], lA:[-118,-118,-40], lB:[-118,-118,-40], an:['palmA',0,0], fit:{ pt:'toeA', y:0, keys:'legs' } };
+/* Kletterer: Knie vorne, Beinwechsel in der Luft */
+const AN_MC_KNEE = (k, o)=>anX(AN_HP, Object.assign({ t:18, h:20 }, { [k]:[-14,-152,-112] }, { fit:{ pt:k==='lA' ? 'toeB' : 'toeA', y:0, keys:['t','h', k==='lA' ? 'lB' : 'lA'] } }, o || {}));
+const AN_MC_MID = anX(AN_HP, { t:26, h:28, lA:[-100,-168,-80], lB:[-100,-168,-80], fit:{ pt:'lowleg', y:2, keys:['t','h'] } });
+/* Laufen auf der Stelle: Zwischenstellung, beide Fußballen am Boden */
+const AN_RUN_MID = anX(AN_ST, { aA:[-88,-20,-20], aB:[-88,-20,-20], lA:[-91,-93,-35], lB:[-91,-93,-35], an:['toeA',0,0] });
+/* Seitlicher Ausfallschritt */
+const AN_SL_HX = -24, AN_SL_HY = anHipY(AN_SL_HX, 92, AN_FS_ANKB, 'B');
+const AN_SL_ARMS = { aA:[-60,20], aB:[-120,160] };
+/* Sumo: Füße bleiben breit stehen */
+const AN_SUMO = (hy, o)=>anStanceF(Object.assign({ hip:[0, hy], ankA:[-46, 8.3], ankB:[46, 8.3], aA:[-62,22], aB:[-118,158] }, o || {}));
+
+/* Zwischenstellung: gelöste Schlüsselposen überblenden.
+   - Verankerung: ein Kontaktpunkt, der in beiden Stellungen am selben Ort bleibt (Fuß, Hand, Knie …)
+   - Bedingungen, die in beiden Stellungen gelten (gleicher Punkt, gleiche Achse), bleiben erhalten
+   - spec.tf['a-b']: zusätzliche Bedingungen nur für diesen Übergang; y/x als [von, bis] wird überblendet, arc hebt in der Mitte an (Schrittbogen) */
+const AN_SOLVED = new WeakMap();
+function anSolvedPose(p){ let s = AN_SOLVED.get(p); if(!s){ s = rgSolve(p); AN_SOLVED.set(p, s); } return s; }
+function anFits(p){ return !p.fit ? [] : (Array.isArray(p.fit) ? p.fit : [p.fit]); }
+const AN_CONTACTS = ['toeA','toeB','heelA','heelB','soleA','soleB','ankleA','ankleB','palmA','palmB','kneeA','kneeB','elbowA','elbowB'];
+function anBetween(spec, a, b, t){
+  const P0 = spec.kf[a][0], P1 = spec.kf[b][0];
+  const strip = x=>{ const o = Object.assign({}, x); delete o.fit; return o; };
+  let A = strip(anSolvedPose(P0)), B = strip(anSolvedPose(P1));
+  if(A.an && B.an && A.an[0]!==B.an[0]){
+    const ra = rgAnchored(A), rb = rgAnchored(B);
+    let best = null;
+    [B.an[0], A.an[0]].concat(AN_CONTACTS).forEach(n=>{
+      const pa = ra.named[n], pb = rb.named[n];
+      if(!pa || !pb || pa[1] > 12 || pb[1] > 12) return;
+      const d = Math.hypot(pa[0] - pb[0], pa[1] - pb[1]);
+      if(d < 2 && (!best || d < best.d - 0.01)) best = { n, d, pa, pb };
+    });
+    if(best){ A = Object.assign({}, A, { an:[best.n, best.pa[0], best.pa[1]] }); B = Object.assign({}, B, { an:[best.n, best.pb[0], best.pb[1]] }); }
+  }
+  const out = rgLerp(A, B, t);
+  const fb = anFits(P1), fits = [];
+  anFits(P0).forEach(f=>{
+    const g = fb.find(g=>g.pt===f.pt && (g.x===undefined)===(f.x===undefined));
+    if(g) fits.push(f.x!==undefined ? Object.assign({}, f, { x:f.x + (g.x - f.x) * t }) : Object.assign({}, f, { y:f.y + (g.y - f.y) * t }));
+  });
+  const tf = spec.tf && spec.tf[a + '-' + b];
+  if(tf) tf.forEach(f=>{
+    const v = k=>(Array.isArray(f[k]) ? f[k][0] + (f[k][1] - f[k][0]) * t : f[k]) + (f.arc ? f.arc * Math.sin(Math.PI * t) : 0);
+    fits.push(f.x!==undefined ? Object.assign({}, f, { x:v('x') }) : Object.assign({}, f, { y:v('y') }));
+  });
+  if(fits.length) out.fit = fits.length===1 ? fits[0] : fits;
+  return out;
+}
+/* Kontakt festhalten: Punkt pt bleibt in allen Stellungen an der x-Position aus Stellung 0 (gelöst über keys) */
+function anKeep(spec){
+  if(!spec.keep) return spec;
+  spec.keep.forEach(k=>{
+    const x0 = rgResolve(spec.kf[0][0]).named[k.pt][0];
+    spec.kf = spec.kf.map(kf=>[Object.assign({}, kf[0], { fit:anFits(kf[0]).concat([{ pt:k.pt, x:x0, keys:k.keys }]) })].concat(kf.slice(1)));
+  });
+  return spec;
+}
+
+/* kf: [Pose, Beschriftung, Haltefaktor]; Beschriftung null = Zwischenstellung ohne Halt.
+   mode: 'pp' hin und zurück, 'cycle' der Reihe nach, 'static' Haltepose; speed < 1 = schneller; wall: Wand bei x oder an einem Punkt;
+   icon: Stellung fürs Listen-Symbol (sonst 1 bzw. 0) */
+const SP_ANIM = {
+  pushup:        { keep:[{ pt:'toeA', keys:['aA0','aA1','aB0','aB1'] }], kf:[[AN_HP,'oben'], [anX(AN_HP, { aA:[-165,-92,0], aB:[-165,-92,0] }),'unten']] },
+  kneepushup:    { keep:[{ pt:'kneeA', keys:['aA0','aA1','aB0','aB1'] }], kf:[[anX(AN_HP, { t:28, h:30, lA:[208,150,150], lB:[208,150,150], fit:{ pt:'kneeA', y:5, keys:['t','h','lA0','lB0'] } }),'oben'],
+                        [anX(AN_HP, { t:28, h:30, aA:[-162,-92,0], aB:[-162,-92,0], lA:[208,150,150], lB:[208,150,150], fit:{ pt:'kneeA', y:5, keys:['t','h','lA0','lB0'] } }),'unten']] },
+  wallpushup:    { wall:106, kf:[[anX(AN_ST, { t:72, h:74, aA:[2,2,90], aB:[0,0,90], lA:[252,252,0], lB:[252,252,0], fit:{ pt:'palmA', x:106, keys:'body2' } }),'Arme lang'],
+                        [anX(AN_ST, { t:72, h:74, aA:[-60,20,90], aB:[-62,18,90], lA:[252,252,0], lB:[252,252,0], fit:{ pt:'palmA', x:106, keys:'body2' } }),'zur Wand']] },
+  widepushup:    { keep:[{ pt:'toeA', keys:['aA0','aA1','aB0','aB1'] }], kf:[[AN_HP,'oben'], [anX(AN_HP, { aA:[-158,-86,0], aB:[-158,-86,0] }),'unten']] },
+  diamondpushup: { keep:[{ pt:'toeA', keys:['aA0','aA1','aB0','aB1'] }], kf:[[AN_HP,'oben'], [anX(AN_HP, { aA:[-170,-98,0], aB:[-170,-98,0] }),'unten']] },
+  pikepushup:    { kf:[[AN_PIKE_TOP,'oben'],
+                        [{ v:'side', t:-48.4, h:-52.5, aA:[-9.4,-95.9,0], aB:[-9.4,-95.9,0], lA:[-133.8,-133.8,-41.3], lB:[-133.8,-133.8,-41.3], sc:{ aA:[0.65,1], aB:[0.65,1] }, an:['palmA',0,0] },'Kopf runter']] },
+  floordips:     { kf:[[{ v:'side', t:140, h:106, aA:[-96,-96,0], aB:[-96,-96,0], lA:[22,-72,0], lB:[22,-72,0], an:['palmA',0,0], fit:{ pt:'heelA', y:0, keys:'legs2' } },'oben'],
+                        [{ v:'side', t:140, h:108, aA:[-128,-70,0], aB:[-128,-70,0], lA:[22,-72,0], lB:[22,-72,0], an:['palmA',0,0], fit:[{ pt:'low', y:1.5, keys:['aA0','aB0'] }, { pt:'heelA', y:0, keys:'legs2' }] },'unten']] },
+  plankupdown:   { kf:[[anX(AN_FP, { an:['toeA',0,0], fit:{ pt:'palmA', y:AN_FP_PALM[1], keys:'body' } }),'Unterarme'],
+                        [anX(AN_HP, { an:['toeA',0,0], fit:{ pt:'palmA', y:0, keys:'body' } }),'Hände']] },
+  shouldertaps:  { mode:'cycle', kf:[[AN_HP,'Stütz'], [anX(AN_HP, { aA:[-50,165,165], an:['palmB',0,0] }),'Hand zur Schulter'], [AN_HP,'Stütz'], [anX(AN_HP, { aB:[-50,165,165] }),'andere Seite']] },
+  ytw:           { mode:'cycle', kf:[[anX(AN_TOP, { aA:[38,38,38], aB:[-38,-38,-38] }),'Y'], [anX(AN_TOP, { aA:[90,90,90], aB:[-90,-90,-90] }),'T'], [anX(AN_TOP, { aA:[140,62,62], aB:[-140,-62,-62] }),'W']] },
+  snowangel:     { mode:'cycle', kf:[[anX(AN_TOP, { aA:[168,176,176], aB:[-168,-176,-176] }),'Arme an der Seite'], [anX(AN_TOP, { aA:[92,92,92], aB:[-92,-92,-92] }),'seitlich'],
+                        [anX(AN_TOP, { aA:[22,16,16], aB:[-22,-16,-16] }),'über den Kopf'], [anX(AN_TOP, { aA:[92,92,92], aB:[-92,-92,-92] }),'zurück']] },
+  supermanpull:  { kf:[[anX(AN_TOP, { aA:[8,4,4], aB:[-8,-4,-4] }),'Arme vorn'], [anX(AN_TOP, { aA:[150,58,58], aB:[-150,-58,-58] }),'Ellbogen zur Taille']] },
+  isobiceps:     { kf:[[anX(AN_ST, { aA:[-90,0,0], aB:[-38,12,-20] }),'gegenhalten'], [anX(AN_ST, { aA:[-90,55,55], aB:[-20,48,10] }),'langsam beugen']] },
+  armcircles:    { mode:'cycle', speed:0.7, kf:[[anX(AN_FS, { aA:[172,172,172], aB:[8,8,8] }),'oben'], [anX(AN_FS, { aA:[180,180,180], aB:[0,0,0] }),'außen'],
+                        [anX(AN_FS, { aA:[188,188,188], aB:[-8,-8,-8] }),'unten'], [anX(AN_FS, { aA:[180,180,180], aB:[0,0,0] }),'außen']] },
+  plank:         { mode:'static', kf:[[AN_FP,'halten']] },
+  sideplank:     { kf:[[{ v:'front', t:30, h:26, aA:[210,212,212], aB:[-90,0,0], lA:[196,196], lB:[196,196], sc:{ aB:[1,0.6] }, an:['elbowB',0,4.3], fit:{ pt:'ankleB', y:7, keys:'legs' } },'Hüfte unten'],
+                        [{ v:'front', t:15, h:14, aA:[196,198,198], aB:[-90,0,0], lA:[196,196], lB:[196,196], sc:{ aB:[1,0.6] }, an:['elbowB',0,4.3], fit:{ pt:'ankleB', y:7, keys:'legs' } },'anheben & halten']] },
+  crunch:        { kf:[[anX(AN_SUPK, { aA:[165,40,40], aB:[163,38,38] }),'liegen'], [anX(AN_SUPK, { t:148, h:138, aA:[133,8,8], aB:[131,6,6] }),'Schultern heben']] },
+  bicycle:       { kf:[[anX(AN_SUPF, { t:150, h:140, aA:[133,8,8], aB:[131,6,6], lA:[118,14,104], lB:[14,14,104] }),'Knie zum Ellbogen'],
+                        [anX(AN_SUPF, { t:150, h:140, aA:[133,8,8], aB:[131,6,6], lA:[14,14,104], lB:[118,14,104] }),'Seite wechseln']] },
+  legraise:      { kf:[[anX(AN_SUPF, { lA:[6,6,96], lB:[6,6,96] }),'unten'], [anX(AN_SUPF, { lA:[88,88,178], lB:[88,88,178] }),'oben']] },
+  deadbug:       { mode:'cycle', kf:[[anX(AN_SUPF, { aA:[90,90,90], aB:[88,88,88], lA:[90,0,90], lB:[90,0,90] }),'Ausgang'],
+                        [anX(AN_SUPF, { aA:[176,176,176], aB:[88,88,88], lA:[90,0,90], lB:[6,6,96] }),'Arm & Gegenbein'],
+                        [anX(AN_SUPF, { aA:[90,90,90], aB:[88,88,88], lA:[90,0,90], lB:[90,0,90] }),'zurück'],
+                        [anX(AN_SUPF, { aA:[90,90,90], aB:[176,176,176], lA:[6,6,96], lB:[90,0,90] }),'andere Seite']] },
+  hollow:        { kf:[[anX(AN_SUPF, { aA:[178,178,178], aB:[178,178,178] }),'liegen'], [anX(AN_SUPF, { t:162, h:158, aA:[166,166,166], aB:[166,166,166], lA:[16,16,106], lB:[16,16,106] }),'Schale halten']] },
+  russiantwist:  { kf:[[{ v:'front', t:96, h:94, aA:[-118,-150], aB:[-150,-176], lA:[112,-92], lB:[68,-88], sc:{ t:0.88, lA:[0.45,0.62], lB:[0.45,0.62] }, an:['low',0,0] },'links'],
+                        [{ v:'front', t:84, h:86, aA:[-30,-4], aB:[-62,-30], lA:[112,-92], lB:[68,-88], sc:{ t:0.88, lA:[0.45,0.62], lB:[0.45,0.62] }, an:['low',0,0] },'rechts']] },
+  flutterkicks:  { speed:0.55, kf:[[anX(AN_SUPF, { lA:[16,16,106], lB:[5,5,95] }),'Beine im Wechsel'], [anX(AN_SUPF, { lA:[5,5,95], lB:[16,16,106] }),'auf und ab']] },
+  birddog:       { mode:'cycle', kf:[[AN_QD,'Vierfüßler'], [anX(AN_QD, { aA:[4,4,4], lB:[180,180,180], an:['palmB',0,0] }),'Arm & Gegenbein'],
+                        [AN_QD,'zurück'], [anX(AN_QD, { aB:[4,4,4], lA:[180,180,180], fit:{ pt:'kneeB', y:4.8, keys:'th' } }),'andere Seite']] },
+  superman:      { kf:[[anX(AN_PR, { aA:[-3,-3,-3], aB:[-3,-3,-3] }),'liegen'], [anX(AN_PR, { t:14, h:18, aA:[14,14,14], aB:[12,12,12], lA:[168,168,192], lB:[170,170,192] }),'abheben']] },
+  reverseplank:  { kf:[[{ v:'side', t:118, h:105, aA:[-96,-96,0], aB:[-96,-96,0], lA:[-2,-2,88], lB:[-2,-2,88], an:['palmA',0,0], fit:[{ pt:'low', y:0, keys:'th' }, { pt:'heelA', y:0, keys:'legs' }] },'sitzen'],
+                        [{ v:'side', t:162, h:150, aA:[-92,-92,0], aB:[-92,-92,0], lA:[-18,-18,70], lB:[-18,-18,70], an:['palmA',0,0], fit:{ pt:'heelA', y:0, keys:'body' } },'Hüfte hoch']] },
+  squat:         { kf:[[AN_ST,'Stand'], [AN_SQ_DOWN,'tief']] },
+  sumosquat:     { kf:[[AN_SUMO(80),'Stand'], [AN_SUMO(50),'tief']] },
+  jumpsquat:     { speed:0.65, kf:[[anX(AN_SQ_DOWN, { an:['toeA', AN_ST_TOE[0], 0] }),'tief'], [anX(AN_ST, { t:88, h:90, aA:[-150,-150,-150], aB:[-148,-148,-148], lA:[-90,-92,-62], lB:[-90,-92,-62], an:['toeA', AN_ST_TOE[0], 18] }),'Sprung', 0.4]] },
+  wallsit:       { mode:'static', wall:'back', kf:[[anX(AN_ST, { aA:[-60,-10,-10], aB:[-62,-12,-12], lA:[0,-90,0], lB:[0,-90,0] }),'halten']] },
+  lunge:         { mode:'cycle', tf:{ '0-1':[{ pt:'heelA', y:0, arc:9, keys:'lA2' }], '1-2':[{ pt:'heelA', y:0, arc:9, keys:'lA2' }], '2-3':[{ pt:'heelB', y:0, arc:9, keys:'lB2' }], '3-0':[{ pt:'heelB', y:0, arc:9, keys:'lB2' }] },
+                   kf:[[anX(AN_ST, { an:['toeB',0,0] }),'Stand'], [anX(AN_ST, { t:88, lA:[-6,-88,0], lB:[-114,178,-62], an:['toeB',0,0], fit:{ pt:'heelA', y:0, keys:'lB2' } }),'Schritt vor'],
+                        [anX(AN_ST, { an:['toeB',0,0] }),'zurück'], [anX(AN_ST, { t:88, lB:[-6,-88,0], lA:[-114,178,-62], an:['toeA',0,0], fit:{ pt:'heelB', y:0, keys:'lA2' } }),'anderes Bein']] },
+  reverselunge:  { mode:'cycle', tf:{ '0-1':[{ pt:'toeB', y:0, arc:9, keys:'lB2' }], '1-2':[{ pt:'toeB', y:0, arc:9, keys:'lB2' }], '2-3':[{ pt:'toeA', y:0, arc:9, keys:'lA2' }], '3-0':[{ pt:'toeA', y:0, arc:9, keys:'lA2' }] },
+                   kf:[[anX(AN_ST, { an:['heelA',0,0] }),'Stand'], [anX(AN_ST, { t:88, lA:[-6,-88,0], lB:[-114,178,-62], an:['heelA',0,0], fit:{ pt:'toeB', y:0, keys:'lB2' } }),'Schritt zurück'],
+                        [anX(AN_ST, { an:['heelA',0,0] }),'zurück'], [anX(AN_ST, { t:88, lB:[-6,-88,0], lA:[-114,178,-62], an:['heelB',0,0], fit:{ pt:'toeA', y:0, keys:'lA2' } }),'anderes Bein']] },
+  sidelunge:     { mode:'cycle', kf:[[anX(AN_FS, AN_SL_ARMS),'Stand'],
+                        [anStanceF(Object.assign({ t:92, h:90, hip:[AN_SL_HX, AN_SL_HY], ankA:[-80, AN_FS_ANKA[1]], ankB:AN_FS_ANKB, pin:'B' }, AN_SL_ARMS)),'Schritt zur Seite'],
+                        [anX(AN_FS, AN_SL_ARMS),'zurück'],
+                        [anStanceF(Object.assign({ t:88, h:90, hip:[-AN_SL_HX, AN_SL_HY], ankA:AN_FS_ANKA, ankB:[80, AN_FS_ANKB[1]], pin:'A' }, AN_SL_ARMS)),'andere Seite']] },
+  pistol:        { kf:[[anX(AN_ST, { lB:[-40,-40,50] }),'Stand'], [anX(AN_ST, { t:56, h:68, aA:[0,0,0], aB:[-2,-2,-2], lA:[-16,-120,0], lB:[4,4,94] }),'tief']] },
+  glutebridge:   { kf:[[anX(AN_SUPK, { an:['low:sh', AN_SUPK_SH[0], 0] }),'liegen'], [anX(AN_SUPK, { t:202, h:186, lA:[24,-84,0], lB:[24,-84,0], an:['low:sh', AN_SUPK_SH[0], 0] }),'Becken hoch']] },
+  singlebridge:  { kf:[[anX(AN_SUPK, { lB:[52,52,142], an:['low:sh', AN_SUPK_SH[0], 0], fit:{ pt:'heelA', y:0, keys:'lA2' } }),'liegen'],
+                        [anX(AN_SUPK, { t:202, h:186, lA:[24,-84,0], lB:[22,22,112], an:['low:sh', AN_SUPK_SH[0], 0], fit:{ pt:'heelA', y:0, keys:'lA2' } }),'Becken hoch']] },
+  donkeykick:    { kf:[[AN_QD,'Vierfüßler'], [anX(AN_QD, { lA:[178,90,180], fit:{ pt:'kneeB', y:4.8, keys:'th' } }),'Fuß zur Decke']] },
+  firehydrant:   { kf:[[{ v:'front', t:90, h:90, aA:[-96,-90], aB:[-84,-90], lA:[-98,-90], lB:[-82,-90], sc:{ t:0.42, h:0.85, aA:[1.08,1.08], aB:[1.08,1.08], lA:[1,0.02], lB:[1,0.02] }, an:['kneeB', 12, 8.3] },'Vierfüßler von hinten'],
+                        [{ v:'front', t:90, h:90, aA:[-96,-90], aB:[-84,-90], lA:[178,-90], lB:[-82,-90], sc:{ t:0.42, h:0.85, aA:[1.08,1.08], aB:[1.08,1.08], lA:[1,0.02], lB:[1,0.02] }, an:['kneeB', 12, 8.3] },'Bein seitlich hoch']] },
+  sidelegraise:  { kf:[[AN_SIDE,'liegen'], [anX(AN_SIDE, { lA:[148,148] }),'Bein heben']] },
+  clamshell:     { kf:[[anX(AN_SIDE, { lA:[-150,180], lB:[-150,180], sc:{ lA:[0.62,1], lB:[0.62,1] } }),'Knie zusammen'],
+                        [anX(AN_SIDE, { lA:[150,-122], lB:[-150,180], sc:{ lA:[0.62,1], lB:[0.62,1] } }),'Knie öffnen']] },
+  singlerdl:     { kf:[[anX(AN_ST, { lB:[-92,-92,0] }),'Stand'], [anX(AN_ST, { t:6, h:10, aA:[-90,-90,-90], aB:[-88,-88,-88], lA:[-80,-98,0], lB:[186,186,276] }),'vorbeugen']] },
+  goodmorning:   { kf:[[anX(AN_ST, { aA:[112,-48,-48], aB:[110,-50,-50] }),'Stand'], [anX(AN_ST, { t:12, h:16, aA:[34,-128,-128], aB:[32,-130,-130], lA:[-80,-98,0], lB:[-80,-98,0] }),'vorbeugen']] },
+  calfraise:     { kf:[[anX(AN_ST, { an:['toeA', AN_ST_TOE[0], 0] }),'unten'], [anX(AN_ST, { lA:[-90,-90,-50], lB:[-90,-90,-50], an:['toeA', AN_ST_TOE[0], 0] }),'Fersen hoch']] },
+  singlecalf:    { wall:44, kf:[[anX(AN_ST, { aA:[-28,24,84], lB:[-98,-152,-152], an:['toeA', AN_ST_TOE[0], 0], fit:{ pt:'palmA', x:44, keys:['aA0'] } }),'unten'],
+                        [anX(AN_ST, { aA:[-40,10,84], lA:[-90,-90,-50], lB:[-98,-152,-152], an:['toeA', AN_ST_TOE[0], 0], fit:{ pt:'palmA', x:44, keys:['aA0'] } }),'Ferse hoch']] },
+  burpee:        { mode:'cycle', speed:0.7, tf:{ '1-2':[{ pt:'toeA', y:[0, 2.5], keys:'th' }], '4-5':[{ pt:'toeA', y:[2.5, 0], keys:'th' }] }, kf:[[AN_ST,'Stand'], [AN_BURPEE_CROUCH,'Hocke'], [AN_BURPEE_KICK,null], [AN_HP_BURPEE,'Liegestütz'], [AN_BURPEE_KICK,null], [AN_BURPEE_CROUCH,'Hocke'],
+                        [anX(AN_ST, { aA:[95,95,95], aB:[88,88,88], lA:[-90,-92,-62], lB:[-90,-92,-62], an:['toeA', AN_ST_TOE[0], 18] }),'Sprung', 0.4]] },
+  jumpingjacks:  { speed:0.55, kf:[[AN_FS,'zusammen'], [anFloor(anX(AN_FS, { aA:[118,104,104], aB:[62,76,76], lA:[-114,-112], lB:[-66,-68] }), 'soleA', 4),'auseinander']] },
+  mountainclimber:{ speed:0.6, icon:0, tf:{ '0-1':[{ pt:'lowleg', y:[0,2], keys:['t','h'] }], '1-2':[{ pt:'lowleg', y:[2,0], keys:['t','h'] }], '2-1':[{ pt:'lowleg', y:[0,2], keys:['t','h'] }], '1-0':[{ pt:'lowleg', y:[2,0], keys:['t','h'] }] },
+                   kf:[[AN_MC_KNEE('lA'),'Knie zur Brust'], [AN_MC_MID,null], [AN_MC_KNEE('lB'),'Beinwechsel']] },
+  highknees:     { mode:'cycle', speed:0.4, icon:0, kf:[[anX(AN_ST, { aA:[-130,-60,-60], aB:[-40,40,40], lA:[2,-90,-30], lB:[-90,-92,-35], an:['toeB',0,0] }),'Knie hoch'], [AN_RUN_MID,null],
+                        [anX(AN_ST, { aA:[-40,40,40], aB:[-130,-60,-60], lB:[2,-90,-30], lA:[-90,-92,-35], an:['toeA',0,0] }),'Wechsel'], [AN_RUN_MID,null]] },
+  buttkicks:     { mode:'cycle', speed:0.4, icon:0, kf:[[anX(AN_ST, { aA:[-60,10,10], aB:[-120,-60,-60], lA:[-104,98,98], lB:[-90,-92,-35], an:['toeB',0,0] }),'Ferse zum Po'], [AN_RUN_MID,null],
+                        [anX(AN_ST, { aB:[-60,10,10], aA:[-120,-60,-60], lB:[-104,98,98], lA:[-90,-92,-35], an:['toeA',0,0] }),'Wechsel'], [AN_RUN_MID,null]] },
+  skater:        { mode:'cycle', speed:0.75, icon:0, kf:[[anX(AN_FS, { t:104, h:98, aA:[-40,-30], aB:[-150,-160], lA:[-98,-76], lB:[-128,-160], an:['soleA', -26, 0] }),'links landen'],
+                        [anFloor(anX(AN_FS, { lA:[-100,-86], lB:[-80,-94] }), 'soleA', 12),null],
+                        [anX(AN_FS, { t:76, h:82, aB:[-140,-150], aA:[-30,-20], lB:[-82,-104], lA:[-52,-20], an:['soleB', 26, 0] }),'rechts landen'],
+                        [anFloor(anX(AN_FS, { lA:[-100,-86], lB:[-80,-94] }), 'soleA', 12),null]] },
+  bearcrawl:     { mode:'cycle', speed:0.8, kf:[[anX(AN_QD, { lA:[-82,182,-70], lB:[-82,182,-70], fit:{ pt:'toeA', y:0, keys:'th' } }),'Knie schweben'],
+                        [anX(AN_QD, { aA:[-62,-62,0], lA:[-82,182,-70], lB:[-48,190,-70], an:['palmB',0,0], fit:{ pt:'toeA', y:0, keys:'th' } }),'Hand & Gegenfuß vor'],
+                        [anX(AN_QD, { lA:[-82,182,-70], lB:[-82,182,-70], fit:{ pt:'toeA', y:0, keys:'th' } }),'zurück'],
+                        [anX(AN_QD, { aB:[-62,-62,0], lB:[-82,182,-70], lA:[-48,190,-70], fit:{ pt:'toeB', y:0, keys:'th' } }),'andere Seite']] },
+  inchworm:      { mode:'cycle', tf:{ '1-2':[{ pt:'palmA', y:0, keys:'th' }], '2-3':[{ pt:'palmA', y:0, keys:'th' }] }, kf:[[AN_ST,'Stand'], [AN_FOLD,'Hände zum Boden'], [AN_HP_INCH,'vorlaufen'], [AN_FOLD,'zurücklaufen']] }
+};
+Object.values(SP_ANIM).forEach(anKeep);
+/* ---------- Sport: Bewegungs-Player (Animation + Bildfolge) ---------- */
+const SPA_HOLD = 520, SPA_MOVE = 950, SPA_ASPECT = 1.75, SPA_STEPS = 48;
+const spaBoxCache = {}, spaThumbCache = {}, spaIconCache = {};
+let spaRun = null;
+function spaSeq(spec){
+  const n = spec.kf.length;
+  if(n < 2 || spec.mode==='static') return [0];
+  const s = [...Array(n).keys()];
+  if(spec.mode==='cycle') return s;
+  for(let i=n-2; i>=1; i--) s.push(i);
+  return s;
+}
+function spaWallX(spec){
+  if(spec.wall===undefined) return null;
+  return typeof spec.wall==='number' ? spec.wall : rgResolve(spec.kf[0][0]).named[spec.wall][0];
+}
+function spaBounds(poses, top, pad){
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+  poses.forEach(p=>{ const R = rgResolve(p); Object.values(R.named).forEach(q=>{ if(q[0] < x0) x0 = q[0]; if(q[0] > x1) x1 = q[0]; if(q[1] < y0) y0 = q[1]; if(q[1] > y1) y1 = q[1]; }); });
+  return { x0:x0 - pad, x1:x1 + pad, y0:top ? y0 - pad : Math.min(y0 - 4, -6), y1:y1 + pad };
+}
+function spaFit(b, aspect, top){
+  let w = b.x1 - b.x0, h = b.y1 - b.y0;
+  if(w / h < aspect){ const nw = h * aspect; b.x0 -= (nw - w) / 2; w = nw; b.x1 = b.x0 + w; }
+  else { const nh = w / aspect; if(top){ const c = (b.y0 + b.y1) / 2; b.y0 = c - nh / 2; } b.y1 = b.y0 + nh; h = nh; }
+  b.w = w; b.h = h;
+  return b;
+}
+/* gemeinsamer Bildausschnitt für alle Stellungen einer Übung */
+function spaBox(id){
+  if(spaBoxCache[id]) return spaBoxCache[id];
+  const spec = SP_ANIM[id], seq = spaSeq(spec), top = spec.kf[0][0].v==='top';
+  const poses = spec.kf.map(k=>k[0]);
+  if(seq.length > 1) seq.forEach((a, i)=>{ const b = seq[(i + 1) % seq.length]; [0.33, 0.66].forEach(t=>poses.push(anBetween(spec, a, b, t))); });
+  const b = spaBounds(poses, top, 14), wx = spaWallX(spec);
+  if(wx!==null) b.x1 = Math.max(b.x1, wx + 8);
+  if(top) b.mat = { x0:b.x0 + 4, x1:b.x1 - 4, y0:b.y0 + 4, y1:b.y1 - 4 };
+  spaFit(b, SPA_ASPECT, top);
+  b.top = top; b.wx = wx;
+  return spaBoxCache[id] = b;
+}
+function spaFrame(b, inner, cls){
+  let s = `<svg class="${cls}" viewBox="${b.x0.toFixed(1)} ${(-b.y1).toFixed(1)} ${b.w.toFixed(1)} ${b.h.toFixed(1)}" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">`;
+  if(!b.top) s += `<line class="rg-floor" x1="${b.x0.toFixed(1)}" x2="${b.x1.toFixed(1)}" y1="0" y2="0"/>`;
+  else if(b.mat) s += `<rect class="rg-mat" x="${b.mat.x0.toFixed(1)}" y="${(-b.mat.y1).toFixed(1)}" width="${(b.mat.x1 - b.mat.x0).toFixed(1)}" height="${(b.mat.y1 - b.mat.y0).toFixed(1)}" rx="6"/>`;
+  if(b.wx!==null && b.wx!==undefined) s += `<line class="rg-wall" x1="${b.wx.toFixed(1)}" x2="${b.wx.toFixed(1)}" y1="0" y2="${(-b.y1).toFixed(1)}"/>`;
+  return s + `<g class="rg-fig">${inner}</g></svg>`;
+}
+function spaThumb(id, i){
+  const key = id + ':' + i;
+  if(!spaThumbCache[key]) spaThumbCache[key] = spaFrame(spaBox(id), rgSVG(rgResolve(SP_ANIM[id].kf[i][0])), 'spa-svg');
+  return spaThumbCache[key];
+}
+/* kleines Symbolbild für Listen: typische Stellung, eng zugeschnitten */
+function spaIcon(id){
+  if(spaIconCache[id] !== undefined) return spaIconCache[id];
+  const spec = SP_ANIM[id];
+  if(!spec) return spaIconCache[id] = '';
+  const i = spec.icon !== undefined ? spec.icon : (spec.kf.length > 1 ? 1 : 0), p = spec.kf[i][0], top = p.v==='top';
+  const b = spaBounds([p], top, 8), wx = spaWallX(spec);
+  if(wx!==null){ b.x0 = Math.min(b.x0, wx - 4); b.x1 = Math.max(b.x1, wx + 4); }
+  if(top) b.mat = { x0:b.x0 + 3, x1:b.x1 - 3, y0:b.y0 + 3, y1:b.y1 - 3 };
+  spaFit(b, 1.4, top);
+  b.top = top; b.wx = wx;
+  return spaIconCache[id] = spaFrame(b, rgSVG(rgResolve(p)), 'spa-ico');
+}
+function spaEase(t){ return 0.5 - 0.5 * Math.cos(Math.PI * t); }
+function spaHold(spec, i){ const k = spec.kf[i]; return k[1]===null ? 0 : SPA_HOLD * (k[2] || 1) * (spec.speed || 1); }
+function spaReduced(){ try{ return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(_){ return false; } }
+
+function spaMount(box, id, opts){
+  spaStop();
+  const spec = SP_ANIM[id];
+  if(!box) return;
+  if(!spec){ box.innerHTML = ''; return; }
+  const steps = spec.kf.map((k, i)=>({ i, label:k[1] })).filter(s=>s.label!==null);
+  const animated = spaSeq(spec).length > 1;
+  const desc = steps.map(s=>s.label).join(' → ');
+  box.innerHTML = `<div class="spa-stage${animated ? ' spa-tap' : ''}" role="img" aria-label="Bewegungsablauf: ${escapeHtml(desc)}">${spaFrame(spaBox(id), rgSVG(rgResolve(spec.kf[0][0])), 'spa-svg')}` +
+    (animated ? `<button class="spa-play" type="button"></button>` : '') + `</div>` +
+    (steps.length > 1 ? `<div class="spa-strip" style="--n:${steps.length}">` + steps.map((s, n)=>`<button class="spa-th" data-i="${s.i}" type="button" aria-label="Schritt ${n + 1}: ${escapeHtml(s.label)}">${spaThumb(id, s.i)}<span class="spa-lb"><b>${n + 1}</b> ${escapeHtml(s.label)}</span></button>`).join('') + `</div>`
+      : `<div class="spa-hint">${escapeHtml(steps[0] ? steps[0].label : '')}${spec.mode==='static' ? ' — Position ruhig halten' : ''}</div>`);
+  const r = spaRun = { id, spec, box, seq:spaSeq(spec), k:0, phase:'hold', t0:0, playing:false, raf:0, last:0, active:-1, cache:new Map(),
+    g:box.querySelector('.spa-stage .rg-fig'), modal:opts && opts.modal ? document.getElementById(opts.modal) : null };
+  const btn = box.querySelector('.spa-play');
+  const setBtn = ()=>{ if(!btn) return; btn.innerHTML = r.playing ? '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
+    btn.setAttribute('aria-label', r.playing ? 'Animation anhalten' : 'Animation abspielen'); };
+  r.setBtn = setBtn;
+  const play = ()=>{ if(!animated) return; r.playing = true; r.t0 = performance.now(); r.phase = 'hold'; setBtn(); spaLoop(); };
+  const pause = ()=>{ r.playing = false; setBtn(); };
+  if(btn) btn.onclick = ev=>{ ev.stopPropagation(); r.playing ? pause() : play(); };
+  const stage = box.querySelector('.spa-stage');
+  if(animated) stage.onclick = ()=>{ r.playing ? pause() : play(); };
+  box.querySelectorAll('.spa-th').forEach(b=>{ b.onclick = ()=>{ pause(); const i = +b.dataset.i; r.k = Math.max(0, r.seq.indexOf(i)); r.phase = 'hold'; spaDraw(r, rgResolve(spec.kf[i][0])); spaMark(r, i); }; });
+  spaMark(r, 0);
+  if(animated && !spaReduced()) play(); else setBtn();
+}
+function spaStop(){ if(spaRun){ cancelAnimationFrame(spaRun.raf); spaRun.playing = false; } spaRun = null; }
+function spaDraw(r, R){ if(r.g) r.g.innerHTML = rgSVG(R); }
+function spaMark(r, i){
+  let j = i;
+  if(r.spec.kf[j][1]===null){ const pos = r.seq.indexOf(j); for(let s=1; s<r.seq.length; s++){ const c = r.seq[(pos - s + r.seq.length) % r.seq.length]; if(r.spec.kf[c][1]!==null){ j = c; break; } } }
+  if(j===r.active) return;
+  r.active = j;
+  r.box.querySelectorAll('.spa-th').forEach(b=>b.classList.toggle('on', +b.dataset.i===j));
+}
+function spaLoop(){
+  const r = spaRun; if(!r) return;
+  cancelAnimationFrame(r.raf);
+  const tick = now=>{
+    if(spaRun!==r) return;
+    if(!r.box.isConnected || r.box.offsetParent===null || (r.modal && r.modal.style.display!=='flex')){ spaStop(); return; }
+    if(!r.playing) return;
+    r.raf = requestAnimationFrame(tick);
+    if(now - r.last < 30) return;
+    r.last = now;
+    const spec = r.spec, n = r.seq.length;
+    for(let guard=0; guard<2*n + 2; guard++){
+      const cur = r.seq[r.k], nxt = r.seq[(r.k + 1) % n], el = now - r.t0;
+      if(r.phase==='hold'){
+        const d = spaHold(spec, cur);
+        if(el < d){ if(r.drawn!==cur){ spaDraw(r, rgResolve(spec.kf[cur][0])); r.drawn = cur; } spaMark(r, cur); return; }
+        r.t0 += d; r.phase = 'move'; continue;
+      }
+      const d = SPA_MOVE * (spec.speed || 1);
+      if(el < d){
+        /* Zwischenbilder einmal berechnen, danach aus dem Zwischenspeicher */
+        const t = el / d, q = Math.round(spaEase(t) * SPA_STEPS), key = cur + '>' + nxt + ':' + q;
+        let svg = r.cache.get(key);
+        if(svg===undefined){ svg = rgSVG(rgResolve(anBetween(spec, cur, nxt, q / SPA_STEPS))); r.cache.set(key, svg); }
+        if(r.g) r.g.innerHTML = svg;
+        r.drawn = -1; spaMark(r, t > 0.5 ? nxt : cur); return;
+      }
+      r.t0 += d; r.phase = 'hold'; r.k = (r.k + 1) % n;
+    }
+    r.t0 = now;
+  };
+  r.raf = requestAnimationFrame(tick);
+}
+document.addEventListener('visibilitychange', ()=>{ if(spaRun && spaRun.playing && !document.hidden){ spaRun.t0 = performance.now(); spaRun.phase = 'hold'; spaLoop(); } });
+
 /* ---------- Sport ---------- */
 let sportEntries = [];
 let sportView = 'today';
@@ -3983,14 +4661,20 @@ function spClamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
 function spOf(person){ return (sportEntries || []).filter(e=>e && e.by===person && SP_EX[e.ex] && e.day); }
 function spAmt(e){ return SP_EX[e.ex].type==='secs' ? (e.secs || 0) : (e.reps || 0); }
 function spUnit(ex){ return ex.type==='secs' ? 's' : 'Wdh.'; }
-function spAmtText(e){ const ex = SP_EX[e.ex]; return `${e.sets} × ${spAmt(e)}${ex.type==='secs' ? ' s' : ''}${ex.side ? ' je Seite' : ''}`; }
+function spAmtText(e){
+  const ex = SP_EX[e.ex], u = ex.type==='secs' ? ' s' : '', side = ex.side ? ' je Seite' : '';
+  const per = Array.isArray(e.per) && e.per.length > 1 ? e.per : null;
+  if(per && per.some(v=>v!==per[0])) return `${per.join('/')}${u}${side}`;
+  return `${e.sets} × ${spAmt(e)}${u}${side}`;
+}
 function spNames(ids){ return ids.map(id=>SP_MU[id] ? SP_MU[id].name : id).join(', '); }
 function spDur(s){ const m = Math.floor(s/60), r = Math.round(s%60); return m ? `${m}:${pad2(r)} Min.` : `${r} Sek.`; }
 function spSummary(list){
   const ex = new Set(list.map(e=>e.ex)).size;
   const sets = list.reduce((a,e)=>a + (e.sets||0), 0);
-  const reps = list.filter(e=>SP_EX[e.ex].type==='reps').reduce((a,e)=>a + e.sets*(e.reps||0)*(SP_EX[e.ex].side ? 2 : 1), 0);
-  const secs = list.filter(e=>SP_EX[e.ex].type==='secs').reduce((a,e)=>a + e.sets*(e.secs||0)*(SP_EX[e.ex].side ? 2 : 1), 0);
+  const sum = e=>spPer(e).reduce((a,v)=>a + v, 0) * (SP_EX[e.ex].side ? 2 : 1);
+  const reps = list.filter(e=>SP_EX[e.ex].type==='reps').reduce((a,e)=>a + sum(e), 0);
+  const secs = list.filter(e=>SP_EX[e.ex].type==='secs').reduce((a,e)=>a + sum(e), 0);
   const parts = [`${ex} ${ex===1 ? 'Übung' : 'Übungen'}`, `${sets} ${sets===1 ? 'Satz' : 'Sätze'}`];
   if(reps) parts.push(`${reps} Wdh.`);
   if(secs) parts.push(`${spDur(secs)} Haltezeit/Ausdauer`);
@@ -4018,11 +4702,14 @@ function spBest(person, exId, exceptId){ return spOf(person).filter(e=>e.ex===ex
 /* ---------- Ansichten ---------- */
 function renderSport(){
   if(!sportPerson) sportPerson = identity;
-  $$('#spViewChips .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===sportView));
-  $('#spToday').style.display = sportView==='today' ? 'block' : 'none';
-  $('#spLibrary').style.display = sportView==='library' ? 'block' : 'none';
-  $('#spStats').style.display = sportView==='stats' ? 'block' : 'none';
+  wrEnsureLoaded();
+  if(sportView==='run' && !sportRun) sportView = 'workouts';
+  const chip = sportView==='run' ? 'workouts' : sportView;
+  $$('#spViewChips .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===chip));
+  [['today','#spToday'], ['workouts','#spWorkouts'], ['run','#spRun'], ['library','#spLibrary'], ['stats','#spStats']].forEach(([v, sel])=>{ $(sel).style.display = sportView===v ? 'block' : 'none'; });
   if(sportView==='today') renderSportToday();
+  if(sportView==='workouts') renderSportWorkouts();
+  if(sportView==='run') renderSportRun();
   if(sportView==='library') renderSportLibrary();
   if(sportView==='stats') renderSportStats();
 }
@@ -4031,7 +4718,7 @@ function spGoMuscle(id){ sportMuscleSel = id; sportCat = 'all'; $('#spSearch').v
 function spEntryRow(e, canDelete){
   const ex = SP_EX[e.ex];
   return `<div class="sp-entry">
-    <button class="sp-entry-main" data-ex="${ex.id}" type="button"><span class="sp-entry-name">${escapeHtml(ex.name)}</span><span class="sp-entry-amt">${spAmtText(e)}</span>${e.note ? `<span class="sp-entry-note">${escapeHtml(e.note)}</span>` : ''}</button>
+    <button class="sp-entry-main" data-ex="${ex.id}" type="button"><span class="sp-entry-name">${escapeHtml(ex.name)}</span><span class="sp-entry-amt">${spAmtText(e)}</span>${e.wkName ? `<span class="sp-entry-wk">${escapeHtml(e.wkName)}</span>` : ''}${e.note ? `<span class="sp-entry-note">${escapeHtml(e.note)}</span>` : ''}</button>
     ${canDelete && e.by===identity ? `<button class="del sp-del" data-id="${e.id}" type="button" aria-label="${escapeHtml(ex.name)} löschen">${trashSvg()}</button>` : ''}
   </div>`;
 }
@@ -4046,7 +4733,7 @@ function renderSportToday(){
   const now = new Date(), today = spToday();
   const mine = spOf(identity);
   const todays = mine.filter(e=>e.day===today).sort((a,b)=>a.at - b.at);
-  let h = `<div class="balance-card"><div class="label">Heute · ${TD_WEEKDAYS[now.getDay()]}, ${now.getDate()}. ${MONTH_NAMES[now.getMonth()]}</div>`;
+  let h = (sportRun ? wrBannerHTML() : wrDoneCardHTML()) + `<div class="balance-card"><div class="label">Heute · ${TD_WEEKDAYS[now.getDay()]}, ${now.getDate()}. ${MONTH_NAMES[now.getMonth()]}</div>`;
   if(todays.length){
     const w = spWorked(todays);
     h += `<div class="sp-sum">${spSummary(todays)}</div>` + todays.map(e=>spEntryRow(e, true)).join('');
@@ -4055,6 +4742,7 @@ function renderSportToday(){
     h += `<div class="td-text" style="color:var(--muted);margin-top:4px;">Noch nichts eingetragen. Such dir unter „Übungen" eine aus — über die Figur nach Muskelgruppe oder über die Liste.</div>`;
   }
   h += `<button class="btn-wide" id="spAddBtn" type="button" style="margin-top:12px;">+ Übung eintragen</button></div>`;
+  h += wkTodayCardHTML();
 
   /* Diese Woche als sieben Punkte */
   const mon = spMonday(now), days = new Set(mine.map(e=>e.day));
@@ -4084,7 +4772,10 @@ function renderSportToday(){
   }
   $('#spToday').innerHTML = h;
   $('#spAddBtn').onclick = ()=>{ sportView = 'library'; renderSport(); window.scrollTo(0,0); };
-  spBindCommon($('#spToday'));
+  const tb = $('#spToday');
+  spBindCommon(tb); wrBindBanner(tb); wkBindStart(tb);
+  tb.querySelectorAll('.wk-go').forEach(b=>{ b.onclick = ()=>{ sportView = 'workouts'; renderSport(); window.scrollTo(0,0); }; });
+  tb.querySelectorAll('.wr-donex').forEach(b=>{ b.onclick = ()=>{ wrDoneInfo = null; renderSportToday(); }; });
 }
 
 function renderSportLibrary(){
@@ -4107,6 +4798,7 @@ function renderSportExList(){
   $('#spExList').innerHTML = head + (list.length ? list.map(ex=>{
     const last = spLastOf(identity, ex.id);
     return `<button class="item sp-ex sp-open" data-ex="${ex.id}" type="button">
+      <span class="sp-ex-ico" aria-hidden="true">${spaIcon(ex.id)}</span>
       <span class="sp-ex-main"><span class="sp-ex-name">${escapeHtml(ex.name)}</span>
         <span class="sp-ex-mus">${escapeHtml(spNames(ex.p))}${ex.s.length ? ` <span class="sp-muted">+ ${escapeHtml(spNames(ex.s))}</span>` : ''}</span>
         ${last ? `<span class="sp-ex-last">Zuletzt ${spShort(last.day)} · ${spAmtText(last)}</span>` : ''}</span>
@@ -4128,6 +4820,7 @@ function openSportSheet(exId, preset){
   $('#spExTitle').textContent = ex.name;
   $('#spExMeta').textContent = `${ex.cat} · ${SP_LEVELS[ex.lvl]} · ohne Geräte`;
   $('#spExFigure').innerHTML = sportFigureSVG({ mode:'show', primary:ex.p, secondary:ex.s, label:`Beanspruchte Muskeln: ${spNames(ex.p)}` });
+  spaMount($('#spExAnim'), exId, { modal:'spExModal' });
   $('#spExLegend').innerHTML = spLegendHTML(ex.p, ex.s);
   $('#spExHow').textContent = ex.how;
   $('#spExTip').textContent = ex.tip ? 'Tipp: ' + ex.tip : '';
@@ -4378,6 +5071,477 @@ function renderSportStats(){
   spBindCommon($('#spStats')); spBindTips($('#spStats'));
 }
 
+/* ---------- Sport: Trainings — eigene Zusammenstellungen, mit Werten vom letzten Mal ---------- */
+let sportWorkouts = [];
+let sportRun = null, wrLoadedFor = null;
+let wkDraft = null, wkPickCat = 'all';
+let wrTimer = 0, wrWake = null, wrWakeBusy = false, wrAudio = null, wrAnimOpen = -1, wrDoneInfo = null;
+const WK_RESTS = [30, 45, 60, 90, 120];
+const WK_TEMPLATES = [
+  { name:'Ganzkörper Einstieg', rest:60, items:[['squat',3,12],['kneepushup',3,8],['glutebridge',3,12],['reverselunge',2,8],['superman',3,10],['plank',3,30]] },
+  { name:'Bauch & Rumpf', rest:45, items:[['crunch',3,15],['bicycle',3,16],['legraise',3,10],['deadbug',3,10],['sideplank',2,20],['plank',2,40]] },
+  { name:'Beine & Po', rest:60, items:[['squat',4,15],['lunge',3,10],['glutebridge',3,15],['sidelunge',3,8],['donkeykick',2,15],['wallsit',2,40]] },
+  { name:'Oberkörper', rest:60, items:[['pushup',4,10],['pikepushup',3,6],['floordips',3,12],['shouldertaps',3,20],['ytw',3,8],['supermanpull',3,12]] },
+  { name:'Kurz & intensiv', rest:30, items:[['jumpingjacks',3,40],['jumpsquat',3,10],['mountainclimber',3,30],['burpee',3,8],['highknees',3,30]] }
+];
+
+function wkItems(w){ return (w && Array.isArray(w.items) ? w.items : []).filter(it=>it && SP_EX[it.ex]); }
+function wkById(id){ return sportWorkouts.find(w=>w && w.id===id) || null; }
+function wkUnit(ex){ return ex.type==='secs' ? ' s' : ''; }
+function wkMax(ex){ return ex.type==='secs' ? 900 : 300; }
+function wkPlanText(it){ const ex = SP_EX[it.ex]; return `${it.sets} × ${it.amt}${wkUnit(ex)}${ex.side ? ' je Seite' : ''}`; }
+/* Werte je Satz eines Eintrags (ältere Einträge: alle Sätze gleich) */
+function spPer(e){ return Array.isArray(e.per) && e.per.length ? e.per.map(v=>+v || 0) : Array(Math.max(1, e.sets || 1)).fill(spAmt(e)); }
+/* letzter eigener Eintrag einer Übung — bevorzugt aus demselben Training */
+function wkLast(person, wkId, exId){
+  const list = spOf(person).filter(e=>e.ex===exId).sort((a,b)=>b.day.localeCompare(a.day) || b.at - a.at);
+  const inWk = wkId ? list.find(e=>e.wk===wkId) : null;
+  return inWk ? { e:inWk, wk:true } : (list[0] ? { e:list[0], wk:false } : null);
+}
+function wkLastDay(person, wkId){ let d = null; spOf(person).forEach(e=>{ if(e.wk===wkId && (!d || e.day > d)) d = e.day; }); return d; }
+function wkMinutes(w){
+  const rest = w.rest || 60; let s = 0;
+  wkItems(w).forEach(it=>{ const ex = SP_EX[it.ex], one = (ex.type==='secs' ? it.amt : it.amt * 3) * (ex.side ? 2 : 1); s += it.sets * (one + rest); });
+  return Math.max(1, Math.round(s / 60));
+}
+function wkSorted(){
+  return sportWorkouts.filter(w=>w && w.id).map(w=>({ w, d:wkLastDay(identity, w.id) || '' }))
+    .sort((a,b)=>b.d.localeCompare(a.d) || (b.w.at || 0) - (a.w.at || 0)).map(x=>x.w);
+}
+function wkRestLabel(s){ return s < 120 ? `${s} s` : `${s / 60} Min.`; }
+function wkPenSvg(){ return '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>'; }
+function wkBindStart(root){ root.querySelectorAll('.wk-start').forEach(b=>{ b.onclick = ()=>wrStart(b.dataset.id); }); }
+
+/* ---------- Ansicht: Trainings ---------- */
+function wkRowHTML(w, it){
+  const ex = SP_EX[it.ex], l = wkLast(identity, w.id, it.ex);
+  const where = l && !l.wk ? ` · ${l.e.wkName ? escapeHtml(l.e.wkName) : 'einzeln'}` : '';
+  return `<button class="wk-row sp-open" data-ex="${ex.id}" type="button">
+    <span class="sp-ex-ico wk-ico" aria-hidden="true">${spaIcon(ex.id)}</span>
+    <span class="wk-row-main"><span class="wk-row-name">${escapeHtml(ex.name)}</span>
+      <span class="wk-row-plan">Plan ${wkPlanText(it)}</span>
+      <span class="wk-row-last${l ? '' : ' none'}">${l ? `Zuletzt ${spAmtText(l.e)} · ${spShort(l.e.day)}${where}` : 'Noch nicht gemacht'}</span></span>
+  </button>`;
+}
+function renderSportWorkouts(){
+  const other = identity==='Julian' ? 'Clarisse' : 'Julian', list = wkSorted();
+  let h = sportRun ? wrBannerHTML() : '';
+  h += `<button class="btn-wide" id="wkNew" type="button" style="margin:0 0 16px;">+ Neues Training</button>`;
+  if(!list.length) h += `<div class="empty" style="padding:18px 20px 28px;"><b>Noch keine Trainings</b>Stell dir Trainings aus mehreren Übungen zusammen — oder übernimm unten eine Vorlage. Beim Trainieren siehst du bei jeder Übung, wie viele Sätze und Wiederholungen du beim letzten Mal geschafft hast.</div>`;
+  list.forEach(w=>{
+    const items = wkItems(w), mine = wkLastDay(identity, w.id), theirs = wkLastDay(other, w.id);
+    const seen = [mine ? 'du ' + spShort(mine) : '', theirs ? escapeHtml(other) + ' ' + spShort(theirs) : ''].filter(Boolean);
+    h += `<div class="balance-card wk-card">
+      <div class="wk-head"><div class="wk-title">${escapeHtml(w.name)}</div><button class="wk-edit" data-id="${w.id}" type="button" aria-label="${escapeHtml(w.name)} bearbeiten">${wkPenSvg()}</button></div>
+      <div class="wk-meta">${items.length} ${items.length===1 ? 'Übung' : 'Übungen'} · ca. ${wkMinutes(w)} Min. · ${wkRestLabel(w.rest || 60)} Pause${seen.length ? `<br>Zuletzt trainiert: ${seen.join(' · ')}` : ''}</div>
+      <div class="wk-list">${items.map(it=>wkRowHTML(w, it)).join('')}</div>
+      <button class="btn-wide wk-start" data-id="${w.id}" type="button">▶ Training starten</button>
+    </div>`;
+  });
+  const names = new Set(list.map(w=>w.name)), tpl = WK_TEMPLATES.filter(t=>!names.has(t.name));
+  if(tpl.length) h += `<div class="balance-card"><div class="label">Vorlagen</div><div class="td-src" style="margin:0 0 4px;">Antippen, nach Wunsch anpassen, speichern.</div>` +
+    tpl.map(t=>{ const items = t.items.map(x=>({ ex:x[0], sets:x[1], amt:x[2] }));
+      return `<button class="wk-tplrow wk-tpl" data-name="${escapeHtml(t.name)}" type="button"><span class="wk-tpl-main"><b>${escapeHtml(t.name)}</b><span>${items.length} Übungen · ca. ${wkMinutes({ rest:t.rest, items })} Min. · ${escapeHtml(spNames(spWorked(items).P.slice(0, 3)))}</span></span><span class="wk-pick-add" aria-hidden="true">+</span></button>`; }).join('') + `</div>`;
+  const box = $('#spWorkouts');
+  box.innerHTML = h;
+  $('#wkNew').onclick = ()=>wkOpenEditor(null);
+  box.querySelectorAll('.wk-edit').forEach(b=>{ b.onclick = ()=>wkOpenEditor(b.dataset.id); });
+  box.querySelectorAll('.wk-tpl').forEach(b=>{ b.onclick = ()=>wkOpenEditor(null, WK_TEMPLATES.find(t=>t.name===b.dataset.name)); });
+  wrBindBanner(box); wkBindStart(box); spBindCommon(box);
+}
+/* kleine Karte für „Heute" */
+function wkTodayCardHTML(){
+  const list = wkSorted().slice(0, 3);
+  if(!list.length) return `<div class="balance-card"><div class="label">Trainings</div><div class="td-text" style="margin-top:2px;">Stell dir eigene Trainings aus mehreren Übungen zusammen — mit Sätzen, Wiederholungen und deinen Werten vom letzten Mal.</div><button class="clear-btn wk-go" type="button" style="width:100%; text-align:center; margin-top:10px;">Trainings ansehen</button></div>`;
+  return `<div class="balance-card"><div class="label">Trainings</div>` + list.map(w=>{
+    const d = wkLastDay(identity, w.id);
+    return `<div class="wk-quick"><div class="wk-quick-main"><b>${escapeHtml(w.name)}</b><span>${wkItems(w).length} Übungen · ca. ${wkMinutes(w)} Min.${d ? ' · zuletzt ' + spShort(d) : ''}</span></div><button class="wk-play wk-start" data-id="${w.id}" type="button" aria-label="${escapeHtml(w.name)} starten"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></button></div>`;
+  }).join('') + `<button class="clear-btn wk-go" type="button" style="width:100%; text-align:center; margin-top:10px;">Alle Trainings</button></div>`;
+}
+
+/* ---------- Editor ---------- */
+function wkOpenEditor(id, tpl){
+  const w = id ? wkById(id) : null;
+  if(id && !w) return;
+  wkDraft = w ? { id:w.id, name:w.name, rest:w.rest || 60, items:wkItems(w).map(it=>({ ex:it.ex, sets:it.sets, amt:it.amt })) }
+    : { id:null, name:tpl ? tpl.name : '', rest:tpl ? tpl.rest : 60, items:tpl ? tpl.items.filter(x=>SP_EX[x[0]]).map(x=>({ ex:x[0], sets:x[1], amt:x[2] })) : [] };
+  wkPickCat = 'all';
+  $('#wkTitle').textContent = w ? 'Training bearbeiten' : (tpl ? 'Vorlage übernehmen' : 'Neues Training');
+  $('#wkName').value = wkDraft.name;
+  $('#wkSearch').value = '';
+  $('#wkDelete').style.display = w ? '' : 'none';
+  $('#wkMsg').textContent = '';
+  wkSetPicker(!wkDraft.items.length);
+  renderWkEditor();
+  showModal('wkModal');
+}
+function wkSetPicker(open){
+  $('#wkPicker').style.display = open ? 'block' : 'none';
+  const t = $('#wkAddToggle');
+  t.textContent = open ? 'Übungsauswahl schließen' : '+ Übung hinzufügen';
+  t.setAttribute('aria-expanded', open ? 'true' : 'false');
+  if(open) renderWkPicker();
+}
+function wkItemHTML(it, i, n){
+  const ex = SP_EX[it.ex];
+  return `<div class="wk-it">
+    <span class="sp-ex-ico wk-ico" aria-hidden="true">${spaIcon(ex.id)}</span>
+    <div class="wk-it-main">
+      <div class="wk-it-name">${i + 1}. ${escapeHtml(ex.name)}</div>
+      <div class="wk-mini"><button type="button" data-a="sets" data-d="-1" data-i="${i}" aria-label="${escapeHtml(ex.name)}: ein Satz weniger">−</button><span><b>${it.sets}</b> ${it.sets===1 ? 'Satz' : 'Sätze'}</span><button type="button" data-a="sets" data-d="1" data-i="${i}" aria-label="${escapeHtml(ex.name)}: ein Satz mehr">+</button></div>
+      <div class="wk-mini"><button type="button" data-a="amt" data-d="-1" data-i="${i}" aria-label="${escapeHtml(ex.name)}: weniger">−</button><span><b>${it.amt}</b> ${ex.type==='secs' ? 'Sek.' : 'Wdh.'}${ex.side ? ' je Seite' : ''}</span><button type="button" data-a="amt" data-d="1" data-i="${i}" aria-label="${escapeHtml(ex.name)}: mehr">+</button></div>
+    </div>
+    <div class="wk-it-side">
+      <button type="button" class="wk-mv" data-a="del" data-i="${i}" aria-label="${escapeHtml(ex.name)} entfernen">✕</button>
+      <button type="button" class="wk-mv" data-a="up" data-i="${i}" aria-label="${escapeHtml(ex.name)} nach oben"${i===0 ? ' disabled' : ''}>↑</button>
+      <button type="button" class="wk-mv" data-a="down" data-i="${i}" aria-label="${escapeHtml(ex.name)} nach unten"${i===n - 1 ? ' disabled' : ''}>↓</button>
+    </div>
+  </div>`;
+}
+function renderWkEditor(){
+  const d = wkDraft; if(!d) return;
+  $('#wkItems').innerHTML = d.items.length ? d.items.map((it, i)=>wkItemHTML(it, i, d.items.length)).join('')
+    : `<div class="td-src" style="margin:0 0 4px;">Noch keine Übung — füge unten welche hinzu.</div>`;
+  $('#wkRest').innerHTML = WK_RESTS.map(s=>`<button class="chip ${d.rest===s ? 'selected' : ''}" data-s="${s}" type="button">${wkRestLabel(s)}</button>`).join('');
+  if(d.items.length){
+    const w = spWorked(d.items);
+    $('#wkCover').innerHTML = `<div class="sp-subhead">Trainierte Muskeln · ca. ${wkMinutes(d)} Min.</div><div class="sp-fig sp-fig-sm">${sportFigureSVG({ mode:'show', primary:w.P, secondary:w.S, label:'Muskeln, die dieses Training beansprucht' })}</div>${spLegendHTML(w.P, w.S)}`;
+  } else $('#wkCover').innerHTML = '';
+  if($('#wkPicker').style.display!=='none') renderWkPicker();
+}
+function renderWkPicker(){
+  const q = ($('#wkSearch').value || '').trim().toLowerCase(), count = {};
+  (wkDraft ? wkDraft.items : []).forEach(it=>{ count[it.ex] = (count[it.ex] || 0) + 1; });
+  $('#wkPickCats').innerHTML = [['all','Alle'], ...SPORT_CATS.map(c=>[c,c])].map(([v,l])=>`<button class="chip proj-chip ${wkPickCat===v ? 'selected' : ''}" data-val="${escapeHtml(v)}" type="button">${escapeHtml(l)}</button>`).join('');
+  const list = SPORT_EXERCISES.filter(ex=>(wkPickCat==='all' || ex.cat===wkPickCat) && (!q || ex.name.toLowerCase().includes(q) || spNames(ex.p).toLowerCase().includes(q)));
+  $('#wkPickList').innerHTML = list.length ? list.map(ex=>`<button class="wk-pick${count[ex.id] ? ' on' : ''}" data-ex="${ex.id}" type="button" aria-pressed="${count[ex.id] ? 'true' : 'false'}">
+      <span class="sp-ex-ico wk-ico" aria-hidden="true">${spaIcon(ex.id)}</span>
+      <span class="wk-pick-main"><span class="wk-pick-name">${escapeHtml(ex.name)}</span><span class="wk-pick-mus">${escapeHtml(spNames(ex.p))}</span></span>
+      <span class="wk-pick-add" aria-hidden="true">${count[ex.id] ? '✓' : '+'}</span></button>`).join('')
+    : `<div class="td-src" style="padding:10px 2px;">Keine Übung gefunden.</div>`;
+}
+$('#wkAddToggle').addEventListener('click', ()=>wkSetPicker($('#wkPicker').style.display==='none'));
+$('#wkSearch').addEventListener('input', renderWkPicker);
+$('#wkName').addEventListener('input', ()=>{ if(wkDraft) wkDraft.name = $('#wkName').value; $('#wkMsg').textContent = ''; });
+$('#wkPickCats').addEventListener('click', ev=>{ const b = ev.target.closest('.chip'); if(!b) return; wkPickCat = b.dataset.val; renderWkPicker(); });
+$('#wkPickList').addEventListener('click', ev=>{
+  const b = ev.target.closest('.wk-pick'); if(!b || !wkDraft) return;
+  const id = b.dataset.ex, ex = SP_EX[id]; if(!ex) return;
+  const at = wkDraft.items.map(it=>it.ex).lastIndexOf(id);
+  if(at >= 0) wkDraft.items.splice(at, 1);
+  else { const l = wkLast(identity, null, id); wkDraft.items.push({ ex:id, sets:l ? spClamp(l.e.sets, 1, 10) : 3, amt:l ? spAmt(l.e) : ex.def }); }
+  $('#wkMsg').textContent = '';
+  renderWkEditor();
+});
+$('#wkItems').addEventListener('click', ev=>{
+  const b = ev.target.closest('button[data-a]'); if(!b || !wkDraft) return;
+  const i = +b.dataset.i, it = wkDraft.items[i]; if(!it) return;
+  const ex = SP_EX[it.ex], a = b.dataset.a, d = +b.dataset.d || 0;
+  if(a==='sets') it.sets = spClamp(it.sets + d, 1, 10);
+  if(a==='amt'){ const step = ex.type==='secs' ? 5 : 1; it.amt = spClamp(it.amt + d * step, ex.type==='secs' ? 5 : 1, wkMax(ex)); }
+  if(a==='del') wkDraft.items.splice(i, 1);
+  if(a==='up' && i > 0) wkDraft.items.splice(i - 1, 0, wkDraft.items.splice(i, 1)[0]);
+  if(a==='down' && i < wkDraft.items.length - 1) wkDraft.items.splice(i + 1, 0, wkDraft.items.splice(i, 1)[0]);
+  renderWkEditor();
+  /* Fokus nach dem Neuzeichnen an derselben Stelle halten (Tastatur, Bildschirmleser) */
+  const again = $(`#wkItems button[data-a="${a}"][data-i="${a==='up' ? i - 1 : a==='down' ? i + 1 : i}"]${b.dataset.d ? `[data-d="${b.dataset.d}"]` : ''}`);
+  if(again && !again.disabled) again.focus();
+});
+$('#wkRest').addEventListener('click', ev=>{ const b = ev.target.closest('.chip'); if(!b || !wkDraft) return; wkDraft.rest = +b.dataset.s; renderWkEditor(); });
+$('#wkSave').addEventListener('click', async ()=>{
+  const d = wkDraft; if(!d) return;
+  const name = $('#wkName').value.replace(/\s+/g, ' ').trim().slice(0, 40);
+  if(!name){ $('#wkMsg').textContent = 'Bitte gib dem Training einen Namen.'; $('#wkName').focus(); return; }
+  if(!d.items.length){ $('#wkMsg').textContent = 'Füge mindestens eine Übung hinzu.'; wkSetPicker(true); return; }
+  const items = d.items.filter(it=>SP_EX[it.ex]).map(it=>{ const ex = SP_EX[it.ex]; return { ex:it.ex, sets:spClamp(Math.round(it.sets) || 1, 1, 10), amt:spClamp(Math.round(it.amt) || ex.def, 1, wkMax(ex)) }; });
+  if(d.id && wkById(d.id)) sportWorkouts = sportWorkouts.map(w=>w && w.id===d.id ? Object.assign({}, w, { name, rest:d.rest, items, upd:Date.now() }) : w);
+  else sportWorkouts = [...sportWorkouts.filter(Boolean), { id:uid(), name, by:identity, at:Date.now(), rest:d.rest, items }];
+  hideModal('wkModal'); wkDraft = null;
+  if(sportView!=='run') sportView = 'workouts';
+  renderSport();
+  setStatus(`Training „${name}" gespeichert`);
+  await storageSet('household-sportWorkouts', JSON.stringify(sportWorkouts), true);
+});
+$('#wkDelete').addEventListener('click', async ()=>{
+  const d = wkDraft; if(!d || !d.id) return;
+  const w = wkById(d.id); if(!w) return;
+  if(!confirm(`Training „${w.name}" löschen? Bereits eingetragene Übungen bleiben im Verlauf.`)) return;
+  sportWorkouts = sportWorkouts.filter(x=>x && x.id!==d.id);
+  hideModal('wkModal'); wkDraft = null;
+  renderSport();
+  setStatus('Training gelöscht');
+  await storageSet('household-sportWorkouts', JSON.stringify(sportWorkouts), true);
+});
+
+/* ---------- Training durchführen ---------- */
+function wrKey(){ return 'gz-sport-run-' + identity; }
+function wrSave(){ try{ if(sportRun) localStorage.setItem(wrKey(), JSON.stringify(sportRun)); else localStorage.removeItem(wrKey()); }catch(_){} }
+function wrEnsureLoaded(){
+  if(wrLoadedFor===identity) return;
+  wrLoadedFor = identity; sportRun = null; wrAnimOpen = -1; wrDoneInfo = null;
+  try{ const r = JSON.parse(localStorage.getItem(wrKey()) || 'null'); if(r && Array.isArray(r.items) && r.items.length && r.start) sportRun = r; }catch(_){}
+  if(sportRun) wrTickStart();
+}
+function wrStats(r){
+  let doneSets = 0, total = 0, doneEx = 0;
+  r.items.forEach(it=>{ const d = it.sets.filter(s=>s.done).length; doneSets += d; total += it.sets.length; if(d && d===it.sets.length) doneEx++; });
+  return { doneSets, total, doneEx, n:r.items.length };
+}
+function wrClock(ms){ const s = Math.max(0, Math.floor(ms / 1000)), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60; return h ? `${h}:${pad2(m)}:${pad2(x)}` : `${m}:${pad2(x)}`; }
+function wrCur(r){ return r.items.findIndex(it=>it.sets.some(s=>!s.done)); }
+function wrPerText(per, ex){ const u = wkUnit(ex), side = ex.side ? ' je Seite' : ''; return per.length > 1 && per.some(v=>v!==per[0]) ? `${per.join('/')}${u}${side}` : `${per.length} × ${per[0]}${u}${side}`; }
+function wrStart(wkId){
+  const w = wkById(wkId); if(!w) return;
+  wrEnsureLoaded();
+  if(sportRun && !confirm(`Das laufende Training „${sportRun.name}" wird verworfen. Neues Training starten?`)) return;
+  wrAudioInit();
+  const items = wkItems(w).map(it=>{
+    const l = wkLast(identity, w.id, it.ex), prev = l ? spPer(l.e) : null, sets = [];
+    for(let j=0; j<Math.max(1, it.sets); j++) sets.push({ amt:prev ? (prev[j] !== undefined ? prev[j] : prev[prev.length - 1]) : it.amt, done:false });
+    return { ex:it.ex, plan:{ sets:it.sets, amt:it.amt }, prev:prev ? { per:prev, day:l.e.day } : null, sets };
+  });
+  if(!items.length) return;
+  sportRun = { id:uid(), wk:w.id, name:w.name, by:identity, start:Date.now(), rest:w.rest || 60, items, restEnd:0, cd:null };
+  wrAnimOpen = -1; wrDoneInfo = null;
+  wrSave(); wrTickStart();
+  sportView = 'run'; renderSport(); window.scrollTo(0, 0);
+}
+function wrBannerHTML(){
+  const r = sportRun, st = wrStats(r);
+  return `<button class="wr-banner" type="button"><span class="wr-pulse" aria-hidden="true"></span><span class="wr-banner-main"><b>Training läuft: ${escapeHtml(r.name)}</b><span>${st.doneSets} von ${st.total} Sätzen · <span class="wr-banner-t">${wrClock(Date.now() - r.start)}</span></span></span><span class="wr-banner-go">Weiter ›</span></button>`;
+}
+function wrBindBanner(root){ root.querySelectorAll('.wr-banner').forEach(b=>{ b.onclick = ()=>{ sportView = 'run'; renderSport(); window.scrollTo(0, 0); }; }); }
+function wrDoneCardHTML(){
+  const d = wrDoneInfo; if(!d || Date.now() - d.at > 30 * 60000) return '';
+  return `<div class="balance-card wr-donecard"><div class="wk-head"><div><div class="label">Geschafft 💪</div><div class="wk-title">${escapeHtml(d.name)}</div></div><button class="sheet-close wr-donex" type="button" aria-label="Hinweis ausblenden">✕</button></div>
+    <div class="wk-meta" style="margin:4px 0 0;">${d.mins} Min. · ${d.ex} ${d.ex===1 ? 'Übung' : 'Übungen'} · ${d.sets} ${d.sets===1 ? 'Satz' : 'Sätze'}</div>${d.pbs.length ? `<div class="wr-pb">🎉 Neue Bestleistung: ${escapeHtml(d.pbs.join(', '))}</div>` : ''}</div>`;
+}
+function wrSetHTML(r, it, ex, i, j){
+  const s = it.sets[j], secs = ex.type==='secs', run = !!(r.cd && r.cd.i===i && r.cd.j===j);
+  const pv = it.prev && it.prev.per[j] !== undefined ? it.prev.per[j] : null;
+  const sub = run ? `<span id="wrSide${i}_${j}">${r.cd.sides===2 ? (r.cd.half ? 'Seite 2 läuft' : 'Seite 1 läuft') : 'läuft …'}</span>` : (pv!==null ? `<span>zuletzt ${pv}${secs ? ' s' : ''}</span>` : '');
+  return `<div class="wr-set${s.done ? ' done' : ''}${run ? ' run' : ''}">
+    <div class="wr-setlab"><b>Satz ${j + 1}</b>${sub}</div>
+    <div class="sp-step-ctl wr-ctl">
+      <button class="sp-stepbtn" type="button" data-a="dec" data-i="${i}" data-j="${j}" aria-label="Satz ${j + 1}: weniger"${run ? ' disabled' : ''}>−</button>
+      <input type="number" inputmode="numeric" min="1" max="${wkMax(ex)}" value="${run ? wrRemain(r) : s.amt}" id="wrIn${i}_${j}" data-i="${i}" data-j="${j}" aria-label="Satz ${j + 1}: ${secs ? 'Sekunden' : 'Wiederholungen'}"${run ? ' readonly' : ''}>
+      <button class="sp-stepbtn" type="button" data-a="inc" data-i="${i}" data-j="${j}" aria-label="Satz ${j + 1}: mehr"${run ? ' disabled' : ''}>+</button>
+    </div>
+    ${secs && !s.done ? `<button class="wr-btn wr-timer" type="button" data-a="timer" data-i="${i}" data-j="${j}" aria-label="${run ? 'Countdown stoppen und Zeit übernehmen' : `Countdown starten${ex.side ? ' (beide Seiten)' : ''}`}">${run ? '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>'}</button>` : ''}
+    <button class="wr-btn wr-check" type="button" data-a="check" data-i="${i}" data-j="${j}" aria-pressed="${s.done ? 'true' : 'false'}" aria-label="Satz ${j + 1} ${s.done ? 'wieder öffnen' : 'abhaken'}">${checkSvg()}</button>
+  </div>`;
+}
+function wrRemain(r){
+  const cd = r.cd; if(!cd) return 0;
+  const el = (Date.now() - cd.start) / 1000, total = cd.dur * (cd.sides || 1);
+  return Math.max(0, Math.ceil((cd.sides===2 && el < cd.dur ? cd.dur : total) - el));
+}
+function renderSportRun(){
+  const r = sportRun, box = $('#spRun');
+  if(!r){ box.innerHTML = ''; return; }
+  const st = wrStats(r), cur = wrCur(r), now = Date.now(), sound = wrSoundOn();
+  let h = `<div class="wr-head">
+    <div class="wr-top">
+      <div class="wr-titles"><div class="wr-name">${escapeHtml(r.name)}</div><div class="wr-meta"><span id="wrElapsed">${wrClock(now - r.start)}</span> · ${st.doneEx}/${st.n} Übungen · ${st.doneSets}/${st.total} Sätze</div></div>
+      <button class="wr-sound" id="wrSound" type="button" aria-pressed="${sound}" aria-label="Signalton">${sound ? '🔔' : '🔕'}</button>
+      <button class="wr-fin" id="wrFinTop" type="button">Fertig</button>
+    </div>
+    <div class="wr-bar" role="progressbar" aria-label="Erledigte Sätze" aria-valuemin="0" aria-valuemax="${st.total}" aria-valuenow="${st.doneSets}"><i style="width:${st.total ? Math.round(st.doneSets / st.total * 100) : 0}%"></i></div>
+    <div class="wr-rest" id="wrRest"${r.restEnd > now ? '' : ' hidden'}><span>Pause</span><b id="wrRestT">${wrClock(r.restEnd - now + 999)}</b><span class="wr-sp"></span><button type="button" id="wrRestPlus">+15 s</button><button type="button" id="wrRestSkip">Weiter</button></div>
+  </div>`;
+  r.items.forEach((it, i)=>{
+    const ex = SP_EX[it.ex]; if(!ex) return;
+    const fin = it.sets.every(s=>s.done), open = wrAnimOpen===i;
+    h += `<div class="balance-card wr-ex${i===cur ? ' cur' : ''}${fin ? ' fin' : ''}" id="wrEx${i}">
+      <div class="wr-exhead">
+        <button class="sp-ex-ico wr-ico" type="button" data-i="${i}" aria-expanded="${open}" aria-controls="wrHow${i}" aria-label="Bewegungsablauf ${escapeHtml(ex.name)} ${open ? 'ausblenden' : 'zeigen'}">${spaIcon(ex.id)}</button>
+        <div class="wr-exinfo"><div class="wr-exname">${i + 1}. ${escapeHtml(ex.name)}${fin ? ' <span class="wr-ok" aria-label="erledigt">✓</span>' : ''}</div>
+          <div class="wr-last">${it.prev ? `Zuletzt ${wrPerText(it.prev.per, ex)} · ${spShort(it.prev.day)}` : 'Zum ersten Mal'}</div>
+          <div class="wr-plan">Plan ${it.plan.sets} × ${it.plan.amt}${wkUnit(ex)}${ex.side ? ' je Seite' : ''}</div></div>
+        <button class="wr-howbtn wr-ico" type="button" data-i="${i}" aria-hidden="true" tabindex="-1">${open ? 'weniger' : 'Ablauf'}</button>
+      </div>
+      <div class="wr-how" id="wrHow${i}"${open ? '' : ' hidden'}><div class="spa" id="wrAnim${i}"></div><div class="td-text" style="margin-top:0;">${escapeHtml(ex.how)}</div>${ex.tip ? `<div class="td-src">Tipp: ${escapeHtml(ex.tip)}</div>` : ''}</div>
+      <div class="wr-sets">${it.sets.map((s, j)=>wrSetHTML(r, it, ex, i, j)).join('')}</div>
+      <div class="wr-setbtns"><button type="button" class="wr-mini" data-a="add" data-i="${i}">+ Satz</button>${it.sets.length > 1 ? `<button type="button" class="wr-mini" data-a="rm" data-i="${i}">− Satz</button>` : ''}</div>
+    </div>`;
+  });
+  if(st.total && st.doneSets===st.total) h += `<div class="wr-alldone">Alle Sätze geschafft 💪</div>`;
+  h += `<button class="btn-wide" id="wrFinish" type="button">Training beenden &amp; speichern</button><button class="clear-btn" id="wrCancel" type="button" style="width:100%; text-align:center;">Training abbrechen</button>`;
+  box.innerHTML = h;
+  const ai = wrAnimOpen;
+  if(ai >= 0 && r.items[ai] && $('#wrAnim' + ai)) spaMount($('#wrAnim' + ai), r.items[ai].ex, {});
+  wrTickStart(); wrWakeOn();
+}
+$('#spRun').addEventListener('click', ev=>{
+  const b = ev.target.closest('button'); const r = sportRun;
+  if(!b || !r) return;
+  if(b.id==='wrFinTop' || b.id==='wrFinish'){ wrFinish(); return; }
+  if(b.id==='wrCancel'){ wrCancel(); return; }
+  if(b.id==='wrSound'){ wrSoundToggle(); return; }
+  if(b.id==='wrRestPlus'){ r.restEnd = Math.max(r.restEnd, Date.now()) + 15000; wrSave(); wrTick(); return; }
+  if(b.id==='wrRestSkip'){ r.restEnd = 0; wrSave(); wrTick(); return; }
+  if(b.classList.contains('wr-ico')){ const i = +b.dataset.i; wrAnimOpen = wrAnimOpen===i ? -1 : i; if(wrAnimOpen < 0) spaStop(); renderSportRun(); const f = $(`#wrEx${i} .sp-ex-ico.wr-ico`); if(f) f.focus(); return; }
+  const a = b.dataset.a, i = +b.dataset.i, j = +b.dataset.j, it = r.items[i];
+  if(!a || !it) return;
+  const ex = SP_EX[it.ex];
+  if(a==='inc' || a==='dec'){
+    const s = it.sets[j]; if(!s) return;
+    const step = ex.type==='secs' ? 5 : 1;
+    s.amt = spClamp((+s.amt || 0) + (a==='inc' ? step : -step), 1, wkMax(ex));
+    const inp = $(`#wrIn${i}_${j}`); if(inp) inp.value = s.amt;
+    wrSave(); return;
+  }
+  if(a==='check'){
+    wrAudioInit();
+    const s = it.sets[j]; if(!s) return;
+    if(r.cd && r.cd.i===i && r.cd.j===j){ s.amt = wrCdAmt(r.cd); r.cd = null; }
+    s.done = !s.done;
+    if(s.done){ s.at = Date.now(); wrAfterSet(); } else r.restEnd = 0;
+    wrSave(); renderSportRun();
+    const f = $(`#wrEx${i} .wr-check[data-j="${j}"]`); if(f) f.focus({ preventScroll:true });
+    if(s.done) wrMaybeScroll(i);
+    return;
+  }
+  if(a==='timer'){ wrAudioInit(); wrTimerToggle(i, j); return; }
+  if(a==='add'){ const last = it.sets[it.sets.length - 1]; it.sets.push({ amt:last ? last.amt : it.plan.amt, done:false }); wrSave(); renderSportRun(); return; }
+  if(a==='rm' && it.sets.length > 1){
+    const k = it.sets.length - 1;
+    if(it.sets[k].done && !confirm('Den letzten, schon abgehakten Satz entfernen?')) return;
+    if(r.cd && r.cd.i===i && r.cd.j===k) r.cd = null;
+    it.sets.pop(); wrSave(); renderSportRun();
+  }
+});
+$('#spRun').addEventListener('input', ev=>{
+  const inp = ev.target, r = sportRun;
+  if(!r || inp.tagName!=='INPUT' || inp.dataset.i===undefined || inp.readOnly) return;
+  const it = r.items[+inp.dataset.i], s = it && it.sets[+inp.dataset.j]; if(!s) return;
+  const v = parseInt(inp.value);
+  if(v > 0){ s.amt = Math.min(v, wkMax(SP_EX[it.ex])); wrSave(); }
+});
+$('#spRun').addEventListener('change', ev=>{
+  const inp = ev.target, r = sportRun;
+  if(!r || inp.tagName!=='INPUT' || inp.dataset.i===undefined || inp.readOnly) return;
+  const it = r.items[+inp.dataset.i], s = it && it.sets[+inp.dataset.j]; if(s) inp.value = s.amt;
+});
+function wrAfterSet(){ const r = sportRun; if(r) r.restEnd = r.items.some(it=>it.sets.some(s=>!s.done)) ? Date.now() + r.rest * 1000 : 0; }
+function wrMaybeScroll(i){
+  const r = sportRun; if(!r) return;
+  const it = r.items[i]; if(!it || it.sets.some(s=>!s.done)) return;
+  const nx = wrCur(r), el = nx >= 0 ? $('#wrEx' + nx) : $('#wrFinish');
+  if(el) try{ el.scrollIntoView({ behavior:spaReduced() ? 'auto' : 'smooth', block:nx >= 0 ? 'start' : 'center' }); }catch(_){}
+}
+function wrTimerToggle(i, j){
+  const r = sportRun, it = r.items[i], s = it && it.sets[j]; if(!s) return;
+  const ex = SP_EX[it.ex];
+  if(r.cd && r.cd.i===i && r.cd.j===j){
+    s.amt = wrCdAmt(r.cd);
+    s.done = true; s.at = Date.now(); r.cd = null; wrAfterSet(); wrSave(); renderSportRun(); wrMaybeScroll(i);
+    return;
+  }
+  const inp = $(`#wrIn${i}_${j}`), dur = spClamp(parseInt(inp && inp.value) || s.amt || ex.def, 1, wkMax(ex));
+  s.amt = dur;
+  const sides = ex.side ? 2 : 1;
+  r.cd = { i, j, start:Date.now(), end:Date.now() + dur * sides * 1000, dur, sides, half:false };
+  r.restEnd = 0;
+  wrSave(); renderSportRun();
+}
+/* vorzeitig gestoppter Countdown: geschaffte Sekunden (bei „je Seite": die der laufenden Seite) */
+function wrCdAmt(cd){ const el = (Date.now() - cd.start) / 1000; return spClamp(Math.round(cd.sides===2 && el >= cd.dur ? el - cd.dur : el), 1, cd.dur); }
+function wrTickStart(){ if(!wrTimer) wrTimer = setInterval(wrTick, 250); }
+function wrTickStop(){ if(wrTimer) clearInterval(wrTimer); wrTimer = 0; }
+function wrVisible(){ const p = document.querySelector('.panel[data-panel="sport"]'); return !!(p && p.classList.contains('active') && sportView==='run' && $('#wrElapsed')); }
+function wrTick(){
+  const r = sportRun;
+  if(!r){ wrTickStop(); wrWakeOff(); return; }
+  const now = Date.now(), vis = wrVisible();
+  if(r.cd){
+    const cd = r.cd, it = r.items[cd.i], s = it && it.sets[cd.j];
+    if(!s) r.cd = null;
+    else if(now >= cd.end){
+      s.done = true; s.amt = cd.dur; s.at = now; r.cd = null;
+      wrAfterSet(); wrSave(); wrSignal(false);
+      if(vis){ renderSportRun(); wrMaybeScroll(cd.i); }
+      return;
+    } else {
+      if(cd.sides===2 && !cd.half && now - cd.start >= cd.dur * 1000){ cd.half = true; wrSave(); wrSignal(true); const lab = $(`#wrSide${cd.i}_${cd.j}`); if(lab) lab.textContent = 'Seite 2 läuft'; }
+      if(vis){ const inp = $(`#wrIn${cd.i}_${cd.j}`); if(inp) inp.value = wrRemain(r); }
+    }
+  }
+  if(r.restEnd && now >= r.restEnd){ r.restEnd = 0; wrSave(); wrSignal(true); }
+  if(vis){
+    const e = $('#wrElapsed'); if(e) e.textContent = wrClock(now - r.start);
+    const rest = $('#wrRest');
+    if(rest){ const on = r.restEnd > now; rest.hidden = !on; if(on) $('#wrRestT').textContent = wrClock(r.restEnd - now + 999); }
+  } else if(wrWake) wrWakeOff();
+  document.querySelectorAll('.wr-banner-t').forEach(el=>{ el.textContent = wrClock(now - r.start); });
+}
+function wrSoundOn(){ try{ return localStorage.getItem('gz-sport-sound')!=='0'; }catch(_){ return true; } }
+function wrSoundToggle(){
+  const on = !wrSoundOn();
+  try{ localStorage.setItem('gz-sport-sound', on ? '1' : '0'); }catch(_){}
+  if(on){ wrAudioInit(); wrSignal(true); }
+  const b = $('#wrSound'); if(b){ b.textContent = on ? '🔔' : '🔕'; b.setAttribute('aria-pressed', on ? 'true' : 'false'); }
+}
+function wrAudioInit(){
+  try{
+    if(!wrAudio){ const AC = window.AudioContext || window.webkitAudioContext; if(AC) wrAudio = new AC(); }
+    if(wrAudio && wrAudio.state==='suspended') wrAudio.resume();
+  }catch(_){}
+}
+function wrSignal(soft){
+  try{ if(navigator.vibrate) navigator.vibrate(soft ? 150 : [180, 90, 180]); }catch(_){}
+  if(!wrAudio || !wrSoundOn()) return;
+  try{
+    const t = wrAudio.currentTime;
+    (soft ? [0] : [0, 0.24]).forEach(d=>{
+      const o = wrAudio.createOscillator(), g = wrAudio.createGain();
+      o.type = 'sine'; o.frequency.value = soft ? 660 : 880;
+      g.gain.setValueAtTime(0.0001, t + d); g.gain.exponentialRampToValueAtTime(0.22, t + d + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + d + 0.2);
+      o.connect(g); g.connect(wrAudio.destination); o.start(t + d); o.stop(t + d + 0.22);
+    });
+  }catch(_){}
+}
+/* Bildschirm bleibt während des Trainings an (wo der Browser es erlaubt) */
+async function wrWakeOn(){
+  if(wrWake || wrWakeBusy || !sportRun || document.hidden || !('wakeLock' in navigator)) return;
+  wrWakeBusy = true;
+  try{ wrWake = await navigator.wakeLock.request('screen'); wrWake.addEventListener('release', ()=>{ wrWake = null; }); }catch(_){ wrWake = null; }
+  wrWakeBusy = false;
+  if(wrWake && !wrVisible()) wrWakeOff();
+}
+function wrWakeOff(){ try{ if(wrWake) wrWake.release(); }catch(_){} wrWake = null; }
+document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && sportRun){ wrTick(); if(wrVisible()) wrWakeOn(); } });
+function wrCleanup(){ sportRun = null; wrAnimOpen = -1; spaStop(); wrSave(); wrTickStop(); wrWakeOff(); }
+async function wrFinish(){
+  const r = sportRun; if(!r) return;
+  const st = wrStats(r), open = st.total - st.doneSets;
+  if(!st.doneSets){ if(!confirm('Noch kein Satz abgehakt. Training ohne Speichern beenden?')) return; wrCleanup(); sportView = 'workouts'; renderSport(); window.scrollTo(0, 0); return; }
+  if(open && !confirm(`${open} ${open===1 ? 'Satz ist' : 'Sätze sind'} noch offen. Trotzdem beenden und das Erledigte speichern?`)) return;
+  const day = spIso(new Date(r.start)), base = Date.now(), add = [], pbs = [];
+  r.items.forEach((it, k)=>{
+    const ex = SP_EX[it.ex]; if(!ex) return;
+    const done = it.sets.filter(s=>s.done).map(s=>spClamp(Math.round(+s.amt) || 1, 1, wkMax(ex)));
+    if(!done.length) return;
+    const max = Math.max(...done), prevBest = spBest(identity, ex.id);
+    if(prevBest && max > prevBest && !pbs.includes(ex.name)) pbs.push(ex.name);
+    const e = { id:uid(), by:identity, at:base + k, day, ex:ex.id, sets:done.length, wk:r.wk, wkName:r.name, sess:r.id };
+    if(ex.type==='secs') e.secs = max; else e.reps = max;
+    if(done.some(v=>v!==max)) e.per = done;
+    add.push(e);
+  });
+  wrDoneInfo = { at:Date.now(), name:r.name, mins:Math.max(1, Math.round((Date.now() - r.start) / 60000)), ex:add.length, sets:add.reduce((a,e)=>a + e.sets, 0), pbs };
+  wrCleanup();
+  sportEntries = [...add.slice().reverse(), ...sportEntries];
+  sportView = 'today'; renderSport(); window.scrollTo(0, 0);
+  setStatus(pbs.length ? `Training gespeichert — neue Bestleistung 🎉` : 'Training gespeichert');
+  await storageSet('household-sport', JSON.stringify(sportEntries), true);
+}
+function wrCancel(){
+  const r = sportRun; if(!r) return;
+  if(!confirm(wrStats(r).doneSets ? 'Training abbrechen? Die abgehakten Sätze werden nicht gespeichert.' : 'Training abbrechen?')) return;
+  wrCleanup(); sportView = 'workouts'; renderSport(); window.scrollTo(0, 0);
+}
+
 /* ---------- Load all (Firebase, with live sync) ---------- */
 async function loadAll(){
   try{
@@ -4517,7 +5681,13 @@ function attachLiveSync(){
     const v = snap.val();
     sportEntries = Array.isArray(v) ? v.filter(Boolean) : (v ? Object.values(v) : []);
     const p = document.querySelector('.panel[data-panel="sport"]');
-    if(p && p.classList.contains('active')) renderSport();
+    if(p && p.classList.contains('active') && sportView!=='run') renderSport();
+  });
+  db.ref('sportWorkouts').on('value', snap=>{
+    const v = snap.val();
+    sportWorkouts = Array.isArray(v) ? v.filter(Boolean) : (v ? Object.values(v) : []);
+    const p = document.querySelector('.panel[data-panel="sport"]');
+    if(p && p.classList.contains('active') && sportView!=='run' && $('#wkModal').style.display!=='flex') renderSport();
   });
   setTimeout(()=>{ liveSyncPrimed = true; }, 2500);
 }

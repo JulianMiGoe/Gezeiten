@@ -10,7 +10,13 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#143C3F">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23143C3F'/%3E%3Cpath d='M10 55 Q25 40 40 55 T70 55 T100 55' stroke='%236FA695' stroke-width='6' fill='none'/%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%23143C3F'/%3E%3Cpath d='M10 55 Q25 40 40 55 T70 55 T100 55' stroke='%236FA695' stroke-width='6' fill='none'/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#143C3F">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Gezeiten">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js" onerror="this.dataset.failed='1'"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-database-compat.js" onerror="this.dataset.failed='1'"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js" onerror="this.dataset.failed='1'"></script>
@@ -709,6 +715,35 @@ nav.bottom{
       <button id="bmDelete" type="button" class="clear-btn" style="flex:1; text-align:center; margin:0;">Entfernen</button>
       <button id="bmSave" type="button" class="btn-wide" style="flex:2; margin:0;">Speichern</button>
     </div>
+  </div>
+</div>
+
+<div id="pushModal" class="modal-bg">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title">Benachrichtigungen</span><button class="sheet-close" data-close="pushModal" type="button" aria-label="schließen">✕</button></div>
+    <div id="pushDeviceStatus" class="balance-card" style="font-size:.88rem; line-height:1.5;"></div>
+    <button id="pushToggle" class="btn-wide" type="button" style="margin:0 0 8px;"></button>
+    <button id="pushTest" class="clear-btn" type="button" style="width:100%; text-align:center; margin:0 0 8px;">Testnachricht an dieses Gerät</button>
+    <div id="pushMsg" style="font-size:.8rem; min-height:1.1em; margin:4px 0 12px; line-height:1.45;"></div>
+    <label class="share-toggle"><input type="checkbox" id="pushLocalToggle"> Hinweise nur, solange die App offen ist (ohne Push)</label>
+    <details id="pushSetup" class="balance-card" style="margin-top:6px;">
+      <summary style="cursor:pointer; font-weight:600; font-size:.92rem; color:var(--ink);">Einrichtung (einmalig für euch beide)</summary>
+      <div class="field-label" style="margin-top:14px;">Adresse eures Cloudflare-Workers</div>
+      <div style="display:flex; gap:8px;">
+        <input type="text" id="pushWorkerUrl" class="field" placeholder="https://gezeiten-push.….workers.dev" autocapitalize="off" autocorrect="off" spellcheck="false" style="margin:0; flex:1; min-width:0;">
+        <button id="pushWorkerSave" class="add-btn" type="button" aria-label="speichern">✓</button>
+      </div>
+      <div id="pushWorkerStatus" class="td-src"></div>
+      <div class="field-label" style="margin-top:16px;">Schlüssel</div>
+      <div id="pushKeyStatus" style="font-size:.85rem; line-height:1.45; color:var(--ink);"></div>
+      <button id="pushKeyGen" class="clear-btn" type="button" style="margin-top:8px;"></button>
+      <div id="pushKeyOut" style="display:none; margin-top:12px;">
+        <div style="font-size:.8rem; color:var(--coral); line-height:1.45;">Geheimer Schlüssel — wird nur jetzt angezeigt. Kopieren und in Cloudflare als Secret <b>VAPID_PRIVATE_JWK</b> eintragen. Nicht weitergeben.</div>
+        <textarea id="pushKeyText" class="field" rows="4" readonly style="font-family:'IBM Plex Mono',monospace; font-size:.7rem; margin:8px 0;"></textarea>
+        <button id="pushKeyCopy" class="btn-wide" type="button" style="margin:0;">Kopieren</button>
+      </div>
+    </details>
+    <div id="pushDevices" class="td-src" style="margin-top:12px;"></div>
   </div>
 </div>
 
@@ -1539,6 +1574,7 @@ async function storageSet(key, value, shared){
     const path = key.replace('household-', '');
     let parsed;
     try{ parsed = JSON.parse(value); }catch(_){ parsed = value; }
+    pushOnWrite(path, parsed);
     await db.ref(path).set(parsed);
   }catch(e){ setStatus('Speichern fehlgeschlagen — nochmal versuchen', true); }
 }
@@ -1923,6 +1959,8 @@ function showApp(){
   $('#app').style.display = 'flex';
   $('#whoamiBtn').textContent = identity;
   loadAll();
+  const m = location.hash.match(/^#tab=(\w+)/);
+  if(m){ switchToTab(m[1]); history.replaceState(null, '', location.pathname + location.search); }
 }
 $('#whoamiBtn').addEventListener('click', async ()=>{
   identity = identity === 'Julian' ? 'Clarisse' : 'Julian';
@@ -3509,6 +3547,7 @@ async function migrateNameIfNeeded(){
 let liveSyncPrimed = false;
 function notificationsOn(){ return localStorage.getItem('notificationsEnabled') === '1'; }
 function showNotification(body){
+  if(pushActiveHere()) return; /* kommt schon als Push */
   if(!notificationsOn()) return;
   if(!('Notification' in window) || Notification.permission !== 'granted') return;
   try{ new Notification('Gezeiten', { body }); }catch(e){}
@@ -3534,6 +3573,7 @@ function refreshCalendarIfActive(){
   if(panel && panel.classList.contains('active')){ renderCalendarGrid(); renderDayDetail(); }
 }
 function attachLiveSync(){
+  pushAttachWatchers();
   db.ref('tasks').on('value', snap=>{
     const v = snap.val() || [];
     notifyNewItems(tasks, v, 'addedBy', t=>`📋 Neue Aufgabe: ${t.text}`);
@@ -3601,31 +3641,267 @@ function attachLiveSync(){
   });
   setTimeout(()=>{ liveSyncPrimed = true; }, 2500);
 }
+/* ---------- Push-Benachrichtigungen (über euren Cloudflare-Worker) ---------- */
+const PUSH_RULES = {
+  tasks:    { key:'addedBy', title:'📋 Neue Aufgabe', tab:'tasks',     text:t=>t.text },
+  shopping: { key:'addedBy', title:'🛒 Einkaufsliste', tab:'shopping', text:s=>s.text },
+  expenses: { key:'paidBy',  title:'💶 Ausgaben',     tab:'expenses',  text:e=>e.isSettlement ? `Schulden beglichen (${fmtEUR(e.amount)})` : `${e.desc} (${fmtEUR(e.amount)})` },
+  books:    { key:'addedBy', title:'📚 Bibliothek',   tab:'library',   text:b=>b.title },
+  photos:   { key:'by',      title:'📷 Bilder',       tab:'photos',    text:()=>'hat ein Foto geteilt', sentence:true },
+  feelings: { key:'by',      title:'💛 Gefühle',      tab:'feelings',  text:f=>`fühlt sich heute ${f.word}`, sentence:true },
+  cleaning: { key:'lastDoneBy', title:'🧹 Putzplan',  tab:'cleaning',  text:c=>`hat „${c.text}" erledigt`, sentence:true }
+};
+let pushConfig = {}, pushSubsAll = {}, pushPrev = {}, pushQueue = [], pushTimer = null, pushWatchersOn = false;
+
+function pushActiveHere(){ return localStorage.getItem('push-active') === '1'; }
+function pushDeviceId(){
+  let id = localStorage.getItem('push-device-id');
+  if(!id){ id = uid(); localStorage.setItem('push-device-id', id); }
+  return id;
+}
+function pushDeviceLabel(){
+  const ua = navigator.userAgent;
+  const os = /iPhone/.test(ua) ? 'iPhone' : /iPad/.test(ua) ? 'iPad' : /Android/.test(ua) ? 'Android' : /Mac/.test(ua) ? 'Mac' : /Windows/.test(ua) ? 'Windows' : 'Gerät';
+  const br = /Edg\//.test(ua) ? 'Edge' : /Firefox\//.test(ua) ? 'Firefox' : /Chrome\//.test(ua) ? 'Chrome' : /Safari\//.test(ua) ? 'Safari' : '';
+  return br ? `${os} · ${br}` : os;
+}
+function pushIsIOS(){ return /iPhone|iPad|iPod/.test(navigator.userAgent); }
+function pushIsStandalone(){ return (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true; }
+function pushSupported(){ return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window; }
+function b64urlFromBytes(bytes){ let s = ''; bytes.forEach(b=>{ s += String.fromCharCode(b); }); return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+function bytesFromB64url(str){ const s = String(str).replace(/-/g,'+').replace(/_/g,'/'); const bin = atob(s + '==='.slice((s.length + 3) % 4)); return Uint8Array.from(bin, c=>c.charCodeAt(0)); }
+function setPushMsg(msg, isErr){ const el = $('#pushMsg'); if(!el) return; el.textContent = msg || ''; el.style.color = isErr ? 'var(--coral)' : 'var(--muted)'; }
+
+/* Service Worker registrieren (liegt als sw.js neben index.html im Repo) */
+let pushRegPromise = null;
+function pushRegister(){
+  if(!('serviceWorker' in navigator)) return Promise.resolve(null);
+  if(!pushRegPromise) pushRegPromise = navigator.serviceWorker.register('sw.js').catch(()=>{ pushRegPromise = null; return null; });
+  return pushRegPromise;
+}
+if('serviceWorker' in navigator){
+  pushRegister();
+  navigator.serviceWorker.addEventListener('message', e=>{
+    if(e.data && e.data.type==='open-tab' && e.data.tab && $('#app').style.display!=='none') switchToTab(e.data.tab);
+  });
+}
+
+/* Einstellungen und Geräteliste aus der Datenbank mitlesen */
+function pushAttachWatchers(){
+  if(pushWatchersOn) return;
+  pushWatchersOn = true;
+  db.ref('settings/push').on('value', snap=>{
+    pushConfig = snap.val() || {};
+    pushAutoRefresh();
+    if($('#pushModal').style.display==='flex') renderPushModal();
+  });
+  db.ref('push/subs').on('value', snap=>{
+    pushSubsAll = snap.val() || {};
+    if($('#pushModal').style.display==='flex') renderPushModal();
+  });
+  Object.keys(PUSH_RULES).forEach(path=>{
+    db.ref(path).on('value', snap=>{ const v = snap.val(); pushPrev[path] = Array.isArray(v) ? v : (v ? Object.values(v) : []); });
+  });
+}
+
+/* Beim Speichern: Was hat dieses Gerät gerade neu angelegt? → kurz sammeln, dann eine Nachricht */
+function pushOnWrite(path, val){
+  try{
+    const rule = PUSH_RULES[path];
+    if(!rule || !identity || !pushConfig.workerUrl || !Array.isArray(val)) return;
+    const prev = pushPrev[path];
+    if(!prev) return;
+    if(path==='cleaning'){
+      const before = {}; prev.forEach(c=>{ if(c) before[c.id] = c.lastDone; });
+      val.forEach(c=>{ if(c && before[c.id]!==undefined && c.lastDone && c.lastDone!==before[c.id] && c.lastDoneBy===identity) pushQueueAdd(path, rule.text(c)); });
+      return;
+    }
+    const known = new Set(prev.map(x=>x && x.id));
+    val.forEach(x=>{ if(x && !known.has(x.id) && x[rule.key]===identity) pushQueueAdd(path, rule.text(x)); });
+  }catch(e){}
+}
+function pushQueueAdd(cat, text){
+  pushQueue.push({ cat, text });
+  clearTimeout(pushTimer);
+  pushTimer = setTimeout(pushFlush, 3000);
+}
+function pushCompose(queue, from){
+  const cats = [...new Set(queue.map(x=>x.cat))];
+  const part = cat=>{
+    const r = PUSH_RULES[cat], texts = queue.filter(x=>x.cat===cat).map(x=>x.text);
+    if(cat==='photos' && texts.length>1) return `${from} hat ${texts.length} Fotos geteilt`;
+    return r.sentence ? `${from} ${[...new Set(texts)].join(' · ')}` : `${from}: ${texts.join(', ')}`;
+  };
+  if(cats.length===1){
+    const r = PUSH_RULES[cats[0]];
+    return { title:r.title, body:part(cats[0]).slice(0, 280), tag:cats[0], tab:r.tab };
+  }
+  return { title:'Gezeiten', body:cats.map(c=>`${PUSH_RULES[c].title.split(' ')[0]} ${part(c)}`).join('\n').slice(0, 280), tag:'mixed', tab:PUSH_RULES[cats[0]].tab };
+}
+async function pushFlush(){
+  clearTimeout(pushTimer);
+  const q = pushQueue; pushQueue = [];
+  if(!q.length) return;
+  try{ await pushSend(Object.assign({ from:identity }, pushCompose(q, identity))); }catch(e){}
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden && pushQueue.length) pushFlush(); });
+
+async function pushSend(msg){
+  const url = pushConfig.workerUrl;
+  const user = auth.currentUser;
+  if(!url || !user) throw new Error('Push ist noch nicht eingerichtet');
+  const token = await user.getIdToken();
+  const res = await fetch(url, { method:'POST', headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer ' + token }, body:JSON.stringify(msg) });
+  let data = {}; try{ data = await res.json(); }catch(e){}
+  if(!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+  return data;
+}
+
+/* Gerät an- und abmelden */
+async function pushSubscribeHere(reg){
+  let sub = await reg.pushManager.getSubscription();
+  if(sub && localStorage.getItem('push-key') !== pushConfig.publicKey){ try{ await sub.unsubscribe(); }catch(e){} sub = null; }
+  if(!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey: bytesFromB64url(pushConfig.publicKey) });
+  const j = sub.toJSON();
+  await db.ref(`push/subs/${identity}/${pushDeviceId()}`).set({ endpoint:j.endpoint, keys:j.keys, device:pushDeviceLabel(), at:Date.now() });
+  localStorage.setItem('push-active', '1');
+  localStorage.setItem('push-key', pushConfig.publicKey);
+}
+async function pushEnable(){
+  if(!pushSupported()){ setPushMsg('Dieser Browser kann keine Push-Nachrichten empfangen.', true); return; }
+  if(pushIsIOS() && !pushIsStandalone()){ setPushMsg('Auf dem iPhone: Gezeiten zuerst über „Teilen → Zum Home-Bildschirm" hinzufügen und von dort öffnen.', true); return; }
+  if(!pushConfig.workerUrl || !pushConfig.publicKey){ setPushMsg('Erst die Einrichtung unten abschließen (Worker-Adresse und Schlüssel).', true); $('#pushSetup').open = true; return; }
+  /* Erlaubnis zuerst fragen — iOS verlangt das direkt beim Antippen */
+  const perm = await Notification.requestPermission();
+  if(perm!=='granted'){ setPushMsg('Benachrichtigungen wurden nicht erlaubt. Das lässt sich in den Website-Einstellungen des Browsers ändern.', true); return; }
+  setPushMsg('Melde dieses Gerät an …');
+  try{
+    const reg = await pushRegister();
+    if(!reg) throw new Error('sw.js nicht gefunden — liegt die Datei im Repo neben index.html?');
+    await navigator.serviceWorker.ready;
+    await pushSubscribeHere(reg);
+    setPushMsg('Dieses Gerät bekommt jetzt Push-Nachrichten.');
+  }catch(e){ setPushMsg('Anmelden fehlgeschlagen: ' + e.message, true); }
+  renderPushModal(); updateNotifyBtn();
+}
+async function pushDisable(){
+  try{
+    const reg = await pushRegister();
+    const sub = reg && await reg.pushManager.getSubscription();
+    if(sub) await sub.unsubscribe();
+  }catch(e){}
+  try{ await db.ref(`push/subs/${identity}/${pushDeviceId()}`).remove(); }catch(e){}
+  localStorage.removeItem('push-active');
+  setPushMsg('Push auf diesem Gerät ausgeschaltet.');
+  renderPushModal(); updateNotifyBtn();
+}
+/* Wurde der Schlüssel neu erzeugt, melden sich aktive Geräte still neu an */
+async function pushAutoRefresh(){
+  if(!pushActiveHere() || !pushConfig.publicKey || !identity) return;
+  if(localStorage.getItem('push-key') === pushConfig.publicKey && (pushSubsAll[identity]||{})[pushDeviceId()]) return;
+  try{
+    if(Notification.permission!=='granted') return;
+    const reg = await pushRegister(); if(!reg) return;
+    await navigator.serviceWorker.ready;
+    await pushSubscribeHere(reg);
+  }catch(e){}
+}
+
+/* Einrichtung: Schlüsselpaar erzeugen — der öffentliche Teil kommt in die Datenbank, der geheime nur in Cloudflare */
+async function pushGenerateKeys(){
+  if(pushConfig.publicKey && !confirm('Neuen Schlüssel erzeugen? Danach muss der neue Schlüssel in Cloudflare eingetragen werden, und alle Geräte werden neu angemeldet.')) return;
+  try{
+    const kp = await crypto.subtle.generateKey({ name:'ECDSA', namedCurve:'P-256' }, true, ['sign','verify']);
+    const jwk = await crypto.subtle.exportKey('jwk', kp.privateKey);
+    const pub = b64urlFromBytes(new Uint8Array(await crypto.subtle.exportKey('raw', kp.publicKey)));
+    await db.ref('push/subs').remove();
+    await db.ref('settings/push').update({ publicKey:pub, keyCreatedAt:Date.now(), keyCreatedBy:identity });
+    $('#pushKeyText').value = JSON.stringify({ kty:'EC', crv:'P-256', x:jwk.x, y:jwk.y, d:jwk.d });
+    $('#pushKeyOut').style.display = 'block';
+    setPushMsg('');
+  }catch(e){ setPushMsg('Schlüssel konnte nicht erzeugt werden: ' + e.message, true); }
+}
+async function pushSaveWorker(){
+  let url = $('#pushWorkerUrl').value.trim().replace(/\/+$/, '');
+  if(url && !/^https:\/\//.test(url)) url = 'https://' + url.replace(/^http:\/\//, '');
+  if(!/^https:\/\/[^\s/]+\.[^\s/]+/.test(url)){ $('#pushWorkerStatus').textContent = 'Bitte die vollständige Adresse eintragen, z. B. https://gezeiten-push.name.workers.dev'; return; }
+  await db.ref('settings/push').update({ workerUrl:url });
+  $('#pushWorkerUrl').value = url;
+  pushCheckWorker();
+}
+async function pushCheckWorker(){
+  const el = $('#pushWorkerStatus');
+  if(!pushConfig.workerUrl){ el.textContent = ''; return; }
+  el.textContent = 'Prüfe Worker …';
+  try{
+    const res = await fetch(pushConfig.workerUrl);
+    const j = await res.json();
+    el.textContent = j.configured ? '✓ Worker erreichbar, Schlüssel ist eingetragen.' : '✓ Worker erreichbar — aber der geheime Schlüssel fehlt dort noch (Schritt 2).';
+    el.style.color = j.configured ? 'var(--sage)' : 'var(--amber)';
+  }catch(e){ el.textContent = '✗ Worker nicht erreichbar. Adresse prüfen und ob der Worker „deployed" ist.'; el.style.color = 'var(--coral)'; }
+}
+
+function renderPushModal(){
+  const here = pushActiveHere();
+  const setupDone = !!(pushConfig.workerUrl && pushConfig.publicKey);
+  let status;
+  if(!pushSupported()) status = 'Dieser Browser unterstützt keine Push-Nachrichten.';
+  else if(pushIsIOS() && !pushIsStandalone()) status = 'Auf dem iPhone funktioniert Push nur, wenn Gezeiten auf dem Home-Bildschirm liegt (iOS 16.4 oder neuer): In Safari auf „Teilen" → „Zum Home-Bildschirm", dann die App von dort öffnen.';
+  else if(here) status = `✓ Dieses Gerät (${pushDeviceLabel()}) bekommt Push-Nachrichten — auch wenn Gezeiten geschlossen ist.`;
+  else status = setupDone ? 'Dieses Gerät bekommt noch keine Push-Nachrichten.' : 'Push ist noch nicht eingerichtet — siehe „Einrichtung" unten.';
+  $('#pushDeviceStatus').textContent = status;
+  $('#pushToggle').textContent = here ? 'Auf diesem Gerät ausschalten' : 'Auf diesem Gerät einschalten';
+  $('#pushTest').style.display = here ? 'block' : 'none';
+  $('#pushLocalToggle').checked = notificationsOn();
+  $('#pushWorkerUrl').value = pushConfig.workerUrl || $('#pushWorkerUrl').value || '';
+  $('#pushKeyStatus').textContent = pushConfig.publicKey
+    ? `✓ Schlüssel vorhanden (erzeugt ${pushConfig.keyCreatedAt ? new Date(pushConfig.keyCreatedAt).toLocaleDateString('de-DE') : ''}${pushConfig.keyCreatedBy ? ' von ' + pushConfig.keyCreatedBy : ''}).`
+    : 'Noch kein Schlüssel. Erzeugen, kopieren und in Cloudflare eintragen.';
+  $('#pushKeyGen').textContent = pushConfig.publicKey ? 'Neuen Schlüssel erzeugen' : 'Schlüssel erzeugen';
+  const devs = ['Julian','Clarisse'].map(p=>{
+    const list = Object.values(pushSubsAll[p] || {});
+    return `${p}: ${list.length ? list.map(d=>d.device || 'Gerät').join(', ') : 'kein Gerät'}`;
+  });
+  $('#pushDevices').textContent = 'Angemeldet — ' + devs.join(' · ');
+}
+function openPushModal(){
+  setPushMsg(''); $('#pushKeyOut').style.display = 'none';
+  $('#pushSetup').open = !(pushConfig.workerUrl && pushConfig.publicKey);
+  renderPushModal(); showModal('pushModal'); pushCheckWorker();
+}
+$('#pushToggle').addEventListener('click', ()=>{ pushActiveHere() ? pushDisable() : pushEnable(); });
+$('#pushTest').addEventListener('click', async ()=>{
+  setPushMsg('Sende …');
+  try{
+    const r = await pushSend({ from:identity, toSelf:true, title:'🔔 Test', body:'Push funktioniert auf diesem Gerät.', tag:'test' });
+    setPushMsg(r.sent ? `Gesendet an ${r.sent} Gerät${r.sent>1?'e':''} — die Nachricht sollte gleich erscheinen.` : 'Kein Gerät erreicht. Einmal aus- und wieder einschalten.', !r.sent);
+  }catch(e){ setPushMsg('Senden fehlgeschlagen: ' + e.message, true); }
+});
+$('#pushLocalToggle').addEventListener('change', async e=>{
+  if(!e.target.checked){ localStorage.setItem('notificationsEnabled','0'); updateNotifyBtn(); return; }
+  if(!('Notification' in window)){ e.target.checked = false; return; }
+  const perm = Notification.permission==='granted' ? 'granted' : await Notification.requestPermission();
+  if(perm==='granted') localStorage.setItem('notificationsEnabled','1'); else e.target.checked = false;
+  updateNotifyBtn();
+});
+$('#pushWorkerSave').addEventListener('click', pushSaveWorker);
+$('#pushWorkerUrl').addEventListener('keydown', e=>{ if(e.key==='Enter') pushSaveWorker(); });
+$('#pushKeyGen').addEventListener('click', pushGenerateKeys);
+$('#pushKeyCopy').addEventListener('click', async ()=>{
+  const t = $('#pushKeyText');
+  try{ await navigator.clipboard.writeText(t.value); $('#pushKeyCopy').textContent = '✓ Kopiert'; }
+  catch(e){ t.select(); document.execCommand && document.execCommand('copy'); $('#pushKeyCopy').textContent = '✓ Kopiert (markiert)'; }
+  setTimeout(()=>{ $('#pushKeyCopy').textContent = 'Kopieren'; }, 2500);
+});
+
 function updateNotifyBtn(){
-  const on = notificationsOn();
+  const on = pushActiveHere() || notificationsOn();
   const btn = $('#notifyBtn');
   btn.textContent = on ? '🔔' : '🔕';
   btn.style.opacity = on ? '1' : '.5';
-  btn.title = on ? 'Benachrichtigungen an — zum Ausschalten tippen' : 'Benachrichtigungen aus — zum Einschalten tippen';
+  btn.title = 'Benachrichtigungen';
 }
-$('#notifyBtn').addEventListener('click', async ()=>{
-  if(notificationsOn()){
-    localStorage.setItem('notificationsEnabled','0');
-    updateNotifyBtn();
-    setStatus('Benachrichtigungen ausgeschaltet');
-    return;
-  }
-  if(!('Notification' in window)){ setStatus('Benachrichtigungen werden hier nicht unterstützt', true); return; }
-  let perm = Notification.permission;
-  if(perm !== 'granted') perm = await Notification.requestPermission();
-  if(perm === 'granted'){
-    localStorage.setItem('notificationsEnabled','1');
-    updateNotifyBtn();
-    setStatus('Benachrichtigungen an (solange die App offen ist)');
-  } else {
-    setStatus('Benachrichtigungen im Browser nicht erlaubt', true);
-  }
-});
+$('#notifyBtn').addEventListener('click', openPushModal);
 updateNotifyBtn();
 
 /* ---------- Tasks & Projects ---------- */

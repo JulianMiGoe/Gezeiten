@@ -246,6 +246,117 @@ button.item{ font-family:inherit; color:inherit; }
 .td-wev{ font-size:.85rem; line-height:1.5; color:var(--ink); padding:5px 0; }
 .td-link{ background:none; border:none; padding:0; color:var(--accent); font:inherit; text-align:left; cursor:pointer; text-decoration:underline; text-underline-offset:2px; }
 @media (prefers-reduced-motion: reduce){ .td-skel{ animation:none; } }
+.mq{ display:block; width:100%; max-width:360px; height:auto; margin:6px auto 0; -webkit-user-select:none; user-select:none; }
+.mq-body{ fill:var(--mq-wood, #EBDCC3); stroke:var(--mq-line, #A88B62); stroke-width:1.1; stroke-linejoin:round; }
+.mq-joint{ fill:var(--mq-joint, #DCC6A0); stroke:var(--mq-line, #A88B62); stroke-width:1.1; }
+.mq-m{ fill:var(--coral); fill-opacity:0; stroke:none; transition:fill-opacity .15s; }
+.mq-pick .mq-m{ stroke:var(--mq-line, #A88B62); stroke-opacity:.5; stroke-width:.8; cursor:pointer; pointer-events:all; }
+.mq-pick .mq-m:hover{ fill-opacity:.22; }
+.mq-m.p{ fill-opacity:.9; }
+.mq-m.s{ fill-opacity:.38; }
+.mq-pick .mq-m.p:hover{ fill-opacity:.9; }
+.mq-m.sel{ stroke:var(--ink); stroke-opacity:1; stroke-width:1.6; }
+.mq-label{ fill:var(--muted); font-size:11px; font-family:'Inter', sans-serif; }
+.sp-fig-link .mq-m{ cursor:pointer; pointer-events:all; }
+.sp-fig-sm .mq{ max-width:290px; }
+.sp-legend{ font-size:.8rem; line-height:1.5; color:var(--ink); margin:8px 0 2px; }
+.sp-legend b{ font-weight:600; }
+.sp-sw{ display:inline-block; width:11px; height:11px; border-radius:3px; background:var(--coral); vertical-align:-1px; margin-right:6px; }
+.sp-sw.s{ opacity:.38; }
+.sp-sum{ font-size:.82rem; color:var(--muted); margin:2px 0 8px; }
+.sp-entry{ display:flex; align-items:center; gap:8px; border-top:1px solid var(--line); }
+.sp-entry:first-of-type{ border-top:none; }
+.sp-entry-main{ flex:1; min-width:0; display:flex; flex-wrap:wrap; align-items:baseline; gap:2px 10px; background:none; border:none; padding:9px 0; text-align:left; font-family:'Inter'; color:var(--ink); cursor:pointer; }
+div.sp-entry-main{ cursor:default; }
+.sp-entry-name{ font-size:.92rem; font-weight:500; }
+.sp-entry-amt{ font-family:'IBM Plex Mono', monospace; font-size:.82rem; color:var(--muted); }
+.sp-entry-note{ flex-basis:100%; font-size:.78rem; color:var(--muted); }
+.sp-week{ display:flex; justify-content:space-between; gap:4px; margin-top:8px; }
+.sp-wd{ display:flex; flex-direction:column; align-items:center; gap:5px; font-size:.72rem; color:var(--muted); flex:1; }
+.sp-wd span{ width:24px; height:24px; border-radius:50%; border:1.5px solid var(--line); background:transparent; }
+.sp-wd.on span{ background:var(--coral); border-color:var(--coral); }
+.sp-wd.today span{ box-shadow:0 0 0 2px var(--card), 0 0 0 3.5px var(--muted); }
+.sp-wd.today{ color:var(--ink); font-weight:600; }
+.sp-wd.future span{ border-style:dotted; }
+.sp-chiplist{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.sp-chiplist .chip{ margin:0; }
+.sp-stale{ display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 0; border-top:1px solid var(--line); font-size:.88rem; }
+.sp-stale:first-of-type{ border-top:none; }
+.sp-stale .chip{ margin:0; flex-shrink:0; }
+.sp-muted{ color:var(--muted); font-weight:400; }
+.sp-listhead{ font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:2px 0 8px; }
+.sp-ex{ width:100%; text-align:left; margin-bottom:8px; cursor:pointer; align-items:flex-start; }
+.sp-ex-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:2px; }
+.sp-ex-name{ font-weight:600; font-size:.95rem; color:var(--ink); }
+.sp-ex-mus{ font-size:.8rem; color:var(--ink); }
+.sp-ex-last{ font-size:.74rem; color:var(--muted); margin-top:1px; }
+.sp-ex-side{ display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0; }
+.sp-lvl{ display:inline-flex; gap:3px; }
+.sp-lvl i{ width:7px; height:7px; border-radius:50%; border:1.2px solid var(--muted); }
+.sp-lvl i.on{ background:var(--muted); }
+#spSearch{ margin:0 0 12px; }
+.sp-steps{ display:flex; gap:10px; margin:6px 0 12px; flex-wrap:wrap; }
+.sp-step{ flex:1; min-width:140px; }
+.sp-step-ctl{ display:flex; align-items:center; gap:6px; }
+.sp-stepbtn{ width:40px; height:40px; border-radius:12px; border:1px solid var(--line); background:var(--card); color:var(--ink); font-size:1.25rem; line-height:1; cursor:pointer; flex-shrink:0; }
+.sp-step-ctl input{ width:100%; min-width:0; text-align:center; border:1px solid var(--line); border-radius:12px; padding:9px 4px; font-family:'IBM Plex Mono', monospace; font-size:1.05rem; background:var(--card); color:var(--ink); }
+.sp-tiles{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:16px; }
+.sp-tiles-3{ grid-template-columns:1fr 1fr 1fr; gap:8px; margin:6px 0 10px; }
+.sp-tile{ background:var(--card); border:1px solid var(--line); border-radius:14px; padding:12px 12px 10px; min-width:0; }
+.sp-tiles-3 .sp-tile{ padding:10px 8px; }
+.sp-tile .l{ font-size:.72rem; color:var(--muted); line-height:1.3; }
+.sp-tile .v{ font-family:'Inter', sans-serif; font-weight:600; font-size:1.55rem; color:var(--ink); margin-top:4px; line-height:1.15; }
+.sp-tiles-3 .sp-tile .v{ font-size:1.2rem; }
+.sp-tile .v small{ font-size:.7rem; font-weight:500; color:var(--muted); }
+.sp-tile .d{ font-size:.72rem; color:var(--muted); margin-top:3px; }
+.sp-tile .d.up{ color:var(--sage); }
+.sp-subhead{ font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:14px 0 6px; }
+.sp-chart{ position:relative; margin-top:8px; }
+.sp-svg{ display:block; width:100%; height:auto; overflow:visible; }
+.sp-grid{ stroke:var(--line); stroke-width:1; }
+.sp-axisline{ stroke:var(--muted); stroke-opacity:.5; stroke-width:1; }
+.sp-axis{ fill:var(--muted); font-size:9.5px; font-family:'Inter', sans-serif; font-variant-numeric:tabular-nums; }
+.sp-val{ fill:var(--ink); font-size:10px; font-weight:600; font-family:'Inter', sans-serif; }
+.sp-bar{ fill:var(--coral); }
+.sp-hit{ fill:transparent; cursor:pointer; outline:none; }
+.sp-hit.on, .sp-hit:focus-visible{ fill:var(--ink); fill-opacity:.06; }
+.sp-line{ fill:none; stroke:var(--coral); stroke-width:2; stroke-linejoin:round; stroke-linecap:round; }
+.sp-dot{ fill:var(--coral); stroke:var(--card); stroke-width:2; }
+.sp-pt{ outline:none; cursor:pointer; }
+.sp-pt .sp-cross, .sp-pt .sp-hdot{ opacity:0; }
+.sp-pt .sp-cross{ stroke:var(--muted); stroke-width:1; }
+.sp-pt.on .sp-cross, .sp-pt.on .sp-hdot, .sp-pt:focus-visible .sp-cross, .sp-pt:focus-visible .sp-hdot{ opacity:1; }
+.sp-cell{ cursor:pointer; outline:none; }
+.sp-cell.b0, .sp-cellkey.b0{ fill:var(--line); background:var(--line); }
+.sp-cell.b1, .sp-cell.b2, .sp-cell.b3, .sp-cell.b4{ fill:var(--coral); }
+.sp-cell.b1{ fill-opacity:.28; } .sp-cell.b2{ fill-opacity:.5; } .sp-cell.b3{ fill-opacity:.74; } .sp-cell.b4{ fill-opacity:1; }
+.sp-cell.today{ stroke:var(--ink); stroke-width:1.2; }
+.sp-cell.on, .sp-cell:focus-visible{ stroke:var(--ink); stroke-width:2; }
+.sp-cellkey{ display:inline-block; width:12px; height:12px; border-radius:3px; }
+.sp-cellkey.b1, .sp-cellkey.b2, .sp-cellkey.b3, .sp-cellkey.b4{ background:var(--coral); }
+.sp-cellkey.b1{ opacity:.28; } .sp-cellkey.b2{ opacity:.5; } .sp-cellkey.b3{ opacity:.74; }
+.sp-scale{ display:flex; align-items:center; gap:4px; font-size:.72rem; color:var(--muted); margin-top:8px; }
+.sp-scale span:first-child{ margin-right:2px; } .sp-scale span:last-child{ margin-left:2px; }
+.sp-heatinfo{ font-size:.8rem; color:var(--ink); margin-top:8px; min-height:1.2em; line-height:1.45; }
+.sp-tip{ display:none; position:absolute; transform:translate(-50%, calc(-100% - 8px)); background:var(--ink); color:var(--card); font-size:.74rem; line-height:1.35; padding:6px 9px; border-radius:8px; pointer-events:none; white-space:nowrap; z-index:3; font-family:'Inter', sans-serif; }
+.sp-table{ margin-top:8px; font-size:.78rem; color:var(--muted); }
+.sp-table summary{ cursor:pointer; }
+.sp-table table{ width:100%; border-collapse:collapse; margin-top:6px; color:var(--ink); }
+.sp-table th, .sp-table td{ text-align:left; padding:4px 2px; border-bottom:1px solid var(--line); font-variant-numeric:tabular-nums; }
+.sp-table th:not(:first-child), .sp-table td:not(:first-child){ text-align:right; }
+.sp-rank{ margin-top:10px; }
+.sp-rank-row{ display:grid; grid-template-columns:minmax(0,1.25fr) 1fr auto; gap:8px; align-items:center; width:100%; background:none; border:none; padding:5px 0; font-family:'Inter'; font-size:.82rem; color:var(--ink); text-align:left; cursor:pointer; }
+.sp-rank-row .n{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.sp-rank-row .b{ height:8px; background:transparent; }
+.sp-rank-row .b i{ display:block; height:8px; background:var(--coral); border-radius:0 4px 4px 0; }
+.sp-rank-row .v{ font-size:.75rem; color:var(--muted); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.sp-listrow{ display:flex; justify-content:space-between; gap:10px; width:100%; background:none; border:none; border-top:1px solid var(--line); padding:9px 0; font-family:'Inter'; font-size:.88rem; color:var(--ink); text-align:left; cursor:pointer; }
+.sp-listrow:first-of-type{ border-top:none; }
+.sp-listrow .sp-muted{ font-size:.8rem; text-align:right; }
+.sp-day{ padding:8px 0 4px; border-top:1px solid var(--line); }
+.sp-day:first-of-type{ border-top:none; padding-top:2px; }
+.sp-dayhead{ display:flex; justify-content:space-between; gap:10px; align-items:baseline; font-size:.85rem; margin-bottom:2px; }
+.sp-dayhead .sp-muted{ font-size:.74rem; text-align:right; }
 .side-menu-item{ display:block; width:100%; text-align:left; background:none; border:none; color:#EAF3EF; font-family:'Inter'; font-size:.95rem; font-weight:500; padding:14px 22px; cursor:pointer; }
 .side-menu-item:hover, .side-menu-item:focus-visible{ background:#1D4E4F; outline:none; }
 .side-menu-item.active{ background:#1D4E4F; color:#fff; font-weight:600; }
@@ -575,6 +686,27 @@ nav.bottom{
       <div class="td-src" style="text-align:center; margin:4px 0 12px;">Bilder: Wikipedia &amp; Wikimedia Commons, Art Institute of Chicago. Jahrestage, Kunst- und Naturtexte sind eigene Zusammenfassungen.</div>
     </section>
 
+    <!-- SPORT -->
+    <section class="panel" data-panel="sport">
+      <div class="chips" id="spViewChips">
+        <button class="chip selected" data-val="today" type="button">Heute</button>
+        <button class="chip" data-val="library" type="button">Übungen</button>
+        <button class="chip" data-val="stats" type="button">Statistik</button>
+      </div>
+      <div id="spToday"></div>
+      <div id="spLibrary" style="display:none;">
+        <div class="balance-card">
+          <div id="spLibFig" class="sp-fig"></div>
+          <div id="spLibInfo" style="margin-top:8px;"></div>
+          <div class="chips proj-chips-row" id="spMuscleChips" style="margin:12px 0 0;"></div>
+        </div>
+        <div class="chips proj-chips-row" id="spCatChips"></div>
+        <input type="search" id="spSearch" class="field" placeholder="Übung suchen …" autocomplete="off">
+        <div id="spExList"></div>
+      </div>
+      <div id="spStats" style="display:none;"></div>
+    </section>
+
     <!-- FEELINGS -->
     <section class="panel" data-panel="feelings">
       <div class="balance-card" id="feelToday"></div>
@@ -670,6 +802,7 @@ nav.bottom{
   <button class="side-menu-item" data-tab="cleaning" type="button">🧹 Putzplan</button>
   <button class="side-menu-item" data-tab="expenses" type="button">💶 Ausgaben</button>
   <button class="side-menu-item" data-tab="calendar" type="button">📅 Kalender</button>
+  <button class="side-menu-item" data-tab="sport" type="button">🏃 Sport</button>
   <button class="side-menu-item" data-tab="photos" type="button">📷 Bilder</button>
   <button class="side-menu-item" data-tab="library" type="button">📚 Bibliothek</button>
   <button class="side-menu-item" data-tab="learn" type="button">🔬 Lernen</button>
@@ -744,6 +877,33 @@ nav.bottom{
       </div>
     </details>
     <div id="pushDevices" class="td-src" style="margin-top:12px;"></div>
+  </div>
+</div>
+
+<div id="spExModal" class="modal-bg">
+  <div class="sheet">
+    <div class="sheet-head"><span class="sheet-title" id="spExTitle"></span><button class="sheet-close" data-close="spExModal" type="button" aria-label="schließen">✕</button></div>
+    <div id="spExMeta" class="td-meta" style="margin-top:-10px;"></div>
+    <div id="spExFigure" class="sp-fig sp-fig-sm"></div>
+    <div id="spExLegend"></div>
+    <div id="spExHow" class="td-text"></div>
+    <div id="spExTip" class="td-src"></div>
+    <div class="balance-card" style="margin-top:14px;">
+      <div class="label">Eintragen</div>
+      <div class="sp-steps">
+        <div class="sp-step"><div class="field-label">Sätze</div>
+          <div class="sp-step-ctl"><button class="sp-stepbtn" data-k="sets" data-d="-1" type="button" aria-label="ein Satz weniger">−</button><input id="spSetsIn" type="number" inputmode="numeric" min="1" max="20" aria-label="Sätze"><button class="sp-stepbtn" data-k="sets" data-d="1" type="button" aria-label="ein Satz mehr">+</button></div></div>
+        <div class="sp-step"><div class="field-label" id="spAmtLabel">Wiederholungen</div>
+          <div class="sp-step-ctl"><button class="sp-stepbtn" data-k="amt" data-d="-1" type="button" aria-label="weniger">−</button><input id="spAmtIn" type="number" inputmode="numeric" min="1" max="900" aria-labelledby="spAmtLabel"><button class="sp-stepbtn" data-k="amt" data-d="1" type="button" aria-label="mehr">+</button></div></div>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <input type="date" id="spDay" class="field" style="flex:1; min-width:0;" aria-label="Datum">
+        <input type="text" id="spNote" class="field" maxlength="120" placeholder="Notiz (optional)" style="flex:1.4; min-width:0;">
+      </div>
+      <div id="spMsg" style="font-size:.8rem; color:var(--coral); min-height:1em; margin:-4px 0 6px;"></div>
+      <button id="spSave" class="btn-wide" type="button" style="margin:0;">Eintragen</button>
+    </div>
+    <div id="spExProgress"></div>
   </div>
 </div>
 
@@ -909,7 +1069,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const auth = firebase.auth();
 
-const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8', learn:'#6FA695', feelings:'#D9A534', vault:'#4C7EA8', today:'#C68A3B' };
+const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8', learn:'#6FA695', feelings:'#D9A534', vault:'#4C7EA8', today:'#C68A3B', sport:'#C1543D' };
 const THEMES = {
   gezeiten: { label:'Gezeiten', deep:'#143C3F', mid:'#2D7A73', foam:'#F3F6F4', card:'#FFFFFF', line:'#DCE6E1', ink:'#16211F', muted:'#5C6E68', sage:'#6FA695', amber:'#C68A3B', coral:'#C1543D', violet:'#7C6FA6', tide:'#4C7EA8' },
   duenen:   { label:'Dünen',    deep:'#4A3B2A', mid:'#C17A4E', foam:'#FAF6EF', card:'#FFFFFF', line:'#E8DCC8', ink:'#2E2418', muted:'#8A7A63', sage:'#9C9463', amber:'#D4A24C', coral:'#B85C4A', violet:'#8C6E8F', tide:'#5B8AA3' },
@@ -1981,6 +2141,7 @@ function switchToTab(name){
   if(name==='feelings') renderFeelings();
   if(name==='vault') renderVault();
   if(name==='today') renderToday();
+  if(name==='sport') renderSport();
 }
 $$('.tab').forEach(tab=>{
   tab.addEventListener('click', ()=> switchToTab(tab.dataset.tab));
@@ -2010,6 +2171,9 @@ function applyTheme(key){
   const root = document.documentElement.style;
   root.setProperty('--tide-deep', t.deep);
   root.setProperty('--heading', key==='nacht' ? t.ink : t.deep);
+  root.setProperty('--mq-wood', key==='nacht' ? '#4A4338' : '#EBDCC3');
+  root.setProperty('--mq-line', key==='nacht' ? '#9A8566' : '#A88B62');
+  root.setProperty('--mq-joint', key==='nacht' ? '#5A5144' : '#DCC6A0');
   root.setProperty('--tide-mid', t.mid);
   root.setProperty('--foam', t.foam);
   root.setProperty('--card', t.card);
@@ -2021,7 +2185,7 @@ function applyTheme(key){
   root.setProperty('--coral', t.coral);
   root.setProperty('--violet', t.violet);
   TAB_ACCENT.tasks = t.mid; TAB_ACCENT.shopping = t.amber; TAB_ACCENT.cleaning = t.sage;
-  TAB_ACCENT.expenses = t.coral; TAB_ACCENT.photos = t.violet; TAB_ACCENT.calendar = t.tide; TAB_ACCENT.library = t.violet; TAB_ACCENT.learn = t.sage; TAB_ACCENT.feelings = t.amber; TAB_ACCENT.vault = t.tide; TAB_ACCENT.today = t.amber;
+  TAB_ACCENT.expenses = t.coral; TAB_ACCENT.photos = t.violet; TAB_ACCENT.calendar = t.tide; TAB_ACCENT.library = t.violet; TAB_ACCENT.learn = t.sage; TAB_ACCENT.feelings = t.amber; TAB_ACCENT.vault = t.tide; TAB_ACCENT.today = t.amber; TAB_ACCENT.sport = t.coral;
   const activeTab = document.querySelector('.tab.active');
   const name = activeTab ? activeTab.dataset.tab : 'tasks';
   const pathEl = $('#tidePath');
@@ -3504,6 +3668,716 @@ $('#dvDelete').addEventListener('click', async ()=>{
   hideModal('docViewModal'); revokeVaultUrls(); renderVaultList();
 });
 
+/* ---------- Sport: Muskelgruppen und Übungen (nur ohne Geräte — Boden und Wand) ---------- */
+const SPORT_MUSCLES = [
+  { id:'brust',           name:'Brust',                 desc:'Großer Brustmuskel — drückt die Arme nach vorn und zur Mitte.' },
+  { id:'schultern',       name:'Schultern',             desc:'Deltamuskel — hebt die Arme nach vorn, zur Seite und nach hinten.' },
+  { id:'bizeps',          name:'Bizeps',                desc:'Beugt den Ellbogen. Ohne Geräte nur eingeschränkt trainierbar.' },
+  { id:'trizeps',         name:'Trizeps',               desc:'Streckt den Ellbogen — arbeitet bei jeder Drückbewegung mit.' },
+  { id:'unterarme',       name:'Unterarme',             desc:'Griff und Handgelenk. Ohne Geräte nur unterstützend beansprucht.' },
+  { id:'bauch',           name:'Gerader Bauch',         desc:'Beugt den Rumpf und stabilisiert die Körpermitte.' },
+  { id:'seitbauch',       name:'Seitliche Bauchmuskeln', desc:'Drehen und neigen den Rumpf, halten gegen Verdrehung.' },
+  { id:'hueftbeuger',     name:'Hüftbeuger',            desc:'Ziehen das Knie Richtung Brust.' },
+  { id:'quadrizeps',      name:'Oberschenkel vorne',    desc:'Quadrizeps — streckt das Knie, z. B. beim Aufstehen.' },
+  { id:'adduktoren',      name:'Oberschenkel innen',    desc:'Adduktoren — ziehen die Beine zur Mitte.' },
+  { id:'abduktoren',      name:'Hüfte außen',           desc:'Spreizen das Bein ab und halten das Becken beim Gehen stabil.' },
+  { id:'nacken',          name:'Nacken & oberer Rücken', desc:'Trapez- und Rautenmuskeln — ziehen die Schulterblätter zusammen, für eine aufrechte Haltung.' },
+  { id:'latissimus',      name:'Breiter Rückenmuskel',  desc:'Zieht die Arme von oben nach unten. Ohne Stange nur eingeschränkt trainierbar.' },
+  { id:'rueckenstrecker', name:'Unterer Rücken',        desc:'Rückenstrecker — richtet die Wirbelsäule auf und schützt sie.' },
+  { id:'gesaess',         name:'Gesäß',                 desc:'Streckt die Hüfte — der größte Muskel des Körpers.' },
+  { id:'beinbeuger',      name:'Oberschenkel hinten',   desc:'Beinbeuger — beugen das Knie und strecken die Hüfte.' },
+  { id:'waden',           name:'Waden',                 desc:'Strecken das Fußgelenk, z. B. beim Abdrücken und Springen.' }
+];
+const SPORT_CATS = ['Oberkörper', 'Rumpf', 'Beine & Po', 'Ganzkörper'];
+/* type: 'reps' (Wiederholungen) oder 'secs' (Sekunden halten), def: Vorschlag je Satz, side: pro Seite,
+   lvl: 1 Einstieg · 2 Mittel · 3 Fortgeschritten, p: stark beansprucht, s: unterstützend */
+const SPORT_EXERCISES = [
+  /* Oberkörper */
+  { id:'pushup', name:'Liegestütz', cat:'Oberkörper', type:'reps', def:10, lvl:2, p:['brust','trizeps'], s:['schultern','bauch'],
+    how:'Hände etwas breiter als schulterbreit, Körper von Kopf bis Ferse gerade. Brust bis knapp über den Boden senken, Ellbogen etwa 45° vom Körper, wieder hochdrücken.',
+    tip:'Zu schwer? Knie- oder Wand-Liegestütz — sauber ist wichtiger als viele.' },
+  { id:'kneepushup', name:'Knieliegestütz', cat:'Oberkörper', type:'reps', def:12, lvl:1, p:['brust','trizeps'], s:['schultern'],
+    how:'Wie der Liegestütz, aber die Knie bleiben am Boden. Der Körper bildet von den Knien bis zum Kopf eine gerade Linie.',
+    tip:'Nicht mit dem Po zuerst hochkommen — Hüfte und Schultern bewegen sich gemeinsam.' },
+  { id:'wallpushup', name:'Wand-Liegestütz', cat:'Oberkörper', type:'reps', def:15, lvl:1, p:['brust'], s:['trizeps','schultern'],
+    how:'Eine Armlänge vor der Wand stehen, Hände schulterbreit auf Brusthöhe an die Wand. Brust zur Wand beugen und wieder wegdrücken.',
+    tip:'Ideal zum Einstieg — je weiter die Füße von der Wand weg stehen, desto schwerer.' },
+  { id:'widepushup', name:'Breite Liegestütze', cat:'Oberkörper', type:'reps', def:10, lvl:2, p:['brust'], s:['schultern','trizeps','bauch'],
+    how:'Hände deutlich breiter als schulterbreit aufsetzen, Finger leicht nach außen. Kontrolliert absenken und hochdrücken.',
+    tip:'Die Brust arbeitet hier mehr, der Trizeps weniger als beim normalen Liegestütz.' },
+  { id:'diamondpushup', name:'Diamant-Liegestütz', cat:'Oberkörper', type:'reps', def:8, lvl:3, p:['trizeps'], s:['brust','schultern','bauch'],
+    how:'Hände unter der Brust so zusammenführen, dass Daumen und Zeigefinger eine Raute bilden. Eng am Körper absenken und hochdrücken.',
+    tip:'Ellbogen nah am Körper führen. Auf den Knien ausführen, bis es sauber klappt.' },
+  { id:'pikepushup', name:'Pike-Liegestütz', cat:'Oberkörper', type:'reps', def:8, lvl:3, p:['schultern'], s:['trizeps','nacken'],
+    how:'Aus dem Liegestütz die Hüfte hochschieben, bis der Körper ein umgedrehtes V bildet. Den Kopf zwischen den Händen Richtung Boden senken und wieder hochdrücken.',
+    tip:'Je näher die Füße an den Händen stehen, desto mehr arbeiten die Schultern.' },
+  { id:'floordips', name:'Trizeps-Dips am Boden', cat:'Oberkörper', type:'reps', def:12, lvl:1, p:['trizeps'], s:['schultern'],
+    how:'Im Sitzen die Hände hinter dem Po aufsetzen, Finger zeigen zu den Füßen, Po leicht anheben. Ellbogen nach hinten beugen und wieder strecken.',
+    tip:'Ellbogen zeigen nach hinten, nicht nach außen. Schultern weg von den Ohren.' },
+  { id:'plankupdown', name:'Plank Up-Down', cat:'Oberkörper', type:'reps', def:10, lvl:2, p:['trizeps','bauch'], s:['schultern','brust'],
+    how:'Aus dem Unterarmstütz nacheinander auf die Hände hochdrücken und wieder auf die Unterarme ablegen. Die führende Hand abwechseln.',
+    tip:'Die Hüfte möglichst ruhig halten — Füße etwas breiter aufsetzen hilft.' },
+  { id:'shouldertaps', name:'Schulter-Tippen im Stütz', cat:'Oberkörper', type:'reps', def:20, lvl:1, p:['bauch','schultern'], s:['seitbauch','trizeps'],
+    how:'Hoher Liegestütz, Füße etwas breiter als hüftbreit. Abwechselnd mit einer Hand die gegenüberliegende Schulter berühren. Zählt beide Seiten zusammen.',
+    tip:'Die Hüfte darf nicht hin und her schaukeln — langsamer ist schwerer.' },
+  { id:'ytw', name:'Y-T-W in Bauchlage', cat:'Oberkörper', type:'reps', def:8, lvl:1, p:['nacken','schultern'], s:['rueckenstrecker'],
+    how:'Bauchlage, Stirn knapp über dem Boden. Die Arme nacheinander als Y (schräg nach vorn), T (zur Seite) und W (Ellbogen gebeugt, nach hinten gezogen) anheben. Ein Durchgang zählt als eine Wiederholung.',
+    tip:'Daumen zeigen nach oben, Schulterblätter zusammenziehen; kleine, kontrollierte Bewegungen reichen.' },
+  { id:'snowangel', name:'Schneeengel in Bauchlage', cat:'Oberkörper', type:'reps', def:10, lvl:2, p:['nacken','latissimus'], s:['schultern','rueckenstrecker'],
+    how:'Bauchlage, Arme neben dem Körper knapp über dem Boden. Die Arme in einem großen Bogen seitlich nach vorn über den Kopf führen und zurück, ohne sie abzulegen.',
+    tip:'Brust nur leicht abheben, Blick zum Boden.' },
+  { id:'supermanpull', name:'Superman-Zug', cat:'Oberkörper', type:'reps', def:12, lvl:2, p:['latissimus','nacken'], s:['bizeps','rueckenstrecker'],
+    how:'Bauchlage, Arme nach vorn gestreckt und leicht angehoben. Die Ellbogen kraftvoll zur Taille ziehen, als würdest du dich an einer Stange hochziehen, Schulterblätter zusammen, dann wieder strecken.',
+    tip:'Ohne Klimmzugstange eine der wenigen Übungen für den breiten Rückenmuskel.' },
+  { id:'isobiceps', name:'Bizeps-Selbstwiderstand', cat:'Oberkörper', type:'secs', def:20, side:true, lvl:1, p:['bizeps'], s:['unterarme'],
+    how:'Ellbogen im rechten Winkel, Handfläche nach oben. Die andere Hand drückt von oben dagegen, der Arm hält mit voller Kraft dagegen — oder beugt sich langsam gegen den Widerstand.',
+    tip:'Ohne Geräte ist der Bizeps schwer gezielt zu trainieren; der Superman-Zug hilft zusätzlich.' },
+  { id:'armcircles', name:'Armkreisen', cat:'Oberkörper', type:'secs', def:30, lvl:1, p:['schultern'], s:['nacken'],
+    how:'Arme seitlich auf Schulterhöhe ausstrecken und kleine, dann größere Kreise ziehen. Nach der Hälfte der Zeit die Richtung wechseln.',
+    tip:'Gut zum Aufwärmen vor Liegestützen.' },
+  /* Rumpf */
+  { id:'plank', name:'Unterarmstütz', cat:'Rumpf', type:'secs', def:30, lvl:1, p:['bauch'], s:['schultern','seitbauch','gesaess'],
+    how:'Unterarme schulterbreit auf den Boden, Ellbogen unter den Schultern. Der Körper bildet eine gerade Linie von Kopf bis Ferse; Bauch und Po fest anspannen.',
+    tip:'Hüfte weder durchhängen lassen noch hochschieben — lieber kürzer und sauber.' },
+  { id:'sideplank', name:'Seitstütz', cat:'Rumpf', type:'secs', def:20, side:true, lvl:2, p:['seitbauch'], s:['abduktoren','schultern','bauch'],
+    how:'Seitlich auf einen Unterarm stützen, Ellbogen unter der Schulter, Beine gestreckt übereinander. Die Hüfte anheben, bis der Körper eine Linie bildet.',
+    tip:'Leichter wird es mit abgelegtem unteren Knie.' },
+  { id:'crunch', name:'Crunch', cat:'Rumpf', type:'reps', def:15, lvl:1, p:['bauch'], s:[],
+    how:'Rückenlage, Beine angewinkelt, Füße am Boden. Die Schulterblätter mit dem Ausatmen vom Boden lösen, kurz halten, langsam wieder ablegen.',
+    tip:'Nicht am Kopf ziehen — Hände nur leicht an die Schläfen, Blick schräg nach oben.' },
+  { id:'bicycle', name:'Fahrrad-Crunch', cat:'Rumpf', type:'reps', def:20, lvl:2, p:['bauch','seitbauch'], s:['hueftbeuger'],
+    how:'Rückenlage, Schultern leicht angehoben. Abwechselnd einen Ellbogen zum gegenüberliegenden Knie führen, während sich das andere Bein streckt. Zählt beide Seiten zusammen.',
+    tip:'Langsam drehen statt hektisch strampeln — die Drehung kommt aus dem Oberkörper.' },
+  { id:'legraise', name:'Beinheben in Rückenlage', cat:'Rumpf', type:'reps', def:12, lvl:2, p:['bauch','hueftbeuger'], s:[],
+    how:'Rückenlage, Hände neben dem Po. Die gestreckten Beine kontrolliert bis etwa senkrecht heben und langsam absenken, ohne sie abzulegen.',
+    tip:'Der untere Rücken bleibt am Boden — sonst die Knie leicht beugen.' },
+  { id:'deadbug', name:'Dead Bug', cat:'Rumpf', type:'reps', def:12, lvl:1, p:['bauch'], s:['hueftbeuger','seitbauch'],
+    how:'Rückenlage, Arme zur Decke, Knie über der Hüfte im rechten Winkel. Gegengleich einen Arm und ein Bein langsam Richtung Boden strecken, zurückholen, Seite wechseln. Zählt beide Seiten zusammen.',
+    tip:'Der untere Rücken bleibt die ganze Zeit fest am Boden — das ist die eigentliche Übung.' },
+  { id:'hollow', name:'Hollow Hold', cat:'Rumpf', type:'secs', def:20, lvl:3, p:['bauch'], s:['hueftbeuger','quadrizeps'],
+    how:'Rückenlage, den unteren Rücken an den Boden pressen. Schultern und gestreckte Beine leicht anheben, Arme lang nach hinten — der Körper bildet eine flache Schale.',
+    tip:'Zu schwer? Knie anwinkeln oder die Arme neben dem Körper lassen.' },
+  { id:'russiantwist', name:'Russian Twist', cat:'Rumpf', type:'reps', def:20, lvl:2, p:['seitbauch'], s:['bauch','hueftbeuger'],
+    how:'Im Sitzen leicht zurücklehnen, Füße am Boden oder angehoben. Den Oberkörper abwechselnd nach rechts und links drehen, die Hände neben die Hüfte führen. Zählt beide Seiten zusammen.',
+    tip:'Aus dem Brustkorb drehen, nicht nur die Arme schwingen; der Rücken bleibt lang.' },
+  { id:'flutterkicks', name:'Flutter Kicks', cat:'Rumpf', type:'secs', def:30, lvl:2, p:['hueftbeuger','bauch'], s:['quadrizeps'],
+    how:'Rückenlage, Hände unter dem Po, Beine gestreckt knapp über dem Boden. Die Beine im schnellen Wechsel wenige Zentimeter auf und ab bewegen.',
+    tip:'Der untere Rücken bleibt am Boden.' },
+  { id:'birddog', name:'Bird-Dog', cat:'Rumpf', type:'reps', def:10, side:true, lvl:1, p:['rueckenstrecker','gesaess'], s:['bauch','schultern'],
+    how:'Vierfüßlerstand. Gegengleich einen Arm nach vorn und ein Bein nach hinten strecken, bis beide waagerecht sind, kurz halten, dann die Seite wechseln.',
+    tip:'Das Becken nicht kippen — stell dir ein Glas Wasser auf dem unteren Rücken vor.' },
+  { id:'superman', name:'Superman', cat:'Rumpf', type:'reps', def:12, lvl:1, p:['rueckenstrecker'], s:['gesaess','beinbeuger','nacken'],
+    how:'Bauchlage, Arme nach vorn gestreckt. Arme, Brust und Beine gleichzeitig leicht anheben, 2 Sekunden halten, ablegen.',
+    tip:'Blick bleibt zum Boden, Nacken lang — nicht den Kopf in den Nacken legen.' },
+  { id:'reverseplank', name:'Rückwärtsstütz', cat:'Rumpf', type:'secs', def:20, lvl:2, p:['gesaess','rueckenstrecker'], s:['beinbeuger','trizeps','schultern'],
+    how:'Im Sitzen die Hände hinter dem Po aufsetzen, Finger zeigen zu den Füßen. Die Hüfte anheben, bis der Körper von den Schultern bis zu den Fersen eine Linie bildet.',
+    tip:'Den Kopf in Verlängerung der Wirbelsäule halten.' },
+  /* Beine & Po */
+  { id:'squat', name:'Kniebeuge', cat:'Beine & Po', type:'reps', def:15, lvl:1, p:['quadrizeps','gesaess'], s:['adduktoren','beinbeuger','rueckenstrecker'],
+    how:'Füße etwa schulterbreit, Fußspitzen leicht nach außen. Die Hüfte nach hinten unten schieben, als würdest du dich auf einen Stuhl setzen, bis die Oberschenkel etwa waagerecht sind, dann aufstehen.',
+    tip:'Knie folgen den Fußspitzen, Fersen bleiben am Boden, Brust bleibt aufrecht.' },
+  { id:'sumosquat', name:'Sumo-Kniebeuge', cat:'Beine & Po', type:'reps', def:15, lvl:1, p:['adduktoren','gesaess'], s:['quadrizeps','beinbeuger'],
+    how:'Breiter Stand, Fußspitzen deutlich nach außen. Gerade nach unten beugen und die Knie dabei aktiv nach außen drücken.',
+    tip:'Oberkörper bleibt aufrecht, das Gewicht auf den ganzen Füßen.' },
+  { id:'jumpsquat', name:'Sprungkniebeuge', cat:'Beine & Po', type:'reps', def:10, lvl:3, p:['quadrizeps','gesaess'], s:['waden','beinbeuger'],
+    how:'Aus der Kniebeuge explosiv nach oben springen, weich landen und direkt in die nächste Kniebeuge abfedern.',
+    tip:'Leise landen — über den Vorfuß abrollen. Nichts für empfindliche Knie.' },
+  { id:'wallsit', name:'Wandsitzen', cat:'Beine & Po', type:'secs', def:30, lvl:2, p:['quadrizeps'], s:['gesaess','adduktoren'],
+    how:'Rücken an die Wand, Füße etwa einen halben Meter davor. An der Wand hinabrutschen, bis Knie und Hüfte einen rechten Winkel bilden, und halten.',
+    tip:'Knie über den Fußgelenken, nicht davor.' },
+  { id:'lunge', name:'Ausfallschritt', cat:'Beine & Po', type:'reps', def:10, side:true, lvl:2, p:['quadrizeps','gesaess'], s:['beinbeuger','adduktoren'],
+    how:'Einen großen Schritt nach vorn machen und beide Knie beugen, bis das hintere Knie knapp über dem Boden ist. Über die vordere Ferse zurück in den Stand drücken.',
+    tip:'Das vordere Knie bleibt über dem Fuß und knickt nicht nach innen.' },
+  { id:'reverselunge', name:'Rückwärts-Ausfallschritt', cat:'Beine & Po', type:'reps', def:10, side:true, lvl:1, p:['gesaess','quadrizeps'], s:['beinbeuger','adduktoren'],
+    how:'Einen großen Schritt nach hinten machen, beide Knie beugen, das vordere Knie bleibt über dem Fußgelenk. Zurück in den Stand.',
+    tip:'Oft knieschonender als der Ausfallschritt nach vorn.' },
+  { id:'sidelunge', name:'Seitlicher Ausfallschritt', cat:'Beine & Po', type:'reps', def:10, side:true, lvl:2, p:['adduktoren','quadrizeps'], s:['gesaess','abduktoren'],
+    how:'Einen großen Schritt zur Seite machen und in dieses Knie beugen, das andere Bein bleibt gestreckt. Kräftig zurück in die Mitte drücken.',
+    tip:'Die Fußsohlen bleiben ganz am Boden, der Po geht nach hinten.' },
+  { id:'pistol', name:'Einbeinige Kniebeuge', cat:'Beine & Po', type:'reps', def:5, side:true, lvl:3, p:['quadrizeps','gesaess'], s:['adduktoren','abduktoren','bauch'],
+    how:'Auf einem Bein stehen, das andere gestreckt nach vorn halten. Langsam so tief wie möglich beugen und wieder aufstehen.',
+    tip:'Sehr anspruchsvoll — anfangs nur bis zu einer Teiltiefe gehen oder mit einer Hand an der Wand abstützen.' },
+  { id:'glutebridge', name:'Beckenheben', cat:'Beine & Po', type:'reps', def:15, lvl:1, p:['gesaess'], s:['beinbeuger','rueckenstrecker'],
+    how:'Rückenlage, Füße hüftbreit nah am Po. Das Becken anheben, bis Knie, Hüfte und Schultern eine Linie bilden, oben den Po fest anspannen, langsam absenken.',
+    tip:'Stehen die Füße weiter vom Po weg, arbeiten die Beinbeuger mehr.' },
+  { id:'singlebridge', name:'Einbeiniges Beckenheben', cat:'Beine & Po', type:'reps', def:10, side:true, lvl:2, p:['gesaess','beinbeuger'], s:['rueckenstrecker','abduktoren'],
+    how:'Wie das Beckenheben, aber ein Bein ist gestreckt in der Luft. Das Becken bleibt beim Heben waagerecht.',
+    tip:'Kippt das Becken zur Seite, ist die Übung noch zu schwer — dann erst beidbeinig.' },
+  { id:'donkeykick', name:'Donkey Kicks', cat:'Beine & Po', type:'reps', def:15, side:true, lvl:1, p:['gesaess'], s:['beinbeuger'],
+    how:'Vierfüßlerstand. Ein Bein angewinkelt mit der Fußsohle Richtung Decke drücken, bis der Oberschenkel waagerecht ist, dann langsam absenken.',
+    tip:'Kein Hohlkreuz — die Bewegung kommt aus dem Po, nicht aus dem Rücken.' },
+  { id:'firehydrant', name:'Fire Hydrant', cat:'Beine & Po', type:'reps', def:12, side:true, lvl:1, p:['abduktoren'], s:['gesaess'],
+    how:'Vierfüßlerstand. Ein angewinkeltes Bein seitlich anheben, bis der Oberschenkel etwa waagerecht ist, dann langsam absenken.',
+    tip:'Der Oberkörper bleibt ruhig und lehnt sich nicht zur Gegenseite.' },
+  { id:'sidelegraise', name:'Seitliches Beinheben', cat:'Beine & Po', type:'reps', def:15, side:true, lvl:1, p:['abduktoren'], s:['gesaess','seitbauch'],
+    how:'Seitenlage, Kopf auf dem Arm. Das obere Bein gestreckt anheben, die Fußspitze zeigt nach vorn, langsam absenken.',
+    tip:'Lieber etwas weniger hoch, dafür ohne den Oberkörper nach hinten zu drehen.' },
+  { id:'clamshell', name:'Muschel', cat:'Beine & Po', type:'reps', def:15, side:true, lvl:1, p:['abduktoren','gesaess'], s:[],
+    how:'Seitenlage, Knie angewinkelt, Füße zusammen. Das obere Knie wie eine Muschel öffnen, die Füße bleiben aufeinander, dann wieder schließen.',
+    tip:'Das Becken nicht nach hinten kippen lassen.' },
+  { id:'singlerdl', name:'Einbeiniges Kreuzheben', cat:'Beine & Po', type:'reps', def:10, side:true, lvl:2, p:['beinbeuger','gesaess'], s:['rueckenstrecker','abduktoren'],
+    how:'Auf einem Bein stehen, Knie leicht gebeugt. Den Oberkörper nach vorn neigen und das freie Bein nach hinten strecken, bis Rumpf und Bein fast waagerecht sind, dann aufrichten.',
+    tip:'Der Rücken bleibt gerade; anfangs mit den Fingern an der Wand balancieren.' },
+  { id:'goodmorning', name:'Good Morning', cat:'Beine & Po', type:'reps', def:15, lvl:1, p:['beinbeuger','rueckenstrecker'], s:['gesaess'],
+    how:'Hüftbreit stehen, Hände an den Schläfen, Knie leicht gebeugt. Mit geradem Rücken aus der Hüfte nach vorn beugen, bis du hinten im Oberschenkel eine Dehnung spürst, dann aufrichten.',
+    tip:'Der Po schiebt nach hinten — kein Rundrücken.' },
+  { id:'calfraise', name:'Wadenheben', cat:'Beine & Po', type:'reps', def:20, lvl:1, p:['waden'], s:[],
+    how:'Hüftbreit stehen, auf die Fußballen hochdrücken, oben kurz halten und langsam absenken.',
+    tip:'Langsames Absenken macht die Übung deutlich wirksamer.' },
+  { id:'singlecalf', name:'Einbeiniges Wadenheben', cat:'Beine & Po', type:'reps', def:12, side:true, lvl:2, p:['waden'], s:[],
+    how:'Auf einem Bein stehen, mit einer Hand an der Wand balancieren. Auf den Fußballen hochdrücken und langsam absenken.',
+    tip:'Doppelter Widerstand im Vergleich zur beidbeinigen Variante.' },
+  /* Ganzkörper */
+  { id:'burpee', name:'Burpees', cat:'Ganzkörper', type:'reps', def:10, lvl:3, p:['quadrizeps','brust'], s:['gesaess','schultern','trizeps','bauch'],
+    how:'Aus dem Stand in die Hocke, Hände auf den Boden, mit den Füßen nach hinten in den Liegestütz springen, Füße zurück zu den Händen und hochspringen.',
+    tip:'Leichter ohne Sprung: Füße nacheinander nach hinten setzen.' },
+  { id:'jumpingjacks', name:'Hampelmann', cat:'Ganzkörper', type:'secs', def:45, lvl:1, p:['waden'], s:['schultern','abduktoren','adduktoren'],
+    how:'Aus dem Stand die Beine grätschen und die Arme über den Kopf führen, dann zurückspringen.',
+    tip:'Leise auf dem Vorfuß landen. Ohne Springen: abwechselnd ein Bein zur Seite setzen.' },
+  { id:'mountainclimber', name:'Mountain Climbers', cat:'Ganzkörper', type:'secs', def:30, lvl:2, p:['bauch'], s:['hueftbeuger','schultern','quadrizeps'],
+    how:'Hoher Liegestütz, Hände unter den Schultern. Die Knie abwechselnd zügig Richtung Brust ziehen.',
+    tip:'Die Hüfte bleibt auf Schulterhöhe und schiebt nicht nach oben.' },
+  { id:'highknees', name:'Hohe Knie', cat:'Ganzkörper', type:'secs', def:30, lvl:2, p:['hueftbeuger'], s:['waden','quadrizeps','bauch'],
+    how:'Auf der Stelle laufen und die Knie abwechselnd bis auf Hüfthöhe ziehen, die Arme schwingen mit.',
+    tip:'Aufrecht bleiben und auf dem Vorfuß landen.' },
+  { id:'buttkicks', name:'Anfersen', cat:'Ganzkörper', type:'secs', def:30, lvl:1, p:['beinbeuger'], s:['waden','quadrizeps'],
+    how:'Auf der Stelle laufen und die Fersen abwechselnd Richtung Po ziehen.',
+    tip:'Gut zum Aufwärmen der Beine.' },
+  { id:'skater', name:'Eisschnellläufer-Sprünge', cat:'Ganzkörper', type:'reps', def:20, lvl:2, p:['gesaess','quadrizeps'], s:['abduktoren','adduktoren','waden'],
+    how:'Seitlich von einem Bein aufs andere springen, das freie Bein hinter dem Standbein kreuzen, die Arme schwingen mit. Zählt beide Seiten zusammen.',
+    tip:'Kurz in jeder Landung stabilisieren, bevor du weiterspringst.' },
+  { id:'bearcrawl', name:'Bärengang', cat:'Ganzkörper', type:'secs', def:30, lvl:2, p:['schultern','bauch'], s:['quadrizeps','trizeps','unterarme'],
+    how:'Vierfüßlerstand, die Knie wenige Zentimeter über dem Boden. Gegengleich Hand und Fuß vorwärts setzen, der Rücken bleibt flach.',
+    tip:'Auf kleinem Raum: ein paar Schritte vor und zurück.' },
+  { id:'inchworm', name:'Raupe', cat:'Ganzkörper', type:'reps', def:6, lvl:2, p:['schultern','bauch'], s:['beinbeuger','trizeps'],
+    how:'Aus dem Stand mit möglichst gestreckten Beinen die Hände auf den Boden setzen, mit den Händen nach vorn in den Liegestütz laufen, zurücklaufen und aufrichten.',
+    tip:'Die Knie dürfen leicht gebeugt sein, wenn die Beinrückseite spannt.' }
+];
+/* ---------- Sport: Gliederpuppe (Vorder- und Rückseite) ---------- */
+/* Koordinaten je Ansicht: 200 × 432, Mitte x = 100. Rechte Körperseite wird gespiegelt. */
+const MQ_SEG = 12;
+function mqCapsule(ax, ay, bx, by, ra, rb){
+  const dx = bx - ax, dy = by - ay, L = Math.hypot(dx, dy) || 1;
+  const ux = dx / L, uy = dy / L, nx = -uy, ny = ux;
+  const pts = [];
+  for(let i=0;i<=MQ_SEG;i++){ const t = -Math.PI/2 + Math.PI * i / MQ_SEG; pts.push([bx + rb*(ux*Math.cos(t) + nx*Math.sin(t)), by + rb*(uy*Math.cos(t) + ny*Math.sin(t))]); }
+  for(let i=0;i<=MQ_SEG;i++){ const t = Math.PI/2 + Math.PI * i / MQ_SEG; pts.push([ax + ra*(ux*Math.cos(t) + nx*Math.sin(t)), ay + ra*(uy*Math.cos(t) + ny*Math.sin(t))]); }
+  return 'M' + pts.map(p=>p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z';
+}
+/* Spiegelt einen Pfad an der Körpermitte (x → 200 − x); funktioniert für M/L/C/Q/Z mit absoluten Koordinaten */
+function mqMirror(d){
+  return d.replace(/(-?\d+(?:\.\d+)?),(-?\d+(?:\.\d+)?)/g, (m, x, y)=> (200 - parseFloat(x)).toFixed(1) + ',' + y);
+}
+function mqEllipse(cx, cy, rx, ry, rot){
+  /* als Pfad, damit Spiegeln und Drehen einheitlich funktionieren */
+  const pts = [], r = (rot||0) * Math.PI / 180;
+  for(let i=0;i<32;i++){ const t = 2*Math.PI*i/32, x = rx*Math.cos(t), y = ry*Math.sin(t); pts.push([cx + x*Math.cos(r) - y*Math.sin(r), cy + x*Math.sin(r) + y*Math.cos(r)]); }
+  return 'M' + pts.map(p=>p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('L') + 'Z';
+}
+const MQ_BODY = (()=>{
+  const seg = [], joint = [];
+  const both = (list, d)=>{ list.push(d); list.push(mqMirror(d)); };
+  /* Kopf (eiförmig, ohne Gesicht) und Hals */
+  seg.push('M100,15.5C111.5,15.5 117.5,26 117.5,38C117.5,52 110,63 100,63C90,63 82.5,52 82.5,38C82.5,26 88.5,15.5 100,15.5Z');
+  seg.push(mqCapsule(100, 60, 100, 77, 7.5, 8.5));
+  /* Brustkorb, Taille, Becken */
+  seg.push('M72,75C82,69 118,69 128,75C136,79 137,100 133,118C130,134 122,146 112,150L88,150C78,146 70,134 67,118C63,100 64,79 72,75Z');
+  seg.push(mqEllipse(100, 160, 18, 13));
+  seg.push('M78,175C86,169 114,169 122,175C128,190 126,207 118,222C112,230 106,234 100,234C94,234 88,230 82,222C74,207 72,190 78,175Z');
+  /* Arme */
+  both(seg, mqCapsule(63, 90, 53, 147, 9.5, 8));
+  both(seg, mqCapsule(51, 158, 44, 212, 7.5, 5.5));
+  both(seg, mqEllipse(41, 233, 7.5, 12.5, 8));
+  /* Beine */
+  both(seg, mqCapsule(87, 224, 89, 314, 13.5, 9.5));
+  both(seg, mqCapsule(89, 326, 90, 398, 9.5, 6));
+  /* Gelenke */
+  both(joint, mqEllipse(65, 84, 10.5, 10.5));
+  both(joint, mqEllipse(52, 153, 7, 7));
+  both(joint, mqEllipse(43, 217, 4.5, 4.5));
+  both(joint, mqEllipse(89, 320, 8.5, 8.5));
+  both(joint, mqEllipse(90, 403, 5, 5));
+  return { seg, joint };
+})();
+const MQ_FEET = {
+  front: [mqEllipse(90, 413, 8.5, 6.5, -8), mqMirror(mqEllipse(90, 413, 8.5, 6.5, -8))],
+  back:  [mqEllipse(90, 412, 7, 6), mqMirror(mqEllipse(90, 412, 7, 6))]
+};
+/* Muskelflächen je Ansicht: [Muskel-ID, Pfad] — linke Seite wird gespiegelt */
+const MQ_MUSCLES = (()=>{
+  const front = [], back = [];
+  const both = (list, id, d)=>{ list.push([id, d]); list.push([id, mqMirror(d)]); };
+  /* vorne */
+  both(front, 'schultern', mqEllipse(64, 87, 11, 12.5));
+  both(front, 'brust', 'M98,86C90,83 79,84 72,90C68,97 70,108 77,114C85,118 94,116 98,112Z');
+  front.push(['bauch', 'M90,119C96,116 104,116 110,119L112,166C112,186 108,200 100,206C92,200 88,186 88,166Z']);
+  both(front, 'seitbauch', 'M69,121C74,134 80,146 83,160C82,170 79,180 78,192L88,194L88,166L89,121C82,120 75,120 69,121Z');
+  both(front, 'bizeps', mqCapsule(61, 99, 55, 140, 6, 5));
+  both(front, 'unterarme', mqCapsule(50, 163, 45, 205, 5.5, 4));
+  both(front, 'abduktoren', 'M76,192C80,199 82,211 81,226L75.5,229C72.5,216 72.5,203 76,192Z');
+  both(front, 'hueftbeuger', mqCapsule(85.5, 221, 94, 244, 5, 4.2));
+  both(front, 'quadrizeps', mqCapsule(84, 248, 87.5, 306, 8.5, 6));
+  both(front, 'adduktoren', 'M96,238C99,248 100.5,262 98.5,286C95,279 93,262 93.5,246Z');
+  /* hinten */
+  back.push(['nacken', 'M100,62C106,70 120,75 133,79C126,86 114,94 105,128L100,134L95,128C86,94 74,86 67,79C80,75 94,70 100,62Z']);
+  both(back, 'schultern', mqEllipse(64, 87, 11, 12.5));
+  both(back, 'latissimus', 'M71,98C77,108 86,124 94,150L95,162C88,158 80,148 75,134C70,122 69,108 71,98Z');
+  both(back, 'rueckenstrecker', 'M96.5,132L99,135L99,204L94,204C93,186 94,158 96.5,132Z');
+  both(back, 'trizeps', mqCapsule(61, 99, 55, 140, 6, 5));
+  both(back, 'unterarme', mqCapsule(50, 163, 45, 205, 5.5, 4));
+  both(back, 'abduktoren', 'M77,188C81,182 91,180 97,184C92,190 84,194 78,200C76,196 76,192 77,188Z');
+  both(back, 'gesaess', 'M99.5,196C100,214 97,232 88,238C80,239 76,229 77,216C79,205 89,197 99.5,196Z');
+  both(back, 'beinbeuger', mqCapsule(87, 248, 89, 306, 9, 6.5));
+  both(back, 'waden', mqCapsule(89, 336, 90, 374, 8, 5));
+  return { front, back };
+})();
+
+/*
+ * opts.mode:    'pick' (Zonen sichtbar, antippbar) | 'show' (nur Hervorhebung) | 'heat' (Intensität je Muskel)
+ * opts.primary / opts.secondary: Muskel-IDs   opts.heat: { id: 0..1 }   opts.selected: Muskel-ID
+ */
+function sportFigureSVG(opts){
+  opts = opts || {};
+  const P = new Set(opts.primary || []), S = new Set(opts.secondary || []), heat = opts.heat || {};
+  const view = (name, dx)=>{
+    let s = `<g transform="translate(${dx},0)">`;
+    MQ_BODY.seg.forEach(d=>{ s += `<path class="mq-body" d="${d}"/>`; });
+    MQ_FEET[name].forEach(d=>{ s += `<path class="mq-body" d="${d}"/>`; });
+    MQ_BODY.joint.forEach(d=>{ s += `<path class="mq-joint" d="${d}"/>`; });
+    MQ_MUSCLES[name].forEach(([id, d])=>{
+      let cls = 'mq-m', style = '';
+      if(opts.mode==='heat'){ const v = heat[id] || 0; if(v>0){ cls += ' h'; style = ` style="fill-opacity:${(0.16 + 0.8*v).toFixed(2)}"`; } }
+      else if(P.has(id)) cls += ' p';
+      else if(S.has(id)) cls += ' s';
+      if(opts.selected===id) cls += ' sel';
+      s += `<path class="${cls}" data-m="${id}" d="${d}"${style}/>`;
+    });
+    s += `<text class="mq-label" x="100" y="430" text-anchor="middle">${name==='front' ? 'vorne' : 'hinten'}</text>`;
+    return s + '</g>';
+  };
+  return `<svg class="mq mq-${opts.mode||'show'}" viewBox="22 8 356 428" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${opts.label ? String(opts.label).replace(/"/g,'') : 'Muskelfigur'}">${view('front', 0)}${view('back', 178)}</svg>`;
+}
+/* ---------- Sport ---------- */
+let sportEntries = [];
+let sportView = 'today';
+let sportMuscleSel = null;
+let sportCat = 'all';
+let sportPerson = null;
+let sportHistoryDays = 10;
+let sportSheetEx = null;
+const SP_EX = {}; SPORT_EXERCISES.forEach(e=>{ SP_EX[e.id] = e; });
+const SP_MU = {}; SPORT_MUSCLES.forEach(m=>{ SP_MU[m.id] = m; });
+const SP_WD = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+const SP_LEVELS = ['', 'Einstieg', 'Mittel', 'Fortgeschritten'];
+const SP_STARTER = ['squat','kneepushup','plank','glutebridge','superman','reverselunge'];
+
+function spIso(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
+function spDate(iso){ const p = String(iso).split('-').map(Number); return new Date(p[0], p[1]-1, p[2], 12); }
+function spAddDays(d, n){ const x = new Date(d); x.setDate(x.getDate() + n); return x; }
+function spMonday(d){ const x = new Date(d); x.setHours(12,0,0,0); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x; }
+function spIsoWeek(d){ const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())); const wd = t.getUTCDay() || 7; t.setUTCDate(t.getUTCDate() + 4 - wd); return Math.ceil(((t - Date.UTC(t.getUTCFullYear(), 0, 1)) / 86400000 + 1) / 7); }
+function spDayLabel(iso){ const d = spDate(iso); return `${SP_WD[d.getDay()]}, ${d.getDate()}.${d.getMonth()+1}.`; }
+function spShort(iso){ const d = spDate(iso); return `${d.getDate()}.${d.getMonth()+1}.`; }
+function spToday(){ return spIso(new Date()); }
+function spClamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+function spOf(person){ return (sportEntries || []).filter(e=>e && e.by===person && SP_EX[e.ex] && e.day); }
+function spAmt(e){ return SP_EX[e.ex].type==='secs' ? (e.secs || 0) : (e.reps || 0); }
+function spUnit(ex){ return ex.type==='secs' ? 's' : 'Wdh.'; }
+function spAmtText(e){ const ex = SP_EX[e.ex]; return `${e.sets} × ${spAmt(e)}${ex.type==='secs' ? ' s' : ''}${ex.side ? ' je Seite' : ''}`; }
+function spNames(ids){ return ids.map(id=>SP_MU[id] ? SP_MU[id].name : id).join(', '); }
+function spDur(s){ const m = Math.floor(s/60), r = Math.round(s%60); return m ? `${m}:${pad2(r)} Min.` : `${r} Sek.`; }
+function spSummary(list){
+  const ex = new Set(list.map(e=>e.ex)).size;
+  const sets = list.reduce((a,e)=>a + (e.sets||0), 0);
+  const reps = list.filter(e=>SP_EX[e.ex].type==='reps').reduce((a,e)=>a + e.sets*(e.reps||0)*(SP_EX[e.ex].side ? 2 : 1), 0);
+  const secs = list.filter(e=>SP_EX[e.ex].type==='secs').reduce((a,e)=>a + e.sets*(e.secs||0)*(SP_EX[e.ex].side ? 2 : 1), 0);
+  const parts = [`${ex} ${ex===1 ? 'Übung' : 'Übungen'}`, `${sets} ${sets===1 ? 'Satz' : 'Sätze'}`];
+  if(reps) parts.push(`${reps} Wdh.`);
+  if(secs) parts.push(`${spDur(secs)} Haltezeit/Ausdauer`);
+  return parts.join(' · ');
+}
+function spLoad(list){
+  const load = {};
+  list.forEach(e=>{ const ex = SP_EX[e.ex], n = e.sets || 1; ex.p.forEach(m=>{ load[m] = (load[m]||0) + n; }); ex.s.forEach(m=>{ load[m] = (load[m]||0) + n/2; }); });
+  return load;
+}
+function spWorked(list){
+  const P = new Set(), S = new Set();
+  list.forEach(e=>SP_EX[e.ex].p.forEach(m=>P.add(m)));
+  list.forEach(e=>SP_EX[e.ex].s.forEach(m=>{ if(!P.has(m)) S.add(m); }));
+  return { P:[...P], S:[...S] };
+}
+function spLevelDots(l){ return `<span class="sp-lvl" title="${SP_LEVELS[l]}" aria-label="Schwierigkeit: ${SP_LEVELS[l]}">${[1,2,3].map(i=>`<i class="${i<=l ? 'on' : ''}"></i>`).join('')}</span>`; }
+function spLegendHTML(P, S){
+  return `<div class="sp-legend"><div><span class="sp-sw p"></span><b>Stark beansprucht:</b> ${escapeHtml(spNames(P)) || '—'}</div>` +
+    (S.length ? `<div><span class="sp-sw s"></span><b>Unterstützend:</b> ${escapeHtml(spNames(S))}</div>` : '') + `</div>`;
+}
+function spLastOf(person, exId){ return spOf(person).filter(e=>e.ex===exId).sort((a,b)=>(b.day.localeCompare(a.day)) || (b.at - a.at))[0] || null; }
+function spBest(person, exId, exceptId){ return spOf(person).filter(e=>e.ex===exId && e.id!==exceptId).reduce((m,e)=>Math.max(m, spAmt(e)), 0); }
+
+/* ---------- Ansichten ---------- */
+function renderSport(){
+  if(!sportPerson) sportPerson = identity;
+  $$('#spViewChips .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===sportView));
+  $('#spToday').style.display = sportView==='today' ? 'block' : 'none';
+  $('#spLibrary').style.display = sportView==='library' ? 'block' : 'none';
+  $('#spStats').style.display = sportView==='stats' ? 'block' : 'none';
+  if(sportView==='today') renderSportToday();
+  if(sportView==='library') renderSportLibrary();
+  if(sportView==='stats') renderSportStats();
+}
+$$('#spViewChips .chip').forEach(c=>c.addEventListener('click', ()=>{ sportView = c.dataset.val; renderSport(); window.scrollTo(0,0); }));
+function spGoMuscle(id){ sportMuscleSel = id; sportCat = 'all'; $('#spSearch').value = ''; sportView = 'library'; renderSport(); window.scrollTo(0,0); }
+function spEntryRow(e, canDelete){
+  const ex = SP_EX[e.ex];
+  return `<div class="sp-entry">
+    <button class="sp-entry-main" data-ex="${ex.id}" type="button"><span class="sp-entry-name">${escapeHtml(ex.name)}</span><span class="sp-entry-amt">${spAmtText(e)}</span>${e.note ? `<span class="sp-entry-note">${escapeHtml(e.note)}</span>` : ''}</button>
+    ${canDelete && e.by===identity ? `<button class="del sp-del" data-id="${e.id}" type="button" aria-label="${escapeHtml(ex.name)} löschen">${trashSvg()}</button>` : ''}
+  </div>`;
+}
+function spBindCommon(root){
+  root.querySelectorAll('.sp-entry-main[data-ex], .sp-open[data-ex]').forEach(b=>{ b.onclick = ()=> openSportSheet(b.dataset.ex, b.dataset.sets ? { sets:+b.dataset.sets, amt:+b.dataset.amt } : null); });
+  root.querySelectorAll('.sp-del').forEach(b=>{ b.onclick = ()=> spDelete(b.dataset.id); });
+  root.querySelectorAll('.sp-golm').forEach(b=>{ b.onclick = ()=> spGoMuscle(b.dataset.m); });
+  root.querySelectorAll('.sp-fig-link').forEach(f=>{ f.onclick = ev=>{ const t = ev.target.closest('[data-m]'); if(t) spGoMuscle(t.dataset.m); }; });
+}
+
+function renderSportToday(){
+  const now = new Date(), today = spToday();
+  const mine = spOf(identity);
+  const todays = mine.filter(e=>e.day===today).sort((a,b)=>a.at - b.at);
+  let h = `<div class="balance-card"><div class="label">Heute · ${TD_WEEKDAYS[now.getDay()]}, ${now.getDate()}. ${MONTH_NAMES[now.getMonth()]}</div>`;
+  if(todays.length){
+    const w = spWorked(todays);
+    h += `<div class="sp-sum">${spSummary(todays)}</div>` + todays.map(e=>spEntryRow(e, true)).join('');
+    h += `<div class="sp-fig sp-fig-link" title="Muskel antippen für passende Übungen">${sportFigureSVG({ mode:'show', primary:w.P, secondary:w.S, label:'Heute trainierte Muskeln' })}</div>` + spLegendHTML(w.P, w.S);
+  } else {
+    h += `<div class="td-text" style="color:var(--muted);margin-top:4px;">Noch nichts eingetragen. Such dir unter „Übungen" eine aus — über die Figur nach Muskelgruppe oder über die Liste.</div>`;
+  }
+  h += `<button class="btn-wide" id="spAddBtn" type="button" style="margin-top:12px;">+ Übung eintragen</button></div>`;
+
+  /* Diese Woche als sieben Punkte */
+  const mon = spMonday(now), days = new Set(mine.map(e=>e.day));
+  let wk = 0;
+  const dots = [0,1,2,3,4,5,6].map(i=>{ const iso = spIso(spAddDays(mon, i)), on = days.has(iso); if(on) wk++; return `<div class="sp-wd ${on ? 'on' : ''} ${iso===today ? 'today' : ''} ${iso>today ? 'future' : ''}"><span></span>${SP_WD[(i+1)%7]}</div>`; }).join('');
+  h += `<div class="balance-card"><div class="label">Diese Woche · ${wk} von 7 Tagen</div><div class="sp-week">${dots}</div></div>`;
+
+  if(!mine.length){
+    h += `<div class="balance-card"><div class="label">Für den Anfang</div><div class="td-text" style="margin-top:2px;">Eine einfache Runde für den ganzen Körper — je 2–3 Sätze, dazwischen kurz Pause:</div><div class="sp-chiplist">` +
+      SP_STARTER.map(id=>`<button class="chip sp-open" data-ex="${id}" type="button">${escapeHtml(SP_EX[id].name)}</button>`).join('') + `</div></div>`;
+  } else {
+    /* Nochmal: zuletzt gemachte Übungen mit den letzten Werten */
+    const seen = new Set(), recent = [];
+    [...mine].sort((a,b)=>b.at - a.at).forEach(e=>{ if(!seen.has(e.ex) && recent.length<6){ seen.add(e.ex); recent.push(e); } });
+    h += `<div class="balance-card"><div class="label">Nochmal</div><div class="sp-chiplist">` +
+      recent.map(e=>`<button class="chip sp-open" data-ex="${e.ex}" data-sets="${e.sets}" data-amt="${spAmt(e)}" type="button">${escapeHtml(SP_EX[e.ex].name)} · ${e.sets}×${spAmt(e)}${SP_EX[e.ex].type==='secs' ? ' s' : ''}</button>`).join('') + `</div></div>`;
+    /* Länger nicht trainiert (14 Tage) */
+    const since = spIso(spAddDays(now, -13)), last = {};
+    mine.forEach(e=>SP_EX[e.ex].p.forEach(m=>{ if(!last[m] || e.day>last[m]) last[m] = e.day; }));
+    const stale = SPORT_MUSCLES.filter(m=>!last[m.id] || last[m.id] < since).sort((a,b)=>(last[a.id]||'').localeCompare(last[b.id]||'')).slice(0, 3);
+    if(stale.length){
+      h += `<div class="balance-card"><div class="label">Länger nicht trainiert</div>` + stale.map(m=>{
+        const sug = SPORT_EXERCISES.filter(x=>x.p.includes(m.id)).sort((a,b)=>a.lvl - b.lvl)[0];
+        return `<div class="sp-stale"><div><b>${escapeHtml(m.name)}</b><span class="sp-muted">${last[m.id] ? ' · zuletzt ' + spShort(last[m.id]) : ' · noch nie'}</span></div>${sug ? `<button class="chip sp-open" data-ex="${sug.id}" type="button">${escapeHtml(sug.name)}</button>` : ''}</div>`;
+      }).join('') + `</div>`;
+    }
+  }
+  $('#spToday').innerHTML = h;
+  $('#spAddBtn').onclick = ()=>{ sportView = 'library'; renderSport(); window.scrollTo(0,0); };
+  spBindCommon($('#spToday'));
+}
+
+function renderSportLibrary(){
+  const sel = sportMuscleSel;
+  $('#spLibFig').innerHTML = sportFigureSVG({ mode:'pick', primary: sel ? [sel] : [], selected: sel, label:'Muskelgruppe antippen' });
+  $('#spLibInfo').innerHTML = sel
+    ? `<div class="td-title">${escapeHtml(SP_MU[sel].name)}</div><div class="td-text" style="margin-top:4px;">${escapeHtml(SP_MU[sel].desc)}</div>`
+    : `<div class="td-text" style="color:var(--muted);margin-top:0;">Tippe auf einen Muskel — oder wähle unten eine Gruppe —, um passende Übungen zu finden.</div>`;
+  $('#spMuscleChips').innerHTML = SPORT_MUSCLES.map(m=>`<button class="chip proj-chip ${sel===m.id ? 'selected' : ''}" data-m="${m.id}" type="button">${escapeHtml(m.name)}</button>`).join('');
+  $$('#spMuscleChips .chip').forEach(b=>{ b.onclick = ()=>{ sportMuscleSel = sportMuscleSel===b.dataset.m ? null : b.dataset.m; renderSportLibrary(); }; });
+  $('#spCatChips').innerHTML = [['all','Alle'], ...SPORT_CATS.map(c=>[c,c])].map(([v,l])=>`<button class="chip proj-chip ${sportCat===v ? 'selected' : ''}" data-val="${escapeHtml(v)}" type="button">${escapeHtml(l)}</button>`).join('');
+  $$('#spCatChips .chip').forEach(b=>{ b.onclick = ()=>{ sportCat = b.dataset.val; renderSportLibrary(); }; });
+  renderSportExList();
+}
+function renderSportExList(){
+  const sel = sportMuscleSel, q = ($('#spSearch').value || '').trim().toLowerCase();
+  let list = SPORT_EXERCISES.filter(ex=>(sportCat==='all' || ex.cat===sportCat) && (!sel || ex.p.includes(sel) || ex.s.includes(sel)) && (!q || ex.name.toLowerCase().includes(q)));
+  if(sel) list = list.sort((a,b)=>(a.p.includes(sel) ? 0 : 1) - (b.p.includes(sel) ? 0 : 1) || a.lvl - b.lvl);
+  const head = sel ? `<div class="sp-listhead">${list.length} ${list.length===1 ? 'Übung' : 'Übungen'} für ${escapeHtml(SP_MU[sel].name)}</div>` : '';
+  $('#spExList').innerHTML = head + (list.length ? list.map(ex=>{
+    const last = spLastOf(identity, ex.id);
+    return `<button class="item sp-ex sp-open" data-ex="${ex.id}" type="button">
+      <span class="sp-ex-main"><span class="sp-ex-name">${escapeHtml(ex.name)}</span>
+        <span class="sp-ex-mus">${escapeHtml(spNames(ex.p))}${ex.s.length ? ` <span class="sp-muted">+ ${escapeHtml(spNames(ex.s))}</span>` : ''}</span>
+        ${last ? `<span class="sp-ex-last">Zuletzt ${spShort(last.day)} · ${spAmtText(last)}</span>` : ''}</span>
+      <span class="sp-ex-side">${spLevelDots(ex.lvl)}${sel ? `<span class="tag">${ex.p.includes(sel) ? 'stark' : 'mit'}</span>` : ''}</span>
+    </button>`;
+  }).join('') : `<div class="empty"><b>Keine Übung gefunden</b>Andere Kategorie oder Muskelgruppe wählen.</div>`);
+  spBindCommon($('#spExList'));
+}
+$('#spLibFig').addEventListener('click', ev=>{ const t = ev.target.closest('[data-m]'); if(!t) return; sportMuscleSel = sportMuscleSel===t.dataset.m ? null : t.dataset.m; renderSportLibrary(); });
+$('#spSearch').addEventListener('input', renderSportExList);
+
+/* ---------- Übung: Ansicht + Eintragen ---------- */
+function openSportSheet(exId, preset){
+  const ex = SP_EX[exId]; if(!ex) return;
+  sportSheetEx = exId;
+  const last = spLastOf(identity, exId);
+  const sets = preset ? preset.sets : (last ? last.sets : 3);
+  const amt = preset ? preset.amt : (last ? spAmt(last) : ex.def);
+  $('#spExTitle').textContent = ex.name;
+  $('#spExMeta').textContent = `${ex.cat} · ${SP_LEVELS[ex.lvl]} · ohne Geräte`;
+  $('#spExFigure').innerHTML = sportFigureSVG({ mode:'show', primary:ex.p, secondary:ex.s, label:`Beanspruchte Muskeln: ${spNames(ex.p)}` });
+  $('#spExLegend').innerHTML = spLegendHTML(ex.p, ex.s);
+  $('#spExHow').textContent = ex.how;
+  $('#spExTip').textContent = ex.tip ? 'Tipp: ' + ex.tip : '';
+  $('#spAmtLabel').textContent = ex.type==='secs' ? (ex.side ? 'Sekunden je Seite' : 'Sekunden') : (ex.side ? 'Wdh. je Seite' : 'Wiederholungen');
+  $('#spSetsIn').value = sets;
+  $('#spAmtIn').value = amt;
+  $('#spDay').value = spToday();
+  $('#spDay').max = spToday();
+  $('#spNote').value = '';
+  $('#spMsg').textContent = '';
+  renderSportProgress();
+  showModal('spExModal');
+}
+$$('#spExModal .sp-stepbtn').forEach(b=>b.addEventListener('click', ()=>{
+  const ex = SP_EX[sportSheetEx]; if(!ex) return;
+  if(b.dataset.k==='sets'){ $('#spSetsIn').value = spClamp((parseInt($('#spSetsIn').value)||0) + +b.dataset.d, 1, 20); }
+  else { const step = ex.type==='secs' ? 5 : 1; $('#spAmtIn').value = spClamp((parseInt($('#spAmtIn').value)||0) + step * +b.dataset.d, ex.type==='secs' ? 5 : 1, ex.type==='secs' ? 900 : 300); }
+}));
+$('#spSave').addEventListener('click', async ()=>{
+  const ex = SP_EX[sportSheetEx]; if(!ex) return;
+  const sets = spClamp(parseInt($('#spSetsIn').value)||0, 1, 20);
+  const amt = spClamp(parseInt($('#spAmtIn').value)||0, 1, ex.type==='secs' ? 900 : 300);
+  const day = $('#spDay').value || spToday();
+  if(day > spToday()){ $('#spMsg').textContent = 'Bitte kein Datum in der Zukunft.'; return; }
+  const prevBest = spBest(identity, ex.id);
+  const entry = { id:uid(), by:identity, at:Date.now(), day, ex:ex.id, sets };
+  if(ex.type==='secs') entry.secs = amt; else entry.reps = amt;
+  const note = $('#spNote').value.trim().slice(0, 120);
+  if(note) entry.note = note;
+  sportEntries = [entry, ...sportEntries];
+  hideModal('spExModal');
+  setStatus(prevBest && amt > prevBest ? `Neue Bestleistung bei ${ex.name}: ${amt} ${spUnit(ex)} 🎉` : `${ex.name} eingetragen`);
+  renderSport();
+  await storageSet('household-sport', JSON.stringify(sportEntries), true);
+});
+async function spDelete(id){
+  const e = sportEntries.find(x=>x && x.id===id);
+  if(!e || e.by!==identity) return;
+  if(!confirm(`„${SP_EX[e.ex].name}" (${spAmtText(e)}) vom ${spShort(e.day)} löschen?`)) return;
+  sportEntries = sportEntries.filter(x=>x && x.id!==id);
+  renderSport();
+  if($('#spExModal').style.display==='flex') renderSportProgress();
+  await storageSet('household-sport', JSON.stringify(sportEntries), true);
+}
+function renderSportProgress(){
+  const ex = SP_EX[sportSheetEx]; if(!ex) return;
+  const mine = spOf(identity).filter(e=>e.ex===ex.id);
+  const box = $('#spExProgress');
+  if(!mine.length){ box.innerHTML = ''; return; }
+  const byDay = {};
+  mine.forEach(e=>{ const d = byDay[e.day] || (byDay[e.day] = { day:e.day, best:0, sets:0 }); d.best = Math.max(d.best, spAmt(e)); d.sets += e.sets; });
+  const sessions = Object.values(byDay).sort((a,b)=>a.day.localeCompare(b.day));
+  const best = sessions.reduce((m,s)=>s.best > m.best ? s : m, sessions[0]);
+  let h = `<div class="balance-card" style="margin-top:14px;"><div class="label">Dein Verlauf</div>`;
+  h += `<div class="sp-tiles sp-tiles-3">
+    <div class="sp-tile"><div class="l">Bestwert</div><div class="v">${best.best}<small> ${spUnit(ex)}</small></div><div class="d">${spShort(best.day)}</div></div>
+    <div class="sp-tile"><div class="l">Trainingstage</div><div class="v">${sessions.length}</div><div class="d">seit ${spShort(sessions[0].day)}</div></div>
+    <div class="sp-tile"><div class="l">Sätze gesamt</div><div class="v">${mine.reduce((a,e)=>a + e.sets, 0)}</div><div class="d">&nbsp;</div></div></div>`;
+  h += sessions.length >= 2
+    ? `<div class="sp-subhead">${ex.type==='secs' ? 'Längster Satz' : 'Meiste Wiederholungen'} pro Trainingstag</div>` + spLineChart(sessions.slice(-20), ex)
+    : `<div class="td-src">Ab dem zweiten Trainingstag siehst du hier deine Entwicklung.</div>`;
+  h += `<div class="sp-subhead">Letzte Einträge</div>` + [...mine].sort((a,b)=>b.day.localeCompare(a.day) || b.at - a.at).slice(0, 5)
+    .map(e=>`<div class="sp-entry"><div class="sp-entry-main"><span class="sp-entry-name">${spDayLabel(e.day)}</span><span class="sp-entry-amt">${spAmtText(e)}</span>${e.note ? `<span class="sp-entry-note">${escapeHtml(e.note)}</span>` : ''}</div><button class="del sp-del" data-id="${e.id}" type="button" aria-label="Eintrag löschen">${trashSvg()}</button></div>`).join('');
+  box.innerHTML = h + `</div>`;
+  spBindCommon(box); spBindTips(box);
+}
+
+/* ---------- Diagramme (eine Farbe, Werte antippbar, Tabelle als Alternative) ---------- */
+function spNiceMax(v){ if(v<=5) return 5; const p = Math.pow(10, Math.floor(Math.log10(v))); for(const m of [1, 1.2, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10]){ if(m*p >= v) return m*p; } return 10*p; }
+function spBarPath(x, y, w, h, r){ r = Math.min(r, w/2, h); return `M${x},${y+h}L${x},${y+r}Q${x},${y} ${x+r},${y}L${x+w-r},${y}Q${x+w},${y} ${x+w},${y+r}L${x+w},${y+h}Z`; }
+function spTipAttr(s){ return String(s).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;'); }
+function spChartWrap(svg, extra){ return `<div class="sp-chart"${extra||''}>${svg}<div class="sp-tip" role="status"></div></div>`; }
+
+function spWeeklyChart(E){
+  const weeks = 12, mon0 = spAddDays(spMonday(new Date()), -7*(weeks-1));
+  const data = [];
+  for(let w=0; w<weeks; w++){
+    const a = spAddDays(mon0, 7*w), b = spAddDays(a, 6), ai = spIso(a), bi = spIso(b);
+    const list = E.filter(e=>e.day>=ai && e.day<=bi);
+    data.push({ a, b, kw:spIsoWeek(a), sets:list.reduce((s,e)=>s + e.sets, 0), days:new Set(list.map(e=>e.day)).size });
+  }
+  const W = 320, H = 150, L = 28, R = 6, T = 16, B = 22, pw = W - L - R, ph = H - T - B, band = pw / weeks, bw = Math.min(14, band - 6);
+  const max = spNiceMax(Math.max(1, ...data.map(d=>d.sets)));
+  const ticks = [0, max/2, max].filter(t=>Number.isInteger(t));
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="sp-svg" role="img" aria-label="Sätze pro Woche, letzte 12 Wochen">`;
+  ticks.forEach(t=>{ const y = T + ph - t/max*ph; s += `<line class="sp-grid" x1="${L}" x2="${W-R}" y1="${y}" y2="${y}"/><text class="sp-axis" x="${L-5}" y="${y+3.5}" text-anchor="end">${t}</text>`; });
+  const maxIdx = data.reduce((m,d,i)=>d.sets > data[m].sets ? i : m, 0);
+  data.forEach((d,i)=>{
+    const x = L + band*i + (band - bw)/2, h = d.sets/max*ph, y = T + ph - h;
+    if(h>0) s += `<path class="sp-bar" d="${spBarPath(x, y, bw, h, 4)}"/>`;
+    if(d.sets>0 && (i===maxIdx || i===weeks-1)) s += `<text class="sp-val" x="${x + bw/2}" y="${y - 4}" text-anchor="middle">${d.sets}</text>`;
+    if(i%3===2 || i===weeks-1) s += `<text class="sp-axis" x="${x + bw/2}" y="${H - 6}" text-anchor="middle">KW ${d.kw}</text>`;
+    s += `<rect class="sp-hit" x="${L + band*i}" y="${T}" width="${band}" height="${ph}" tabindex="0" data-tip="${spTipAttr(`KW ${d.kw} (${d.a.getDate()}.${d.a.getMonth()+1}.–${d.b.getDate()}.${d.b.getMonth()+1}.): ${d.sets} Sätze · ${d.days} ${d.days===1 ? 'Tag' : 'Tage'}`)}" aria-label="${spTipAttr(`KW ${d.kw}: ${d.sets} Sätze`)}"/>`;
+  });
+  s += `<line class="sp-axisline" x1="${L}" x2="${W-R}" y1="${T+ph}" y2="${T+ph}"/></svg>`;
+  const table = `<details class="sp-table"><summary>Werte als Tabelle</summary><table><thead><tr><th>Woche</th><th>Sätze</th><th>Tage</th></tr></thead><tbody>` +
+    [...data].reverse().map(d=>`<tr><td>KW ${d.kw} · ${d.a.getDate()}.${d.a.getMonth()+1}.</td><td>${d.sets}</td><td>${d.days}</td></tr>`).join('') + `</tbody></table></details>`;
+  return spChartWrap(s) + table;
+}
+function spHeatmap(E){
+  const byDay = {};
+  E.forEach(e=>{ byDay[e.day] = (byDay[e.day]||0) + e.sets; });
+  const weeks = 16, cell = 15, gap = 3, L = 22, T = 16, today = spToday();
+  const start = spAddDays(spMonday(new Date()), -7*(weeks-1));
+  const W = L + weeks*(cell+gap), H = T + 7*(cell+gap);
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="sp-svg" role="img" aria-label="Trainingstage der letzten 16 Wochen">`;
+  ['Mo','','Mi','','Fr','','So'].forEach((l,r)=>{ if(l) s += `<text class="sp-axis" x="0" y="${T + r*(cell+gap) + cell - 3}">${l}</text>`; });
+  let lastMonth = -1;
+  for(let c=0; c<weeks; c++){
+    const colMon = spAddDays(start, 7*c);
+    if(colMon.getMonth()!==lastMonth){ const lastCol = c===weeks-1; s += `<text class="sp-axis" x="${L + c*(cell+gap) + (lastCol ? cell : 0)}" y="${T - 5}"${lastCol ? ' text-anchor="end"' : ''}>${MONTH_NAMES[colMon.getMonth()].slice(0,3)}</text>`; lastMonth = colMon.getMonth(); }
+    for(let r=0; r<7; r++){
+      const iso = spIso(spAddDays(colMon, r));
+      if(iso > today) continue;
+      const v = byDay[iso] || 0, bin = !v ? 0 : v<=3 ? 1 : v<=8 ? 2 : v<=15 ? 3 : 4;
+      s += `<rect class="sp-cell b${bin}${iso===today ? ' today' : ''}" x="${L + c*(cell+gap)}" y="${T + r*(cell+gap)}" width="${cell}" height="${cell}" rx="3" tabindex="0" data-day="${iso}" data-tip="${spTipAttr(`${spDayLabel(iso)} ${v ? v + ' Sätze' : 'kein Training'}`)}"/>`;
+    }
+  }
+  s += `</svg>`;
+  const legend = `<div class="sp-scale"><span>weniger</span>${[0,1,2,3,4].map(b=>`<i class="sp-cellkey b${b}"></i>`).join('')}<span>mehr</span></div>`;
+  return spChartWrap(s, ' data-kind="heat"') + legend + `<div id="spHeatInfo" class="sp-heatinfo"></div>`;
+}
+function spLineChart(sessions, ex){
+  const W = 320, H = 140, L = 30, R = 34, T = 14, B = 20, pw = W - L - R, ph = H - T - B, n = sessions.length;
+  const max = spNiceMax(Math.max(...sessions.map(s=>s.best)));
+  const X = i=> L + (n===1 ? pw/2 : i*pw/(n-1)), Y = v=> T + ph - v/max*ph;
+  let s = `<svg viewBox="0 0 ${W} ${H}" class="sp-svg" role="img" aria-label="Verlauf ${spTipAttr(ex.name)}">`;
+  [0, max/2, max].filter(t=>Number.isInteger(t)).forEach(t=>{ s += `<line class="sp-grid" x1="${L}" x2="${W-R}" y1="${Y(t)}" y2="${Y(t)}"/><text class="sp-axis" x="${L-5}" y="${Y(t)+3.5}" text-anchor="end">${t}</text>`; });
+  s += `<path class="sp-line" d="${sessions.map((p,i)=>(i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(p.best).toFixed(1)).join('')}"/>`;
+  const last = sessions[n-1];
+  s += `<circle class="sp-dot" cx="${X(n-1)}" cy="${Y(last.best)}" r="4"/><text class="sp-val" x="${X(n-1) + 8}" y="${Y(last.best) + 4}">${last.best}${ex.type==='secs' ? ' s' : ''}</text>`;
+  s += `<text class="sp-axis" x="${L}" y="${H-5}">${spShort(sessions[0].day)}</text><text class="sp-axis" x="${W-R}" y="${H-5}" text-anchor="end">${spShort(last.day)}</text>`;
+  const step = n>1 ? pw/(n-1) : pw;
+  sessions.forEach((p,i)=>{
+    s += `<g class="sp-pt" tabindex="0" data-tip="${spTipAttr(`${spDayLabel(p.day)}: ${p.best} ${spUnit(ex)} · ${p.sets} ${p.sets===1 ? 'Satz' : 'Sätze'}`)}">` +
+      `<rect class="sp-hit" x="${Math.max(L - 6, X(i) - step/2)}" y="${T}" width="${Math.max(step, 12)}" height="${ph}"/>` +
+      `<line class="sp-cross" x1="${X(i)}" x2="${X(i)}" y1="${T}" y2="${T+ph}"/><circle class="sp-dot sp-hdot sp-anchor" cx="${X(i)}" cy="${Y(p.best)}" r="4"/></g>`;
+  });
+  return spChartWrap(s + `</svg>`);
+}
+function spBindTips(root){
+  root.querySelectorAll('.sp-chart').forEach(ch=>{
+    const tip = ch.querySelector('.sp-tip');
+    const show = el=>{
+      ch.querySelectorAll('.on').forEach(x=>x.classList.remove('on'));
+      el.classList.add('on');
+      tip.textContent = el.getAttribute('data-tip');
+      tip.style.display = 'block';
+      const a = (el.querySelector && el.querySelector('.sp-anchor')) || el;
+      const r = a.getBoundingClientRect(), cr = ch.getBoundingClientRect(), tw = tip.offsetWidth;
+      tip.style.left = Math.max(tw/2 + 2, Math.min(cr.width - tw/2 - 2, r.left + r.width/2 - cr.left)) + 'px';
+      tip.style.top = Math.max(0, r.top - cr.top) + 'px';
+      if(ch.dataset.kind==='heat' && el.dataset.day) spHeatInfo(el.dataset.day);
+    };
+    const hide = el=>{ el.classList.remove('on'); tip.style.display = 'none'; };
+    ch.querySelectorAll('[data-tip]').forEach(el=>{
+      el.addEventListener('pointerenter', e=>{ if(e.pointerType==='mouse') show(el); });
+      el.addEventListener('pointerleave', e=>{ if(e.pointerType==='mouse') hide(el); });
+      el.addEventListener('click', ()=>show(el));
+      el.addEventListener('focus', ()=>show(el));
+      el.addEventListener('blur', ()=>hide(el));
+    });
+  });
+}
+function spHeatInfo(day){
+  const box = $('#spHeatInfo'); if(!box) return;
+  const list = spOf(sportPerson).filter(e=>e.day===day);
+  box.textContent = list.length ? `${spDayLabel(day)}: ` + list.map(e=>`${SP_EX[e.ex].name} ${e.sets}×${spAmt(e)}${SP_EX[e.ex].type==='secs' ? ' s' : ''}`).join(' · ') : `${spDayLabel(day)}: kein Training`;
+}
+
+/* ---------- Statistik ---------- */
+function spStreaks(E){
+  const days = new Set(E.map(e=>e.day));
+  let d = new Date(), cur = 0;
+  if(!days.has(spIso(d))) d = spAddDays(d, -1);
+  while(days.has(spIso(d))){ cur++; d = spAddDays(d, -1); }
+  const sorted = [...days].sort();
+  let best = 0, run = 0, prev = null;
+  sorted.forEach(iso=>{ run = (prev && spIso(spAddDays(spDate(prev), 1))===iso) ? run + 1 : 1; best = Math.max(best, run); prev = iso; });
+  return { cur, best, total:days.size, first:sorted[0] };
+}
+function spDelta(now, before){
+  const d = now - before;
+  if(!d) return `<div class="d">wie Vorwoche</div>`;
+  return `<div class="d ${d>0 ? 'up' : 'down'}">${d>0 ? '▲' : '▼'} ${Math.abs(d)} ggü. Vorwoche</div>`;
+}
+function renderSportStats(){
+  const p = sportPerson || identity;
+  const E = spOf(p);
+  let h = `<div class="chips" id="spPersonChips">${[identity, identity==='Julian' ? 'Clarisse' : 'Julian'].map(n=>`<button class="chip ${n===p ? 'selected' : ''}" data-val="${n}" type="button">${n===identity ? 'Ich' : escapeHtml(n)}</button>`).join('')}</div>`;
+  if(!E.length){
+    $('#spStats').innerHTML = h + `<div class="empty"><b>Noch keine Einträge</b>${p===identity ? 'Sobald du Übungen einträgst, siehst du hier Statistiken und Verläufe.' : escapeHtml(p) + ' hat noch nichts eingetragen.'}</div>`;
+    $$('#spPersonChips .chip').forEach(b=>{ b.onclick = ()=>{ sportPerson = b.dataset.val; renderSportStats(); }; });
+    return;
+  }
+  /* Kennzahlen */
+  const mon = spMonday(new Date()), lmon = spAddDays(mon, -7), today = spToday();
+  const tw = E.filter(e=>e.day>=spIso(mon) && e.day<=today), lw = E.filter(e=>e.day>=spIso(lmon) && e.day<spIso(mon));
+  const twDays = new Set(tw.map(e=>e.day)).size, lwDays = new Set(lw.map(e=>e.day)).size;
+  const twSets = tw.reduce((a,e)=>a + e.sets, 0), lwSets = lw.reduce((a,e)=>a + e.sets, 0);
+  const st = spStreaks(E);
+  h += `<div class="sp-tiles">
+    <div class="sp-tile"><div class="l">Trainingstage diese Woche</div><div class="v">${twDays}</div>${spDelta(twDays, lwDays)}</div>
+    <div class="sp-tile"><div class="l">Sätze diese Woche</div><div class="v">${twSets}</div>${spDelta(twSets, lwSets)}</div>
+    <div class="sp-tile"><div class="l">Serie</div><div class="v">${st.cur}<small> ${st.cur===1 ? 'Tag' : 'Tage'}</small></div><div class="d">Rekord: ${st.best} ${st.best===1 ? 'Tag' : 'Tage'}</div></div>
+    <div class="sp-tile"><div class="l">Trainingstage gesamt</div><div class="v">${st.total}</div><div class="d">seit ${spShort(st.first)}</div></div>
+  </div>`;
+  h += `<div class="balance-card"><div class="label">Trainingstage · letzte 16 Wochen</div>${spHeatmap(E)}</div>`;
+  h += `<div class="balance-card"><div class="label">Sätze pro Woche · letzte 12 Wochen</div>${spWeeklyChart(E)}</div>`;
+  /* Muskeln der letzten 30 Tage */
+  const since30 = spIso(spAddDays(new Date(), -29));
+  const E30 = E.filter(e=>e.day>=since30);
+  const load = spLoad(E30), maxLoad = Math.max(0, ...Object.values(load));
+  const heat = {}; Object.keys(load).forEach(k=>{ heat[k] = maxLoad ? load[k]/maxLoad : 0; });
+  const ranked = SPORT_MUSCLES.filter(m=>load[m.id]).sort((a,b)=>load[b.id] - load[a.id]);
+  const untrained = SPORT_MUSCLES.filter(m=>!load[m.id]);
+  h += `<div class="balance-card"><div class="label">Muskeln · letzte 30 Tage</div>`;
+  if(E30.length){
+    h += `<div class="sp-fig sp-fig-link">${sportFigureSVG({ mode:'heat', heat, label:'Beanspruchung je Muskelgruppe in den letzten 30 Tagen' })}</div>`;
+    h += `<div class="sp-scale" style="justify-content:center;"><span>wenig</span>${[0.2,0.45,0.7,1].map(v=>`<i class="sp-cellkey" style="background:var(--coral);opacity:${(0.16 + 0.8*v).toFixed(2)}"></i>`).join('')}<span>viel</span></div>`;
+    h += `<div class="sp-rank">` + ranked.map(m=>`<button class="sp-rank-row sp-golm" data-m="${m.id}" type="button"><span class="n">${escapeHtml(m.name)}</span><span class="b"><i style="width:${Math.max(4, Math.round(load[m.id]/maxLoad*100))}%"></i></span><span class="v">≈ ${Math.round(load[m.id])} Sätze</span></button>`).join('') + `</div>`;
+    h += `<div class="td-src">Volle Sätze für stark beanspruchte Muskeln, halbe für unterstützende.</div>`;
+    if(untrained.length) h += `<div class="sp-subhead">Nicht trainiert</div><div class="sp-chiplist">${untrained.map(m=>`<button class="chip sp-golm" data-m="${m.id}" type="button">${escapeHtml(m.name)}</button>`).join('')}</div>`;
+  } else h += `<div class="td-text" style="color:var(--muted);">In den letzten 30 Tagen nichts eingetragen.</div>`;
+  h += `</div>`;
+  /* Häufigste Übungen */
+  if(E30.length){
+    const agg = {};
+    E30.forEach(e=>{ const a = agg[e.ex] || (agg[e.ex] = { ex:e.ex, days:new Set(), sets:0 }); a.days.add(e.day); a.sets += e.sets; });
+    const top = Object.values(agg).sort((a,b)=>b.sets - a.sets).slice(0, 5);
+    h += `<div class="balance-card"><div class="label">Häufigste Übungen · 30 Tage</div>` + top.map(a=>`<button class="sp-listrow sp-open" data-ex="${a.ex}" type="button"><span>${escapeHtml(SP_EX[a.ex].name)}</span><span class="sp-muted">${a.days.size} ${a.days.size===1 ? 'Tag' : 'Tage'} · ${a.sets} Sätze</span></button>`).join('') + `</div>`;
+  }
+  /* Bestleistungen */
+  const pb = {};
+  [...E].sort((a,b)=>a.day.localeCompare(b.day) || a.at - b.at).forEach(e=>{ const v = spAmt(e); if(!pb[e.ex] || v > pb[e.ex].v) pb[e.ex] = { v, day:e.day }; });
+  const pbs = Object.entries(pb).sort((a,b)=>b[1].day.localeCompare(a[1].day)).slice(0, 6);
+  h += `<div class="balance-card"><div class="label">Bestleistungen</div>` + pbs.map(([id, r])=>`<button class="sp-listrow sp-open" data-ex="${id}" type="button"><span>${escapeHtml(SP_EX[id].name)}</span><span class="sp-muted">${r.v} ${spUnit(SP_EX[id])}${SP_EX[id].side ? ' je Seite' : ''} · ${spShort(r.day)}</span></button>`).join('') + `</div>`;
+  /* Verlauf */
+  const days = [...new Set(E.map(e=>e.day))].sort().reverse();
+  h += `<div class="balance-card"><div class="label">Verlauf</div>` + days.slice(0, sportHistoryDays).map(d=>{
+    const list = E.filter(e=>e.day===d).sort((a,b)=>a.at - b.at);
+    return `<div class="sp-day"><div class="sp-dayhead"><b>${spDayLabel(d)}</b><span class="sp-muted">${spSummary(list)}</span></div>${list.map(e=>spEntryRow(e, p===identity)).join('')}</div>`;
+  }).join('') + (days.length > sportHistoryDays ? `<button class="clear-btn" id="spMoreHist" type="button" style="width:100%;text-align:center;">Weitere Tage anzeigen (${days.length - sportHistoryDays})</button>` : '') + `</div>`;
+
+  $('#spStats').innerHTML = h;
+  $$('#spPersonChips .chip').forEach(b=>{ b.onclick = ()=>{ sportPerson = b.dataset.val; sportHistoryDays = 10; renderSportStats(); }; });
+  const more = $('#spMoreHist'); if(more) more.onclick = ()=>{ sportHistoryDays += 20; renderSportStats(); };
+  spBindCommon($('#spStats')); spBindTips($('#spStats'));
+}
+
 /* ---------- Load all (Firebase, with live sync) ---------- */
 async function loadAll(){
   try{
@@ -3638,6 +4512,12 @@ function attachLiveSync(){
     vaultDocsEnc = snap.val() || [];
     if(vaultKey) await decryptAllDocs();
     if(vaultPanelActive()) renderVault();
+  });
+  db.ref('sport').on('value', snap=>{
+    const v = snap.val();
+    sportEntries = Array.isArray(v) ? v.filter(Boolean) : (v ? Object.values(v) : []);
+    const p = document.querySelector('.panel[data-panel="sport"]');
+    if(p && p.classList.contains('active')) renderSport();
   });
   setTimeout(()=>{ liveSyncPrimed = true; }, 2500);
 }

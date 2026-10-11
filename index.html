@@ -218,6 +218,28 @@ button.item{ font-family:inherit; color:inherit; }
 .guide-opt{ display:block; width:100%; text-align:left; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-bottom:8px; cursor:pointer; font-family:'Inter'; font-size:.95rem; color:var(--ink); }
 .guide-opt small{ display:block; font-size:.78rem; color:var(--muted); margin-top:2px; }
 .guide-opt:hover, .guide-opt:focus-visible{ border-color:var(--accent); outline:none; }
+.today-nav{ display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+.today-arrow{ width:42px; height:42px; border-radius:12px; border:1px solid var(--line); background:var(--card); color:var(--ink); font-size:1.4rem; line-height:1; cursor:pointer; flex-shrink:0; }
+.today-arrow:disabled{ opacity:.35; cursor:default; }
+.today-date{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--heading); }
+.today-back{ background:none; border:none; color:var(--accent); font-size:.78rem; cursor:pointer; padding:2px 4px; font-family:'Inter'; }
+.td-img{ display:block; width:100%; max-height:320px; object-fit:cover; border-radius:12px; margin:10px 0 8px; background:var(--foam); cursor:zoom-in; }
+.td-skel{ height:190px; border-radius:12px; margin:10px 0 8px; background:linear-gradient(90deg, var(--foam) 25%, var(--line) 50%, var(--foam) 75%); background-size:200% 100%; animation:tdshim 1.4s ease-in-out infinite; }
+@keyframes tdshim{ from{ background-position:200% 0; } to{ background-position:-200% 0; } }
+.td-title{ font-family:'Fraunces',serif; font-weight:600; font-size:1.02rem; color:var(--ink); line-height:1.3; margin-top:2px; }
+.td-meta{ font-size:.78rem; color:var(--muted); margin-top:3px; }
+.td-text{ font-size:.88rem; line-height:1.55; color:var(--ink); margin-top:8px; }
+.td-src{ font-size:.72rem; color:var(--muted); margin-top:8px; line-height:1.4; }
+.td-src a{ color:var(--muted); }
+.td-quote{ font-family:'Fraunces',serif; font-size:1.15rem; line-height:1.45; color:var(--ink); margin-top:8px; }
+.td-ev{ padding:12px 0; border-top:1px solid var(--line); }
+.td-ev:first-of-type{ border-top:none; padding-top:6px; }
+.td-year{ font-family:'IBM Plex Mono',monospace; font-size:.76rem; color:var(--accent); font-weight:500; }
+.td-sub{ font-size:.75rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin:14px 0 6px; padding-top:12px; border-top:1px solid var(--line); }
+.td-loading{ text-transform:none; letter-spacing:0; }
+.td-wev{ font-size:.85rem; line-height:1.5; color:var(--ink); padding:5px 0; }
+.td-link{ background:none; border:none; padding:0; color:var(--accent); font:inherit; text-align:left; cursor:pointer; text-decoration:underline; text-underline-offset:2px; }
+@media (prefers-reduced-motion: reduce){ .td-skel{ animation:none; } }
 .side-menu-item{ display:block; width:100%; text-align:left; background:none; border:none; color:#EAF3EF; font-family:'Inter'; font-size:.95rem; font-weight:500; padding:14px 22px; cursor:pointer; }
 .side-menu-item:hover, .side-menu-item:focus-visible{ background:#1D4E4F; outline:none; }
 .side-menu-item.active{ background:#1D4E4F; color:#fff; font-weight:600; }
@@ -528,6 +550,25 @@ nav.bottom{
       </div>
     </section>
 
+    <!-- TODAY -->
+    <section class="panel" data-panel="today">
+      <div class="today-nav">
+        <button id="todayPrev" class="today-arrow" type="button" aria-label="Vortag">‹</button>
+        <div style="flex:1; text-align:center; min-width:0;">
+          <div id="todayDateLabel" class="today-date"></div>
+          <button id="todayBack" class="today-back" type="button" style="display:none;">Zurück zu heute</button>
+        </div>
+        <button id="todayNext" class="today-arrow" type="button" aria-label="Folgetag">›</button>
+      </div>
+      <div id="tdHistory"></div>
+      <div id="tdArt"></div>
+      <div id="tdQuote"></div>
+      <div id="tdPotd"></div>
+      <div id="tdMuseum"></div>
+      <div id="tdNature"></div>
+      <div class="td-src" style="text-align:center; margin:4px 0 12px;">Bilder: Wikipedia &amp; Wikimedia Commons, Art Institute of Chicago. Jahrestage, Kunst- und Naturtexte sind eigene Zusammenfassungen.</div>
+    </section>
+
     <!-- FEELINGS -->
     <section class="panel" data-panel="feelings">
       <div class="balance-card" id="feelToday"></div>
@@ -617,6 +658,7 @@ nav.bottom{
 <div id="sideMenuOverlay" style="display:none; position:fixed; inset:0; background:rgba(10,20,18,.5); z-index:60;"></div>
 <div id="sideMenu" style="position:fixed; top:0; left:0; bottom:0; width:78%; max-width:300px; background:var(--tide-deep); z-index:61; transform:translateX(-100%); transition:transform .22s ease; padding:24px 0; overflow-y:auto;">
   <div style="padding:0 22px 20px; font-family:'Fraunces',serif; font-weight:600; font-size:1.3rem; color:#EAF3EF; border-bottom:1px solid #2C4E4C; margin-bottom:8px;">Gezeiten</div>
+  <button class="side-menu-item" data-tab="today" type="button">☀️ Heute</button>
   <button class="side-menu-item" data-tab="tasks" type="button">📋 Aufgaben</button>
   <button class="side-menu-item" data-tab="shopping" type="button">🛒 Einkauf</button>
   <button class="side-menu-item" data-tab="cleaning" type="button">🧹 Putzplan</button>
@@ -832,7 +874,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.database();
 const auth = firebase.auth();
 
-const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8', learn:'#6FA695', feelings:'#D9A534', vault:'#4C7EA8' };
+const TAB_ACCENT = { tasks:'#2D7A73', shopping:'#C68A3B', cleaning:'#6FA695', expenses:'#C1543D', photos:'#7C6FA6', calendar:'#4C7EA8', learn:'#6FA695', feelings:'#D9A534', vault:'#4C7EA8', today:'#C68A3B' };
 const THEMES = {
   gezeiten: { label:'Gezeiten', deep:'#143C3F', mid:'#2D7A73', foam:'#F3F6F4', card:'#FFFFFF', line:'#DCE6E1', ink:'#16211F', muted:'#5C6E68', sage:'#6FA695', amber:'#C68A3B', coral:'#C1543D', violet:'#7C6FA6', tide:'#4C7EA8' },
   duenen:   { label:'Dünen',    deep:'#4A3B2A', mid:'#C17A4E', foam:'#FAF6EF', card:'#FFFFFF', line:'#E8DCC8', ink:'#2E2418', muted:'#8A7A63', sage:'#9C9463', amber:'#D4A24C', coral:'#B85C4A', violet:'#8C6E8F', tide:'#5B8AA3' },
@@ -845,24 +887,297 @@ const ROOM_COLORS = ['#2D7A73','#C68A3B','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A'
 let CATEGORY_ORDER = ['Supermarkt','Drogeriemarkt','Apotheke','Asia Markt','Sonstiges'];
 let CATEGORY_COLORS = { 'Supermarkt':'#2D7A73', 'Drogeriemarkt':'#C68A3B', 'Apotheke':'#C1543D', 'Asia Markt':'#7C6FA6', 'Sonstiges':'#5C6E68' };
 const MONTH_NAMES = ['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+/* ---------- Heute: kuratierte Inhalte (funktionieren auch offline) ---------- */
+/* Jahrestage: pro Datum eine oder mehrere Einträge */
 const FACTS_BY_DATE = {
-  '01-15': { title:'Ermordung von Rosa Luxemburg und Karl Liebknecht', year:'1919',
-    blurb:'Am 15. Januar 1919 wurden die Revolutionärin Rosa Luxemburg und Karl Liebknecht in Berlin von rechten Freikorps-Soldaten ermordet — mit stillschweigender Duldung der SPD-geführten Übergangsregierung. Ihr Tod gilt bis heute als tiefe Zäsur in der Geschichte der deutschen Linken.' },
-  '03-08': { title:'Internationaler Frauentag', year:'seit 1911',
-    blurb:'Entstanden aus den Arbeiterinnenbewegungen New Yorks und Europas Anfang des 20. Jahrhunderts. Clara Zetkin schlug 1910 auf einer internationalen sozialistischen Frauenkonferenz einen jährlichen Kampftag für Frauenrechte vor — seit 1977 offizieller UN-Tag.' },
-  '05-01': { title:'Tag der Arbeit', year:'seit 1886/1889',
-    blurb:'Geht zurück auf den landesweiten Streik für den Achtstundentag, der am 1. Mai 1886 in Chicago begann und in der gewaltsamen Eskalation am Haymarket Square gipfelte. 1889 erklärte die Zweite Internationale den 1. Mai zum weltweiten Kampftag der Arbeiter:innenbewegung.' },
-  '06-17': { title:'Volksaufstand in der DDR', year:'1953',
-    blurb:'Rund eine Million Menschen protestierten in über 700 Städten der DDR gegen erhöhte Arbeitsnormen und für bessere Lebensbedingungen. Sowjetische Panzer schlugen den Aufstand nieder — bis 1990 war der 17. Juni in Westdeutschland Nationalfeiertag.' },
-  '07-14': { title:'Sturm auf die Bastille', year:'1789',
-    blurb:'Pariser Bürger:innen und Arbeiter:innen erstürmten das Staatsgefängnis Bastille — Fanal für die Französische Revolution und den Sturz der absolutistischen Monarchie. Bis heute Frankreichs Nationalfeiertag.' },
-  '08-28': { title:'„I Have a Dream"', year:'1963',
-    blurb:'Beim Marsch auf Washington für Arbeit und Freiheit hielt Martin Luther King Jr. vor rund 250.000 Menschen seine berühmte Rede — ein Höhepunkt der US-Bürgerrechtsbewegung gegen Rassentrennung und wirtschaftliche Ungleichheit.' },
-  '11-09': { title:'Doppelte Ausrufung der Republik', year:'1918',
-    blurb:'Am selben Tag rief Karl Liebknecht die „freie sozialistische Republik" aus, während Philipp Scheidemann vom Reichstagsbalkon die Republik verkündete — Ausdruck des Machtkampfs zwischen Rätebewegung und Sozialdemokratie am Ende des Kaiserreichs.' },
-  '12-01': { title:'Rosa Parks verweigert ihren Sitzplatz', year:'1955',
-    blurb:'Die Näherin und NAACP-Aktivistin Rosa Parks weigerte sich in Montgomery, Alabama, für einen weißen Fahrgast ihren Bussitz zu räumen. Ihre Festnahme löste den 381 Tage dauernden Busboykott aus und machte sie zur Symbolfigur der US-Bürgerrechtsbewegung.' }
+  '01-15': [{ title:'Ermordung von Rosa Luxemburg und Karl Liebknecht', year:'1919',
+    blurb:'Am 15. Januar 1919 wurden die Revolutionärin Rosa Luxemburg und Karl Liebknecht in Berlin von rechten Freikorps-Soldaten ermordet — mit stillschweigender Duldung der SPD-geführten Übergangsregierung. Ihr Tod gilt bis heute als tiefe Zäsur in der Geschichte der deutschen Linken.' }],
+  '01-19': [{ title:'Frauen wählen erstmals in ganz Deutschland', year:'1919',
+    blurb:'Bei der Wahl zur Weimarer Nationalversammlung durften Frauen zum ersten Mal reichsweit wählen und gewählt werden. 37 Frauen zogen ins Parlament ein — erkämpft von der Frauenbewegung, verkündet im November 1918 vom Rat der Volksbeauftragten.' }],
+  '01-27': [{ title:'Befreiung von Auschwitz', year:'1945',
+    blurb:'Soldaten der Roten Armee befreiten die rund 7.000 verbliebenen Häftlinge des Konzentrations- und Vernichtungslagers Auschwitz. Seit 1996 ist der 27. Januar in Deutschland Gedenktag für die Opfer des Nationalsozialismus, seit 2005 internationaler Holocaust-Gedenktag der UN.' }],
+  '02-01': [{ title:'Sit-in von Greensboro', year:'1960',
+    blurb:'Vier Schwarze Studenten setzten sich in Greensboro, North Carolina, an die „Whites only"-Imbisstheke eines Woolworth-Kaufhauses und blieben trotz Verweigerung sitzen. Innerhalb weniger Wochen breiteten sich Sit-ins über den ganzen Süden der USA aus.' }],
+  '02-02': [{ title:'Welttag der Feuchtgebiete', year:'seit 1997',
+    blurb:'Erinnert an die Ramsar-Konvention, unterzeichnet am 2. Februar 1971 im iranischen Ramsar — das erste globale Naturschutzabkommen, das einem Lebensraumtyp gewidmet ist. Auch das Wattenmeer mit seinen Salzwiesen steht unter ihrem Schutz.' }],
+  '02-11': [{ title:'Nelson Mandela kommt frei', year:'1990',
+    blurb:'Nach 27 Jahren Haft verließ Nelson Mandela das Victor-Verster-Gefängnis bei Paarl nahe Kapstadt. Vier Jahre später wurde er nach den ersten freien Wahlen der erste Schwarze Präsident Südafrikas.' }],
+  '02-19': [{ title:'„Meine Herren und Damen!"', year:'1919',
+    blurb:'Marie Juchacz hielt als erste Frau eine Rede in einem deutschen Parlament. Ihre Anrede an die Nationalversammlung sorgte für Heiterkeit im Saal — und markiert einen Wendepunkt. Im selben Jahr gründete sie die Arbeiterwohlfahrt (AWO).' }],
+  '02-21': [{ title:'Ermordung von Malcolm X', year:'1965',
+    blurb:'Malcolm X wurde während einer Rede im Audubon Ballroom in Harlem erschossen. Seine Autobiografie, im selben Jahr erschienen, wurde zu einem der einflussreichsten Bücher der Schwarzen Befreiungsbewegung.' }],
+  '03-07': [{ title:'„Bloody Sunday" in Selma', year:'1965',
+    blurb:'Polizisten griffen rund 600 friedliche Demonstrierende für das Wahlrecht auf der Edmund-Pettus-Brücke in Alabama mit Knüppeln und Tränengas an. Die Fernsehbilder erschütterten das Land und ebneten den Weg für den Voting Rights Act im August 1965.' }],
+  '03-08': [{ title:'Internationaler Frauentag', year:'seit 1911',
+    blurb:'Entstanden aus den Arbeiterinnenbewegungen New Yorks und Europas Anfang des 20. Jahrhunderts. Clara Zetkin schlug 1910 auf einer internationalen sozialistischen Frauenkonferenz einen jährlichen Kampftag für Frauenrechte vor — seit 1977 offizieller UN-Tag.' }],
+  '03-11': [{ title:'Reaktorkatastrophe von Fukushima', year:'2011',
+    blurb:'Nach einem schweren Seebeben und dem folgenden Tsunami kam es im Kernkraftwerk Fukushima Daiichi zu Kernschmelzen. In Deutschland führte die Katastrophe noch im selben Jahr zum Beschluss des Atomausstiegs.' }],
+  '03-18': [{ title:'Beginn der Pariser Kommune', year:'1871',
+    blurb:'Als Regierungstruppen die Kanonen der Pariser Nationalgarde abholen wollten, stellte sich die Bevölkerung von Montmartre ihnen in den Weg. Daraus entstand die Pariser Kommune — 72 Tage Selbstverwaltung, bis sie in der „Blutigen Woche" im Mai niedergeschlagen wurde.' }],
+  '03-21': [{ title:'Internationaler Tag gegen Rassismus', year:'1960',
+    blurb:'Erinnert an das Massaker von Sharpeville in Südafrika, wo die Polizei auf eine friedliche Demonstration gegen die Passgesetze der Apartheid schoss und 69 Menschen tötete. Die UN erklärten den Tag 1966 zum Internationalen Tag zur Beseitigung der Rassendiskriminierung.' }],
+  '04-04': [{ title:'Ermordung von Martin Luther King Jr.', year:'1968',
+    blurb:'King wurde in Memphis erschossen, wohin er gereist war, um streikende Schwarze Müllarbeiter zu unterstützen. Ihr Protestschild „I AM A MAN" wurde zu einem Symbol der Verbindung von Bürgerrechts- und Arbeitskämpfen.' }],
+  '04-22': [{ title:'Erster Earth Day', year:'1970',
+    blurb:'Rund 20 Millionen Menschen gingen in den USA für Umweltschutz auf die Straße — eine der größten Demonstrationen der US-Geschichte. In der Folge entstanden die Umweltbehörde EPA und Gesetze für saubere Luft und sauberes Wasser.' }],
+  '04-24': [{ title:'Einsturz von Rana Plaza', year:'2013',
+    blurb:'In Bangladesch stürzte ein Fabrikgebäude mit mehreren Textilfabriken ein, obwohl tags zuvor Risse entdeckt worden waren. 1.134 Menschen starben, überwiegend Näherinnen. Die Katastrophe führte zum Bangladesh-Abkommen über Brandschutz und Gebäudesicherheit.' }],
+  '04-25': [{ title:'Nelkenrevolution in Portugal', year:'1974',
+    blurb:'Ein weitgehend unblutiger Aufstand von Teilen des Militärs beendete die jahrzehntelange Diktatur des Estado Novo. Die Bevölkerung steckte den Soldaten Nelken in die Gewehrläufe. Die Revolution beendete auch Portugals Kolonialkriege in Afrika.' }],
+  '04-26': [{ title:'Reaktorkatastrophe von Tschernobyl', year:'1986',
+    blurb:'Bei einem Test explodierte Block 4 des Kernkraftwerks bei Prypjat in der heutigen Ukraine. Radioaktiver Niederschlag ging über weiten Teilen Europas nieder — die Katastrophe prägte die Anti-Atom-Bewegung auch in Deutschland nachhaltig.' }],
+  '04-27': [{ title:'Erste freie Wahlen in Südafrika', year:'1994',
+    blurb:'Zum ersten Mal durften alle Südafrikaner:innen unabhängig von ihrer Hautfarbe wählen; viele standen stundenlang Schlange. Der Tag wird heute als „Freedom Day" gefeiert und markiert das Ende der Apartheid.' }],
+  '05-01': [{ title:'Tag der Arbeit', year:'seit 1886/1889',
+    blurb:'Geht zurück auf den landesweiten Streik für den Achtstundentag, der am 1. Mai 1886 in Chicago begann und in der gewaltsamen Eskalation am Haymarket Square gipfelte. 1889 erklärte die Zweite Internationale den 1. Mai zum weltweiten Kampftag der Arbeiter:innenbewegung.' }],
+  '05-08': [{ title:'Tag der Befreiung', year:'1945',
+    blurb:'Mit der bedingungslosen Kapitulation der Wehrmacht endete der Zweite Weltkrieg in Europa. Bundespräsident Richard von Weizsäcker nannte den 8. Mai 1985 in seiner viel beachteten Rede einen „Tag der Befreiung" vom Nationalsozialismus.' }],
+  '05-10': [{ title:'Bücherverbrennung', year:'1933',
+    blurb:'Studierende und Professoren verbrannten auf dem Berliner Opernplatz und in vielen Universitätsstädten Bücher von Marx, Freud, Heine, Tucholsky, Kästner und vielen anderen. Erich Kästner sah in der Menge zu, wie seine eigenen Werke ins Feuer geworfen wurden.' }],
+  '05-17': [{ title:'Internationaler Tag gegen Homo-, Bi-, Inter- und Transfeindlichkeit', year:'1990',
+    blurb:'Am 17. Mai 1990 strich die Weltgesundheitsorganisation Homosexualität aus ihrem Diagnoseschlüssel für Krankheiten. Seit 2005 wird an diesem Datum weltweit gegen Diskriminierung queerer Menschen protestiert.' }],
+  '05-23': [{ title:'Das Grundgesetz wird verkündet', year:'1949',
+    blurb:'Mit dem Grundgesetz wurde auch der Satz „Männer und Frauen sind gleichberechtigt" Verfassungsrecht. Durchgesetzt hat ihn die Juristin Elisabeth Selbert — gegen anfänglichen Widerstand im Parlamentarischen Rat und mit Hilfe einer Welle von Protestbriefen.' }],
+  '06-05': [{ title:'Weltumwelttag', year:'seit 1974',
+    blurb:'Die Vereinten Nationen riefen den Tag in Erinnerung an die Stockholmer Umweltkonferenz von 1972 ins Leben — die erste große UN-Konferenz, die Umwelt zum Thema internationaler Politik machte.' }],
+  '06-08': [{ title:'Welttag der Ozeane', year:'seit 2009',
+    blurb:'Seit 2009 offiziell von den Vereinten Nationen begangen. Die Ozeane bedecken rund 71 Prozent der Erdoberfläche und haben über 90 Prozent der zusätzlichen Wärme aufgenommen, die durch den menschengemachten Klimawandel entstanden ist.' }],
+  '06-16': [{ title:'Aufstand von Soweto', year:'1976',
+    blurb:'Tausende Schwarze Schüler:innen protestierten in Soweto gegen den Zwang, auf Afrikaans unterrichtet zu werden. Die Polizei schoss in die Menge; das Foto des sterbenden zwölfjährigen Hector Pieterson ging um die Welt. Heute ist der 16. Juni in Südafrika Jugendtag.' }],
+  '06-17': [{ title:'Volksaufstand in der DDR', year:'1953',
+    blurb:'Rund eine Million Menschen protestierten in über 700 Städten der DDR gegen erhöhte Arbeitsnormen und für bessere Lebensbedingungen. Sowjetische Panzer schlugen den Aufstand nieder — bis 1990 war der 17. Juni in Westdeutschland Nationalfeiertag.' }],
+  '06-19': [{ title:'Juneteenth', year:'1865',
+    blurb:'In Galveston, Texas, verkündete ein Unionsgeneral den Versklavten ihre Freiheit — zweieinhalb Jahre nach der Emanzipationsproklamation. Lange vor allem in Schwarzen Gemeinden gefeiert, ist Juneteenth seit 2021 US-Bundesfeiertag.' }],
+  '06-28': [{ title:'Stonewall-Aufstand', year:'1969',
+    blurb:'Bei einer Polizeirazzia im Stonewall Inn in New York wehrten sich die Gäste — viele davon trans Frauen, Drag Queens und obdachlose Jugendliche. Aus den Unruhen entstanden die ersten Pride-Märsche; der deutsche Name Christopher Street Day erinnert an die Straße der Bar.' }],
+  '07-02': [{ title:'Civil Rights Act', year:'1964',
+    blurb:'US-Präsident Lyndon B. Johnson unterzeichnete das Bürgerrechtsgesetz, das Diskriminierung aufgrund von Hautfarbe, Religion, Geschlecht oder Herkunft verbot und die Rassentrennung in öffentlichen Einrichtungen beendete — ein Ergebnis jahrelanger Kämpfe der Bürgerrechtsbewegung.' }],
+  '07-14': [{ title:'Sturm auf die Bastille', year:'1789',
+    blurb:'Pariser Bürger:innen und Arbeiter:innen erstürmten das Staatsgefängnis Bastille — Fanal für die Französische Revolution und den Sturz der absolutistischen Monarchie. Bis heute Frankreichs Nationalfeiertag.' }],
+  '07-19': [{ title:'Konferenz von Seneca Falls', year:'1848',
+    blurb:'Rund 300 Menschen kamen in Seneca Falls, New York, zur ersten Frauenrechtskonferenz der USA zusammen. Elizabeth Cady Stanton und Lucretia Mott legten eine „Declaration of Sentiments" vor; Frederick Douglass sprach sich für die umstrittene Forderung nach dem Frauenwahlrecht aus.' }],
+  '08-06': [{ title:'Atombombe auf Hiroshima', year:'1945',
+    blurb:'Die USA warfen die erste im Krieg eingesetzte Atombombe auf Hiroshima; bis Ende 1945 starben schätzungsweise 140.000 Menschen. Die Überlebenden, die Hibakusha, wurden zu prägenden Stimmen der weltweiten Friedens- und Abrüstungsbewegung.' }],
+  '08-23': [{ title:'Beginn der Haitianischen Revolution', year:'1791',
+    blurb:'In der Nacht zum 23. August erhoben sich Versklavte in der französischen Kolonie Saint-Domingue. Der Aufstand führte 1804 zur Unabhängigkeit Haitis — der ersten Republik, die aus einer erfolgreichen Revolution Versklavter hervorging. Die UNESCO begeht den Tag als Gedenktag an Sklavenhandel und Abschaffung.' }],
+  '08-26': [
+    { title:'Erklärung der Menschen- und Bürgerrechte', year:'1789',
+      blurb:'Die französische Nationalversammlung verabschiedete die Erklärung, nach der alle Menschen frei und gleich an Rechten geboren werden. Frauen schloss sie stillschweigend aus — Olympe de Gouges antwortete 1791 mit ihrer „Erklärung der Rechte der Frau und Bürgerin".' },
+    { title:'Frauenwahlrecht in den USA', year:'1920',
+      blurb:'Der 19. Zusatzartikel zur US-Verfassung wurde offiziell bestätigt. Faktisch blieben viele Schwarze Frauen im Süden durch Wahlsteuern und Schikanen noch bis zum Voting Rights Act von 1965 vom Wählen ausgeschlossen.' }
+  ],
+  '08-28': [{ title:'„I Have a Dream"', year:'1963',
+    blurb:'Beim Marsch auf Washington für Arbeit und Freiheit hielt Martin Luther King Jr. vor rund 250.000 Menschen seine berühmte Rede — ein Höhepunkt der US-Bürgerrechtsbewegung gegen Rassentrennung und wirtschaftliche Ungleichheit.' }],
+  '09-11': [{ title:'Militärputsch in Chile', year:'1973',
+    blurb:'Das Militär unter Augusto Pinochet stürzte die gewählte Regierung des Sozialisten Salvador Allende, der beim Angriff auf den Präsidentenpalast starb. Die folgende Diktatur dauerte bis 1990; Tausende wurden ermordet oder verschwanden, Hunderttausende flohen ins Exil.' }],
+  '09-20': [{ title:'Globaler Klimastreik', year:'2019',
+    blurb:'Auf Initiative von Fridays for Future gingen weltweit Millionen Menschen in über 150 Ländern für Klimaschutz auf die Straße — einer der größten Klimaproteste der Geschichte.' }],
+  '10-09': [{ title:'Montagsdemonstration in Leipzig', year:'1989',
+    blurb:'Rund 70.000 Menschen zogen friedlich über den Leipziger Ring — obwohl die Staatsführung mit Gewalt gedroht hatte. Dass Polizei und Armee nicht eingriffen, gilt als Wendepunkt der Friedlichen Revolution in der DDR.' }],
+  '10-11': [
+    { title:'Coming Out Day', year:'seit 1988',
+      blurb:'Erinnert an den Marsch auf Washington für die Rechte von Lesben und Schwulen am 11. Oktober 1987. Die Idee dahinter: Wer queere Menschen persönlich kennt, baut Vorurteile leichter ab — sichtbar zu sein, ist selbst ein politischer Akt.' },
+    { title:'Welt-Mädchentag', year:'seit 2012',
+      blurb:'Die Vereinten Nationen machen an diesem Tag auf die Rechte von Mädchen aufmerksam — etwa auf Bildung und den Schutz vor Kinderehen und Gewalt.' }
+  ],
+  '10-24': [{ title:'Die UN-Charta tritt in Kraft', year:'1945',
+    blurb:'Mit der Ratifizierung durch die Mehrheit der Gründungsstaaten wurden die Vereinten Nationen offiziell gegründet — mit dem Ziel, „künftige Geschlechter vor der Geißel des Krieges zu bewahren".' }],
+  '11-09': [
+    { title:'Doppelte Ausrufung der Republik', year:'1918',
+      blurb:'Am selben Tag rief Karl Liebknecht die „freie sozialistische Republik" aus, während Philipp Scheidemann vom Reichstagsbalkon die Republik verkündete — Ausdruck des Machtkampfs zwischen Rätebewegung und Sozialdemokratie am Ende des Kaiserreichs.' },
+    { title:'Novemberpogrome', year:'1938',
+      blurb:'In der Nacht vom 9. auf den 10. November organisierten Nationalsozialisten im ganzen Reich Gewalt gegen Jüdinnen und Juden: Synagogen brannten, Geschäfte wurden zerstört, Hunderte Menschen ermordet und rund 30.000 jüdische Männer in Konzentrationslager verschleppt.' },
+    { title:'Fall der Berliner Mauer', year:'1989',
+      blurb:'Nach Wochen massenhafter Proteste und einer missverständlichen Pressekonferenz öffneten sich in der Nacht die Grenzübergänge in Berlin. Tausende strömten über die Grenze — das Ende der Teilung begann von unten.' }
+  ],
+  '11-12': [{ title:'Frauenwahlrecht in Deutschland verkündet', year:'1918',
+    blurb:'Der Rat der Volksbeauftragten erklärte, dass alle Wahlen künftig nach gleichem, geheimem, direktem und allgemeinem Wahlrecht für alle mindestens 20-jährigen Männer und Frauen stattfinden. Ein Erfolg jahrzehntelanger Kämpfe der Frauenbewegung.' }],
+  '11-20': [
+    { title:'UN-Kinderrechtskonvention', year:'1989',
+      blurb:'Die UN-Generalversammlung verabschiedete die Konvention über die Rechte des Kindes — darunter das Recht auf Bildung, Schutz vor Gewalt und Beteiligung. Sie ist das am häufigsten ratifizierte Menschenrechtsabkommen der Welt.' },
+    { title:'Transgender Day of Remembrance', year:'seit 1999',
+      blurb:'Gedenktag für trans Menschen, die durch Gewalt ums Leben gekommen sind. Ins Leben gerufen nach dem Mord an Rita Hester 1998 in Massachusetts.' }
+  ],
+  '11-25': [{ title:'Internationaler Tag gegen Gewalt an Frauen', year:'seit 1981/1999',
+    blurb:'Erinnert an die Schwestern Patria, Minerva und María Teresa Mirabal, die 1960 in der Dominikanischen Republik im Auftrag des Diktators Trujillo ermordet wurden. Lateinamerikanische Feministinnen begehen den Tag seit 1981, die Vereinten Nationen seit 1999.' }],
+  '12-01': [{ title:'Rosa Parks verweigert ihren Sitzplatz', year:'1955',
+    blurb:'Die Näherin und NAACP-Aktivistin Rosa Parks weigerte sich in Montgomery, Alabama, für einen weißen Fahrgast ihren Bussitz zu räumen. Ihre Festnahme löste den 381 Tage dauernden Busboykott aus und machte sie zur Symbolfigur der US-Bürgerrechtsbewegung.' }],
+  '12-02': [{ title:'Internationaler Tag zur Abschaffung der Sklaverei', year:'1949',
+    blurb:'Erinnert an das UN-Übereinkommen gegen Menschenhandel vom 2. Dezember 1949. Sklaverei ist nicht Geschichte: Nach Schätzungen der Internationalen Arbeitsorganisation leben heute rund 50 Millionen Menschen in moderner Sklaverei, etwa in Zwangsarbeit oder Zwangsehen.' }],
+  '12-06': [{ title:'Abschaffung der Sklaverei in den USA', year:'1865',
+    blurb:'Der 13. Zusatzartikel zur US-Verfassung wurde ratifiziert und verbot die Sklaverei — mit einer folgenschweren Ausnahme: als Strafe für Verbrechen. Kritiker:innen sehen darin bis heute eine Wurzel der Masseninhaftierung Schwarzer Menschen in den USA.' }],
+  '12-10': [{ title:'Allgemeine Erklärung der Menschenrechte', year:'1948',
+    blurb:'Die UN-Generalversammlung in Paris verabschiedete die Erklärung, an der eine Kommission unter Vorsitz von Eleanor Roosevelt gearbeitet hatte. Ihr erster Artikel: Alle Menschen sind frei und gleich an Würde und Rechten geboren.' }],
+  '12-12': [{ title:'Pariser Klimaabkommen', year:'2015',
+    blurb:'195 Staaten einigten sich darauf, die Erderwärmung auf deutlich unter 2 Grad zu begrenzen und Anstrengungen für 1,5 Grad zu unternehmen. Kleine Inselstaaten hatten das 1,5-Grad-Ziel gegen große Widerstände durchgesetzt.' }]
 };
+
+/* Kunstwerke: Bild wird über den Wikipedia-Artikel zum Werk geladen (wiki), Dateiname als Rückfall (file) */
+const ART_WORKS = [
+  { artist:'Francisco Goya', title:'Der 3. Mai 1808', year:'1814', wiki:'en:The Third of May 1808', file:'Tres_de_Mayo_by_Goya.jpg',
+    blurb:'Goya malte, wie französische Truppen spanische Aufständische erschießen — eines der ersten Bilder der Kunstgeschichte, das Krieg nicht heroisch, sondern als nacktes Staatsverbrechen zeigt. Bis heute ein Referenzpunkt für Antikriegskunst.' },
+  { artist:'Eugène Delacroix', title:'Die Freiheit führt das Volk', year:'1830', wiki:'en:Liberty Leading the People', file:'Eugène_Delacroix_-_La_liberté_guidant_le_peuple.jpg',
+    blurb:'Entstanden direkt nach der Julirevolution 1830, in der Pariser Bürger:innen und Arbeiter:innen gemeinsam die Bourbonen-Monarchie stürzten. Die Freiheitsfigur vereint Adel, Bürgertum und Arbeiterklasse hinter der Trikolore.' },
+  { artist:'Jean-François Millet', title:'Die Ährenleserinnen', year:'1857', wiki:'en:The Gleaners', file:'Jean-François_Millet_-_Gleaners_-_Google_Art_Project.jpg',
+    blurb:'Drei Bäuerinnen sammeln die Reste nach der Ernte auf — damals das Existenzminimum der Ärmsten. Das Pariser Bürgertum empfand die würdevolle Darstellung von Landarbeiterinnen als Provokation.' },
+  { artist:'Ilja Repin', title:'Die Wolgatreidler', year:'1870–73', wiki:'en:Barge Haulers on the Volga', file:'Ilya_Repin_-_Barge_Haulers_on_the_Volga_-_Google_Art_Project.jpg',
+    blurb:'Elf erschöpfte Männer ziehen im Geschirr ein Lastschiff den Fluss hinauf — Repins schonungsloses Bild wurde zur Ikone der russischen Realisten und zu einem der bekanntesten Bilder harter Lohnarbeit überhaupt.' },
+  { artist:'Käthe Kollwitz', title:'Weberzug', year:'1897', file:'Käthe_Kollwitz,_Ein_Weberaufstand_-_Weberzug,_,_KKS19696,_Statens_Museum_for_Kunst.jpg',
+    blurb:'Teil des Zyklus „Ein Weberaufstand" über den verzweifelten Aufstand schlesischer Weber:innen 1844. Kollwitz, in Berlin mit der Armut der Arbeiterklasse konfrontiert, wurde zur bedeutendsten sozialkritischen Grafikerin Deutschlands.' },
+  { artist:'Honoré Daumier', title:'Der Waggon dritter Klasse', year:'um 1862–64', wiki:'en:The Third-Class Carriage', file:'Honoré Daumier, The Third-Class Carriage - The Metropolitan Museum of Art.jpg',
+    blurb:'Daumier zeigt erschöpfte Arbeiter:innen und ihre Kinder in der billigsten Zugklasse — im Gegensatz zu den meist verklärten Reisebildern seiner Zeit unbeschönigt und mit spürbarer Empathie für die Dargestellten.' },
+  { artist:'Gustave Courbet', title:'Die Steinklopfer', year:'1849', wiki:'en:The Stone Breakers',
+    blurb:'Ein alter Mann und ein Junge zerschlagen Steine für den Straßenbau — lebensgroß, die Gesichter abgewandt, ohne Verklärung. Courbet machte damit harte Handarbeit bildwürdig. Das Original gilt seit 1945 als zerstört; erhalten sind Fotografien.' },
+  { artist:'Gustave Courbet', title:'Ein Begräbnis in Ornans', year:'1849–50', wiki:'en:A Burial at Ornans',
+    blurb:'Ein Dorfbegräbnis in Courbets Heimatort, gemalt im fast sieben Meter breiten Format, das bis dahin Historien- und Heiligenbildern vorbehalten war. Dass einfache Landbevölkerung so monumental erschien, löste in Paris einen Skandal aus.' },
+  { artist:'Adolph Menzel', title:'Das Eisenwalzwerk', year:'1872–75', wiki:'de:Das Eisenwalzwerk',
+    blurb:'Für dieses Bild studierte Menzel wochenlang ein Walzwerk im oberschlesischen Königshütte. Es zeigt Hitze, Lärm und Schichtwechsel: Während einige Arbeiter glühendes Eisen bewegen, waschen sich andere oder essen hastig. Eines der ersten großen Industriebilder Deutschlands.' },
+  { artist:'Giuseppe Pellizza da Volpedo', title:'Der vierte Stand', year:'um 1901', wiki:'en:The Fourth Estate (painting)',
+    blurb:'Landarbeiter:innen marschieren entschlossen auf die Betrachtenden zu, vorne eine Frau mit Kind auf dem Arm. Pellizza arbeitete ein Jahrzehnt an dem Motiv. Das Bild wurde zur Ikone der italienischen Arbeiterbewegung und eröffnet Bertoluccis Film „1900".' },
+  { artist:'Gustave Caillebotte', title:'Die Parkettschleifer', year:'1875', wiki:'en:The Floor Scrapers',
+    blurb:'Drei Arbeiter mit nacktem Oberkörper schaben auf Knien einen Pariser Holzboden ab. Die Jury des Salons lehnte das Bild 1875 als „vulgär" ab — Caillebotte zeigte es stattdessen 1876 bei der Ausstellung der Impressionisten.' },
+  { artist:'Théodore Géricault', title:'Das Floß der Medusa', year:'1818–19', wiki:'en:The Raft of the Medusa',
+    blurb:'1816 lief die französische Fregatte Méduse unter einem politisch ernannten, unerfahrenen Kapitän auf Grund. Offiziere retteten sich in Booten, rund 150 Menschen blieben auf einem Floß zurück — 15 überlebten. Géricaults Bild machte den Skandal zur Anklage gegen den Staat.' },
+  { artist:'Jacques-Louis David', title:'Der Tod des Marat', year:'1793', wiki:'en:The Death of Marat',
+    blurb:'Der revolutionäre Journalist Jean-Paul Marat wurde in seiner Badewanne von Charlotte Corday erstochen. David, selbst Revolutionär, malte ihn wie einen Märtyrer — ein Meisterwerk und zugleich ein frühes Beispiel politischer Bildpropaganda.' },
+  { artist:'Edgar Degas', title:'Das Baumwollkontor in New Orleans', year:'1873', wiki:'en:A Cotton Office in New Orleans',
+    blurb:'Degas malte das Kontor seines Onkels in New Orleans, wo seine Familie Handel trieb: Männer prüfen Baumwollproben, lesen Zeitung, tätigen Geschäfte. Ein nüchternes Bild der Wirtschaft, die auf Baumwolle aus Sklavenarbeit groß geworden war. Es war das erste Werk von Degas, das ein Museum kaufte.' },
+  { artist:'Marie-Guillemine Benoist', title:'Porträt der Madeleine', year:'1800', wiki:'en:Portrait of Madeleine',
+    blurb:'Gemalt sechs Jahre nach der ersten Abschaffung der Sklaverei in Frankreich und zwei Jahre bevor Napoleon sie wieder einführte. Lange trug das Bild einen Titel, der nur die Hautfarbe der Dargestellten nannte. Seit 2019 heißt es nach ihr: Madeleine.' },
+  { artist:'J. M. W. Turner', title:'Das Sklavenschiff', year:'1840', wiki:'en:The Slave Ship',
+    blurb:'Turner bezieht sich auf das Massaker auf dem Schiff Zong 1781, dessen Besatzung über hundert Versklavte ins Meer warf, um Versicherungsgeld zu kassieren. Ausgestellt wurde das Bild im selben Jahr, in dem in London die erste Welt-Anti-Sklaverei-Konferenz tagte.' },
+  { artist:'Henry Ossawa Tanner', title:'Die Banjostunde', year:'1893', wiki:'en:The Banjo Lesson',
+    blurb:'Ein älterer Mann bringt einem Jungen das Banjospielen bei. Tanner, einer der ersten international erfolgreichen Schwarzen Maler der USA, setzte damit den rassistischen Minstrel-Klischees seiner Zeit ein Bild von Zärtlichkeit, Würde und Weitergabe entgegen.' },
+  { artist:'Edmonia Lewis', title:'Der Tod der Kleopatra', year:'1876', wiki:'en:The Death of Cleopatra (Edmonia Lewis)',
+    blurb:'Lewis, Tochter eines Schwarzen Vaters und einer Mutter mit Ojibwe-Wurzeln, wurde als erste Bildhauerin ihrer Herkunft international bekannt. Die Marmorfigur war eine Sensation auf der Weltausstellung 1876 — und landete später als Grabstein für ein Rennpferd, bevor sie wiederentdeckt wurde.' },
+  { artist:'Artemisia Gentileschi', title:'Judith enthauptet Holofernes', year:'um 1620', wiki:'en:Judith Slaying Holofernes (Artemisia Gentileschi, Florence)',
+    blurb:'Gentileschi war eine der erfolgreichsten Malerinnen des Barock. Als junge Frau zeigte sie ihren Vergewaltiger an und musste im Prozess Folter ertragen, um ihre Aussage zu bestätigen. Ihre kraftvollen Judith-Bilder werden heute oft auch vor diesem Hintergrund gelesen.' },
+  { artist:'Paula Modersohn-Becker', title:'Selbstbildnis am 6. Hochzeitstag', year:'1906', wiki:'en:Self-Portrait at 6th Wedding Anniversary',
+    blurb:'Gilt als das erste Selbstbildnis einer Malerin als Akt in der Kunstgeschichte. Modersohn-Becker malte ihn in Paris, nachdem sie ihren Mann in Worpswede verlassen hatte, um als Künstlerin unabhängig zu arbeiten. Sie starb ein Jahr später mit 31 Jahren.' },
+  { artist:'Rosa Bonheur', title:'Der Pferdemarkt', year:'1852–55', wiki:'en:The Horse Fair',
+    blurb:'Um auf Pferdemärkten ungestört studieren zu können, beantragte Bonheur bei der Pariser Polizei eine Erlaubnis, Männerkleidung zu tragen. Das monumentale Bild machte sie zur international gefeierten Malerin — in einer Zeit, in der Kunstakademien Frauen meist ausschlossen.' },
+  { artist:'Johannes Vermeer', title:'Die Dienstmagd mit dem Milchkrug', year:'um 1657–58', wiki:'en:The Milkmaid (Vermeer)',
+    blurb:'Eine Magd gießt konzentriert Milch in eine Schüssel. Vermeer gab einer einfachen Hausarbeit eine Ruhe und Würde, die sonst Heiligen oder Adligen vorbehalten war — Licht auf Brot, Krug und Wand wird hier selbst zum Thema.' },
+  { artist:'Vincent van Gogh', title:'Die Kartoffelesser', year:'1885', wiki:'en:The Potato Eaters',
+    blurb:'Eine Bauernfamilie beim kargen Abendessen im Lampenlicht. Van Gogh schrieb seinem Bruder, er wolle zeigen, dass diese Menschen ihre Kartoffeln mit denselben Händen essen, mit denen sie die Erde umgegraben haben — ehrlich verdientes Essen.' },
+  { artist:'Dorothea Lange', title:'Migrant Mother', year:'1936', wiki:'en:Migrant Mother',
+    blurb:'Lange fotografierte Florence Owens Thompson mit ihren Kindern in einem Lager verarmter Erntehelfer in Kalifornien, im Auftrag einer staatlichen Behörde. Das Foto wurde zum Gesicht der Großen Depression — Thompson selbst sagte später, sie habe nie etwas davon gehabt.' },
+  { artist:'Winslow Homer', title:'Der Golfstrom', year:'1899', wiki:'en:The Gulf Stream (painting)',
+    blurb:'Ein Schwarzer Seemann treibt allein auf einem entmasteten Boot, umgeben von Haien, am Horizont eine Wasserhose. Homer ließ offen, ob Rettung kommt. Das Bild wird bis heute auch als Kommentar zur Lage Schwarzer Menschen im Amerika nach der Sklaverei gelesen.' },
+  { artist:'Katsushika Hokusai', title:'Die große Welle vor Kanagawa', year:'um 1831', wiki:'en:The Great Wave off Kanagawa',
+    blurb:'Ein Farbholzschnitt aus der Serie „36 Ansichten des Berges Fuji": Fischerboote kämpfen gegen eine gewaltige Welle, winzig im Hintergrund der Fuji. Hokusai nutzte das damals neu importierte Preußischblau — es wurde zum vielleicht bekanntesten Bild Japans.' },
+  { artist:'Iwan Aiwasowski', title:'Die neunte Woge', year:'1850', wiki:'en:The Ninth Wave',
+    blurb:'Schiffbrüchige klammern sich nach einer Sturmnacht an einen Mast, während die Sonne durchbricht. Der Titel greift eine alte Seefahrerlegende auf, nach der die neunte Welle die gewaltigste ist. Aiwasowski malte über 6.000 Bilder, die meisten vom Meer.' },
+  { artist:'Caspar David Friedrich', title:'Der Mönch am Meer', year:'1808–10', wiki:'en:The Monk by the Sea',
+    blurb:'Eine winzige Figur am Strand, davor nur Meer und ein riesiger Himmel. Die radikale Leere schockierte das Publikum. Heinrich von Kleist schrieb, man fühle sich davor, als ob einem die Augenlider weggeschnitten wären.' }
+];
+
+/* Zitate: Übersetzungen ins Deutsche, Quelle jeweils angegeben */
+const QUOTES_FACTS = [
+  { person:'James Baldwin', role:'Schriftsteller & Essayist', quote:'Nicht alles, dem man sich stellt, lässt sich ändern. Aber nichts lässt sich ändern, dem man sich nicht stellt.',
+    context:'aus dem Essay „As Much Truth as One Can Bear", New York Times Book Review, 1962' },
+  { person:'Audre Lorde', role:'Schriftstellerin & Bürgerrechtlerin', quote:'Dein Schweigen wird dich nicht schützen.',
+    context:'aus „The Transformation of Silence into Language and Action", 1977' },
+  { person:'Toni Morrison', role:'Schriftstellerin, Literaturnobelpreis 1993', quote:'Wenn du fliegen willst, musst du den Ballast loslassen, der dich runterzieht.',
+    context:'aus dem Roman „Song of Solomon", 1977 — gesprochen von der Figur Guitar' },
+  { person:'Nina Simone', role:'Musikerin & Bürgerrechtlerin', quote:'Die Pflicht einer Künstlerin ist es, meiner Meinung nach, die Zeit zu spiegeln, in der sie lebt.',
+    context:'aus einem Interview der 1960er-Jahre' },
+  { person:'Maya Angelou', role:'Schriftstellerin & Bürgerrechtlerin', quote:'Es gibt keine größere Qual, als eine unerzählte Geschichte in sich zu tragen.',
+    context:'aus „I Know Why the Caged Bird Sings", 1969' },
+  { person:'bell hooks', role:'Autorin & Kulturkritikerin', quote:'In dem Moment, in dem wir uns für die Liebe entscheiden, beginnen wir, uns gegen Herrschaft zu bewegen.',
+    context:'aus dem Essay „Love as the Practice of Freedom" in „Outlaw Culture", 1994' },
+  { person:'Frederick Douglass', role:'Abolitionist & Schriftsteller', quote:'Wo es keinen Kampf gibt, gibt es keinen Fortschritt.',
+    context:'Rede zum Jahrestag der Sklavenbefreiung in Westindien, Canandaigua (New York), 1857' },
+  { person:'Frederick Douglass', role:'Abolitionist & Schriftsteller', quote:'Macht gibt nichts her ohne eine Forderung. Das hat sie nie getan, und das wird sie nie tun.',
+    context:'aus derselben Rede, 1857' },
+  { person:'Rosa Luxemburg', role:'Theoretikerin & Revolutionärin', quote:'Freiheit ist immer Freiheit der Andersdenkenden.',
+    context:'aus „Zur russischen Revolution", 1918 geschrieben, 1922 veröffentlicht' },
+  { person:'Karl Marx', role:'Philosoph & Ökonom', quote:'Die Philosophen haben die Welt nur verschieden interpretiert; es kommt aber darauf an, sie zu verändern.',
+    context:'11. These über Feuerbach, 1845 — veröffentlicht 1888 von Friedrich Engels' },
+  { person:'Karl Marx & Friedrich Engels', role:'Philosophen', quote:'Die Geschichte aller bisherigen Gesellschaft ist die Geschichte von Klassenkämpfen.',
+    context:'erster Satz des „Manifests der Kommunistischen Partei", 1848' },
+  { person:'Hedwig Dohm', role:'Schriftstellerin & Frauenrechtlerin', quote:'Menschenrechte haben kein Geschlecht.',
+    context:'aus „Der Frauen Natur und Recht", 1876' },
+  { person:'Olympe de Gouges', role:'Schriftstellerin & Revolutionärin', quote:'Die Frau hat das Recht, das Schafott zu besteigen; sie muss gleichermaßen das Recht haben, die Rednertribüne zu besteigen.',
+    context:'Artikel 10 der „Erklärung der Rechte der Frau und Bürgerin", 1791 — sie wurde 1793 hingerichtet' },
+  { person:'Mary Wollstonecraft', role:'Philosophin & Frauenrechtlerin', quote:'Ich wünsche nicht, dass Frauen Macht über Männer haben, sondern über sich selbst.',
+    context:'aus „A Vindication of the Rights of Woman", 1792' },
+  { person:'W. E. B. Du Bois', role:'Soziologe & Bürgerrechtler', quote:'Das Problem des zwanzigsten Jahrhunderts ist das Problem der Farblinie.',
+    context:'aus „The Souls of Black Folk", 1903' },
+  { person:'Heinrich Heine', role:'Dichter', quote:'Dort, wo man Bücher verbrennt, verbrennt man auch am Ende Menschen.',
+    context:'aus der Tragödie „Almansor", 1821 — mehr als ein Jahrhundert vor der Bücherverbrennung 1933' },
+  { person:'Hannah Arendt', role:'Politische Theoretikerin', quote:'Niemand hat das Recht zu gehorchen.',
+    context:'im Gespräch mit Joachim Fest, 1964' },
+  { person:'Theodor W. Adorno', role:'Philosoph & Soziologe', quote:'Es gibt kein richtiges Leben im falschen.',
+    context:'aus „Minima Moralia", 1951' },
+  { person:'Antonio Gramsci', role:'Marxistischer Theoretiker', quote:'Pessimismus des Verstandes, Optimismus des Willens.',
+    context:'Leitformel in seinen Schriften, auch in den Gefängnisheften — übernommen vom Schriftsteller Romain Rolland' },
+  { person:'Paulo Freire', role:'Pädagoge', quote:'Niemand befreit einen anderen, niemand befreit sich allein: Menschen befreien sich in Gemeinschaft.',
+    context:'aus „Pädagogik der Unterdrückten", 1968' },
+  { person:'Frantz Fanon', role:'Psychiater & Theoretiker der Dekolonisierung', quote:'Jede Generation muss aus relativer Dunkelheit heraus ihre Aufgabe entdecken, sie erfüllen oder sie verraten.',
+    context:'aus „Die Verdammten dieser Erde", 1961' },
+  { person:'Martin Luther King Jr.', role:'Bürgerrechtler', quote:'Ungerechtigkeit irgendwo ist eine Bedrohung für Gerechtigkeit überall.',
+    context:'aus dem „Brief aus dem Gefängnis in Birmingham", 1963' },
+  { person:'Fannie Lou Hamer', role:'Bürgerrechtlerin', quote:'Ich habe es satt, es satt zu haben.',
+    context:'wiederkehrender Satz in ihren Reden ab 1964' },
+  { person:'Rosa Parks', role:'Bürgerrechtlerin', quote:'Müde war ich nur davon, immer nachzugeben.',
+    context:'aus ihrer Autobiografie „My Story", 1992 — über den Tag im Bus 1955' },
+  { person:'Steve Biko', role:'Anti-Apartheid-Aktivist', quote:'Die mächtigste Waffe in der Hand der Unterdrücker ist das Bewusstsein der Unterdrückten.',
+    context:'aus einer Rede von 1971, veröffentlicht in „I Write What I Like"' },
+  { person:'Thomas Sankara', role:'Präsident von Burkina Faso 1983–87', quote:'Man muss es wagen, die Zukunft zu erfinden.',
+    context:'aus einem Interview, 1985' },
+  { person:'Simone de Beauvoir', role:'Philosophin & Schriftstellerin', quote:'Man kommt nicht als Frau zur Welt, man wird es.',
+    context:'aus „Das andere Geschlecht", 1949' },
+  { person:'Audre Lorde', role:'Schriftstellerin & Bürgerrechtlerin', quote:'Die Werkzeuge des Herrn werden niemals das Haus des Herrn niederreißen.',
+    context:'Titel und Kernsatz eines Vortrags von 1979' },
+  { person:'Rachel Carson', role:'Biologin & Autorin', quote:'In der Natur existiert nichts für sich allein.',
+    context:'aus „Der stumme Frühling", 1962 — Auslöser der modernen Umweltbewegung' },
+  { person:'Alexander von Humboldt', role:'Naturforscher', quote:'Alles ist Wechselwirkung.',
+    context:'Notiz in seinem Reisetagebuch, 1803' },
+  { person:'Erich Kästner', role:'Schriftsteller', quote:'Es gibt nichts Gutes, außer: Man tut es.',
+    context:'Epigramm „Moral"' },
+  { person:'Käthe Kollwitz', role:'Grafikerin & Bildhauerin', quote:'Ich will wirken in dieser Zeit, in der die Menschen so ratlos und hilfsbedürftig sind.',
+    context:'Tagebucheintrag, 1922' },
+  { person:'bell hooks', role:'Autorin & Kulturkritikerin', quote:'Feminismus ist für alle da.',
+    context:'Titel ihres Buches „Feminism Is for Everybody", 2000' },
+  { person:'Toni Morrison', role:'Schriftstellerin, Literaturnobelpreis 1993', quote:'Wenn es ein Buch gibt, das du lesen willst, das aber noch nicht geschrieben ist, dann musst du es schreiben.',
+    context:'aus einer Rede, 1981' },
+  { person:'Bertolt Brecht', role:'Dramatiker & Lyriker', quote:'Wer A sagt, der muss nicht B sagen. Er kann auch erkennen, dass A falsch war.',
+    context:'aus dem Schulstück „Der Neinsager", 1930' }
+];
+
+/* Natur & Meer */
+const NATURE_FACTS = [
+  { title:'Springtide und Nipptide', text:'Bei Neu- und Vollmond stehen Sonne, Mond und Erde in einer Linie, ihre Gezeitenkräfte addieren sich: Es gibt Springtiden mit besonders großem Tidenhub. Bei Halbmond wirken die Kräfte über Kreuz — dann ist Nipptide und der Unterschied zwischen Hoch- und Niedrigwasser am kleinsten.' },
+  { title:'Warum zweimal Hochwasser?', text:'Der Mond erzeugt zwei Flutberge: einen auf der ihm zugewandten Seite und einen auf der abgewandten, weil dort seine Anziehung am schwächsten ist. Da sich der Mond weiterbewegt, kommt Hochwasser im Schnitt alle 12 Stunden und 25 Minuten — jeden Tag knapp eine Stunde später.' },
+  { title:'Welterbe Wattenmeer', text:'Das Wattenmeer ist das größte zusammenhängende System aus Sand- und Schlickwatten der Erde. Der deutsche und niederländische Teil wurden 2009 UNESCO-Weltnaturerbe, 2014 kam der dänische Teil hinzu.' },
+  { title:'Drehkreuz für Zugvögel', text:'Jedes Jahr nutzen bis zu 10 bis 12 Millionen Zugvögel das Wattenmeer als Rast- und Nahrungsgebiet auf ihrem Weg zwischen Arktis und Afrika. Ohne diese Tankstelle könnten viele Arten ihre Langstreckenflüge nicht bewältigen.' },
+  { title:'Der Wattwurm', text:'Die typischen Sandhäufchen im Watt stammen vom Wattwurm. Er lebt in einer U-förmigen Röhre, frisst Sand, verdaut die anhaftenden organischen Teilchen und scheidet den gereinigten Sand als Kringel wieder aus. Am anderen Röhrenende entsteht ein kleiner Trichter.' },
+  { title:'Queller — Pionier im Salz', text:'Der Queller wächst weiter Richtung Meer als fast jede andere Blütenpflanze und wird regelmäßig überflutet. Seine fleischigen Triebe speichern Wasser und verdünnen so das Salz. Als „Meeresspargel" ist er essbar.' },
+  { title:'Kohlenstoffspeicher Salzwiese', text:'Salzwiesen lagern pro Fläche oft deutlich mehr Kohlenstoff im Boden ein als Wälder: Im wassergesättigten, sauerstoffarmen Boden wird abgestorbenes Pflanzenmaterial nur langsam zersetzt, und mit jeder Überflutung lagert sich neues Sediment ab.' },
+  { title:'Der Geruch des Watts', text:'Der Geruch nach faulen Eiern im Schlick kommt von Schwefelwasserstoff. Ihn bilden Bakterien, die unter Sauerstoffmangel Sulfat aus dem Meerwasser statt Sauerstoff veratmen. Die schwarze Farbe darunter stammt von Eisensulfiden.' },
+  { title:'Größtes Raubtier Deutschlands', text:'Die Kegelrobbe ist das größte freilebende Raubtier Deutschlands: Bullen können über 2 Meter lang und mehr als 250 Kilogramm schwer werden. Nach fast vollständiger Ausrottung bringen sie seit einigen Jahrzehnten wieder Junge an der deutschen Küste zur Welt.' },
+  { title:'Heuler nicht anfassen', text:'Ein allein liegendes Seehundjunges ist meist nicht verlassen — die Mutter jagt oft in der Nähe. Wer sich nähert oder es anfasst, kann dafür sorgen, dass sie es nicht mehr annimmt. Richtig ist: Abstand halten und im Zweifel Seehundstation oder Polizei informieren.' },
+  { title:'Halligen und Landunter', text:'Halligen sind kleine, nicht oder nur niedrig eingedeichte Inseln im nordfriesischen Wattenmeer. Bei Sturmfluten werden sie überspült — „Landunter". Dann ragen nur die Warften heraus, die künstlichen Hügel, auf denen die Häuser stehen.' },
+  { title:'Tidenhub in Hamburg', text:'Hamburg liegt über 100 Kilometer vom Meer entfernt und hat trotzdem Gezeiten — die Flut läuft die Elbe hinauf bis zum Wehr in Geesthacht. Durch die Vertiefungen der Elbe hat sich der mittlere Tidenhub in Hamburg seit dem 19. Jahrhundert fast verdoppelt und ist heute größer als in Cuxhaven.' },
+  { title:'Sturmflut 1962', text:'In der Nacht vom 16. auf den 17. Februar 1962 brachen in Hamburg die Deiche; 315 Menschen starben in der Stadt. Der damalige Innensenator Helmut Schmidt koordinierte den Einsatz von Bundeswehr und Hilfskräften. Danach wurden die Deiche an der ganzen Küste deutlich erhöht.' },
+  { title:'Rekord in der Bay of Fundy', text:'Den größten Tidenhub der Welt hat die Bay of Fundy in Kanada: bis zu rund 16 Meter. Die Form der Bucht verstärkt die Gezeitenwelle wie ein Resonanzkörper.' },
+  { title:'Jeder zweite Atemzug', text:'Etwa die Hälfte der weltweiten Photosynthese findet im Meer statt, vor allem durch mikroskopisch kleines Phytoplankton. Ein großer Teil des Sauerstoffs, den wir atmen, stammt also aus dem Ozean.' },
+  { title:'Das häufigste Photosynthese-Lebewesen', text:'Das Cyanobakterium Prochlorococcus wurde erst 1988 entdeckt — und gilt heute als häufigster photosynthetischer Organismus der Erde. Es ist so winzig, dass in einem einzigen Milliliter Meerwasser oft über hunderttausend Zellen schwimmen.' },
+  { title:'Seegras ist keine Alge', text:'Seegras ist eine echte Blütenpflanze, die vor Jahrmillionen vom Land ins Meer zurückgekehrt ist. Im Wattenmeer wachsen zwei Arten. Seegraswiesen stabilisieren den Boden, speichern Kohlenstoff und sind Kinderstube für viele Fische.' },
+  { title:'Muscheln als Kläranlage', text:'Eine Miesmuschel filtert je nach Größe ein bis mehrere Liter Wasser pro Stunde und holt dabei Plankton und Schwebteilchen heraus. Große Muschelbänke können so das Wasser über ihnen spürbar klären.' },
+  { title:'Neue Bewohner: die Pazifische Auster', text:'Die Pazifische Auster wurde in den 1980er-Jahren für die Zucht an die Nordsee gebracht und breitete sich danach im Wattenmeer aus. Heute bildet sie vielerorts eigene Riffe, oft auf früheren Miesmuschelbänken.' },
+  { title:'Meeresleuchten', text:'Wenn das Wasser bei Nacht bei jeder Bewegung bläulich aufleuchtet, steckt oft der Einzeller Noctiluca scintillans dahinter. Mechanische Reizung löst in ihm eine chemische Lichtreaktion aus — Biolumineszenz.' },
+  { title:'Hämmerer und Stecher', text:'Austernfischer öffnen Muscheln mit zwei Techniken: Manche hämmern die Schale auf, andere stechen mit dem Schnabel zwischen die Schalenhälften und durchtrennen den Schließmuskel. Welche Methode ein Vogel nutzt, lernt er offenbar von den Eltern.' },
+  { title:'Rekordflug der Pfuhlschnepfe', text:'Eine Pfuhlschnepfe flog 2022 rund 13.500 Kilometer nonstop von Alaska nach Tasmanien — der längste bekannte Nonstop-Flug eines Vogels. Auch im Wattenmeer rasten Pfuhlschnepfen, allerdings eine andere Population derselben Art.' },
+  { title:'Krabben sind Garnelen', text:'Was an der Nordsee als „Krabben" verkauft wird, ist die Nordseegarnele. Echte Krabben haben einen breiten Panzer und einen unter den Körper geklappten Hinterleib — wie die Strandkrabbe.' },
+  { title:'Kieselalgen halten das Watt zusammen', text:'Der bräunliche Schimmer auf dem Schlick sind oft Millionen Kieselalgen. Sie scheiden schleimige Substanzen aus, die die Sedimentkörnchen verkleben und das Watt gegen Erosion stabilisieren.' },
+  { title:'Schlick, Misch- und Sandwatt', text:'Wo Strömung und Wellen stark sind, bleibt nur grober Sand liegen. In geschützten Bereichen setzen sich feine Teilchen ab — es entsteht Schlickwatt. Dazwischen liegt das Mischwatt. Am Untergrund lässt sich also ablesen, wie bewegt das Wasser ist.' },
+  { title:'Der Ozean als Wärmespeicher', text:'Über 90 Prozent der zusätzlichen Wärme, die der menschengemachte Klimawandel seit den 1970er-Jahren erzeugt hat, hat der Ozean aufgenommen. Er bremst damit die Erwärmung an Land — mit Folgen wie Meeresspiegelanstieg und Hitzewellen im Meer.' },
+  { title:'Die größte Wanderung der Erde', text:'Jede Nacht steigen Milliarden kleiner Meerestiere aus der Tiefe zur Oberfläche, um im Dunkeln zu fressen, und tauchen im Morgengrauen wieder ab. Gemessen an der Zahl der Tiere ist das die größte tägliche Wanderung auf dem Planeten.' },
+  { title:'Gezeiten bremsen die Erde', text:'Die Reibung der Gezeiten bremst die Drehung der Erde: Ein Tag wird pro Jahrhundert um rund zwei tausendstel Sekunden länger. Gleichzeitig entfernt sich der Mond um etwa 3,8 Zentimeter pro Jahr von uns.' }
+];
+
 const LEARN_TOPICS = [
 { id:'lichtreaktion', title:'Photosynthese: Die Lichtreaktion', cat:'Stoffwechsel', level:'Abitur',
   summary:'Wie Thylakoidmembranen Lichtenergie in ATP und NADPH umwandeln.',
@@ -1130,40 +1445,6 @@ const LEARN_TOPICS = [
   ]}
 ];
 
-const QUOTES_FACTS = [
-  { person:'James Baldwin', role:'Schriftsteller & Essayist', quote:'Nicht alles, dem man sich stellt, lässt sich ändern. Aber nichts lässt sich ändern, dem man sich nicht stellt.',
-    context:'aus dem Essay „As Much Truth as One Can Bear", New York Times Book Review, 1962' },
-  { person:'Audre Lorde', role:'Schriftstellerin & Bürgerrechtlerin', quote:'Dein Schweigen wird dich nicht schützen.',
-    context:'aus „The Transformation of Silence into Language and Action", 1977' },
-  { person:'Toni Morrison', role:'Schriftstellerin, Literaturnobelpreis 1993', quote:'Wenn du fliegen willst, musst du den Ballast loslassen, der dich runterzieht.',
-    context:'wiederkehrendes Motiv in Interviews und ihrem Werk' },
-  { person:'Nina Simone', role:'Musikerin & Bürgerrechtlerin', quote:'Die Pflicht einer Künstlerin ist es, meiner Meinung nach, die Zeit zu spiegeln, in der sie lebt.',
-    context:'aus verschiedenen Interviews der 1960er Jahre' },
-  { person:'Maya Angelou', role:'Schriftstellerin & Bürgerrechtlerin', quote:'Es gibt keine größere Qual, als eine unerzählte Geschichte in sich zu tragen.',
-    context:'aus „I Know Why the Caged Bird Sings", 1969' },
-  { person:'bell hooks', role:'Autorin & Kulturkritikerin', quote:'In dem Moment, in dem wir uns für die Liebe entscheiden, beginnen wir, uns gegen Herrschaft zu bewegen.',
-    context:'aus „All About Love: New Visions", 2000' }
-];
-const CULTURE_FACTS = [
-  { artist:'Francisco Goya', title:'Der 3. Mai 1808', year:'1814',
-    file:'Tres_de_Mayo_by_Goya.jpg',
-    blurb:'Goya malte, wie französische Truppen spanische Aufständische erschießen — eines der ersten Bilder der Kunstgeschichte, das Krieg nicht heroisch, sondern als nacktes Staatsverbrechen zeigt. Bis heute ein Referenzpunkt für Antikriegskunst.' },
-  { artist:'Eugène Delacroix', title:'Die Freiheit führt das Volk', year:'1830',
-    file:'Eugène_Delacroix_-_La_liberté_guidant_le_peuple.jpg',
-    blurb:'Entstanden direkt nach der Julirevolution 1830, in der Pariser Bürger:innen und Arbeiter:innen gemeinsam die Bourbonen-Monarchie stürzten. Die Freiheitsfigur vereint Adel, Bürgertum und Arbeiterklasse hinter der Trikolore.' },
-  { artist:'Jean-François Millet', title:'Die Ährenleserinnen', year:'1857',
-    file:'Jean-François_Millet_-_Gleaners_-_Google_Art_Project.jpg',
-    blurb:'Drei Bäuerinnen sammeln die Reste nach der Ernte auf — damals das Existenzminimum der Ärmsten. Das Pariser Bürgertum empfand die würdevolle Darstellung von Landarbeiterinnen als Provokation.' },
-  { artist:'Ilja Repin', title:'Die Wolgatreidler', year:'1870–73',
-    file:'Ilya_Repin_-_Barge_Haulers_on_the_Volga_-_Google_Art_Project.jpg',
-    blurb:'Elf erschöpfte Männer ziehen im Geschirr ein Lastschiff den Fluss hinauf — Repins schonungsloses Bild wurde zur Ikone der russischen Realisten und zu einem der bekanntesten Bilder harter Lohnarbeit überhaupt.' },
-  { artist:'Käthe Kollwitz', title:'Weberzug', year:'1897',
-    file:'Käthe_Kollwitz,_Ein_Weberaufstand_-_Weberzug,_,_KKS19696,_Statens_Museum_for_Kunst.jpg',
-    blurb:'Teil des Zyklus „Ein Weberaufstand" über den verzweifelten Aufstand schlesischer Weber:innen 1844. Kollwitz, in Berlin mit der Armut der Arbeiterklasse konfrontiert, wurde zur bedeutendsten sozialkritischen Grafikerin Deutschlands.' },
-  { artist:'Honoré Daumier', title:'Der Wagon dritter Klasse', year:'um 1862–64',
-    file:'Honoré Daumier, The Third-Class Carriage - The Metropolitan Museum of Art.jpg',
-    blurb:'Daumier zeigt erschöpfte Arbeiter:innen und ihre Kinder in der billigsten Zugklasse — im Gegensatz zu den meist verklärten Reisebildern seiner Zeit unbeschönigt und mit spürbarer Empathie für die Dargestellten.' }
-];
 const IMPORT_TASKS = [
   {room:'Allgemein', text:'Fenster putzen', freq:'90', assignee:'Beide', duration:30},
   {room:'Bad', text:'Wanne auswischen', freq:'7', assignee:'Julian', duration:8},
@@ -1324,55 +1605,299 @@ function dayOfYear(d){
 function todayKey(d){
   return `${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
-function renderDailyFact(){
-  const today = new Date();
-  const dateFact = FACTS_BY_DATE[todayKey(today)];
-  const img = $('#dailyFactImg');
-  img.onclick = null;
-  img.style.cursor = 'default';
+/* ---------- Heute: Bilder & Fakten des Tages ---------- */
+/* Kuratierte Inhalte rotieren täglich (für euch beide gleich). Live-Quellen werden pro Tag
+   im Gerät zwischengespeichert; schlägt eine fehl, wird die Karte einfach ausgeblendet. */
+let todayOffset = 0;
+let todayRenderToken = 0;
+const TD_WEEKDAYS = ['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+const TD_MIN_OFFSET = -366, TD_MAX_OFFSET = 366;
+const tdInflight = {};
 
-  if(dateFact){
+function tdDate(offset){ const d = new Date(); d.setHours(12,0,0,0); d.setDate(d.getDate() + (offset===undefined ? todayOffset : offset)); return d; }
+function tdIso(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
+function tdDayIndex(d){ return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000); }
+function tdPick(arr, d, shift){ const n = arr.length; return arr[(((tdDayIndex(d) + (shift||0)) % n) + n) % n]; }
+function tdCacheAll(){ try{ return JSON.parse(localStorage.getItem('td-cache') || '{}'); }catch(e){ return {}; } }
+function tdCacheGet(key, maxAgeMs){
+  const e = tdCacheAll()[key];
+  if(!e) return null;
+  if(maxAgeMs && Date.now() - e.at > maxAgeMs) return null;
+  return e.val;
+}
+function tdCacheSet(key, val){
+  try{
+    const all = tdCacheAll();
+    all[key] = { at:Date.now(), val };
+    const keys = Object.keys(all).sort((a,b)=>all[b].at - all[a].at);
+    keys.slice(80).forEach(k=>delete all[k]);
+    localStorage.setItem('td-cache', JSON.stringify(all));
+  }catch(e){}
+}
+async function tdFetchJSON(url, ms){
+  const ctrl = ('AbortController' in window) ? new AbortController() : null;
+  const timer = ctrl ? setTimeout(()=>ctrl.abort(), ms || 9000) : null;
+  try{
+    const res = await fetch(url, ctrl ? { signal:ctrl.signal } : undefined);
+    if(!res.ok) throw new Error('HTTP ' + res.status);
+    return await res.json();
+  } finally { if(timer) clearTimeout(timer); }
+}
+/* Gleiches Ergebnis nur einmal laden, auch wenn mehrere Stellen danach fragen */
+function tdOnce(key, maxAgeMs, loader){
+  const cached = tdCacheGet(key, maxAgeMs);
+  if(cached!==null) return Promise.resolve(cached);
+  if(tdInflight[key]) return tdInflight[key];
+  tdInflight[key] = loader().then(v=>{ if(v) tdCacheSet(key, v); return v; }).catch(()=>null).finally(()=>{ delete tdInflight[key]; });
+  return tdInflight[key];
+}
+function tdDecode(s){ const t = document.createElement('textarea'); t.innerHTML = s; return t.value; }
+function tdStripHtml(s){ return tdDecode(String(s||'').replace(/<[^>]+>/g, ' ')).replace(/\s+/g, ' ').trim(); }
+function wikiToText(s){
+  return tdDecode(String(s||'')
+    .replace(/<ref[\s\S]*?<\/ref>/gi, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/\[\[(?:[^\]|]*\|)?([^\]]*)\]\]/g, '$1')
+    .replace(/\[https?:\/\/\S+\s([^\]]+)\]/g, '$1')
+    .replace(/'{2,}/g, '')
+    .replace(/\{\{[^{}]*\}\}/g, ''))
+    .replace(/\s+/g, ' ').trim();
+}
+function tdShorten(s, n){ s = String(s||''); if(s.length<=n) return s; const cut = s.slice(0, n); return cut.slice(0, Math.max(cut.lastIndexOf(' '), n-20)).replace(/[,;:]$/, '') + ' …'; }
+function tdHash(str){ let h = 2166136261; for(let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+
+/* Bild zu einem kuratierten Kunstwerk: Leitbild des Wikipedia-Artikels, sonst Commons-Datei */
+function tdArtImage(a){
+  if(a.wiki){
+    const i = a.wiki.indexOf(':'), lang = a.wiki.slice(0, i), title = a.wiki.slice(i+1);
+    return tdOnce('artimg:' + a.wiki, 30*86400000, async ()=>{
+      const j = await tdFetchJSON(`https://${lang}.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail&pithumbsize=1200&redirects=1&format=json&formatversion=2&origin=*&titles=${encodeURIComponent(title)}`);
+      const pg = j && j.query && j.query.pages && j.query.pages[0];
+      return (pg && pg.thumbnail && pg.thumbnail.source) || null;
+    }).then(src => src || (a.file ? tdCommonsUrl(a.file, 1200) : ''));
+  }
+  return Promise.resolve(a.file ? tdCommonsUrl(a.file, 1200) : '');
+}
+function tdCommonsUrl(file, width){ return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=${width}`; }
+
+/* Wikimedia-Commons-Bild des Tages (Dateiname + Beschreibung über die Tagesvorlagen) */
+function tdPotd(iso){
+  return tdOnce('potd:' + iso, 0, async ()=>{
+    const SEP = '@@TDSEP@@';
+    const text = `{{Potd/${iso}}}${SEP}{{Potd/${iso} (de)}}${SEP}{{Potd/${iso} (en)}}`;
+    const j = await tdFetchJSON(`https://commons.wikimedia.org/w/api.php?action=expandtemplates&prop=wikitext&format=json&formatversion=2&origin=*&text=${encodeURIComponent(text)}`);
+    const raw = (j && j.expandtemplates && j.expandtemplates.wikitext) || '';
+    const parts = raw.split(SEP).map(s=>s.trim());
+    const missing = s => !s || /^\[\[:/.test(s);
+    let file = missing(parts[0]) ? '' : wikiToText(parts[0]).replace(/^(File|Datei|Image):/i, '').trim();
+    if(!/\.(jpe?g|png|tiff?|gif|webp)$/i.test(file)) return null;
+    const de = missing(parts[1]) ? '' : wikiToText(parts[1]);
+    const en = missing(parts[2]) ? '' : wikiToText(parts[2]);
+    return { file, caption: tdShorten(de || en, 420), lang: de ? 'de' : 'en' };
+  });
+}
+
+/* „Was geschah am …" aus dem deutschen Wikipedia-Datumsartikel */
+function tdParseEvents(text){
+  const lines = String(text||'').split('\n');
+  const start = lines.findIndex(l=>/^==\s*Ereignisse\s*==\s*$/.test(l.trim()));
+  if(start<0) return [];
+  const out = []; let cat = 'Allgemein', pendingYear = null;
+  for(const raw of lines.slice(start+1)){
+    const line = raw.replace(/^[\s*•·\-–]+/, '').trim();
+    if(/^==[^=]/.test(raw.trim())) break;
+    const h = raw.trim().match(/^===+\s*(.+?)\s*===+$/);
+    if(h){ cat = h[1]; pendingYear = null; continue; }
+    if(!line) continue;
+    const m = line.match(/^(\d{1,4})(\s*v\.\s*Chr\.)?\s*:\s*(.*)$/);
+    if(m){
+      if(m[2]){ pendingYear = null; continue; }
+      const y = parseInt(m[1], 10);
+      if(m[3]) out.push({ year:y, text:m[3], cat }); else pendingYear = y;
+      continue;
+    }
+    if(pendingYear!==null) out.push({ year:pendingYear, text:line, cat });
+  }
+  return out;
+}
+function tdWikiEvents(d){
+  const title = `${d.getDate()}. ${MONTH_NAMES[d.getMonth()]}`;
+  return tdOnce('wpev:' + todayKey(d), 30*86400000, async ()=>{
+    const j = await tdFetchJSON(`https://de.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&exsectionformat=wiki&redirects=1&format=json&formatversion=2&origin=*&titles=${encodeURIComponent(title)}`, 12000);
+    const pg = j && j.query && j.query.pages && j.query.pages[0];
+    const items = tdParseEvents(pg && pg.extract).filter(e=>e.year>=1789 && e.text.length>=20);
+    if(!items.length) return null;
+    /* Pro Datum fest ausgewählt: je ein Ereignis aus verschiedenen Bereichen, dann auffüllen */
+    const seed = tdHash(title);
+    const order = ['Gesellschaft','Politik und Weltgeschehen','Wissenschaft und Technik','Kultur','Wirtschaft','Religion','Katastrophen','Sport'];
+    const shuffled = items.map((e,i)=>({ e, k:tdHash(seed + ':' + i + e.text) })).sort((a,b)=>a.k-b.k).map(x=>x.e);
+    const picked = [];
+    order.forEach(c=>{ if(picked.length<4){ const f = shuffled.find(e=>e.cat===c && !picked.includes(e)); if(f) picked.push(f); } });
+    shuffled.forEach(e=>{ if(picked.length<4 && !picked.includes(e)) picked.push(e); });
+    return { title, items: picked.sort((a,b)=>a.year-b.year).map(e=>({ year:e.year, text:tdShorten(e.text, 260) })) };
+  });
+}
+
+/* Art Institute of Chicago: gemeinfreies Werk des Tages (für beide Geräte dasselbe) */
+function tdMuseum(d){
+  const idx = tdDayIndex(d);
+  return tdOnce('museum:' + tdIso(d), 0, async ()=>{
+    const base = 'https://api.artic.edu/api/v1/artworks/search';
+    const fields = 'id,title,artist_display,date_display,image_id,medium_display,short_description,is_public_domain';
+    const valid = it => it && it.image_id && it.is_public_domain===true;
+    const highlights = encodeURIComponent(JSON.stringify({ query:{ bool:{ must:[ {term:{is_public_domain:true}}, {term:{is_boosted:true}}, {exists:{field:'image_id'}} ] } } }));
+    const attempts = [
+      `${base}?params=${highlights}&limit=10&page=${(idx % 40) + 1}&fields=${fields}`,
+      `${base}?query[term][is_public_domain]=true&limit=10&page=${(idx % 400) + 1}&fields=${fields}`
+    ];
+    for(const url of attempts){
+      try{
+        const j = await tdFetchJSON(url);
+        const list = (j && j.data) || [];
+        let it = null;
+        for(let k=0;k<list.length;k++){ const c = list[(idx + k) % list.length]; if(valid(c)){ it = c; break; } }
+        if(!it) continue;
+        const iiif = (j.config && j.config.iiif_url) || 'https://www.artic.edu/iiif/2';
+        return {
+          id: it.id, title: it.title || 'Ohne Titel', artist: tdStripHtml(it.artist_display || ''), date: it.date_display || '',
+          medium: it.medium_display || '', desc: tdShorten(tdStripHtml(it.short_description || ''), 420),
+          img: `${iiif}/${it.image_id}/full/843,/0/default.jpg`
+        };
+      }catch(e){}
+    }
+    return null;
+  });
+}
+
+function tdOpenLightbox(src, meta){
+  if(!src) return;
+  $('#lightboxImg').src = src;
+  $('#lightboxMeta').textContent = meta || '';
+  $('#lightboxDelete').style.display = 'none';
+  $('#lightbox').style.display = 'flex';
+}
+function tdImgHTML(id, alt){ return `<div class="td-skel" id="${id}Skel"></div><img class="td-img" id="${id}" alt="${escapeHtml(alt||'')}" style="display:none;">`; }
+function tdShowImg(id, src, meta, token){
+  const img = document.getElementById(id), sk = document.getElementById(id + 'Skel');
+  if(!img || token!==todayRenderToken) return;
+  if(!src){ img.remove(); if(sk) sk.remove(); return; }
+  img.onload = ()=>{ if(sk) sk.remove(); img.style.display = 'block'; };
+  img.onerror = ()=>{ if(sk) sk.remove(); img.remove(); };
+  img.onclick = ()=> tdOpenLightbox(src, meta);
+  img.src = src;
+}
+function tdCard(label, inner, extraClass){ return `<div class="balance-card ${extraClass||''}"><div class="label">${label}</div>${inner}</div>`; }
+function tdNextAnniversary(d){
+  for(let i=1;i<=366;i++){
+    const n = new Date(d); n.setDate(n.getDate()+i);
+    const ev = FACTS_BY_DATE[todayKey(n)];
+    if(ev) return { date:n, ev:ev[0], offset:i };
+  }
+  return null;
+}
+
+function renderToday(){
+  const token = ++todayRenderToken;
+  const d = tdDate();
+  const isToday = todayOffset===0;
+  $('#todayDateLabel').textContent = `${TD_WEEKDAYS[d.getDay()]}, ${d.getDate()}. ${MONTH_NAMES[d.getMonth()]} ${d.getFullYear()}`;
+  $('#todayBack').style.display = isToday ? 'none' : 'inline-block';
+  $('#todayPrev').disabled = todayOffset<=TD_MIN_OFFSET;
+  $('#todayNext').disabled = todayOffset>=TD_MAX_OFFSET;
+  const dayWord = isToday ? 'heute' : `am ${d.getDate()}. ${MONTH_NAMES[d.getMonth()]}`;
+
+  /* 1 — Jahrestage (kuratiert) + Wikipedia */
+  const evs = FACTS_BY_DATE[todayKey(d)] || [];
+  let hist = evs.map(e=>`<div class="td-ev"><span class="td-year">${escapeHtml(e.year)}</span><div class="td-title">${escapeHtml(e.title)}</div><div class="td-text">${escapeHtml(e.blurb)}</div></div>`).join('');
+  if(!evs.length){
+    const nx = tdNextAnniversary(d);
+    hist = nx
+      ? `<div class="td-text" style="color:var(--muted);">Für diesen Tag steht nichts in eurer Sammlung. Nächster Jahrestag: <button class="td-link" id="tdJumpNext" type="button">${nx.date.getDate()}. ${MONTH_NAMES[nx.date.getMonth()]} — ${escapeHtml(nx.ev.title)}</button></div>`
+      : '';
+  }
+  hist += `<div id="tdWikiEvents"><div class="td-sub">Außerdem ${dayWord} <span class="td-loading">· lädt …</span></div></div>`;
+  $('#tdHistory').innerHTML = tdCard(isToday ? 'Am heutigen Tag' : `Am ${d.getDate()}. ${MONTH_NAMES[d.getMonth()]}`, hist);
+  const jump = $('#tdJumpNext');
+  if(jump){ const nx = tdNextAnniversary(d); jump.onclick = ()=>{ todayOffset = Math.min(TD_MAX_OFFSET, todayOffset + nx.offset); renderToday(); window.scrollTo(0,0); }; }
+  tdWikiEvents(d).then(r=>{
+    if(token!==todayRenderToken) return;
+    const box = $('#tdWikiEvents');
+    if(!r || !r.items.length){ box.remove(); return; }
+    box.innerHTML = `<div class="td-sub">Außerdem ${dayWord}</div>` +
+      r.items.map(e=>`<div class="td-wev"><span class="td-year">${e.year}</span> ${escapeHtml(e.text)}</div>`).join('') +
+      `<div class="td-src">Quelle: <a href="https://de.wikipedia.org/wiki/${encodeURIComponent(r.title.replace(/ /g,'_'))}" target="_blank" rel="noopener">Wikipedia, „${escapeHtml(r.title)}"</a> (CC BY-SA)</div>`;
+  });
+
+  /* 2 — Kunstwerk des Tages (kuratiert) */
+  const art = tdPick(ART_WORKS, d, 0);
+  $('#tdArt').innerHTML = tdCard('Kunstwerk des Tages',
+    tdImgHTML('tdArtImg', art.title) +
+    `<div class="td-title">${escapeHtml(art.title)}</div><div class="td-meta">${escapeHtml(art.artist)} · ${escapeHtml(art.year)}</div><div class="td-text">${escapeHtml(art.blurb)}</div>`);
+  tdArtImage(art).then(src=>tdShowImg('tdArtImg', src, `${art.artist} — ${art.title} (${art.year})`, token));
+
+  /* 3 — Zitat des Tages */
+  const q = tdPick(QUOTES_FACTS, d, 11);
+  $('#tdQuote').innerHTML = tdCard('Zitat des Tages',
+    `<div class="td-quote">„${escapeHtml(q.quote)}"</div><div class="td-meta" style="margin-top:8px;"><b style="color:var(--ink);font-weight:600;">${escapeHtml(q.person)}</b> · ${escapeHtml(q.role)}</div><div class="td-src" style="margin-top:4px;">${escapeHtml(q.context)}</div>`);
+
+  /* 4 — Bild des Tages (Wikimedia Commons) */
+  $('#tdPotd').innerHTML = tdCard('Bild des Tages', tdImgHTML('tdPotdImg', 'Bild des Tages') + `<div id="tdPotdText"></div>`);
+  tdPotd(tdIso(d)).then(p=>{
+    if(token!==todayRenderToken) return;
+    if(!p){ $('#tdPotd').innerHTML = ''; return; }
+    tdShowImg('tdPotdImg', tdCommonsUrl(p.file, 1200), p.caption, token);
+    $('#tdPotdText').innerHTML = (p.caption ? `<div class="td-text">${escapeHtml(p.caption)}${p.lang==='en' ? ' <span class="td-src">(englisch)</span>' : ''}</div>` : '') +
+      `<div class="td-src"><a href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(p.file.replace(/ /g,'_'))}" target="_blank" rel="noopener">Wikimedia Commons</a> — Urheber:in und Lizenz auf der Bildseite</div>`;
+  });
+
+  /* 5 — Aus dem Museum (Art Institute of Chicago, gemeinfrei) */
+  $('#tdMuseum').innerHTML = tdCard('Aus dem Museum', tdImgHTML('tdMuseumImg', 'Museumsstück') + `<div id="tdMuseumText"></div>`);
+  tdMuseum(d).then(m=>{
+    if(token!==todayRenderToken) return;
+    if(!m){ $('#tdMuseum').innerHTML = ''; return; }
+    tdShowImg('tdMuseumImg', m.img, `${m.artist ? m.artist.split('\n')[0] + ' — ' : ''}${m.title}`, token);
+    $('#tdMuseumText').innerHTML = `<div class="td-title">${escapeHtml(m.title)}</div>` +
+      `<div class="td-meta">${escapeHtml([m.artist.split('\n')[0], m.date].filter(Boolean).join(' · '))}</div>` +
+      (m.medium ? `<div class="td-meta">${escapeHtml(m.medium)}</div>` : '') +
+      (m.desc ? `<div class="td-text">${escapeHtml(m.desc)} <span class="td-src">(Museumstext, englisch)</span></div>` : '') +
+      `<div class="td-src"><a href="https://www.artic.edu/artworks/${m.id}" target="_blank" rel="noopener">Art Institute of Chicago</a> · gemeinfrei</div>`;
+  });
+
+  /* 6 — Natur & Meer */
+  const n = tdPick(NATURE_FACTS, d, 5);
+  $('#tdNature').innerHTML = tdCard('Natur & Meer', `<div class="td-title">${escapeHtml(n.title)}</div><div class="td-text">${escapeHtml(n.text)}</div>`);
+}
+$('#todayPrev').addEventListener('click', ()=>{ if(todayOffset>TD_MIN_OFFSET){ todayOffset--; renderToday(); } });
+$('#todayNext').addEventListener('click', ()=>{ if(todayOffset<TD_MAX_OFFSET){ todayOffset++; renderToday(); } });
+$('#todayBack').addEventListener('click', ()=>{ todayOffset = 0; renderToday(); });
+
+/* Kompakte Vorschau oben auf der Aufgabenseite — Tippen öffnet „Heute" */
+function renderDailyFact(){
+  const d = tdDate(0);
+  const evs = FACTS_BY_DATE[todayKey(d)];
+  const img = $('#dailyFactImg');
+  $('#dailyFactCard .label').textContent = 'Heute · Bilder & Fakten';
+  const more = $('#dailyFactBlurb');
+  more.style.display = 'block';
+  more.style.color = 'var(--muted)';
+  more.style.fontSize = '.78rem';
+  more.textContent = 'Kunstwerk, Zitat, Bild des Tages und mehr →';
+  if(evs && evs.length){
     img.style.display = 'none';
     img.removeAttribute('src');
-    $('#dailyFactTitle').textContent = dateFact.title;
-    $('#dailyFactMeta').textContent = `Am heutigen Tag · ${dateFact.year}`;
-    $('#dailyFactBlurb').textContent = dateFact.blurb;
+    $('#dailyFactTitle').textContent = evs[0].title;
+    $('#dailyFactMeta').textContent = `Am heutigen Tag · ${evs[0].year}` + (evs.length>1 ? ` · +${evs.length-1} weitere` : '');
     return;
   }
-
-  const pool = CULTURE_FACTS.length + QUOTES_FACTS.length;
-  const idx = dayOfYear(today) % pool;
-
-  if(idx < CULTURE_FACTS.length){
-    const f = CULTURE_FACTS[idx];
-    $('#dailyFactTitle').textContent = `${f.title} (${f.year})`;
-    $('#dailyFactMeta').textContent = f.artist;
-    $('#dailyFactBlurb').textContent = f.blurb;
-    const url = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f.file)}?width=800`;
-    img.onerror = () => { img.style.display = 'none'; };
-    img.onload = () => { img.style.display = 'block'; };
-    img.src = `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(f.file)}?width=200`;
-    img.style.cursor = 'zoom-in';
-    img.onclick = (e) => {
-      e.stopPropagation();
-      $('#lightboxImg').src = url;
-      $('#lightboxMeta').textContent = `${f.artist} — ${f.title} (${f.year})`;
-      $('#lightboxDelete').style.display = 'none';
-      $('#lightbox').style.display = 'flex';
-    };
-  } else {
-    const q = QUOTES_FACTS[idx - CULTURE_FACTS.length];
-    img.style.display = 'none';
-    img.removeAttribute('src');
-    $('#dailyFactTitle').textContent = `„${q.quote}"`;
-    $('#dailyFactMeta').textContent = `${q.person} · ${q.role}`;
-    $('#dailyFactBlurb').textContent = q.context;
-  }
+  const a = tdPick(ART_WORKS, d, 0);
+  img.style.display = 'none';
+  $('#dailyFactTitle').textContent = `${a.title} (${a.year})`;
+  $('#dailyFactMeta').textContent = a.artist;
+  img.onerror = ()=>{ img.style.display = 'none'; };
+  img.onload = ()=>{ img.style.display = 'block'; };
+  tdArtImage(a).then(src=>{ if(src) img.src = src; else img.style.display = 'none'; });
 }
-$('#dailyFactCard').addEventListener('click', ()=>{
-  const b = $('#dailyFactBlurb');
-  b.style.display = b.style.display==='block' ? 'none' : 'block';
-});
+$('#dailyFactCard').addEventListener('click', ()=> switchToTab('today'));
 renderDailyFact();
 
 /* ---------- Identity (local, per device) ---------- */
@@ -1417,6 +1942,7 @@ function switchToTab(name){
   if(name==='learn') renderLearn();
   if(name==='feelings') renderFeelings();
   if(name==='vault') renderVault();
+  if(name==='today') renderToday();
 }
 $$('.tab').forEach(tab=>{
   tab.addEventListener('click', ()=> switchToTab(tab.dataset.tab));
@@ -1457,7 +1983,7 @@ function applyTheme(key){
   root.setProperty('--coral', t.coral);
   root.setProperty('--violet', t.violet);
   TAB_ACCENT.tasks = t.mid; TAB_ACCENT.shopping = t.amber; TAB_ACCENT.cleaning = t.sage;
-  TAB_ACCENT.expenses = t.coral; TAB_ACCENT.photos = t.violet; TAB_ACCENT.calendar = t.tide; TAB_ACCENT.library = t.violet; TAB_ACCENT.learn = t.sage; TAB_ACCENT.feelings = t.amber; TAB_ACCENT.vault = t.tide;
+  TAB_ACCENT.expenses = t.coral; TAB_ACCENT.photos = t.violet; TAB_ACCENT.calendar = t.tide; TAB_ACCENT.library = t.violet; TAB_ACCENT.learn = t.sage; TAB_ACCENT.feelings = t.amber; TAB_ACCENT.vault = t.tide; TAB_ACCENT.today = t.amber;
   const activeTab = document.querySelector('.tab.active');
   const name = activeTab ? activeTab.dataset.tab : 'tasks';
   const pathEl = $('#tidePath');

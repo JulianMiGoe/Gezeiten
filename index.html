@@ -549,7 +549,8 @@ nav.bottom{
       Mit Google anmelden
     </button>
   </div>
-  <div id="loginError" style="color:#E8A98F; font-size:.85rem; min-height:1.2em; text-align:center;"></div>
+  <button id="loginReset" type="button" style="background:none; border:none; color:#9FBDB6; font-family:'Inter'; font-size:.8rem; text-decoration:underline; cursor:pointer; padding:4px;">Passwort vergessen?</button>
+  <div id="loginError" role="alert" style="color:#E8A98F; font-size:.85rem; min-height:1.2em; text-align:center; max-width:300px; line-height:1.45;"></div>
 </div>
 
 <div id="identityScreen" class="identity-screen" style="display:none;">
@@ -6827,15 +6828,41 @@ $('#loginForm').addEventListener('submit', async (e)=>{
       }catch(_){}
     }
   }catch(err){
-    $('#loginError').textContent = 'Anmeldung fehlgeschlagen — E-Mail oder Passwort prüfen.';
+    $('#loginError').textContent = loginErrorText(err);
   }
 });
-$('#googleLoginBtn').addEventListener('click', ()=>{
+/* verständliche Fehlermeldung — mit Fehlercode, damit sich die Ursache eingrenzen lässt */
+function loginErrorText(err){
+  const code = (err && err.code) || '', msg = String((err && err.message) || '');
+  if(/api-key|API key|referer|referrer|blocked/i.test(code + ' ' + msg)) return 'Firebase lehnt diese Seite ab (API-Schlüssel eingeschränkt). In Google Cloud beim Firebase-Schlüssel die Einschränkungen prüfen. [' + (code || 'api-key') + ']';
+  if(/invalid-credential|wrong-password|user-not-found|invalid-login-credentials|invalid-email/.test(code)) return 'E-Mail oder Passwort stimmt nicht. Unten kannst du das Passwort zurücksetzen. [' + code + ']';
+  if(code==='auth/too-many-requests') return 'Zu viele Versuche — bitte ein paar Minuten warten oder das Passwort zurücksetzen.';
+  if(code==='auth/network-request-failed') return 'Keine Verbindung zu Firebase — Internet, Werbeblocker oder DNS-Filter prüfen.';
+  if(code==='auth/unauthorized-domain') return 'Diese Adresse ist in Firebase nicht als Domain freigegeben (Authentication → Einstellungen → Autorisierte Domains).';
+  if(code==='auth/popup-closed-by-user' || code==='auth/cancelled-popup-request') return '';
+  if(code==='auth/operation-not-allowed') return 'Diese Anmeldeart ist in Firebase ausgeschaltet (Authentication → Anmeldemethode). [' + code + ']';
+  return 'Anmeldung fehlgeschlagen: ' + (code || msg || 'unbekannter Fehler');
+}
+/* Google: zuerst Popup (funktioniert mit heutigen Browsern auf GitHub Pages), sonst Weiterleitung */
+$('#googleLoginBtn').addEventListener('click', async ()=>{
   $('#loginError').textContent = '';
-  auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider());
+  const provider = new firebase.auth.GoogleAuthProvider();
+  provider.setCustomParameters({ prompt:'select_account' });
+  try{ await auth.signInWithPopup(provider); }
+  catch(err){
+    if(err && (err.code==='auth/popup-blocked' || err.code==='auth/operation-not-supported-in-this-environment')){
+      try{ await auth.signInWithRedirect(provider); }catch(e2){ $('#loginError').textContent = loginErrorText(e2); }
+    } else $('#loginError').textContent = loginErrorText(err);
+  }
+});
+$('#loginReset').addEventListener('click', async ()=>{
+  const email = $('#loginEmail').value.trim();
+  if(!email){ $('#loginError').textContent = 'Bitte oben zuerst deine E-Mail-Adresse eintragen.'; $('#loginEmail').focus(); return; }
+  try{ await auth.sendPasswordResetEmail(email); $('#loginError').textContent = 'Falls es für ' + email + ' ein Konto gibt, ist jetzt eine E-Mail zum Zurücksetzen unterwegs (auch im Spam-Ordner nachsehen).'; }
+  catch(err){ $('#loginError').textContent = loginErrorText(err); }
 });
 auth.getRedirectResult().catch(err=>{
-  $('#loginError').textContent = 'Anmeldung fehlgeschlagen: ' + (err.message || 'unbekannter Fehler');
+  $('#loginError').textContent = loginErrorText(err);
 });
 auth.onAuthStateChanged(user=>{
   if(user){

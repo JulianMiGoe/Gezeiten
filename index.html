@@ -230,6 +230,9 @@ button.item{ font-family:inherit; color:inherit; }
 .today-date{ font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--heading); }
 .today-back{ background:none; border:none; color:var(--accent); font-size:.78rem; cursor:pointer; padding:2px 4px; font-family:'Inter'; }
 .td-img{ display:block; width:100%; max-height:320px; object-fit:cover; border-radius:12px; margin:10px 0 8px; background:var(--foam); cursor:zoom-in; }
+.td-img.td-whole{ max-height:440px; object-fit:contain; }
+.td-tags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.td-tags .tag{ font-weight:500; }
 .td-skel{ height:190px; border-radius:12px; margin:10px 0 8px; background:linear-gradient(90deg, var(--foam) 25%, var(--line) 50%, var(--foam) 75%); background-size:200% 100%; animation:tdshim 1.4s ease-in-out infinite; }
 @keyframes tdshim{ from{ background-position:200% 0; } to{ background-position:-200% 0; } }
 .td-title{ font-family:'Fraunces',serif; font-weight:600; font-size:1.02rem; color:var(--ink); line-height:1.3; margin-top:2px; }
@@ -809,11 +812,13 @@ nav.bottom{
       </div>
       <div id="tdHistory"></div>
       <div id="tdArt"></div>
+      <div id="tdArt2"></div>
       <div id="tdQuote"></div>
       <div id="tdPotd"></div>
       <div id="tdMuseum"></div>
+      <div id="tdMet"></div>
       <div id="tdNature"></div>
-      <div class="td-src" style="text-align:center; margin:4px 0 12px;">Bilder: Wikipedia &amp; Wikimedia Commons, Art Institute of Chicago. Jahrestage, Kunst- und Naturtexte sind eigene Zusammenfassungen.</div>
+      <div class="td-src" style="text-align:center; margin:4px 0 12px;">Bilder: Wikipedia &amp; Wikimedia Commons, Art Institute of Chicago, Metropolitan Museum of Art. Jahrestage, Kunst- und Naturtexte sind eigene Zusammenfassungen.</div>
     </section>
 
     <!-- SPORT -->
@@ -1426,6 +1431,245 @@ const ART_WORKS = [
 ];
 
 /* Zitate: Übersetzungen ins Deutsche, Quelle jeweils angegeben */
+/* Kunst & Gesellschaft aus aller Welt — Arbeit, Armut, Protest, Revolution (kuratiert) */
+const SOCIAL_ART = [
+  { artist:'Diego Rivera', title:'Detroit Industry', year:'1932–33', place:'USA', kind:'Wandbild', wiki:'en:Detroit Industry Murals', q:'Diego Rivera Detroit Industry Murals',
+    blurb:'27 Freskotafeln im Detroit Institute of Arts zeigen Arbeiter:innen an den Fließbändern der Ford-Werke River Rouge — Rivera feiert die Arbeit und zeigt zugleich, wie Mensch und Maschine ineinander verschlungen sind. Bezahlt hat ausgerechnet Edsel Ford.' },
+  { artist:'Diego Rivera', title:'Der Mensch am Scheideweg', year:'1934', place:'Mexiko', kind:'Wandbild', wiki:'en:Man at the Crossroads', q:'Diego Rivera Man at the Crossroads',
+    blurb:'Ursprünglich für das Rockefeller Center in New York gemalt. Weil Rivera Lenin ins Bild setzte und nicht übermalen wollte, ließ Nelson Rockefeller das Fresko 1934 abschlagen — Rivera malte es im Palacio de Bellas Artes in Mexiko-Stadt neu.' },
+  { artist:'Diego Rivera', title:'Der Blumenträger', year:'1935', place:'Mexiko', kind:'Malerei', q:'Diego Rivera The Flower Carrier 1935',
+    blurb:'Ein Mann bricht unter einem riesigen Korb voller Blumen fast zusammen, eine Frau stützt die Last — Schönheit für andere, Mühe für die, die sie tragen. Heute im San Francisco Museum of Modern Art.' },
+  { artist:'Diego Rivera', title:'Traum eines Sonntagnachmittags im Alameda-Park', year:'1947', place:'Mexiko', kind:'Wandbild', q:'Rivera Sueño de una tarde dominical en la Alameda Central',
+    blurb:'400 Jahre mexikanische Geschichte als Spaziergang: Eroberer, Diktator Porfirio Díaz, Revolutionäre, die Skelettdame Catrina und Rivera selbst als Kind an ihrer Hand. Den Satz „Gott existiert nicht" musste er nach Protesten übermalen.' },
+  { artist:'David Alfaro Siqueiros', title:'Echo eines Schreis', year:'1937', place:'Mexiko', kind:'Malerei', q:'Siqueiros Echo of a Scream 1937',
+    blurb:'Ein weinendes Kleinkind in einer Landschaft aus Trümmern und Industrieschrott — gemalt im Jahr der Bombardierung Guernicas. Siqueiros kämpfte danach selbst im Spanischen Bürgerkrieg auf republikanischer Seite. Museum of Modern Art, New York.' },
+  { artist:'David Alfaro Siqueiros', title:'Vom Porfirismus zur Revolution', year:'1957–66', place:'Mexiko', kind:'Wandbild', q:'Siqueiros Del porfirismo a la revolución',
+    blurb:'Im Schloss Chapultepec erheben sich die streikenden Bergleute von Cananea und Textilarbeiter:innen von Río Blanco gegen das Díaz-Regime — der Auftakt der Mexikanischen Revolution. Siqueiros saß zwischendurch vier Jahre als politischer Häftling im Gefängnis.' },
+  { artist:'José Clemente Orozco', title:'Das Epos der amerikanischen Zivilisation', year:'1932–34', place:'USA', kind:'Wandbild', wiki:'en:The Epic of American Civilization', q:'Orozco Epic of American Civilization Dartmouth',
+    blurb:'In der Bibliothek des Dartmouth College erzählt Orozco Amerikas Geschichte von den Azteken bis zur Industriegesellschaft — mit bitterer Kritik an Eroberung, Militarismus und einer Universität, die tote Wissenschaft gebiert.' },
+  { artist:'José Clemente Orozco', title:'Zapatistas', year:'1931', place:'Mexiko', kind:'Malerei', q:'Orozco Zapatistas 1931 painting',
+    blurb:'Bäuerliche Revolutionärinnen und Revolutionäre ziehen gesichtslos, mit Sombreros und Macheten, in einer schweren Diagonale durchs Bild — keine Heldenpose, sondern eine kollektive Bewegung.' },
+  { artist:'Frida Kahlo', title:'Selbstbildnis an der Grenze zwischen Mexiko und den USA', year:'1932', place:'Mexiko', kind:'Malerei', wiki:'en:Self-Portrait on the Borderline Between Mexico and the United States', q:'Frida Kahlo Self-Portrait on the Borderline between Mexico and the United States',
+    blurb:'Links präkolumbische Ruinen, Sonne, Mond und Blüten, rechts Fabrikschlote, Maschinen und die Ford-Werke: Kahlo malte das Bild in Detroit, voller Heimweh und Skepsis gegenüber der US-Industriegesellschaft.' },
+  { artist:'José Guadalupe Posada', title:'La Calavera Catrina', year:'um 1910', place:'Mexiko', kind:'Druckgrafik', wiki:'en:La Calavera Catrina', q:'Posada La Calavera Catrina',
+    blurb:'Ein Skelett mit feinem französischem Hut verspottet die Oberschicht, die sich unter Diktator Porfirio Díaz europäisch gab: Im Tod sind alle gleich. Heute die Symbolfigur des Día de Muertos.' },
+  { artist:'Cândido Portinari', title:'Krieg und Frieden', year:'1952–56', place:'Brasilien', kind:'Wandbild', wiki:'en:War and Peace (Portinari)', q:'Portinari War and Peace United Nations',
+    blurb:'Zwei je rund 14 Meter hohe Tafeln im UN-Hauptquartier: Leid und Krieg auf der einen, Arbeit, Spiel und Gemeinschaft auf der anderen Seite. Portinari, Kommunist, bekam für die Einweihung kein Visum für die USA.' },
+  { artist:'Cândido Portinari', title:'Retirantes (Die Vertriebenen)', year:'1944', place:'Brasilien', kind:'Malerei', q:'Portinari Retirantes 1944',
+    blurb:'Eine ausgezehrte Familie flieht vor der Dürre im Nordosten Brasiliens, über ihr kreisen Geier. Portinari kannte die Flüchtenden aus seiner Kindheit auf den Kaffeeplantagen. Museu de Arte de São Paulo.' },
+  { artist:'Antonio Berni', title:'Manifestación', year:'1934', place:'Argentinien', kind:'Malerei', wiki:'es:Manifestación (Berni)', q:'Antonio Berni Manifestación 1934',
+    blurb:'Arbeitslose Männer, Frauen und Kinder drängen sich unter dem Transparent „Pan y trabajo" — Brot und Arbeit. Gemalt in der Weltwirtschaftskrise, mitten in Argentiniens „Infamem Jahrzehnt".' },
+  { artist:'Tarsila do Amaral', title:'Operários (Arbeiter)', year:'1933', place:'Brasilien', kind:'Malerei', q:'Tarsila do Amaral Operários 1933',
+    blurb:'Dutzende Gesichter unterschiedlichster Herkunft, dicht gestaffelt vor rauchenden Fabrikschloten — die multiethnische Arbeiterklasse São Paulos. Tarsila hatte kurz zuvor die Sowjetunion bereist.' },
+  { artist:'Alberto Korda', title:'Guerrillero Heroico', year:'1960', place:'Kuba', kind:'Fotografie', wiki:'en:Guerrillero Heroico', q:'Korda Guerrillero Heroico',
+    blurb:'Aufgenommen bei einer Trauerfeier in Havanna. Che Guevaras Blick wurde zum wohl meistreproduzierten Foto der Welt — auf Fahnen, Postern und T-Shirts, und damit auch ein Lehrstück darüber, wie Revolution zur Ware wird.' },
+  { artist:'Brigada Ramona Parra', title:'Wandbilder für Allende', year:'ab 1968', place:'Chile', kind:'Wandbild', q:'Brigada Ramona Parra mural',
+    blurb:'Die Wandmalbrigade der Kommunistischen Jugend Chiles bemalte für Salvador Allende ganze Straßenzüge in kräftigen Konturen und flachen Farben. Nach dem Putsch 1973 wurde übermalt — die Brigade malt bis heute.' },
+  { artist:'Ben Shahn', title:'Die Passion von Sacco und Vanzetti', year:'1931–32', place:'USA', kind:'Malerei', wiki:'en:The Passion of Sacco and Vanzetti', q:'Ben Shahn Passion of Sacco and Vanzetti',
+    blurb:'Die italienischen Anarchisten Nicola Sacco und Bartolomeo Vanzetti wurden 1927 nach einem umstrittenen Prozess hingerichtet. Shahn zeigt sie im Sarg, darüber die Kommission, die das Urteil bestätigt hatte.' },
+  { artist:'Jacob Lawrence', title:'Die Migrations-Serie', year:'1940–41', place:'USA', kind:'Malerei', wiki:'en:Migration Series', q:'Jacob Lawrence Migration Series',
+    blurb:'60 kleine Tafeln erzählen die Great Migration: Millionen Afroamerikaner:innen flohen vor Rassismus und Armut aus dem Süden in die Industriestädte des Nordens. Lawrence war bei der Arbeit daran gerade 23.' },
+  { artist:'Fotograf umstritten', title:'Mittagspause auf dem Wolkenkratzer', year:'1932', place:'USA', kind:'Fotografie', wiki:'en:Lunch atop a Skyscraper', q:'Lunch atop a Skyscraper',
+    blurb:'Elf Stahlarbeiter essen ungesichert auf einem Träger hoch über Manhattan. Ein inszeniertes Werbefoto für das Rockefeller Center — und trotzdem die Ikone der Bauarbeiter, viele von ihnen Einwanderer.' },
+  { artist:'Jacob Riis', title:'How the Other Half Lives', year:'1890', place:'USA', kind:'Fotografie', wiki:'en:How the Other Half Lives', q:'Jacob Riis How the Other Half Lives',
+    blurb:'Mit Blitzpulver fotografierte Riis die überfüllten Mietskasernen der New Yorker Lower East Side. Das Buch erschütterte die Mittelschicht und brachte erste Wohnungsreformen in Gang.' },
+  { artist:'Lewis Hine', title:'Breaker Boys', year:'1911', place:'USA', kind:'Fotografie', wiki:'en:Breaker boy', q:'Lewis Hine breaker boys Pittston 1911',
+    blurb:'Für das National Child Labor Committee fotografierte Hine Kinder, die in Pennsylvania zehn Stunden am Tag Schiefer aus der Kohle klaubten. Seine Bilder trugen entscheidend zu Gesetzen gegen Kinderarbeit bei.' },
+  { artist:'Dorothea Lange', title:'White Angel Breadline', year:'1933', place:'USA', kind:'Fotografie', q:'Dorothea Lange White Angel Breadline',
+    blurb:'Ein Mann lehnt mit Blechbecher an einem Zaun, abgewandt von der Schlange vor einer Armenspeisung in San Francisco — Langes erstes großes Sozialfoto, aufgenommen vom Fenster ihres Studios aus.' },
+  { artist:'Gordon Parks', title:'American Gothic, Washington, D.C.', year:'1942', place:'USA', kind:'Fotografie', q:'Gordon Parks American Gothic Ella Watson',
+    blurb:'Die Reinigungskraft Ella Watson steht mit Besen und Mopp vor der US-Flagge — Parks\' Antwort auf den Rassismus, den er in der Hauptstadt erlebte, angelehnt an Grant Woods berühmtes Gemälde.' },
+  { artist:'Walker Evans', title:'Allie Mae Burroughs', year:'1936', place:'USA', kind:'Fotografie', q:'Walker Evans Allie Mae Burroughs',
+    blurb:'Die Frau eines Baumwollpächters in Alabama, fotografiert für das Buch „Let Us Now Praise Famous Men" mit James Agee — eines der Gesichter der Großen Depression.' },
+  { artist:'Thomas Hart Benton', title:'America Today', year:'1930–31', place:'USA', kind:'Wandbild', wiki:'en:America Today', q:'Thomas Hart Benton America Today mural',
+    blurb:'Zehn Tafeln mit Stahlwerken, Baumwollfeldern, Ölbohrtürmen und Großstadtgedränge, gemalt am Beginn der Weltwirtschaftskrise — Arbeit als Motor und als Last des Landes. Heute im Metropolitan Museum.' },
+  { artist:'Norman Rockwell', title:'The Problem We All Live With', year:'1964', place:'USA', kind:'Malerei', wiki:'en:The Problem We All Live With', q:'Rockwell The Problem We All Live With',
+    blurb:'Die sechsjährige Ruby Bridges geht 1960 unter dem Schutz von US-Marshals in eine bis dahin weiße Schule in New Orleans. An der Wand ein rassistisches Schmähwort und eine zerplatzte Tomate.' },
+  { artist:'J. Howard Miller', title:'We Can Do It!', year:'1943', place:'USA', kind:'Plakat', wiki:'en:We Can Do It!', q:'We Can Do It poster Miller',
+    blurb:'Ursprünglich ein internes Plakat der Westinghouse-Werke gegen Fehlzeiten. Erst in den 1980ern wurde es als „Rosie the Riveter" zum feministischen Symbol für Frauen in der Industriearbeit.' },
+  { artist:'Keith Haring', title:'Crack Is Wack', year:'1986', place:'USA', kind:'Wandbild', wiki:'en:Crack Is Wack', q:'Keith Haring Crack Is Wack mural',
+    blurb:'Haring malte das Wandbild unerlaubt an einen Handballplatz in Harlem, als Warnung vor der Crack-Epidemie in den armen Vierteln. Er wurde festgenommen — die Stadt ließ das Bild dann stehen.' },
+  { artist:'Jean-Michel Basquiat', title:'Defacement (Der Tod von Michael Stewart)', year:'1983', place:'USA', kind:'Malerei', wiki:'en:Defacement (The Death of Michael Stewart)', q:'Basquiat Defacement Death of Michael Stewart',
+    blurb:'Basquiat malte das Bild direkt an eine Atelierwand, nachdem der junge Schwarze Graffiti-Künstler Michael Stewart nach einer Festnahme durch die New Yorker Transitpolizei gestorben war.' },
+  { artist:'Robert Koehler', title:'Der Streik', year:'1886', place:'USA / Deutschland', kind:'Malerei', q:'Robert Koehler The Strike 1886 painting',
+    blurb:'Vor der Villa des Fabrikbesitzers redet ein Arbeiter auf die Streikenden ein, eine Frau versucht ihn zurückzuhalten. Ausgestellt im Jahr des Haymarket-Aufstands in Chicago, heute im Deutschen Historischen Museum.' },
+  { artist:'Alfred Stieglitz', title:'Das Zwischendeck', year:'1907', place:'USA', kind:'Fotografie', wiki:'en:The Steerage', q:'Stieglitz The Steerage 1907',
+    blurb:'Passagiere der billigsten Klasse auf dem unteren Deck eines Ozeandampfers, darüber die Gangway zur besseren Gesellschaft. Stieglitz sah vor allem Formen — spätere Generationen ein Bild von Migration und Klassenschranken.' },
+  { artist:'Elizabeth Catlett', title:'Sharecropper', year:'1952', place:'USA / Mexiko', kind:'Linolschnitt', q:'Elizabeth Catlett Sharecropper linocut',
+    blurb:'Eine Pächterin mit Strohhut, von unten gesehen und monumental. Catlett arbeitete in Mexiko in der linken Druckwerkstatt Taller de Gráfica Popular und gab Schwarzen Landarbeiterinnen Würde.' },
+  { artist:'Aaron Douglas', title:'Aspects of Negro Life', year:'1934', place:'USA', kind:'Wandbild', q:'Aaron Douglas Aspects of Negro Life',
+    blurb:'Vier Tafeln führen von Afrika über Sklaverei und Emanzipation bis zur Industriearbeit im Norden — ein Hauptwerk der Harlem Renaissance, bezahlt vom Kunstprogramm des New Deal.' },
+  { artist:'Hale Woodruff', title:'Die Amistad-Wandbilder', year:'1938–39', place:'USA', kind:'Wandbild', q:'Hale Woodruff Amistad murals Talladega',
+    blurb:'Die Revolte afrikanischer Gefangener auf dem Sklavenschiff La Amistad 1839 und ihr Freispruch — gemalt zum hundertsten Jahrestag für das historisch Schwarze Talladega College in Alabama.' },
+  { artist:'Faith Ringgold', title:'American People Series #20: Die', year:'1967', place:'USA', kind:'Malerei', q:'Faith Ringgold American People Series 20 Die',
+    blurb:'Schwarze und weiße Menschen in Anzügen und Kleidern, blutverschmiert in einem Strudel der Gewalt — Ringgolds Antwort auf die Unruhen in den US-Städten der 1960er. Heute im Museum of Modern Art.' },
+  { artist:'Bernie Boston', title:'Flower Power', year:'1967', place:'USA', kind:'Fotografie', q:'Bernie Boston Flower Power 1967 Pentagon',
+    blurb:'Bei einer Demonstration gegen den Vietnamkrieg steckt ein junger Mann Nelken in die Gewehrläufe der Militärpolizei vor dem Pentagon.' },
+  { artist:'Käthe Kollwitz', title:'Ein Weberaufstand', year:'1893–97', place:'Deutschland', kind:'Grafikzyklus', wiki:'de:Ein Weberaufstand', q:'Käthe Kollwitz Weberaufstand',
+    blurb:'Angeregt von Gerhart Hauptmanns Drama über den schlesischen Weberaufstand von 1844: Not, Tod, Beratung, Sturm. Kaiser Wilhelm II. verhinderte, dass Kollwitz dafür eine Goldmedaille bekam.' },
+  { artist:'Käthe Kollwitz', title:'Bauernkrieg: Losbruch', year:'1902–03', place:'Deutschland', kind:'Radierung', q:'Käthe Kollwitz Losbruch Bauernkrieg',
+    blurb:'Die „Schwarze Anna" treibt mit erhobenen Armen die Bauern zum Aufstand — aus Kollwitz\' Radierzyklus über den Bauernkrieg von 1525, ihrem größten Werk.' },
+  { artist:'Käthe Kollwitz', title:'Nie wieder Krieg!', year:'1924', place:'Deutschland', kind:'Plakat', q:'Käthe Kollwitz Nie wieder Krieg 1924',
+    blurb:'Für den Mitteldeutschen Jugendtag in Leipzig: Ein junger Mensch reckt die Hand zum Schwur. Kollwitz hatte 1914 ihren Sohn Peter in den ersten Kriegswochen verloren.' },
+  { artist:'Käthe Kollwitz', title:'Gedenkblatt für Karl Liebknecht', year:'1919–20', place:'Deutschland', kind:'Holzschnitt', q:'Käthe Kollwitz Gedenkblatt Karl Liebknecht',
+    blurb:'Arbeiterinnen und Arbeiter nehmen Abschied vom ermordeten Karl Liebknecht. Kollwitz, selbst keine Kommunistin, zeichnete den Toten auf Bitten der Familie. Die Inschrift: „Die Lebenden dem Toten".' },
+  { artist:'George Grosz', title:'Stützen der Gesellschaft', year:'1926', place:'Deutschland', kind:'Malerei', wiki:'en:Pillars of Society (painting)', q:'George Grosz Stützen der Gesellschaft',
+    blurb:'Ein Jurist mit Bierkrug und Schmiss, ein Journalist mit Nachttopf auf dem Kopf, ein Abgeordneter, ein Pfarrer, Militär im Hintergrund — Grosz\' bissige Galerie der Kräfte, die die Weimarer Republik aushöhlten.' },
+  { artist:'Otto Dix', title:'Großstadt (Triptychon)', year:'1927–28', place:'Deutschland', kind:'Malerei', wiki:'en:Metropolis (Dix)', q:'Otto Dix Großstadt Triptychon',
+    blurb:'In der Mitte tanzt die feine Gesellschaft Charleston, auf den Seitenflügeln humpeln Kriegsversehrte an Prostituierten vorbei — die „Goldenen Zwanziger" von unten gesehen. Kunstmuseum Stuttgart.' },
+  { artist:'Otto Dix', title:'Der Krieg (Triptychon)', year:'1929–32', place:'Deutschland', kind:'Malerei', q:'Otto Dix Der Krieg Triptychon Dresden',
+    blurb:'In der Form eines Altarbilds: Ausmarsch, Gemetzel, Bergung, und in der Predella schlafende Soldaten wie im Grab. Dix hatte vier Jahre an der Front gestanden.' },
+  { artist:'John Heartfield', title:'Adolf, der Übermensch: Schluckt Gold und redet Blech', year:'1932', place:'Deutschland', kind:'Fotomontage', q:'Heartfield Adolf der Übermensch schluckt Gold',
+    blurb:'Ein Röntgenbild zeigt Hitlers Speiseröhre voller Goldmünzen — für die Arbeiter-Illustrierte-Zeitung, als Hinweis darauf, wer die NSDAP finanzierte. Heartfield floh 1933 nach Prag.' },
+  { artist:'John Heartfield', title:'Der Sinn des Hitlergrußes', year:'1932', place:'Deutschland', kind:'Fotomontage', q:'Heartfield Sinn des Hitlergrusses Millionen stehen hinter mir',
+    blurb:'Hinter Hitler steht ein übergroßer Geldgeber und legt Scheine in die zum Gruß erhobene Hand. Darunter: „Millionen stehen hinter mir — kleiner Mann bittet um große Gaben".' },
+  { artist:'Max Beckmann', title:'Die Nacht', year:'1918–19', place:'Deutschland', kind:'Malerei', q:'Max Beckmann Die Nacht 1919',
+    blurb:'Drei Eindringlinge quälen eine Familie in einer engen Dachkammer — Beckmanns Bild von Gewalt und Zerrissenheit im Deutschland nach Krieg und Revolution. Kunstsammlung NRW, Düsseldorf.' },
+  { artist:'Max Liebermann', title:'Die Netzflickerinnen', year:'1887–89', place:'Deutschland', kind:'Malerei', q:'Max Liebermann Netzflickerinnen Kunsthalle',
+    blurb:'Fischersfrauen in den Dünen von Katwijk flicken im Wind die Netze. Liebermann zeigte Arbeit ohne Pathos und wurde dafür als „Apostel der Hässlichkeit" beschimpft. Hamburger Kunsthalle.' },
+  { artist:'Max Liebermann', title:'Flachsscheuer in Laren', year:'1887', place:'Deutschland', kind:'Malerei', q:'Max Liebermann Flachsscheuer in Laren',
+    blurb:'Frauen und Mädchen spinnen in einer langen holländischen Scheune Flachs, Reihe um Reihe — eine nüchterne Studie von Handarbeit, die schon an die Fabrik erinnert. Alte Nationalgalerie Berlin.' },
+  { artist:'Otto Griebel', title:'Die Internationale', year:'1928–30', place:'Deutschland', kind:'Malerei', q:'Otto Griebel Die Internationale',
+    blurb:'Dicht gedrängt, Schulter an Schulter, singen Arbeiterinnen und Arbeiter die „Internationale". Griebel, Dresdner KPD-Mitglied, malte keine Helden, sondern eine Menge. Deutsches Historisches Museum.' },
+  { artist:'Felix Nussbaum', title:'Selbstbildnis mit Judenpass', year:'1943', place:'Deutschland / Belgien', kind:'Malerei', wiki:'en:Self-Portrait with Jewish Identity Card', q:'Felix Nussbaum Selbstbildnis mit Judenpass',
+    blurb:'Im Versteck in Brüssel gemalt: Nussbaum hält den Ausweis mit dem Stempel „JUIF – JOOD" hoch, hinter ihm eine Mauer. 1944 wurde er in Auschwitz ermordet. Felix-Nussbaum-Haus Osnabrück.' },
+  { artist:'Charlotte Salomon', title:'Leben? oder Theater?', year:'1940–42', place:'Deutschland / Frankreich', kind:'Gouachen', wiki:'en:Life? or Theatre?', q:'Charlotte Salomon Leben oder Theater',
+    blurb:'Über 700 Gouachen mit Text und Musikhinweisen — ein Singspiel in Bildern über ihre Familie, gemalt im französischen Exil. Salomon wurde 1943 schwanger in Auschwitz ermordet.' },
+  { artist:'Ernst Barlach', title:'Der Schwebende', year:'1927', place:'Deutschland', kind:'Skulptur', q:'Ernst Barlach Der Schwebende Güstrow',
+    blurb:'Statt Heldengedenken: ein schwebender Engel mit den Gesichtszügen von Käthe Kollwitz als Mahnmal für die Kriegstoten im Güstrower Dom. Die Nazis schmolzen ihn ein — ein heimlich gegossener Zweitguss überlebte.' },
+  { artist:'August Sander', title:'Jungbauern', year:'1914', place:'Deutschland', kind:'Fotografie', q:'August Sander Young Farmers 1914',
+    blurb:'Drei junge Bauern im Sonntagsanzug auf dem Weg zum Tanz, aus Sanders Porträtwerk „Menschen des 20. Jahrhunderts". Die Druckplatten seines Bildbands „Antlitz der Zeit" ließen die Nazis 1936 vernichten.' },
+  { artist:'Honoré Daumier', title:'Rue Transnonain, 15. April 1834', year:'1834', place:'Frankreich', kind:'Lithografie', q:'Daumier Rue Transnonain 1834',
+    blurb:'Ein Mann liegt erschlagen im Nachthemd neben seinem Bett, unter ihm ein totes Kind — nach einem Massaker der Armee an den Bewohner:innen eines Pariser Arbeiterhauses während eines Aufstands.' },
+  { artist:'Honoré Daumier', title:'Gargantua', year:'1831', place:'Frankreich', kind:'Lithografie', q:'Daumier Gargantua 1831 lithograph',
+    blurb:'König Louis-Philippe als birnenköpfiger Riese, der die Abgaben der Armen verschlingt und Privilegien für die Reichen ausscheidet. Daumier musste dafür sechs Monate ins Gefängnis.' },
+  { artist:'Honoré Daumier', title:'Die Wäscherin', year:'um 1863', place:'Frankreich', kind:'Malerei', q:'Daumier La Blanchisseuse Orsay',
+    blurb:'Eine Wäscherin steigt mit schwerem Bündel und ihrem Kind die Treppe vom Seineufer hinauf — eine der unsichtbaren Arbeiterinnen von Paris, gegen das Licht monumental gemalt. Musée d\'Orsay.' },
+  { artist:'Jules Adler', title:'Der Streik in Le Creusot', year:'1899', place:'Frankreich', kind:'Malerei', q:'Jules Adler La Grève au Creusot',
+    blurb:'Ein Zug Streikender marschiert mit roter Fahne durch die Industriestadt der Schneider-Werke. Adler nannte man den „Maler der Demütigen".' },
+  { artist:'Maximilien Luce', title:'Eine Pariser Straße im Mai 1871', year:'um 1905', place:'Frankreich', kind:'Malerei', q:'Maximilien Luce Une rue de Paris en mai 1871',
+    blurb:'Tote Kommunarden liegen an einer verlassenen Barrikade. Der Anarchist Luce erinnerte an die „Blutige Woche", in der die Armee die Pariser Kommune niederschlug. Musée d\'Orsay.' },
+  { artist:'Jean-François Millet', title:'Der Sämann', year:'1850', place:'Frankreich', kind:'Malerei', wiki:'en:The Sower (Millet)', q:'Millet The Sower 1850 Boston',
+    blurb:'Ein Bauer schreitet über den dunklen Acker und wirft die Saat — Konservative sahen darin nach der Revolution von 1848 eine bedrohliche Figur des Volkes. Van Gogh griff das Motiv immer wieder auf.' },
+  { artist:'Jean-François Millet', title:'Das Angelusläuten', year:'1857–59', place:'Frankreich', kind:'Malerei', wiki:'en:The Angelus (painting)', q:'Millet The Angelus',
+    blurb:'Ein Bauernpaar unterbricht die Kartoffelernte zum Abendgebet. Das stille Bild wurde zu einem der meistreproduzierten Gemälde des 19. Jahrhunderts. Musée d\'Orsay.' },
+  { artist:'Jules Breton', title:'Das Lied der Lerche', year:'1884', place:'Frankreich', kind:'Malerei', wiki:'en:The Song of the Lark (painting)', q:'Jules Breton Song of the Lark',
+    blurb:'Eine junge Landarbeiterin mit Sichel hält im Morgenlicht barfuß inne und lauscht — zwischen harter Arbeit und Traum. Art Institute of Chicago.' },
+  { artist:'Louis Le Nain', title:'Bauernfamilie in einem Innenraum', year:'um 1642', place:'Frankreich', kind:'Malerei', q:'Le Nain Peasant Family in an Interior Louvre',
+    blurb:'Eine Bauernfamilie mit Brot und Wein blickt ernst und ruhig aus dem Bild — für das 17. Jahrhundert ungewöhnlich würdevoll, ohne Spott über das Landvolk. Louvre.' },
+  { artist:'Constantin Meunier', title:'Der Hafenarbeiter', year:'1890', place:'Belgien', kind:'Skulptur', q:'Constantin Meunier Débardeur sculpture',
+    blurb:'Meunier fand seine Helden in den belgischen Kohlegruben und Häfen. Sein Hafenarbeiter steht ruhig und kraftvoll da — seine Skulpturen prägten das Bild des Proletariers in ganz Europa.' },
+  { artist:'Frans Masereel', title:'Die Passion eines Menschen', year:'1918', place:'Belgien', kind:'Holzschnitte', wiki:'en:25 Images of a Man\'s Passion', q:'Masereel Passion eines Menschen',
+    blurb:'25 Holzschnitte, kein einziges Wort: Ein Arbeiterkind wird Arbeiter, beginnt zu lesen, organisiert einen Streik und wird hingerichtet. Einer der ersten Romane in Bildern.' },
+  { artist:'Eugène Laermans', title:'Der Abend des Streiks', year:'1893', place:'Belgien', kind:'Malerei', q:'Eugène Laermans Le soir de la grève',
+    blurb:'Ein Zug flämischer Arbeiter mit roter Fahne zieht am Abend über die Felder — gemalt im Jahr des belgischen Generalstreiks für das allgemeine Wahlrecht. Königliche Museen der Schönen Künste, Brüssel.' },
+  { artist:'Vincent van Gogh', title:'Weber am Webstuhl', year:'1884', place:'Niederlande', kind:'Malerei', q:'Van Gogh Weaver 1884 loom',
+    blurb:'In Nuenen malte und zeichnete van Gogh Dutzende Weber in ihren dunklen Stuben, eingeklemmt im Holzgestell ihres Webstuhls wie in einem Käfig — Heimarbeit, die gegen die Fabriken keine Chance mehr hatte.' },
+  { artist:'Angelo Morbelli', title:'Für achtzig Centesimi!', year:'1895', place:'Italien', kind:'Malerei', q:'Angelo Morbelli Per ottanta centesimi',
+    blurb:'Reisarbeiterinnen stehen gebückt im Wasser der Reisfelder — für 80 Centesimi am Tag. Die „Mondine" wurden später zum Symbol der italienischen Arbeiterbewegung; von ihnen stammt eine frühe Fassung von „Bella ciao".' },
+  { artist:'Renato Guttuso', title:'Die Kreuzigung', year:'1941', place:'Italien', kind:'Malerei', q:'Renato Guttuso Crocifissione 1941',
+    blurb:'Eine Kreuzigung in grellen Farben, mit nackten Figuren, als Bild des Krieges. Die Kirche protestierte — Guttuso, Kommunist und später Widerstandskämpfer, wurde Italiens bekanntester politischer Maler.' },
+  { artist:'Pablo Picasso', title:'Guernica', year:'1937', place:'Spanien', kind:'Malerei', wiki:'en:Guernica (Picasso)', q:'Picasso Guernica',
+    blurb:'Picassos Antwort auf die Bombardierung der baskischen Stadt durch die deutsche Legion Condor. Erst nach Francos Tod und der Rückkehr zur Demokratie kam das Bild 1981 nach Spanien. Museo Reina Sofía, Madrid.' },
+  { artist:'Pablo Picasso', title:'Massaker in Korea', year:'1951', place:'Spanien / Frankreich', kind:'Malerei', wiki:'en:Massacre in Korea', q:'Picasso Massacre in Korea',
+    blurb:'Roboterhafte Soldaten zielen auf nackte Frauen und Kinder. Picasso, damals Mitglied der Kommunistischen Partei Frankreichs, prangerte den Koreakrieg an.' },
+  { artist:'Francisco de Goya', title:'Die Schrecken des Krieges', year:'1810–20', place:'Spanien', kind:'Radierungen', wiki:'en:The Disasters of War', q:'Goya Disasters of War',
+    blurb:'82 Radierungen über Hinrichtungen, Plünderungen und Hunger im spanischen Unabhängigkeitskrieg — so schonungslos, dass sie erst 35 Jahre nach Goyas Tod veröffentlicht wurden.' },
+  { artist:'Robert Capa', title:'Loyalistischer Soldat im Moment des Todes', year:'1936', place:'Spanien', kind:'Fotografie', wiki:'en:The Falling Soldier', q:'Capa The Falling Soldier',
+    blurb:'Ein republikanischer Milizionär im Spanischen Bürgerkrieg, im Fallen getroffen — eines der berühmtesten Kriegsfotos überhaupt und bis heute umstritten, ob es gestellt war.' },
+  { artist:'Ford Madox Brown', title:'Arbeit', year:'1852–65', place:'Großbritannien', kind:'Malerei', wiki:'en:Work (painting)', q:'Ford Madox Brown Work painting',
+    blurb:'Straßenarbeiter heben in Hampstead einen Graben aus, ringsum alle Klassen der viktorianischen Gesellschaft. Rechts schauen der Philosoph Thomas Carlyle und der christliche Sozialist F. D. Maurice zu. Manchester Art Gallery.' },
+  { artist:'Luke Fildes', title:'Warten auf einen Platz im Armenasyl', year:'1874', place:'Großbritannien', kind:'Malerei', wiki:'en:Applicants for Admission to a Casual Ward', q:'Luke Fildes Applicants for Admission to a Casual Ward',
+    blurb:'Frierende Menschen stehen im Winter vor einer Londoner Polizeiwache an, um eine Nacht im Armenhaus zu bekommen. Das Bild erschütterte das viktorianische Publikum. Royal Holloway, London.' },
+  { artist:'Hubert von Herkomer', title:'Harte Zeiten', year:'1885', place:'Großbritannien', kind:'Malerei', q:'Herkomer Hard Times 1885',
+    blurb:'Eine Familie auf Arbeitssuche rastet am Straßenrand, der Vater blickt suchend den Weg entlang — Arbeitslosigkeit auf dem Land während der Agrarkrise. Manchester Art Gallery.' },
+  { artist:'Hubert von Herkomer', title:'Im Streik', year:'1891', place:'Großbritannien', kind:'Malerei', q:'Herkomer On Strike 1891 Royal Academy',
+    blurb:'Ein streikender Arbeiter steht trotzig in der Tür, hinter ihm die besorgte Frau mit den Kindern — Herkomer zeigt den Preis des Arbeitskampfs für die Familie.' },
+  { artist:'William Hogarth', title:'Beer Street und Gin Lane', year:'1751', place:'Großbritannien', kind:'Kupferstich', wiki:'en:Beer Street and Gin Lane', q:'Hogarth Gin Lane',
+    blurb:'Auf der Gin Lane verfallen die Armen dem billigen Schnaps, eine Mutter lässt ihr Baby fallen, nur der Pfandleiher blüht. Propaganda für ein Gin-Gesetz — und zugleich eine frühe Sozialreportage.' },
+  { artist:'Gustave Doré', title:'London. Eine Pilgerfahrt', year:'1872', place:'Großbritannien', kind:'Holzstiche', wiki:'en:London: A Pilgrimage', q:'Gustave Doré Over London by Rail',
+    blurb:'Doré zeichnete das viktorianische London von oben und unten: Hinterhöfe unter Eisenbahnviadukten, Nachtasyle, Hafenarbeit. Seine Bilder prägten für Generationen die Vorstellung großstädtischer Armut.' },
+  { artist:'Stanley Spencer', title:'Schiffbau am Clyde', year:'1940–46', place:'Großbritannien', kind:'Malerei', q:'Stanley Spencer Shipbuilding on the Clyde',
+    blurb:'Als Kriegsmaler hielt Spencer die Werftarbeiter in Port Glasgow fest — Schweißer, Nieter und Brenner, eng ineinander verschränkt wie auf einem Altarbild. Imperial War Museum.' },
+  { artist:'L. S. Lowry', title:'Auf dem Weg zur Arbeit', year:'1943', place:'Großbritannien', kind:'Malerei', q:'Lowry Going to Work 1943',
+    blurb:'Lowrys „Streichholzmännchen" strömen durch den Schnee in die Fabrik. Der Maler aus Salford, im Hauptberuf Mietkassierer, zeigte sein Leben lang die Industriestädte Nordenglands.' },
+  { artist:'George Cruikshank', title:'Das Massaker auf dem St Peter\'s Field (Peterloo)', year:'1819', place:'Großbritannien', kind:'Karikatur', wiki:'en:Peterloo Massacre', q:'Cruikshank Massacre at St Peter\'s Peterloo',
+    blurb:'Berittene Yeomanry schlägt in Manchester auf eine friedliche Versammlung für das Wahlrecht ein, mindestens 15 Menschen sterben. Karikaturen wie diese machten den Skandal im ganzen Land bekannt.' },
+  { artist:'Christian Krohg', title:'Albertine im Wartezimmer des Polizeiarztes', year:'1887', place:'Norwegen', kind:'Malerei', q:'Christian Krohg Albertine i politilægens venteværelse',
+    blurb:'Ein junges Mädchen wartet zwischen registrierten Prostituierten auf die Zwangsuntersuchung. Krohgs Bild und sein beschlagnahmter Roman trugen dazu bei, dass Kristiania die staatlich regulierte Prostitution 1888 abschaffte.' },
+  { artist:'Christian Krohg', title:'Kampf ums Dasein', year:'1889', place:'Norwegen', kind:'Malerei', q:'Christian Krohg Kampen for tilværelsen',
+    blurb:'Arme Frauen und Kinder drängen sich im Winter vor einer Brotausgabe in Kristiania, Hände strecken sich über die Absperrung. Nationalmuseum Oslo.' },
+  { artist:'Edvard Munch', title:'Arbeiter auf dem Heimweg', year:'1913–14', place:'Norwegen', kind:'Malerei', q:'Edvard Munch Workers on their Way Home',
+    blurb:'Nach Schichtende stapft eine Kolonne Arbeiter direkt auf die Betrachter:innen zu, die Gesichter erschöpft. Munch sah im Arbeiter die Figur der neuen Zeit. Munch-Museum Oslo.' },
+  { artist:'Ilja Repin', title:'Prozession im Gouvernement Kursk', year:'1880–83', place:'Russland', kind:'Malerei', wiki:'en:Religious Procession in Kursk Governorate', q:'Repin Religious Procession in Kursk Governorate',
+    blurb:'Würdenträger, Polizisten und Gläubige ziehen mit einer Ikone vorbei, ein Bettler mit Krücke wird beiseite gestoßen — die ganze Ständeordnung des Zarenreichs in einem Zug. Tretjakow-Galerie.' },
+  { artist:'Wassili Wereschtschagin', title:'Die Apotheose des Krieges', year:'1871', place:'Russland', kind:'Malerei', wiki:'en:The Apotheosis of War', q:'Vereshchagin Apotheosis of War',
+    blurb:'Ein Berg aus Schädeln in der Wüste, Krähen darüber. Gewidmet „allen großen Eroberern, vergangenen, gegenwärtigen und zukünftigen".' },
+  { artist:'Wassili Perow', title:'Troika', year:'1866', place:'Russland', kind:'Malerei', q:'Vasily Perov Troika 1866',
+    blurb:'Drei erschöpfte Kinder ziehen im Winter einen Schlitten mit einem Wasserfass durch Moskau — Kinderarbeit im Zarenreich. Tretjakow-Galerie.' },
+  { artist:'Nikolai Jaroschenko', title:'Überall ist Leben', year:'1888', place:'Russland', kind:'Malerei', q:'Yaroshenko Life is Everywhere 1888',
+    blurb:'Gefangene in einem vergitterten Zugwaggon füttern Tauben auf dem Bahnsteig, vorn eine Mutter mit Kind. Leo Tolstoi war von dem Bild tief bewegt.' },
+  { artist:'Boris Kustodijew', title:'Der Bolschewik', year:'1920', place:'Russland', kind:'Malerei', wiki:'en:The Bolshevik (painting)', q:'Kustodiev The Bolshevik 1920',
+    blurb:'Ein riesiger Arbeiter mit roter Fahne schreitet über die Dächer der Stadt, unten strömen die Massen — die Revolution als Naturgewalt. Tretjakow-Galerie.' },
+  { artist:'El Lissitzky', title:'Schlagt die Weißen mit dem roten Keil', year:'1919', place:'Russland', kind:'Plakat', wiki:'en:Beat the Whites with the Red Wedge', q:'Lissitzky Beat the Whites with the Red Wedge',
+    blurb:'Ein roter Keil dringt in einen weißen Kreis: Bürgerkriegspropaganda nur aus geometrischen Formen — ein Schlüsselwerk des Konstruktivismus.' },
+  { artist:'Dmitri Moor', title:'Hast du dich freiwillig gemeldet?', year:'1920', place:'Russland', kind:'Plakat', q:'Dmitry Moor Have you volunteered poster',
+    blurb:'Ein Rotarmist zeigt direkt auf die Betrachter:innen, hinten rauchen die Fabriken — eines der bekanntesten Plakate des Russischen Bürgerkriegs.' },
+  { artist:'Wladimir Tatlin', title:'Monument der III. Internationale', year:'1919–20', place:'Russland', kind:'Architekturmodell', wiki:'en:Tatlin\'s Tower', q:'Tatlin Tower Monument to the Third International',
+    blurb:'Ein 400 Meter hoher Turm aus Stahl und Glas mit rotierenden Räumen sollte Sitz der Kommunistischen Internationale werden. Nie gebaut — und gerade deshalb Ikone der Avantgarde.' },
+  { artist:'Wera Muchina', title:'Arbeiter und Kolchosbäuerin', year:'1937', place:'Sowjetunion', kind:'Skulptur', wiki:'en:Worker and Kolkhoz Woman', q:'Mukhina Worker and Kolkhoz Woman',
+    blurb:'Für den sowjetischen Pavillon der Pariser Weltausstellung: Ein Arbeiter mit Hammer und eine Bäuerin mit Sichel stürmen voran. Direkt gegenüber stand der Pavillon des NS-Staats.' },
+  { artist:'Alexander Deineka', title:'Die Verteidigung Petrograds', year:'1928', place:'Sowjetunion', kind:'Malerei', q:'Deineka Defence of Petrograd 1928',
+    blurb:'Arbeiterinnen und Arbeiter marschieren im Gleichschritt über eine Brücke zur Front, darunter kehren Verwundete zurück — Deineka verwandelt den Bürgerkrieg in einen Rhythmus aus Körpern.' },
+  { artist:'Kusma Petrow-Wodkin', title:'Das Baden des roten Pferdes', year:'1912', place:'Russland', kind:'Malerei', wiki:'en:Bathing of a Red Horse', q:'Petrov-Vodkin Bathing of a Red Horse',
+    blurb:'Ein Junge auf einem leuchtend roten Pferd im blauen Wasser. Vor der Revolution gemalt, wurde es danach als Vorahnung gedeutet — als Bild für das „Schicksal Russlands". Tretjakow-Galerie.' },
+  { artist:'Jewgeni Chaldej', title:'Die Fahne auf dem Reichstag', year:'1945', place:'Sowjetunion / Deutschland', kind:'Fotografie', wiki:'en:Raising a Flag over the Reichstag', q:'Khaldei Raising a Flag over the Reichstag',
+    blurb:'Sowjetische Soldaten hissen über dem zerstörten Berlin die rote Fahne. Nachgestellt und später retuschiert — und trotzdem das Bildsymbol für das Ende des Kriegs in Europa.' },
+  { artist:'Kollektiv', title:'Der Hof der Pachteintreibung', year:'1965', place:'China', kind:'Skulpturengruppe', wiki:'en:Rent Collection Courtyard', q:'Rent Collection Courtyard sculpture',
+    blurb:'114 lebensgroße Tonfiguren zeigen, wie Pächter dem Großgrundbesitzer ihre Abgaben bringen müssen — aufgestellt im Hof des früheren Grundherrn Liu Wencai in Sichuan, ein zentrales Werk der Kunst der Kulturrevolution.' },
+  { artist:'Li Hua', title:'Brülle, China!', year:'1935', place:'China', kind:'Holzschnitt', q:'Li Hua Roar China woodcut 1935',
+    blurb:'Ein gefesselter Mann mit verbundenen Augen bäumt sich auf. Die chinesische Holzschnittbewegung um den Schriftsteller Lu Xun lernte von Käthe Kollwitz, deren Grafiken Lu Xun in China bekannt machte.' },
+  { artist:'Xu Beihong', title:'Der törichte Alte versetzt Berge', year:'1940', place:'China', kind:'Malerei', q:'Xu Beihong The Foolish Old Man Removes the Mountains',
+    blurb:'Kräftige Arbeiter tragen mit Hacken einen Berg ab — nach der Fabel vom Alten, der nicht aufgibt, gemalt während des Kriegs gegen Japan. Mao machte die Fabel 1945 zum Leitbild.' },
+  { artist:'Jeff Widener u. a.', title:'Tank Man', year:'1989', place:'China', kind:'Fotografie', wiki:'en:Tank Man', q:'Tank Man Tiananmen 1989',
+    blurb:'Am 5. Juni 1989, einen Tag nach der Niederschlagung der Proteste, stellt sich ein Mann in Peking einer Panzerkolonne in den Weg. Wer er war, ist bis heute unbekannt.' },
+  { artist:'Juan Luna', title:'Spoliarium', year:'1884', place:'Philippinen', kind:'Malerei', wiki:'en:Spoliarium', q:'Juan Luna Spoliarium',
+    blurb:'Tote Gladiatoren werden aus der Arena geschleift. Philippinische Nationalisten wie José Rizal lasen das riesige Bild als Gleichnis für das Leiden ihres Landes unter spanischer Kolonialherrschaft. Nationalmuseum Manila.' },
+  { artist:'Raden Saleh', title:'Die Gefangennahme des Prinzen Diponegoro', year:'1857', place:'Indonesien', kind:'Malerei', wiki:'en:The Arrest of Pangeran Diponegoro', q:'Raden Saleh Arrest of Pangeran Diponegoro',
+    blurb:'Saleh malte die Verhaftung des javanischen Rebellenführers durch die Niederländer neu — als Antwort auf ein niederländisches Bild: mit würdevollen Javanern und auffallend großköpfigen Kolonialbeamten.' },
+  { artist:'Chittaprosad', title:'Hungry Bengal', year:'1943', place:'Indien', kind:'Zeichnungen', q:'Chittaprosad Hungry Bengal',
+    blurb:'Der kommunistische Zeichner wanderte durch das von der Hungersnot verwüstete Bengalen und skizzierte die Sterbenden. Die britische Kolonialverwaltung beschlagnahmte die gedruckten Hefte und vernichtete sie.' },
+  { artist:'Zainul Abedin', title:'Skizzen der Hungersnot', year:'1943', place:'Bengalen', kind:'Tuschezeichnungen', q:'Zainul Abedin famine sketches 1943',
+    blurb:'Mit billiger Tusche auf Packpapier hielt Abedin die Hungernden auf den Straßen Kalkuttas fest. Die Bilder machten ihn zum Gründervater der modernen Kunst Bangladeschs.' },
+  { artist:'Amrita Sher-Gil', title:'Mutter Indien', year:'1935', place:'Indien', kind:'Malerei', q:'Amrita Sher-Gil Mother India 1935',
+    blurb:'Eine ausgezehrte Frau mit zwei Kindern — Sher-Gil, Pionierin der indischen Moderne, malte „Mutter Indien" nicht als Göttin, sondern als arme Bäuerin.' },
+  { artist:'Sam Nzima', title:'Hector Pieterson', year:'1976', place:'Südafrika', kind:'Fotografie', wiki:'en:Hector Pieterson', q:'Sam Nzima Hector Pieterson photograph',
+    blurb:'Beim Schüleraufstand von Soweto gegen Afrikaans als Unterrichtssprache trägt Mbuyisa Makhubo den sterbenden zwölfjährigen Hector Pieterson, daneben dessen Schwester Antoinette. Das Foto machte die Gewalt der Apartheid weltweit sichtbar.' },
+  { artist:'Gerard Sekoto', title:'Song of the Pick', year:'1946–47', place:'Südafrika', kind:'Malerei', q:'Gerard Sekoto Song of the Pick',
+    blurb:'Schwarze Arbeiter schwingen im Takt ihre Spitzhacken, ein weißer Aufseher steht daneben. Sekoto ging kurz darauf ins Exil nach Paris und kehrte nie zurück.' },
+  { artist:'Naji al-Ali', title:'Handala', year:'ab 1969', place:'Palästina', kind:'Karikatur', wiki:'en:Handala', q:'Naji al-Ali Handala',
+    blurb:'Ein barfüßiger zehnjähriger Junge, der den Betrachter:innen den Rücken zukehrt — Symbol palästinensischer Geflüchteter und Zeuge in tausenden Karikaturen. Al-Ali wurde 1987 in London erschossen.' },
+  { artist:'Mahmoud Mokhtar', title:'Die Wiedergeburt Ägyptens', year:'1928', place:'Ägypten', kind:'Skulptur', q:'Mahmoud Mokhtar Egypt Renaissance statue',
+    blurb:'Eine Bäuerin hebt ihren Schleier, neben ihr richtet sich eine Sphinx auf. Bezahlt durch eine landesweite Volkssammlung, wurde die Skulptur zum Symbol der ägyptischen Unabhängigkeitsbewegung.' },
+  { artist:'Yolŋu von Yirrkala', title:'Die Rindenpetitionen von Yirrkala', year:'1963', place:'Australien', kind:'Rindenmalerei', wiki:'en:Yirrkala bark petitions', q:'Yirrkala bark petitions',
+    blurb:'Die Yolŋu reichten beim australischen Parlament auf Rinde gemalte Petitionen gegen den Bauxitabbau auf ihrem Land ein — ein Grundstein der Landrechtsbewegung der Aborigines.' },
+  { artist:'Tom Roberts', title:'Die Schur der Widder', year:'1890', place:'Australien', kind:'Malerei', wiki:'en:Shearing the Rams', q:'Tom Roberts Shearing the Rams',
+    blurb:'Schafscherer bei der Arbeit in einem Schuppen in New South Wales — gemalt kurz vor den großen Schererstreiks von 1891, aus denen die australische Labor Party hervorging. National Gallery of Victoria.' },
+  { artist:'Tina Modotti', title:'Arbeiterparade', year:'1926', place:'Mexiko', kind:'Fotografie', q:'Tina Modotti Workers Parade 1926',
+    blurb:'Von oben gesehen ein Meer aus Sombreros bei einer Maikundgebung in Mexiko-Stadt. Modotti, Fotografin und Kommunistin, zeigte die Masse als Muster und als Macht.' },
+  { artist:'Pieter Bruegel d. Ä.', title:'Die Kornernte', year:'1565', place:'Niederlande', kind:'Malerei', wiki:'en:The Harvesters (Bruegel)', q:'Bruegel The Harvesters',
+    blurb:'Bäuerinnen und Bauern mähen, binden Garben und halten Mittagsrast unter einem Birnbaum — eines der ersten europäischen Bilder, das die Landarbeit selbst zum Thema macht. Metropolitan Museum.' }
+];
+
+/* Themen für die Museumsfunde — wechseln täglich */
+const TD_THEMES = [
+  ['strike','Streik'], ['labor','Arbeit'], ['workers','Arbeiterinnen und Arbeiter'], ['factory','Fabrik'], ['miners','Bergbau'],
+  ['harvest','Ernte'], ['poverty','Armut'], ['protest','Protest'], ['revolution','Revolution'], ['laundress','Wäscherinnen'],
+  ['dock','Hafen'], ['railroad','Eisenbahn'], ['immigrants','Migration'], ['peasants','Bäuerinnen und Bauern'], ['war','Krieg'],
+  ['slavery','Sklaverei'], ['market','Markt'], ['weaver','Weben'], ['fishermen','Fischerei'], ['blacksmith','Schmiede'],
+  ['beggar','Not'], ['soldiers','Soldaten'], ['ironworks','Eisenhütte'], ['street','Straßenleben'], ['mother child','Mutter und Kind']
+];
+
 const QUOTES_FACTS = [
   { person:'James Baldwin', role:'Schriftsteller & Essayist', quote:'Nicht alles, dem man sich stellt, lässt sich ändern. Aber nichts lässt sich ändern, dem man sich nicht stellt.',
     context:'aus dem Essay „As Much Truth as One Can Bear", New York Times Book Review, 1962' },
@@ -1972,6 +2216,25 @@ function tdDate(offset){ const d = new Date(); d.setHours(12,0,0,0); d.setDate(d
 function tdIso(d){ return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`; }
 function tdDayIndex(d){ return Math.floor(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 86400000); }
 function tdPick(arr, d, shift){ const n = arr.length; return arr[(((tdDayIndex(d) + (shift||0)) % n) + n) % n]; }
+/* Jedes Element genau einmal pro Runde, Reihenfolge je Runde neu gemischt (deterministisch, für beide gleich) */
+const tdPermCache = {};
+function tdPermPick(arr, d, salt, step){
+  const n = arr.length, idx = tdDayIndex(d) * (step || 1);
+  const cycle = Math.floor(idx / n), pos = ((idx % n) + n) % n, key = salt + ':' + n + ':' + cycle;
+  /* feste Hälften: ein Werk steht immer in derselben Rundenhälfte → frühestens nach einer halben Runde wieder */
+  const half = i=>tdHash(salt + ':h:' + i) % 2;
+  if(!tdPermCache[key]) tdPermCache[key] = [...Array(n).keys()].sort((a, b)=>(half(a) - half(b)) || (tdHash(key + ':' + a) - tdHash(key + ':' + b)));
+  return arr[tdPermCache[key][pos]];
+}
+const TD_ALL_ART = ART_WORKS.concat(SOCIAL_ART);
+function tdArtOfDay(d){ return tdPermPick(TD_ALL_ART, d, 'kunst'); }
+function tdSocialOfDay(d){
+  const main = tdArtOfDay(d);
+  let a = tdPermPick(SOCIAL_ART, d, 'gesellschaft');
+  if(a === main){ const e = new Date(d); e.setDate(e.getDate() + 1); a = tdPermPick(SOCIAL_ART, e, 'gesellschaft'); }
+  return a;
+}
+function tdThemeOfDay(d, shift){ return TD_THEMES[((tdDayIndex(d) + (shift || 0)) % TD_THEMES.length + TD_THEMES.length) % TD_THEMES.length]; }
 function tdCacheAll(){ try{ return JSON.parse(localStorage.getItem('td-cache') || '{}'); }catch(e){ return {}; } }
 function tdCacheGet(key, maxAgeMs){
   const e = tdCacheAll()[key];
@@ -2020,17 +2283,42 @@ function wikiToText(s){
 function tdShorten(s, n){ s = String(s||''); if(s.length<=n) return s; const cut = s.slice(0, n); return cut.slice(0, Math.max(cut.lastIndexOf(' '), n-20)).replace(/[,;:]$/, '') + ' …'; }
 function tdHash(str){ let h = 2166136261; for(let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
 
-/* Bild zu einem kuratierten Kunstwerk: Leitbild des Wikipedia-Artikels, sonst Commons-Datei */
+/* Bild zu einem kuratierten Kunstwerk: Artikelbild bei Wikipedia, sonst Suche (Wikipedia bzw. Commons), sonst Commons-Datei */
+function tdWikiThumb(lang, params){
+  return tdFetchJSON(`https://${lang}.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail&pithumbsize=1200&redirects=1&format=json&formatversion=2&origin=*&${params}`)
+    .then(j=>{ const pages = (j && j.query && j.query.pages) || []; const pg = pages.filter(p=>p.thumbnail).sort((a,b)=>(a.index||0)-(b.index||0))[0]; return (pg && pg.thumbnail && pg.thumbnail.source) || null; })
+    .catch(()=>null);
+}
+function tdCommonsSearch(q){
+  return tdFetchJSON(`https://commons.wikimedia.org/w/api.php?action=query&generator=search&gsrnamespace=6&gsrlimit=3&gsrsearch=${encodeURIComponent(q + ' filetype:bitmap')}&prop=imageinfo&iiprop=url&iiurlwidth=1200&format=json&formatversion=2&origin=*`)
+    .then(j=>{ const pages = ((j && j.query && j.query.pages) || []).filter(p=>p.imageinfo && p.imageinfo[0]).sort((a,b)=>(a.index||0)-(b.index||0)); return pages.length ? (pages[0].imageinfo[0].thumburl || pages[0].imageinfo[0].url) : null; })
+    .catch(()=>null);
+}
 function tdArtImage(a){
-  if(a.wiki){
-    const i = a.wiki.indexOf(':'), lang = a.wiki.slice(0, i), title = a.wiki.slice(i+1);
-    return tdOnce('artimg:' + a.wiki, 30*86400000, async ()=>{
-      const j = await tdFetchJSON(`https://${lang}.wikipedia.org/w/api.php?action=query&prop=pageimages&piprop=thumbnail&pithumbsize=1200&redirects=1&format=json&formatversion=2&origin=*&titles=${encodeURIComponent(title)}`);
-      const pg = j && j.query && j.query.pages && j.query.pages[0];
-      return (pg && pg.thumbnail && pg.thumbnail.source) || null;
-    }).then(src => src || (a.file ? tdCommonsUrl(a.file, 1200) : ''));
-  }
-  return Promise.resolve(a.file ? tdCommonsUrl(a.file, 1200) : '');
+  const key = 'artimg2:' + (a.wiki || a.q || a.file || a.title);
+  return tdOnce(key, 30*86400000, async ()=>{
+    if(a.wiki){
+      const i = a.wiki.indexOf(':'), src = await tdWikiThumb(a.wiki.slice(0, i), 'titles=' + encodeURIComponent(a.wiki.slice(i + 1)));
+      if(src) return src;
+    }
+    if(a.q){
+      const old = parseInt(String(a.year).replace(/\D/g, '').slice(0, 4), 10) < 1925;
+      const tries = old ? [()=>tdCommonsSearch(a.q), ()=>tdWikiThumb('en', 'generator=search&gsrlimit=1&gsrsearch=' + encodeURIComponent(a.q))]
+                        : [()=>tdWikiThumb('en', 'generator=search&gsrlimit=1&gsrsearch=' + encodeURIComponent(a.q)), ()=>tdCommonsSearch(a.q)];
+      for(const t of tries){ const src = await t(); if(src) return src; }
+    }
+    return a.file ? tdCommonsUrl(a.file, 1200) : null;
+  }).then(src=>src || '');
+}
+function tdArtLink(a){
+  if(a.wiki){ const i = a.wiki.indexOf(':'); return `https://${a.wiki.slice(0, i)}.wikipedia.org/wiki/${encodeURIComponent(a.wiki.slice(i + 1).replace(/ /g, '_'))}`; }
+  return `https://de.wikipedia.org/w/index.php?search=${encodeURIComponent(a.q || (a.artist + ' ' + a.title))}`;
+}
+function tdArtCardHTML(label, id, a){
+  return tdCard(label, tdImgHTML(id, a.title, 'td-whole') +
+    `<div class="td-title">${escapeHtml(a.title)}</div><div class="td-meta">${escapeHtml(a.artist)} · ${escapeHtml(a.year)}</div>` +
+    (a.place || a.kind ? `<div class="td-tags">${a.place ? `<span class="tag">${escapeHtml(a.place)}</span>` : ''}${a.kind ? `<span class="tag">${escapeHtml(a.kind)}</span>` : ''}</div>` : '') +
+    `<div class="td-text">${escapeHtml(a.blurb)}</div><div class="td-src"><a href="${tdArtLink(a)}" target="_blank" rel="noopener">Mehr dazu bei Wikipedia</a></div>`);
 }
 function tdCommonsUrl(file, width){ return `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=${width}`; }
 
@@ -2092,31 +2380,53 @@ function tdWikiEvents(d){
   });
 }
 
-/* Art Institute of Chicago: gemeinfreies Werk des Tages (für beide Geräte dasselbe) */
+/* Art Institute of Chicago: gemeinfreies Werk zum Thema des Tages (für beide Geräte dasselbe) */
 function tdMuseum(d){
-  const idx = tdDayIndex(d);
-  return tdOnce('museum:' + tdIso(d), 0, async ()=>{
+  const idx = tdDayIndex(d), theme = tdThemeOfDay(d, 0);
+  return tdOnce('museum2:' + tdIso(d), 0, async ()=>{
     const base = 'https://api.artic.edu/api/v1/artworks/search';
-    const fields = 'id,title,artist_display,date_display,image_id,medium_display,short_description,is_public_domain';
+    const fields = 'id,title,artist_display,date_display,image_id,medium_display,short_description,is_public_domain,place_of_origin';
     const valid = it => it && it.image_id && it.is_public_domain===true;
-    const highlights = encodeURIComponent(JSON.stringify({ query:{ bool:{ must:[ {term:{is_public_domain:true}}, {term:{is_boosted:true}}, {exists:{field:'image_id'}} ] } } }));
+    const must = [ {term:{is_public_domain:true}}, {exists:{field:'image_id'}} ];
+    const themed = encodeURIComponent(JSON.stringify({ q:theme[0], query:{ bool:{ must } } }));
+    const highlights = encodeURIComponent(JSON.stringify({ query:{ bool:{ must:must.concat([{term:{is_boosted:true}}]) } } }));
     const attempts = [
-      `${base}?params=${highlights}&limit=10&page=${(idx % 40) + 1}&fields=${fields}`,
-      `${base}?query[term][is_public_domain]=true&limit=10&page=${(idx % 400) + 1}&fields=${fields}`
+      `${base}?params=${themed}&limit=40&fields=${fields}`,
+      `${base}?params=${highlights}&limit=10&page=${(idx % 40) + 1}&fields=${fields}`
     ];
-    for(const url of attempts){
+    for(let a=0; a<attempts.length; a++){
       try{
-        const j = await tdFetchJSON(url);
-        const list = (j && j.data) || [];
-        let it = null;
-        for(let k=0;k<list.length;k++){ const c = list[(idx + k) % list.length]; if(valid(c)){ it = c; break; } }
-        if(!it) continue;
+        const j = await tdFetchJSON(attempts[a]);
+        const list = ((j && j.data) || []).filter(valid);
+        if(!list.length) continue;
+        const it = list[(tdHash(tdIso(d) + 'aic') + Math.floor(idx / TD_THEMES.length)) % list.length];
         const iiif = (j.config && j.config.iiif_url) || 'https://www.artic.edu/iiif/2';
         return {
           id: it.id, title: it.title || 'Ohne Titel', artist: tdStripHtml(it.artist_display || ''), date: it.date_display || '',
-          medium: it.medium_display || '', desc: tdShorten(tdStripHtml(it.short_description || ''), 420),
-          img: `${iiif}/${it.image_id}/full/843,/0/default.jpg`
+          medium: it.medium_display || '', place: it.place_of_origin || '', desc: tdShorten(tdStripHtml(it.short_description || ''), 420),
+          img: `${iiif}/${it.image_id}/full/843,/0/default.jpg`, theme: a===0 ? theme[1] : ''
         };
+      }catch(e){}
+    }
+    return null;
+  });
+}
+/* Metropolitan Museum of Art: gemeinfreies Werk zu einem zweiten Tagesthema */
+function tdMet(d){
+  const theme = tdThemeOfDay(d, 11);
+  return tdOnce('met:' + tdIso(d), 0, async ()=>{
+    const api = 'https://collectionapi.metmuseum.org/public/collection/v1';
+    const s = await tdFetchJSON(`${api}/search?hasImages=true&q=${encodeURIComponent(theme[0])}`, 12000);
+    const ids = (s && s.objectIDs) || [];
+    if(!ids.length) return null;
+    const start = tdHash(tdIso(d) + 'met') % ids.length;
+    for(let k=0; k<8; k++){
+      try{
+        const o = await tdFetchJSON(`${api}/objects/${ids[(start + k * 7) % ids.length]}`);
+        if(!o || !o.isPublicDomain || !(o.primaryImageSmall || o.primaryImage)) continue;
+        return { title:o.title || 'Ohne Titel', artist:o.artistDisplayName || o.culture || '', date:o.objectDate || '',
+          place:[o.country, o.culture].filter(Boolean)[0] || '', medium:o.medium || '', dept:o.department || '',
+          img:o.primaryImageSmall || o.primaryImage, url:o.objectURL || 'https://www.metmuseum.org/art/collection', theme:theme[1] };
       }catch(e){}
     }
     return null;
@@ -2130,7 +2440,7 @@ function tdOpenLightbox(src, meta){
   $('#lightboxDelete').style.display = 'none';
   $('#lightbox').style.display = 'flex';
 }
-function tdImgHTML(id, alt){ return `<div class="td-skel" id="${id}Skel"></div><img class="td-img" id="${id}" alt="${escapeHtml(alt||'')}" style="display:none;">`; }
+function tdImgHTML(id, alt, cls){ return `<div class="td-skel" id="${id}Skel"></div><img class="td-img${cls ? ' ' + cls : ''}" id="${id}" alt="${escapeHtml(alt||'')}" style="display:none;">`; }
 function tdShowImg(id, src, meta, token){
   const img = document.getElementById(id), sk = document.getElementById(id + 'Skel');
   if(!img || token!==todayRenderToken) return;
@@ -2182,12 +2492,12 @@ function renderToday(){
       `<div class="td-src">Quelle: <a href="https://de.wikipedia.org/wiki/${encodeURIComponent(r.title.replace(/ /g,'_'))}" target="_blank" rel="noopener">Wikipedia, „${escapeHtml(r.title)}"</a> (CC BY-SA)</div>`;
   });
 
-  /* 2 — Kunstwerk des Tages (kuratiert) */
-  const art = tdPick(ART_WORKS, d, 0);
-  $('#tdArt').innerHTML = tdCard('Kunstwerk des Tages',
-    tdImgHTML('tdArtImg', art.title) +
-    `<div class="td-title">${escapeHtml(art.title)}</div><div class="td-meta">${escapeHtml(art.artist)} · ${escapeHtml(art.year)}</div><div class="td-text">${escapeHtml(art.blurb)}</div>`);
+  /* 2 — Kunstwerk des Tages + Kunst & Gesellschaft aus aller Welt (kuratiert, ohne Wiederholung pro Runde) */
+  const art = tdArtOfDay(d), art2 = tdSocialOfDay(d);
+  $('#tdArt').innerHTML = tdArtCardHTML('Kunstwerk des Tages', 'tdArtImg', art);
   tdArtImage(art).then(src=>tdShowImg('tdArtImg', src, `${art.artist} — ${art.title} (${art.year})`, token));
+  $('#tdArt2').innerHTML = tdArtCardHTML('Kunst &amp; Gesellschaft · aus aller Welt', 'tdArt2Img', art2);
+  tdArtImage(art2).then(src=>tdShowImg('tdArt2Img', src, `${art2.artist} — ${art2.title} (${art2.year})`, token));
 
   /* 3 — Zitat des Tages */
   const q = tdPick(QUOTES_FACTS, d, 11);
@@ -2204,17 +2514,30 @@ function renderToday(){
       `<div class="td-src"><a href="https://commons.wikimedia.org/wiki/File:${encodeURIComponent(p.file.replace(/ /g,'_'))}" target="_blank" rel="noopener">Wikimedia Commons</a> — Urheber:in und Lizenz auf der Bildseite</div>`;
   });
 
-  /* 5 — Aus dem Museum (Art Institute of Chicago, gemeinfrei) */
-  $('#tdMuseum').innerHTML = tdCard('Aus dem Museum', tdImgHTML('tdMuseumImg', 'Museumsstück') + `<div id="tdMuseumText"></div>`);
+  /* 5 — Aus dem Museum (Art Institute of Chicago, gemeinfrei, Tagesthema) */
+  $('#tdMuseum').innerHTML = tdCard('Aus dem Museum', tdImgHTML('tdMuseumImg', 'Museumsstück', 'td-whole') + `<div id="tdMuseumText"></div>`);
   tdMuseum(d).then(m=>{
     if(token!==todayRenderToken) return;
     if(!m){ $('#tdMuseum').innerHTML = ''; return; }
     tdShowImg('tdMuseumImg', m.img, `${m.artist ? m.artist.split('\n')[0] + ' — ' : ''}${m.title}`, token);
-    $('#tdMuseumText').innerHTML = `<div class="td-title">${escapeHtml(m.title)}</div>` +
+    $('#tdMuseumText').innerHTML = (m.theme ? `<div class="td-tags" style="margin:0 0 6px;"><span class="tag">Thema: ${escapeHtml(m.theme)}</span></div>` : '') +
+      `<div class="td-title">${escapeHtml(m.title)}</div>` +
       `<div class="td-meta">${escapeHtml([m.artist.split('\n')[0], m.date].filter(Boolean).join(' · '))}</div>` +
       (m.medium ? `<div class="td-meta">${escapeHtml(m.medium)}</div>` : '') +
       (m.desc ? `<div class="td-text">${escapeHtml(m.desc)} <span class="td-src">(Museumstext, englisch)</span></div>` : '') +
       `<div class="td-src"><a href="https://www.artic.edu/artworks/${m.id}" target="_blank" rel="noopener">Art Institute of Chicago</a> · gemeinfrei</div>`;
+  });
+  /* 5b — Fundstück aus dem Metropolitan Museum (gemeinfrei, zweites Tagesthema) */
+  $('#tdMet').innerHTML = tdCard('Fundstück aus dem Met', tdImgHTML('tdMetImg', 'Museumsstück', 'td-whole') + `<div id="tdMetText"></div>`);
+  tdMet(d).then(m=>{
+    if(token!==todayRenderToken) return;
+    if(!m){ $('#tdMet').innerHTML = ''; return; }
+    tdShowImg('tdMetImg', m.img, `${m.artist ? m.artist + ' — ' : ''}${m.title}`, token);
+    $('#tdMetText').innerHTML = `<div class="td-tags" style="margin:0 0 6px;"><span class="tag">Thema: ${escapeHtml(m.theme)}</span>${m.place ? `<span class="tag">${escapeHtml(m.place)}</span>` : ''}</div>` +
+      `<div class="td-title">${escapeHtml(m.title)}</div>` +
+      `<div class="td-meta">${escapeHtml([m.artist, m.date].filter(Boolean).join(' · '))}</div>` +
+      (m.medium ? `<div class="td-meta">${escapeHtml(m.medium)}</div>` : '') +
+      `<div class="td-src"><a href="${escapeHtml(m.url)}" target="_blank" rel="noopener">Metropolitan Museum of Art</a> · gemeinfrei</div>`;
   });
 
   /* 6 — Natur & Meer */
@@ -2235,7 +2558,7 @@ function renderDailyFact(){
   more.style.display = 'block';
   more.style.color = 'var(--muted)';
   more.style.fontSize = '.78rem';
-  more.textContent = 'Kunstwerk, Zitat, Bild des Tages und mehr →';
+  more.textContent = 'Zwei Kunstwerke, zwei Museumsfunde, Zitat, Bild des Tages →';
   if(evs && evs.length){
     img.style.display = 'none';
     img.removeAttribute('src');
@@ -2243,7 +2566,7 @@ function renderDailyFact(){
     $('#dailyFactMeta').textContent = `Am heutigen Tag · ${evs[0].year}` + (evs.length>1 ? ` · +${evs.length-1} weitere` : '');
     return;
   }
-  const a = tdPick(ART_WORKS, d, 0);
+  const a = tdArtOfDay(d);
   img.style.display = 'none';
   $('#dailyFactTitle').textContent = `${a.title} (${a.year})`;
   $('#dailyFactMeta').textContent = a.artist;

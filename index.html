@@ -49,7 +49,7 @@
   });
 </script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap');
 
 :root{--heading:#143C3F;
   --tide-deep:#143C3F;
@@ -529,6 +529,72 @@ nav.bottom{
 .tab:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
 
 .status{ text-align:center; font-size:.75rem; color:var(--muted); padding:8px; }
+/* Buchsuche: Trefferliste */
+#libResults{ margin:-4px 0 14px; }
+.lr-head{ display:flex; justify-content:space-between; align-items:center; font-size:.75rem; color:var(--muted); margin:0 2px 6px; }
+.lr-close{ background:none; border:none; color:var(--muted); font-size:1rem; cursor:pointer; padding:2px 4px; }
+.lr-item{ display:flex; gap:10px; align-items:center; width:100%; text-align:left; background:var(--card); border:1px solid var(--line); border-radius:12px; padding:8px 10px; margin-bottom:6px; cursor:pointer; font-family:'Inter'; color:var(--ink); }
+.lr-item:disabled{ opacity:.55; cursor:default; }
+.lr-cover{ position:relative; width:42px; height:62px; flex-shrink:0; border-radius:5px; overflow:hidden; background:var(--foam); display:flex; align-items:center; justify-content:center; font-size:1.2rem; }
+.lr-cover img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.lr-main{ flex:1; min-width:0; display:flex; flex-direction:column; gap:1px; }
+.lr-main b{ font-size:.9rem; font-weight:600; line-height:1.3; }
+.lr-sub{ font-size:.76rem; color:var(--ink); opacity:.8; }
+.lr-meta{ font-size:.76rem; color:var(--muted); }
+.lr-src{ font-size:.68rem; color:var(--muted); opacity:.85; }
+.lr-add{ width:32px; height:32px; border-radius:50%; border:1.5px solid var(--line); display:flex; align-items:center; justify-content:center; flex-shrink:0; color:var(--accent); font-size:1.1rem; }
+.lr-item:disabled .lr-add{ width:auto; border:none; font-size:.7rem; color:var(--muted); }
+/* Scanner */
+.scan-wrap{ position:relative; width:100%; max-width:440px; border-radius:12px; overflow:hidden; background:#000; }
+.scan-wrap video{ display:block; width:100%; max-height:60vh; object-fit:cover; }
+.scan-frame{ position:absolute; left:7%; right:7%; top:27%; bottom:27%; border:2px solid rgba(255,255,255,.85); border-radius:10px; box-shadow:0 0 0 999px rgba(0,0,0,.35); pointer-events:none; }
+.scan-frame i{ position:absolute; left:6%; right:6%; top:50%; height:2px; background:#E5533D; box-shadow:0 0 8px #E5533D; animation:scanline 1.8s ease-in-out infinite; }
+@keyframes scanline{ 0%,100%{ transform:translateY(-38px); } 50%{ transform:translateY(38px); } }
+.scan-tools{ display:flex; flex-wrap:wrap; gap:8px; justify-content:center; }
+.scan-tools button, .scan-photo{ background:rgba(255,255,255,.12); color:#fff; border:1px solid rgba(255,255,255,.3); border-radius:20px; padding:8px 14px; font-family:'Inter'; font-size:.85rem; cursor:pointer; }
+.scan-tools button.on{ background:#fff; color:#111; }
+.scan-hint{ color:rgba(255,255,255,.7); font-size:.78rem; text-align:center; max-width:360px; line-height:1.45; }
+/* Buchseite */
+.bm-sec{ margin:0 0 14px; }
+.bm-h{ font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 6px; }
+.bm-sum{ font-size:.88rem; line-height:1.55; color:var(--ink); }
+.bm-src{ font-size:.7rem; color:var(--muted); margin-top:4px; }
+.bm-src a{ color:var(--muted); }
+.bm-loading{ font-size:.82rem; color:var(--muted); line-height:1.5; }
+.bm-quote{ position:relative; margin:0 0 8px; padding:8px 30px 8px 12px; border-left:3px solid var(--accent); background:var(--card); border-radius:0 10px 10px 0; font-family:'Fraunces', serif; font-size:.95rem; line-height:1.45; color:var(--ink); }
+.bm-quote cite{ display:block; font-family:'Inter'; font-style:normal; font-size:.72rem; color:var(--muted); margin-top:4px; }
+.bm-quote.mine{ border-left-color:var(--amber); }
+.bm-qdel{ position:absolute; top:6px; right:6px; background:none; border:none; color:var(--muted); cursor:pointer; font-size:.85rem; }
+.bm-refresh{ background:none; border:none; color:var(--muted); font-size:.75rem; text-decoration:underline; cursor:pointer; padding:0; margin:-6px 0 14px; }
+.bm-coverbtn{ background:none; border:none; color:var(--muted); font-size:.72rem; text-decoration:underline; cursor:pointer; padding:0; margin-top:6px; }
+/* Heute: Literatur */
+.td-lq{ margin:10px 0 0; padding:2px 0 8px 12px; border-left:3px solid var(--line); font-family:'Fraunces', serif; font-size:1rem; line-height:1.45; color:var(--ink); }
+.td-lq cite{ display:block; font-family:'Inter'; font-style:normal; font-size:.74rem; color:var(--muted); margin-top:4px; }
+
+/* ---------- Design „Schreibmaschine" ---------- */
+html.tw{ font-size:15px; }
+html.tw body{ background-color:var(--foam); background-image:radial-gradient(rgba(70,52,30,.045) 1px, transparent 1.2px), radial-gradient(rgba(70,52,30,.03) 1px, transparent 1.2px); background-size:7px 7px, 13px 13px; background-position:0 0, 4px 6px; }
+html.tw body, html.tw input, html.tw textarea, html.tw select, html.tw button, html.tw .chip, html.tw .tab, html.tw [style*="font-family"], html.tw .lr-item, html.tw .scan-photo, html.tw .bm-quote cite, html.tw .td-lq cite{ font-family:'Courier Prime', 'Courier New', Courier, monospace !important; }
+html.tw .brand h1, html.tw .sheet-title, html.tw .td-title, html.tw .td-quote, html.tw .empty b, html.tw .group-header, html.tw .wk-title, html.tw .wr-name, html.tw .wr-alldone,
+html.tw #projectHeader .proj-title, html.tw .identity-screen h1, html.tw .identity-btn, html.tw .day-detail h4, html.tw .bm-quote, html.tw .td-lq, html.tw [style*="Fraunces"], html.tw .today-date, html.tw #todayDateLabel{
+  font-family:'Special Elite', 'Courier Prime', monospace !important; font-weight:400 !important; letter-spacing:.01em; }
+html.tw .brand h1::after{ content:'_'; color:var(--coral); margin-left:2px; animation:twblink 1.1s steps(1) infinite; }
+@keyframes twblink{ 50%{ opacity:0; } }
+html.tw .balance-card, html.tw .item, html.tw .sp-tile, html.tw .day-detail, html.tw .wk-it, html.tw .lr-item, html.tw .wr-banner{ border-radius:3px; box-shadow:2px 2px 0 rgba(38,34,29,.10); }
+html.tw .balance-card .label, html.tw .sp-subhead, html.tw .field-label, html.tw .td-sub, html.tw .bm-h, html.tw .sp-listhead{ letter-spacing:.14em; }
+html.tw .btn-wide, html.tw .add-btn, html.tw .wr-fin, html.tw .wk-play{ border-radius:3px; letter-spacing:.06em; box-shadow:2px 2px 0 rgba(38,34,29,.28); }
+html.tw .btn-wide{ text-transform:uppercase; }
+html.tw .btn-wide:active, html.tw .add-btn:active{ transform:translate(1px, 1px); box-shadow:1px 1px 0 rgba(38,34,29,.28); }
+html.tw .chip{ border-radius:2px; border-style:dashed; }
+html.tw .chip.selected{ border-style:solid; }
+html.tw .field, html.tw .add-row input[type=text], html.tw textarea, html.tw input[type=search], html.tw .sp-step-ctl input, html.tw .clear-btn, html.tw .tag, html.tw .sp-stepbtn{ border-radius:2px !important; }
+html.tw .sheet, html.tw #bookModal > div{ border-radius:4px 4px 0 0 !important; border-top:3px double var(--line); }
+html.tw nav.bottom{ border-top:3px double var(--line); }
+html.tw .td-img, html.tw .photo-thumb, html.tw .spa-stage, html.tw .sp-ex-ico, html.tw .lr-cover{ border-radius:2px !important; }
+html.tw .td-img{ filter:sepia(.1) contrast(1.03); }
+html.tw .bm-quote, html.tw .td-lq{ border-radius:0; }
+html.tw svg text{ font-family:'Courier Prime', monospace !important; }
+html.tw .tideline path{ stroke-dasharray:2 5; stroke-linecap:round; }
 </style>
 </head>
 <body>
@@ -753,14 +819,15 @@ nav.bottom{
         <input type="text" id="isbnInput" placeholder="ISBN oder Titel eingeben…" style="flex:1;">
         <button class="add-btn" id="isbnSearchBtn" type="button">🔍</button>
       </div>
-      <button class="clear-btn" id="scanBtn" type="button" style="width:100%; text-align:center; margin:0 0 10px; display:none;">📷 Barcode scannen</button>
+      <button class="clear-btn" id="scanBtn" type="button" style="width:100%; text-align:center; margin:0 0 10px; display:none;">📷 Strichcode scannen</button>
       <button class="clear-btn" id="manualAddToggle" type="button" style="width:100%; text-align:center; margin:0 0 14px;">✏️ Manuell hinzufügen</button>
       <div id="manualAddForm" style="display:none; margin-bottom:14px;">
         <input type="text" id="manualTitle" placeholder="Titel" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:10px; font-family:'Inter'; font-size:.9rem;">
         <input type="text" id="manualAuthor" placeholder="Autor:in (optional)" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; margin-bottom:10px; font-family:'Inter'; font-size:.9rem;">
         <button id="manualAddSave" type="button" class="btn-wide" style="margin:0;">Hinzufügen</button>
       </div>
-      <div id="libStatus" style="font-size:.78rem; color:var(--muted); margin:-4px 0 14px; min-height:1.1em;"></div>
+      <div id="libStatus" role="status" style="font-size:.78rem; color:var(--muted); margin:-4px 0 14px; min-height:1.1em;"></div>
+      <div id="libResults"></div>
       <div class="chips proj-chips-row" id="bookCategoryChips" style="margin-bottom:14px;"></div>
       <div class="photo-grid" id="libraryGrid"></div>
       <div id="libraryEmpty" class="empty" style="display:none;"></div>
@@ -814,11 +881,14 @@ nav.bottom{
       <div id="tdArt"></div>
       <div id="tdArt2"></div>
       <div id="tdQuote"></div>
+      <div id="tdLitQuotes"></div>
+      <div id="tdLit"></div>
+      <div id="tdLibQuote"></div>
       <div id="tdPotd"></div>
       <div id="tdMuseum"></div>
       <div id="tdMet"></div>
       <div id="tdNature"></div>
-      <div class="td-src" style="text-align:center; margin:4px 0 12px;">Bilder: Wikipedia &amp; Wikimedia Commons, Art Institute of Chicago, Metropolitan Museum of Art. Jahrestage, Kunst- und Naturtexte sind eigene Zusammenfassungen.</div>
+      <div class="td-src" style="text-align:center; margin:4px 0 12px;">Bilder &amp; Texte: Wikipedia, Wikimedia Commons, Art Institute of Chicago, Metropolitan Museum of Art. Jahrestage, Kunst- und Naturtexte sind eigene Zusammenfassungen.</div>
     </section>
 
     <!-- SPORT -->
@@ -952,8 +1022,14 @@ nav.bottom{
 
 <div id="scannerOverlay" class="lightbox" style="display:none;">
   <button class="lightbox-close" id="scannerClose" type="button" aria-label="schließen">✕</button>
-  <video id="scannerVideo" autoplay playsinline muted style="width:100%; max-width:400px; border-radius:12px; background:#000;"></video>
-  <div class="lightbox-meta" id="scannerStatus">Richte die Kamera auf den Barcode…</div>
+  <div class="scan-wrap"><video id="scannerVideo" autoplay playsinline muted></video><div class="scan-frame" aria-hidden="true"><i></i></div></div>
+  <div class="lightbox-meta" id="scannerStatus" role="status">Richte die Kamera auf den Strichcode…</div>
+  <div class="scan-tools">
+    <button id="scanTorch" type="button" hidden>💡 Licht</button>
+    <button id="scanZoom" type="button" hidden>🔍 Zoom</button>
+    <label class="scan-photo">📸 Foto vom Strichcode<input type="file" id="scanPhoto" accept="image/*" capture="environment" hidden></label>
+  </div>
+  <div class="scan-hint">Den Strichcode mit 978/979 waagerecht in den Rahmen, ca. 15–25 cm Abstand, gutes Licht. Klappt es nicht: ISBN von der Rückseite oder dem Impressum abtippen.</div>
 </div>
 
 <div id="bookModal" class="lightbox" style="display:none; background:rgba(20,32,30,.55); align-items:flex-end; padding:0;">
@@ -964,9 +1040,11 @@ nav.bottom{
         <div id="bmTitle" style="font-family:'Fraunces',serif; font-weight:600; font-size:1.05rem; color:var(--ink);"></div>
         <div id="bmAuthor" style="font-size:.85rem; color:var(--muted); margin-top:2px;"></div>
         <div id="bmIsbn" style="font-size:.72rem; color:var(--muted); margin-top:4px;"></div>
+        <button id="bmCoverFind" class="bm-coverbtn" type="button">Cover suchen</button>
       </div>
       <button id="bookModalClose" type="button" style="background:none; border:none; font-size:1.3rem; color:var(--muted); cursor:pointer; flex-shrink:0;">✕</button>
     </div>
+    <div id="bmInsights"></div>
     <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Status</div>
     <div class="chips" id="bmStatus">
       <button class="chip" data-val="ungelesen" type="button">Ungelesen</button>
@@ -981,7 +1059,7 @@ nav.bottom{
     <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Kategorie</div>
     <div class="chips" id="bmCategory"></div>
     <div style="font-size:.75rem; color:var(--muted); margin-bottom:6px;">Notizen</div>
-    <textarea id="bmNotes" rows="4" placeholder="Gedanken, Zitate…" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; font-family:'Inter'; font-size:.9rem; margin-bottom:18px; resize:vertical; background:var(--card); color:var(--ink);"></textarea>
+    <textarea id="bmNotes" rows="4" placeholder="Gedanken, Notizen…" style="width:100%; border:1px solid var(--line); border-radius:12px; padding:11px 12px; font-family:'Inter'; font-size:.9rem; margin-bottom:18px; resize:vertical; background:var(--card); color:var(--ink);"></textarea>
     <div style="display:flex; gap:10px;">
       <button id="bmDelete" type="button" class="clear-btn" style="flex:1; text-align:center; margin:0;">Entfernen</button>
       <button id="bmSave" type="button" class="btn-wide" style="flex:2; margin:0;">Speichern</button>
@@ -1237,7 +1315,8 @@ const THEMES = {
   gezeiten: { label:'Gezeiten', deep:'#143C3F', mid:'#2D7A73', foam:'#F3F6F4', card:'#FFFFFF', line:'#DCE6E1', ink:'#16211F', muted:'#5C6E68', sage:'#6FA695', amber:'#C68A3B', coral:'#C1543D', violet:'#7C6FA6', tide:'#4C7EA8' },
   duenen:   { label:'Dünen',    deep:'#4A3B2A', mid:'#C17A4E', foam:'#FAF6EF', card:'#FFFFFF', line:'#E8DCC8', ink:'#2E2418', muted:'#8A7A63', sage:'#9C9463', amber:'#D4A24C', coral:'#B85C4A', violet:'#8C6E8F', tide:'#5B8AA3' },
   nacht:    { label:'Nacht',    deep:'#0A1614', mid:'#4FB8A8', foam:'#10201E', card:'#172826', line:'#26403C', ink:'#E8F0EE', muted:'#7FA096', sage:'#6FA695', amber:'#D9A65C', coral:'#E07A65', violet:'#A594C9', tide:'#6FA0C9' },
-  moos:     { label:'Moos',     deep:'#1F3320', mid:'#4C7A4E', foam:'#F2F5EE', card:'#FFFFFF', line:'#DDE5D6', ink:'#1E2A1C', muted:'#6B7A66', sage:'#7FA66F', amber:'#B98A3E', coral:'#B0553F', violet:'#77698C', tide:'#4E7A93' }
+  moos:     { label:'Moos',     deep:'#1F3320', mid:'#4C7A4E', foam:'#F2F5EE', card:'#FFFFFF', line:'#DDE5D6', ink:'#1E2A1C', muted:'#6B7A66', sage:'#7FA66F', amber:'#B98A3E', coral:'#B0553F', violet:'#77698C', tide:'#4E7A93' },
+  schreibmaschine: { label:'Schreibmaschine', deep:'#2B2620', mid:'#8C2F23', foam:'#F1EADB', card:'#FBF7EE', line:'#D8CBB3', ink:'#26221D', muted:'#6F6455', sage:'#5F7A5A', amber:'#9C6B22', coral:'#A23A2C', violet:'#3E4C63', tide:'#3F5F73' }
 };
 const FREQ_LABELS = { '1':'täglich', '4':'2× pro Woche', '7':'wöchentlich', '14':'alle 2 Wochen', '30':'monatlich', '60':'alle 2 Monate', '90':'alle 3 Monate' };
 const PROJECT_COLORS = ['#2D7A73','#C68A3B','#7C6FA6','#4C7EA8','#A65B7C','#5B8C5A'];
@@ -1668,6 +1747,173 @@ const TD_THEMES = [
   ['dock','Hafen'], ['railroad','Eisenbahn'], ['immigrants','Migration'], ['peasants','Bäuerinnen und Bauern'], ['war','Krieg'],
   ['slavery','Sklaverei'], ['market','Markt'], ['weaver','Weben'], ['fishermen','Fischerei'], ['blacksmith','Schmiede'],
   ['beggar','Not'], ['soldiers','Soldaten'], ['ironworks','Eisenhütte'], ['street','Straßenleben'], ['mother child','Mutter und Kind']
+];
+
+/* Literarische Zitate (q = Zitat, a = Autor:in, w = Werk/Anlass, y = Jahr) */
+const LIT_QUOTES = [
+  { q:'Es gibt kein richtiges Leben im falschen.', a:'Theodor W. Adorno', w:'Minima Moralia', y:'1951' },
+  { q:'Erst kommt das Fressen, dann kommt die Moral.', a:'Bertolt Brecht', w:'Die Dreigroschenoper', y:'1928' },
+  { q:'Unglücklich das Land, das Helden nötig hat.', a:'Bertolt Brecht', w:'Leben des Galilei', y:'1938/39' },
+  { q:'Wer baute das siebentorige Theben? In den Büchern stehen die Namen von Königen. Haben die Könige die Felsbrocken herbeigeschleppt?', a:'Bertolt Brecht', w:'Fragen eines lesenden Arbeiters', y:'1935' },
+  { q:'Was ist ein Einbruch in eine Bank gegen die Gründung einer Bank?', a:'Bertolt Brecht', w:'Die Dreigroschenoper', y:'1928' },
+  { q:'Wer im Stich lässt seinesgleichen, lässt ja nur sich selbst im Stich.', a:'Bertolt Brecht', w:'Solidaritätslied', y:'1931' },
+  { q:'Der Schoß ist fruchtbar noch, aus dem das kroch.', a:'Bertolt Brecht', w:'Der aufhaltsame Aufstieg des Arturo Ui', y:'1941' },
+  { q:'Ein Buch muss die Axt sein für das gefrorene Meer in uns.', a:'Franz Kafka', w:'Brief an Oskar Pollak', y:'1904' },
+  { q:'Jemand musste Josef K. verleumdet haben, denn ohne dass er etwas Böses getan hätte, wurde er eines Morgens verhaftet.', a:'Franz Kafka', w:'Der Process', y:'1925' },
+  { q:'Als Gregor Samsa eines Morgens aus unruhigen Träumen erwachte, fand er sich in seinem Bett zu einem ungeheueren Ungeziefer verwandelt.', a:'Franz Kafka', w:'Die Verwandlung', y:'1915' },
+  { q:'Vor dem Gesetz steht ein Türhüter.', a:'Franz Kafka', w:'Vor dem Gesetz', y:'1915' },
+  { q:'Alle glücklichen Familien gleichen einander, jede unglückliche Familie ist auf ihre eigene Weise unglücklich.', a:'Lew Tolstoi', w:'Anna Karenina', y:'1878' },
+  { q:'Die Philosophen haben die Welt nur verschieden interpretiert; es kommt aber darauf an, sie zu verändern.', a:'Karl Marx', w:'Thesen über Feuerbach', y:'1845' },
+  { q:'Ein Gespenst geht um in Europa – das Gespenst des Kommunismus.', a:'Karl Marx und Friedrich Engels', w:'Manifest der Kommunistischen Partei', y:'1848' },
+  { q:'Proletarier aller Länder, vereinigt euch!', a:'Karl Marx und Friedrich Engels', w:'Manifest der Kommunistischen Partei', y:'1848' },
+  { q:'Die Freiheit ist immer nur Freiheit des anders Denkenden.', a:'Rosa Luxemburg', w:'Zur russischen Revolution', y:'1918' },
+  { q:'Man wird nicht als Frau geboren, man wird es.', a:'Simone de Beauvoir', w:'Das andere Geschlecht', y:'1949' },
+  { q:'Eine Frau muss Geld haben und ein Zimmer für sich allein, wenn sie Romane schreiben will.', a:'Virginia Woolf', w:'Ein Zimmer für sich allein', y:'1929' },
+  { q:'Der Mensch ist frei geboren, und überall liegt er in Ketten.', a:'Jean-Jacques Rousseau', w:'Vom Gesellschaftsvertrag', y:'1762' },
+  { q:'Krieg ist Frieden. Freiheit ist Sklaverei. Unwissenheit ist Stärke.', a:'George Orwell', w:'1984', y:'1949' },
+  { q:'Alle Tiere sind gleich, aber manche Tiere sind gleicher als andere.', a:'George Orwell', w:'Farm der Tiere', y:'1945' },
+  { q:'Es war die beste und die schlimmste aller Zeiten.', a:'Charles Dickens', w:'Eine Geschichte aus zwei Städten', y:'1859' },
+  { q:'Es irrt der Mensch, solang er strebt.', a:'Johann Wolfgang von Goethe', w:'Faust I', y:'1808' },
+  { q:'Ich bin ein Teil von jener Kraft, die stets das Böse will und stets das Gute schafft.', a:'Johann Wolfgang von Goethe', w:'Faust I', y:'1808' },
+  { q:'Der Worte sind genug gewechselt, lasst mich auch endlich Taten sehn!', a:'Johann Wolfgang von Goethe', w:'Faust I', y:'1808' },
+  { q:'Edel sei der Mensch, hilfreich und gut!', a:'Johann Wolfgang von Goethe', w:'Das Göttliche', y:'1783' },
+  { q:'Der Mensch spielt nur, wo er in voller Bedeutung des Worts Mensch ist, und er ist nur da ganz Mensch, wo er spielt.', a:'Friedrich Schiller', w:'Über die ästhetische Erziehung des Menschen', y:'1795' },
+  { q:'Sire, geben Sie Gedankenfreiheit.', a:'Friedrich Schiller', w:'Don Karlos', y:'1787' },
+  { q:'Kein Mensch muss müssen.', a:'Gotthold Ephraim Lessing', w:'Nathan der Weise', y:'1779' },
+  { q:'Das war ein Vorspiel nur, dort wo man Bücher verbrennt, verbrennt man auch am Ende Menschen.', a:'Heinrich Heine', w:'Almansor', y:'1821' },
+  { q:'Denk ich an Deutschland in der Nacht, / Dann bin ich um den Schlaf gebracht.', a:'Heinrich Heine', w:'Nachtgedanken', y:'1844' },
+  { q:'Ich weiß nicht, was soll es bedeuten, / Dass ich so traurig bin.', a:'Heinrich Heine', w:'Die Lore-Ley', y:'1824' },
+  { q:'Friede den Hütten! Krieg den Palästen!', a:'Georg Büchner', w:'Der Hessische Landbote', y:'1834' },
+  { q:'Das Leben der Vornehmen ist ein langer Sonntag.', a:'Georg Büchner', w:'Der Hessische Landbote', y:'1834' },
+  { q:'Man muss sich Sisyphos als einen glücklichen Menschen vorstellen.', a:'Albert Camus', w:'Der Mythos des Sisyphos', y:'1942' },
+  { q:'Ich empöre mich, also sind wir.', a:'Albert Camus', w:'Der Mensch in der Revolte', y:'1951' },
+  { q:'Heute ist Mama gestorben. Vielleicht auch gestern, ich weiß es nicht.', a:'Albert Camus', w:'Der Fremde', y:'1942' },
+  { q:'Die Hölle, das sind die anderen.', a:'Jean-Paul Sartre', w:'Geschlossene Gesellschaft', y:'1944' },
+  { q:'Die Wahrheit ist dem Menschen zumutbar.', a:'Ingeborg Bachmann', w:'Rede zur Verleihung des Hörspielpreises der Kriegsblinden', y:'1959' },
+  { q:'Aufklärung ist der Ausgang des Menschen aus seiner selbstverschuldeten Unmündigkeit.', a:'Immanuel Kant', w:'Beantwortung der Frage: Was ist Aufklärung?', y:'1784' },
+  { q:'Nennt mich Ismael.', a:'Herman Melville', w:'Moby-Dick', y:'1851' },
+  { q:'Es ist eine allgemein anerkannte Wahrheit, dass ein Junggeselle im Besitz eines schönen Vermögens nichts dringender braucht als eine Frau.', a:'Jane Austen', w:'Stolz und Vorurteil', y:'1813' },
+  { q:'Viele Jahre später sollte der Oberst Aureliano Buendía sich vor dem Erschießungskommando an jenen fernen Nachmittag erinnern, an dem sein Vater ihn mitnahm, um das Eis kennenzulernen.', a:'Gabriel García Márquez', w:'Hundert Jahre Einsamkeit', y:'1967' },
+  { q:'Ilsebill salzte nach.', a:'Günter Grass', w:'Der Butt', y:'1977' },
+  { q:'Lange Zeit bin ich früh schlafen gegangen.', a:'Marcel Proust', w:'Auf der Suche nach der verlorenen Zeit', y:'1913' },
+  { q:'Man sieht nur mit dem Herzen gut. Das Wesentliche ist für die Augen unsichtbar.', a:'Antoine de Saint-Exupéry', w:'Der kleine Prinz', y:'1943' },
+  { q:'Es gibt nichts Gutes, außer: Man tut es.', a:'Erich Kästner', w:'Moral', y:'1950' },
+  { q:'Was auch immer geschieht: Nie dürft ihr so tief sinken, von dem Kakao, durch den man euch zieht, auch noch zu trinken.', a:'Erich Kästner', w:'Was auch geschieht!', y:'' },
+  { q:'Wo kämen wir hin, wenn alle sagten, wo kämen wir hin, und niemand ginge, um einmal zu schauen, wohin man käme, wenn man ginge.', a:'Kurt Marti', w:'Gedicht', y:'' },
+  { q:'Und jedem Anfang wohnt ein Zauber inne, / Der uns beschützt und der uns hilft, zu leben.', a:'Hermann Hesse', w:'Stufen', y:'1941' },
+  { q:'Der Kapitalismus trägt den Krieg in sich wie die Wolke den Regen.', a:'Jean Jaurès', w:'Rede', y:'um 1895' },
+  { q:'Eigentum ist Diebstahl.', a:'Pierre-Joseph Proudhon', w:'Was ist das Eigentum?', y:'1840' },
+  { q:'¡No pasarán! – Sie werden nicht durchkommen!', a:'Dolores Ibárruri', w:'Rundfunkrede zu Beginn des Spanischen Bürgerkriegs', y:'1936' },
+  { q:'Die Werkzeuge des Herrn werden niemals das Haus des Herrn niederreißen.', a:'Audre Lorde', w:'Sister Outsider', y:'1984' },
+  { q:'Feminismus ist eine Bewegung, die Sexismus, sexistische Ausbeutung und Unterdrückung beenden will.', a:'bell hooks', w:'Feminism Is for Everybody', y:'2000' },
+  { q:'Nicht alles, dem man sich stellt, lässt sich ändern. Aber nichts lässt sich ändern, solange man sich ihm nicht stellt.', a:'James Baldwin', w:'As Much Truth As One Can Bear', y:'1962' },
+  { q:'Wenn es ein Buch gibt, das du wirklich lesen willst, das aber noch nicht geschrieben wurde, dann musst du es schreiben.', a:'Toni Morrison', w:'Rede', y:'1981' },
+  { q:'Die einzige Geschichte erzeugt Stereotype. Und das Problem mit Stereotypen ist nicht, dass sie falsch sind, sondern dass sie unvollständig sind.', a:'Chimamanda Ngozi Adichie', w:'Die Gefahr einer einzigen Geschichte', y:'2009' },
+  { q:'Jede Generation muss aus relativer Dunkelheit heraus ihre Mission entdecken, sie erfüllen oder sie verraten.', a:'Frantz Fanon', w:'Die Verdammten dieser Erde', y:'1961' },
+  { q:'In einer rassistischen Gesellschaft reicht es nicht, nicht rassistisch zu sein. Wir müssen antirassistisch sein.', a:'Angela Davis', w:'zugeschrieben, vielfach zitiert', y:'' },
+  { q:'Niemand ist frei, solange nicht alle frei sind.', a:'Fannie Lou Hamer', w:'Rede', y:'1971' },
+  { q:'Dieses Buch soll weder eine Anklage noch ein Bekenntnis sein. Es soll nur den Versuch machen, über eine Generation zu berichten, die vom Kriege zerstört wurde – auch wenn sie seinen Granaten entkam.', a:'Erich Maria Remarque', w:'Im Westen nichts Neues', y:'1929' },
+  { q:'Soldaten sind Mörder.', a:'Kurt Tucholsky', w:'Der bewachte Kriegsschauplatz', y:'1931' },
+  { q:'Wir fühlten alle, wie tief und wie furchtbar die äußeren Mächte in das Innerste des Menschen greifen können, aber wir fühlten auch, dass es im Innersten etwas gab, das unangreifbar war und unverletzbar.', a:'Anna Seghers', w:'Das siebte Kreuz', y:'1942' },
+  { q:'Wann Krieg beginnt, das kann man wissen, aber wann beginnt der Vorkrieg.', a:'Christa Wolf', w:'Kassandra', y:'1983' },
+  { q:'Niemand hat das Recht zu gehorchen.', a:'Hannah Arendt', w:'Gespräch mit Joachim Fest', y:'1964' },
+  { q:'Mensch – das klingt stolz!', a:'Maxim Gorki', w:'Nachtasyl', y:'1902' },
+  { q:'Die Schönheit wird die Welt retten.', a:'Fjodor Dostojewski', w:'Der Idiot', y:'1869' },
+  { q:'Ich klage an!', a:'Émile Zola', w:'Offener Brief zur Dreyfus-Affäre in L\'Aurore', y:'1898' },
+  { q:'In den Seelen der Menschen füllen sich die Früchte des Zorns und werden schwer, schwer zur Ernte.', a:'John Steinbeck', w:'Früchte des Zorns', y:'1939' },
+  { q:'Ich bin. Aber ich habe mich nicht. Darum werden wir erst.', a:'Ernst Bloch', w:'Spuren', y:'1930' },
+  { q:'Es ist niemals ein Dokument der Kultur, ohne zugleich ein solches der Barbarei zu sein.', a:'Walter Benjamin', w:'Über den Begriff der Geschichte', y:'1940' },
+  { q:'Die Krise besteht gerade darin, dass das Alte stirbt und das Neue nicht geboren werden kann: In diesem Interregnum kommt es zu den unterschiedlichsten Krankheitserscheinungen.', a:'Antonio Gramsci', w:'Gefängnishefte', y:'1930' },
+  { q:'Pessimismus des Verstandes, Optimismus des Willens.', a:'Antonio Gramsci', w:'Briefe aus dem Gefängnis', y:'1929' },
+  { q:'Vor meinem eignen Tod ist mir nicht bang, / Nur vor dem Tode derer, die mir nah sind.', a:'Mascha Kaléko', w:'Memento', y:'1945' },
+  { q:'Mein Vaterland ist tot / sie haben es begraben / im Feuer // Ich lebe / in meinem Mutterland / Wort', a:'Rose Ausländer', w:'Mutterland', y:'1978' },
+  { q:'Schwarze Milch der Frühe wir trinken sie abends', a:'Paul Celan', w:'Todesfuge', y:'1948' },
+  { q:'Ich habe zu Hause ein blaues Klavier / Und kenne doch keine Note.', a:'Else Lasker-Schüler', w:'Mein blaues Klavier', y:'1937' },
+  { q:'Du musst dein Leben ändern.', a:'Rainer Maria Rilke', w:'Archaïscher Torso Apollos', y:'1908' },
+  { q:'Wo aber Gefahr ist, wächst / Das Rettende auch.', a:'Friedrich Hölderlin', w:'Patmos', y:'1803' },
+  { q:'Das ist ein weites Feld.', a:'Theodor Fontane', w:'Effi Briest', y:'1895' },
+  { q:'Tief ist der Brunnen der Vergangenheit.', a:'Thomas Mann', w:'Joseph und seine Brüder', y:'1933' },
+  { q:'Wenn es aber Wirklichkeitssinn gibt, … dann muss es auch etwas geben, das man Möglichkeitssinn nennen kann.', a:'Robert Musil', w:'Der Mann ohne Eigenschaften', y:'1930' },
+  { q:'Eine andere Welt ist nicht nur möglich, sie ist auf dem Weg. An einem ruhigen Tag kann ich sie atmen hören.', a:'Arundhati Roy', w:'Rede beim Weltsozialforum in Porto Alegre', y:'2003' },
+  { q:'Die Utopie liegt am Horizont. Ich gehe zwei Schritte auf sie zu, und sie entfernt sich um zwei Schritte. Wozu dient die Utopie? Dazu: zu gehen.', a:'Eduardo Galeano (nach Fernando Birri)', w:'Las palabras andantes', y:'1993' },
+  { q:'Du magst mich in den Dreck treten, / doch ich, wie Staub, steig auf.', a:'Maya Angelou', w:'Still I Rise', y:'1978' },
+  { q:'Was geschieht mit einem aufgeschobenen Traum? Vertrocknet er wie eine Rosine in der Sonne?', a:'Langston Hughes', w:'Harlem', y:'1951' },
+  { q:'Hoffnung ist das Ding mit Federn, / das in der Seele sitzt.', a:'Emily Dickinson', w:'„Hope" is the thing with feathers', y:'um 1861' },
+  { q:'Ich bin niemand! Wer bist du?', a:'Emily Dickinson', w:'I\'m Nobody! Who are you?', y:'um 1861' },
+  { q:'Fremd bin ich eingezogen, / Fremd zieh ich wieder aus.', a:'Wilhelm Müller', w:'Winterreise', y:'1824' },
+  { q:'Es war, als hätt der Himmel / Die Erde still geküsst.', a:'Joseph von Eichendorff', w:'Mondnacht', y:'1837' },
+  { q:'Schläft ein Lied in allen Dingen, / Die da träumen fort und fort.', a:'Joseph von Eichendorff', w:'Wünschelrute', y:'1835' },
+  { q:'Ich bin ein Mensch, nichts Menschliches ist mir fremd.', a:'Terenz', w:'Der Selbstquäler', y:'163 v. Chr.' },
+  { q:'Lasst euch nicht verführen! / Es gibt keine Wiederkehr.', a:'Bertolt Brecht', w:'Gegen Verführung', y:'1927' },
+  { q:'Sprache ist eine Waffe. Haltet sie scharf.', a:'Kurt Tucholsky', w:'zugeschrieben', y:'' }
+];
+
+/* Literaturfakten — kurz, überprüfbar */
+const LIT_FACTS = [
+  { t:'Kafka wollte, dass alles verbrannt wird', x:'Franz Kafka bat seinen Freund Max Brod, nach seinem Tod alle unveröffentlichten Manuskripte zu verbrennen. Brod tat es nicht — so erschienen „Der Process", „Das Schloss" und „Der Verschollene".' },
+  { t:'Kafka, der Arbeitsschützer', x:'Kafka arbeitete als Jurist bei der Arbeiter-Unfall-Versicherungs-Anstalt in Prag und beschäftigte sich mit Unfallverhütung in Fabriken und Steinbrüchen.' },
+  { t:'60 Jahre Faust', x:'Goethe beschäftigte sich rund sechs Jahrzehnte mit dem Faust-Stoff. Den zweiten Teil versiegelte er kurz vor seinem Tod — er erschien erst 1832, postum.' },
+  { t:'Das Kapital kommt aus Hamburg', x:'Der erste Band von Karl Marx\' „Das Kapital" erschien 1867 im Hamburger Verlag Otto Meissner.' },
+  { t:'Heine im Bankhaus', x:'Heinrich Heine sollte im Hamburger Bankhaus seines reichen Onkels Salomon Heine Kaufmann werden. Das Tuchgeschäft, das der Onkel ihm einrichtete, ging nach kurzer Zeit pleite.' },
+  { t:'Borchert und die Kammerspiele', x:'Der Hamburger Wolfgang Borchert schrieb „Draußen vor der Tür" Anfang 1947 in wenigen Tagen. Er starb am 20. November 1947 in Basel — einen Tag vor der Uraufführung in den Hamburger Kammerspielen.' },
+  { t:'Kästner sah zu', x:'Bei der Bücherverbrennung am 10. Mai 1933 in Berlin stand Erich Kästner in der Menge und sah zu, wie seine eigenen Bücher ins Feuer geworfen wurden.' },
+  { t:'Frankenstein, mit 18 begonnen', x:'Mary Shelley begann „Frankenstein" 1816 mit 18 Jahren am Genfersee, bei einem Gruselgeschichten-Wettstreit mit Lord Byron und Percy Shelley. Der Roman erschien 1818 zunächst anonym.' },
+  { t:'Dostojewskis Scheinhinrichtung', x:'Fjodor Dostojewski wurde 1849 als Mitglied eines sozialistischen Lesekreises zum Tode verurteilt. Erst auf dem Richtplatz wurde die Begnadigung verkündet — danach folgten vier Jahre Zwangsarbeit in Sibirien.' },
+  { t:'Cervantes in Gefangenschaft', x:'Miguel de Cervantes wurde in der Seeschlacht von Lepanto 1571 an der linken Hand verwundet und war später fünf Jahre in algerischer Gefangenschaft, bevor er den „Don Quijote" schrieb.' },
+  { t:'Welttag des Buches', x:'Der 23. April ist Welttag des Buches, weil Cervantes und Shakespeare beide an einem 23. April 1616 starben — allerdings nach unterschiedlichen Kalendern, also nicht am selben Tag.' },
+  { t:'Erste Frau mit Literaturnobelpreis', x:'Die Schwedin Selma Lagerlöf erhielt 1909 als erste Frau den Literaturnobelpreis — bekannt bis heute für „Nils Holgerssons wunderbare Reise".' },
+  { t:'Sartre sagt Nein', x:'Jean-Paul Sartre lehnte 1964 den Literaturnobelpreis ab. Ein Schriftsteller dürfe sich nicht in eine Institution verwandeln lassen.' },
+  { t:'Orwell in Spanien', x:'George Orwell kämpfte im Spanischen Bürgerkrieg in der Miliz der POUM und wurde durch einen Halsschuss schwer verletzt. Seine Erfahrungen stehen in „Mein Katalonien" (1938).' },
+  { t:'1984 auf der Insel Jura', x:'Orwell schrieb „1984" schwer an Tuberkulose erkrankt auf der abgelegenen schottischen Insel Jura. Der Roman erschien 1949, Orwell starb im Januar 1950.' },
+  { t:'Das siebte Kreuz erschien zuerst auf Englisch', x:'Anna Seghers schrieb „Das siebte Kreuz" im französischen Exil. Der Roman erschien 1942 zuerst in englischer Übersetzung in den USA, die deutsche Ausgabe kam im selben Jahr in Mexiko heraus.' },
+  { t:'Dreigroschenoper nach einer Vorlage von 1728', x:'Brecht und Weill brachten „Die Dreigroschenoper" 1928 im Theater am Schiffbauerdamm heraus. Vorlage war John Gays „Beggar\'s Opera" von 1728.' },
+  { t:'Die Märchenfrau aus Zwehrn', x:'Eine der wichtigsten Erzählerinnen der Brüder Grimm war Dorothea Viehmann, eine Schneiderswitwe aus Zwehrn bei Kassel, die ihnen rund 40 Märchen erzählte.' },
+  { t:'23 Seiten, die die Welt veränderten', x:'Das „Manifest der Kommunistischen Partei" erschien im Februar 1848 als schmale deutschsprachige Broschüre von 23 Seiten in London.' },
+  { t:'Rosa Luxemburgs Herbarien', x:'In ihren Gefängnisjahren 1915–1918 legte Rosa Luxemburg Herbarien an und schrieb Briefe voller Pflanzen- und Vogelbeobachtungen.' },
+  { t:'Toni Morrison', x:'Toni Morrison erhielt 1993 als erste Schwarze Frau den Literaturnobelpreis. Vorher arbeitete sie lange als Lektorin bei Random House und förderte dort Schwarze Autor:innen.' },
+  { t:'Gabriela Mistral', x:'Die Chilenin Gabriela Mistral erhielt 1945 als erste Person aus Lateinamerika den Literaturnobelpreis. Sie war Lehrerin und setzte sich für Bildung armer Kinder ein.' },
+  { t:'Wole Soyinka', x:'Der Nigerianer Wole Soyinka bekam 1986 als erster afrikanischer Autor den Literaturnobelpreis. Im Biafra-Krieg saß er fast zwei Jahre ohne Anklage in Einzelhaft.' },
+  { t:'Zwei Nationalhymnen', x:'Rabindranath Tagore erhielt 1913 als erster Nicht-Europäer den Literaturnobelpreis. Von ihm stammen die Nationalhymnen Indiens und Bangladeschs.' },
+  { t:'Kein Shakespeare-Manuskript', x:'Von keinem Drama Shakespeares ist eine Handschrift erhalten. Einzig ein paar Seiten im Gemeinschaftsstück „Sir Thomas More" gelten als möglicherweise von seiner Hand.' },
+  { t:'Die Gutenberg-Bibel', x:'Gutenberg druckte seine Bibel um 1454 in rund 180 Exemplaren. Erhalten sind 49, teils unvollständig.' },
+  { t:'Das älteste datierte Buch', x:'Das älteste erhaltene gedruckte Buch mit Datum ist eine chinesische Diamant-Sutra von 868, gefunden in den Höhlen von Dunhuang.' },
+  { t:'Gilgamesch', x:'Das Gilgamesch-Epos aus Mesopotamien gehört zu den ältesten Werken der Weltliteratur. Es enthält bereits eine Sintflut-Erzählung.' },
+  { t:'Ein Roman von einer Hofdame', x:'Die „Geschichte vom Prinzen Genji" der japanischen Hofdame Murasaki Shikibu, entstanden um das Jahr 1000, gilt als einer der ersten Romane der Welt.' },
+  { t:'Die erste Berufsschriftstellerin', x:'Christine de Pizan lebte um 1400 in Paris als eine der ersten Frauen vom Schreiben. In „Das Buch von der Stadt der Frauen" (1405) widersprach sie der Frauenfeindlichkeit ihrer Zeit.' },
+  { t:'Les Misérables aus dem Exil', x:'Victor Hugo vollendete „Les Misérables" im Exil auf der Kanalinsel Guernsey, wohin er vor Napoleon III. geflohen war. Der Roman erschien 1862.' },
+  { t:'J\'accuse', x:'Émile Zolas offener Brief „J\'accuse…!" erschien 1898 in der Zeitung L\'Aurore und klagte die Verurteilung des jüdischen Offiziers Dreyfus an. Zola wurde verurteilt und floh nach England.' },
+  { t:'Ins Herz gezielt, den Magen getroffen', x:'Upton Sinclairs Roman „Der Dschungel" (1906) über Chicagos Schlachthöfe sollte das Elend der Arbeiter zeigen — und führte zu Lebensmittelgesetzen. Sinclair: Er habe aufs Herz gezielt und den Magen getroffen.' },
+  { t:'Onkel Toms Hütte', x:'Harriet Beecher Stowes Roman gegen die Sklaverei (1852) wurde zum meistverkauften Roman des 19. Jahrhunderts in den USA.' },
+  { t:'Remarque verbrannt', x:'„Im Westen nichts Neues" (1929) wurde 1933 öffentlich verbrannt. Remarques Schwester Elfriede Scholz wurde 1943 von den Nazis hingerichtet.' },
+  { t:'Lu Xun', x:'Lu Xuns „Tagebuch eines Verrückten" (1918) gilt als erste moderne Erzählung in chinesischer Umgangssprache statt im klassischen Schriftchinesisch.' },
+  { t:'Gorkis „Die Mutter"', x:'Maxim Gorkis Roman „Die Mutter" (1906) gilt als Gründungstext des sozialistischen Realismus. Gorki schrieb ihn zum großen Teil in den USA.' },
+  { t:'Pippi, erfunden von einem kranken Kind', x:'Astrid Lindgrens Tochter Karin lag 1941 krank im Bett und wünschte sich eine Geschichte über „Pippi Langstrumpf" — den Namen hatte sie selbst erfunden.' },
+  { t:'Nobelpreis für die Buddenbrooks', x:'Thomas Mann erhielt den Literaturnobelpreis 1929 ausdrücklich für seinen frühen Roman „Buddenbrooks" über eine Lübecker Kaufmannsfamilie.' },
+  { t:'Nummer 1: Faust', x:'Reclams Universal-Bibliothek startete 1867 mit Goethes „Faust I" als Band Nummer 1 — billige Klassiker für alle.' },
+  { t:'Die Taschenbuch-Revolution', x:'Allen Lane gründete 1935 Penguin Books: gute Literatur zum Preis einer Packung Zigaretten. Die Idee soll ihm auf einem Bahnsteig gekommen sein.' },
+  { t:'Ulysses verboten', x:'James Joyces „Ulysses" erschien 1922 in Paris bei Sylvia Beachs Buchhandlung Shakespeare and Company. In den USA war der Roman bis 1933 verboten.' },
+  { t:'Fahrenheit 451 auf Mietschreibmaschinen', x:'Ray Bradbury tippte die Urfassung von „Fahrenheit 451" auf Münz-Schreibmaschinen im Keller der Bibliothek der UCLA — für 10 Cent pro halbe Stunde.' },
+  { t:'Der erste getippte Roman', x:'Mark Twain gehörte zu den ersten Autoren, die ein Manuskript mit der Schreibmaschine abgaben. Er selbst nannte „Tom Sawyer", die Forschung tippt eher auf „Leben auf dem Mississippi".' },
+  { t:'Nietzsches Schreibkugel', x:'Der fast blinde Nietzsche schrieb 1882 auf einer dänischen Schreibkugel von Malling-Hansen. Er notierte: „Unser Schreibzeug arbeitet mit an unseren Gedanken."' },
+  { t:'Things Fall Apart', x:'Chinua Achebes Roman „Things Fall Apart" (1958) über die Kolonisierung Nigerias hat seinen Titel aus W. B. Yeats\' Gedicht „The Second Coming".' },
+  { t:'Ein Roman auf Toilettenpapier', x:'Der Kenianer Ngũgĩ wa Thiong\'o schrieb im Gefängnis 1978 einen Roman auf Toilettenpapier — auf Gikuyu, weil er nicht mehr in der Sprache der Kolonialmacht schreiben wollte.' },
+  { t:'Canto General im Versteck', x:'Pablo Neruda schrieb große Teile seines „Canto General" 1948/49 im Untergrund, als er als kommunistischer Senator in Chile verfolgt wurde.' },
+  { t:'Nâzım Hikmet', x:'Der türkische Dichter Nâzım Hikmet verbrachte wegen seiner kommunistischen Überzeugung mehr als zwölf Jahre im Gefängnis und starb 1963 im Moskauer Exil.' },
+  { t:'Lorcas verschwundenes Grab', x:'Federico García Lorca wurde 1936 zu Beginn des Bürgerkriegs von Francos Anhängern ermordet. Sein Grab ist bis heute nicht gefunden.' },
+  { t:'Ein Gedicht als Todesurteil', x:'Ossip Mandelstam schrieb 1933 ein Spottgedicht auf Stalin. Er wurde verhaftet und starb 1938 in einem Durchgangslager. Seine Frau Nadeschda rettete seine Gedichte, indem sie sie auswendig lernte.' },
+  { t:'Requiem im Kopf', x:'Anna Achmatowas „Requiem" über den Großen Terror wurde jahrzehntelang nicht aufgeschrieben, sondern von Freundinnen auswendig gelernt — die Manuskripte wurden verbrannt.' },
+  { t:'Samisdat', x:'In der Sowjetunion verbreiteten sich verbotene Texte als „Samisdat" — Selbstverlag: abgetippt mit Durchschlägen auf der Schreibmaschine, von Hand zu Hand.' },
+  { t:'36 Jahre im Turm', x:'Friedrich Hölderlin lebte von 1807 bis zu seinem Tod 1843 im Haus des Schreinermeisters Ernst Zimmer in Tübingen — im heute berühmten Hölderlinturm.' },
+  { t:'Büchner starb mit 23', x:'Georg Büchner starb 1837 mit 23 Jahren in Zürich an Typhus. Sein Fragment „Woyzeck" wurde erst 1913 uraufgeführt.' },
+  { t:'Der erste Detektiv', x:'Edgar Allan Poes „Der Doppelmord in der Rue Morgue" (1841) gilt als erste Detektivgeschichte — mit dem Ermittler C. Auguste Dupin.' },
+  { t:'Woher der Roman seinen Namen hat', x:'„Roman" kommt vom altfranzösischen „romanz": Gemeint waren Texte in der Volkssprache statt in Latein.' },
+  { t:'Sappho in Bruchstücken', x:'Von den neun Büchern der Dichterin Sappho ist nur ein einziges Gedicht vollständig überliefert — der Rest sind Fragmente, manche auf Papyrus-Fetzen aus Mumienhüllen.' },
+  { t:'Auf dem Index', x:'Simone de Beauvoirs „Das andere Geschlecht" kam 1956 auf den Index der vom Vatikan verbotenen Bücher. Den Index selbst schaffte die Kirche 1966 ab.' },
+  { t:'Agatha Christie', x:'Agatha Christie ist laut UNESCO-Index die meistübersetzte Einzelautorin der Welt.' },
+  { t:'Bachmann-Preis', x:'Beim Ingeborg-Bachmann-Preis in Klagenfurt lesen seit 1977 Autorinnen und Autoren unveröffentlichte Texte vor und werden direkt danach live von einer Jury kritisiert.' },
+  { t:'Bertha von Suttner', x:'Bertha von Suttner wurde mit dem Antikriegsroman „Die Waffen nieder!" (1889) berühmt und erhielt 1905 als erste Frau den Friedensnobelpreis.' },
+  { t:'Zuerst als Fortsetzungsroman', x:'Viele Romane von Charles Dickens erschienen zuerst in monatlichen oder wöchentlichen Fortsetzungen — Leser:innen warteten auf die nächste Folge wie heute auf eine Serie.' },
+  { t:'Kassandra in Ost und West', x:'Christa Wolfs „Kassandra" erzählt den Trojanischen Krieg aus Sicht der Seherin, der niemand glaubt. Die Erzählung erschien 1983, mitten im Streit um die Nachrüstung, in der DDR und in der Bundesrepublik.' }
 ];
 
 const QUOTES_FACTS = [
@@ -2218,14 +2464,15 @@ function tdDayIndex(d){ return Math.floor(Date.UTC(d.getFullYear(), d.getMonth()
 function tdPick(arr, d, shift){ const n = arr.length; return arr[(((tdDayIndex(d) + (shift||0)) % n) + n) % n]; }
 /* Jedes Element genau einmal pro Runde, Reihenfolge je Runde neu gemischt (deterministisch, für beide gleich) */
 const tdPermCache = {};
-function tdPermPick(arr, d, salt, step){
-  const n = arr.length, idx = tdDayIndex(d) * (step || 1);
+function tdPermPickAt(arr, idx, salt){
+  const n = arr.length; if(!n) return null;
   const cycle = Math.floor(idx / n), pos = ((idx % n) + n) % n, key = salt + ':' + n + ':' + cycle;
-  /* feste Hälften: ein Werk steht immer in derselben Rundenhälfte → frühestens nach einer halben Runde wieder */
+  /* feste Hälften: ein Eintrag steht immer in derselben Rundenhälfte → frühestens nach einer halben Runde wieder */
   const half = i=>tdHash(salt + ':h:' + i) % 2;
   if(!tdPermCache[key]) tdPermCache[key] = [...Array(n).keys()].sort((a, b)=>(half(a) - half(b)) || (tdHash(key + ':' + a) - tdHash(key + ':' + b)));
   return arr[tdPermCache[key][pos]];
 }
+function tdPermPick(arr, d, salt, step){ return tdPermPickAt(arr, tdDayIndex(d) * (step || 1), salt); }
 const TD_ALL_ART = ART_WORKS.concat(SOCIAL_ART);
 function tdArtOfDay(d){ return tdPermPick(TD_ALL_ART, d, 'kunst'); }
 function tdSocialOfDay(d){
@@ -2365,9 +2612,7 @@ function tdParseEvents(text){
 function tdWikiEvents(d){
   const title = `${d.getDate()}. ${MONTH_NAMES[d.getMonth()]}`;
   return tdOnce('wpev:' + todayKey(d), 30*86400000, async ()=>{
-    const j = await tdFetchJSON(`https://de.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&exsectionformat=wiki&redirects=1&format=json&formatversion=2&origin=*&titles=${encodeURIComponent(title)}`, 12000);
-    const pg = j && j.query && j.query.pages && j.query.pages[0];
-    const items = tdParseEvents(pg && pg.extract).filter(e=>e.year>=1789 && e.text.length>=20);
+    const items = tdParseEvents(await tdWikiDayText(d)).filter(e=>e.year>=1789 && e.text.length>=20);
     if(!items.length) return null;
     /* Pro Datum fest ausgewählt: je ein Ereignis aus verschiedenen Bereichen, dann auffüllen */
     const seed = tdHash(title);
@@ -2378,6 +2623,79 @@ function tdWikiEvents(d){
     shuffled.forEach(e=>{ if(picked.length<4 && !picked.includes(e)) picked.push(e); });
     return { title, items: picked.sort((a,b)=>a.year-b.year).map(e=>({ year:e.year, text:tdShorten(e.text, 260) })) };
   });
+}
+
+/* ---------- Heute: Literatur (Geboren/Gestorben aus dem Wikipedia-Tagesartikel, Zitate aus der eigenen Bibliothek) ---------- */
+const tdDayTextMem = {};
+function tdWikiDayText(d){
+  const title = `${d.getDate()}. ${MONTH_NAMES[d.getMonth()]}`;
+  if(!tdDayTextMem[title]){
+    tdDayTextMem[title] = tdFetchJSON(`https://de.wikipedia.org/w/api.php?action=query&prop=extracts&explaintext=1&exsectionformat=wiki&redirects=1&format=json&formatversion=2&origin=*&titles=${encodeURIComponent(title)}`, 12000)
+      .then(j=>{ const pg = j && j.query && j.query.pages && j.query.pages[0]; return (pg && pg.extract) || ''; })
+      .catch(()=>{ delete tdDayTextMem[title]; return ''; });
+  }
+  return tdDayTextMem[title];
+}
+function tdParseSection(text, name){
+  const lines = String(text || '').split('\n');
+  const start = lines.findIndex(l=>new RegExp('^==\\s*' + name + '\\s*==\\s*$').test(l.trim()));
+  if(start < 0) return [];
+  const out = []; let pendingYear = null;
+  for(const raw of lines.slice(start + 1)){
+    const tr = raw.trim();
+    if(/^==[^=]/.test(tr)) break;
+    if(/^===/.test(tr)){ pendingYear = null; continue; }
+    const line = raw.replace(/^[\s*•·\-–]+/, '').trim();
+    if(!line) continue;
+    const m = line.match(/^(\d{1,4})(\s*v\.\s*Chr\.)?\s*:\s*(.*)$/);
+    if(m){ if(m[2]){ pendingYear = null; continue; } const y = parseInt(m[1], 10); if(m[3]) out.push({ year:y, text:m[3] }); else pendingYear = y; continue; }
+    if(pendingYear!==null) out.push({ year:pendingYear, text:line });
+  }
+  return out;
+}
+const TD_LIT_RX = /(Schriftsteller|Dichter|Lyriker|\bAutor(in)?\b|Romancier|Dramatiker|Erzähler|Essayist|Literat\b|Poet|Librettist|Übersetzer|Literaturnobelpreis|Kinderbuchautor|Verleger)/i;
+function tdWikiLit(d){
+  return tdOnce('wplit:' + todayKey(d), 30*86400000, async ()=>{
+    const text = await tdWikiDayText(d);
+    if(!text) return null;
+    const seed = todayKey(d);
+    const pick = list=>list.filter(e=>TD_LIT_RX.test(e.text) && e.year >= 1500)
+      .map((e, i)=>({ e, k:tdHash(seed + ':' + i + e.text) })).sort((a, b)=>a.k - b.k).slice(0, 3).map(x=>x.e)
+      .sort((a, b)=>a.year - b.year).map(e=>({ year:e.year, text:tdShorten(e.text, 160) }));
+    return { born:pick(tdParseSection(text, 'Geboren')), died:pick(tdParseSection(text, 'Gestorben')), title:`${d.getDate()}. ${MONTH_NAMES[d.getMonth()]}` };
+  });
+}
+/* alle Zitate aus euren Büchern (eigene zuerst gesammelte + gefundene aus dem jeweiligen Buch) */
+function tdLibraryQuotes(){
+  const out = [];
+  (typeof books!=='undefined' && Array.isArray(books) ? books : []).forEach(b=>{
+    if(!b) return;
+    (b.myQuotes || []).forEach(q=>out.push({ t:q.t, b, page:q.page, mine:true }));
+    if(b.info && b.info.quotes && b.info.quotes.scope==='book') (b.info.quotes.list || []).forEach(q=>out.push({ t:q.t, b }));
+  });
+  return out.sort((x, y)=>(x.b.id + x.t).localeCompare(y.b.id + y.t));
+}
+function tdLitQuoteHTML(q){ return `<blockquote class="td-lq">„${escapeHtml(q.q)}“<cite>${escapeHtml(q.a)}${q.w ? ' · ' + escapeHtml(q.w) : ''}${q.y ? ' (' + escapeHtml(q.y) + ')' : ''}</cite></blockquote>`; }
+function renderTodayLiterature(d, token, dayWord){
+  const base = tdDayIndex(d) * 3;
+  const lq = [0, 1, 2].map(k=>tdPermPickAt(LIT_QUOTES, base + k, 'litq'));
+  $('#tdLitQuotes').innerHTML = tdCard('Literarische Zitate', lq.map(tdLitQuoteHTML).join(''));
+  const lf = tdPermPick(LIT_FACTS, d, 'litf');
+  $('#tdLit').innerHTML = tdCard('Literatur', `<div class="td-title">${escapeHtml(lf.t)}</div><div class="td-text">${escapeHtml(lf.x)}</div>` +
+    `<div id="tdLitDay"><div class="td-sub">Geboren &amp; gestorben ${dayWord} <span class="td-loading">· lädt …</span></div></div>`);
+  tdWikiLit(d).then(r=>{
+    if(token!==todayRenderToken) return;
+    const box = $('#tdLitDay'); if(!box) return;
+    if(!r || (!r.born.length && !r.died.length)){ box.remove(); return; }
+    const row = (e, sym)=>`<div class="td-wev"><span class="td-year">${sym} ${e.year}</span> ${escapeHtml(e.text)}</div>`;
+    box.innerHTML = `<div class="td-sub">Geboren &amp; gestorben ${dayWord}</div>` + r.born.map(e=>row(e, '*')).join('') + r.died.map(e=>row(e, '†')).join('') +
+      `<div class="td-src">Quelle: <a href="https://de.wikipedia.org/wiki/${encodeURIComponent(r.title.replace(/ /g, '_'))}" target="_blank" rel="noopener">Wikipedia, „${escapeHtml(r.title)}"</a> (CC BY-SA)</div>`;
+  });
+  const lib = tdLibraryQuotes();
+  if(!lib.length){ $('#tdLibQuote').innerHTML = ''; return; }
+  const q = tdPermPick(lib, d, 'libq');
+  $('#tdLibQuote').innerHTML = tdCard('Aus eurer Bibliothek', `<blockquote class="td-lq">„${escapeHtml(q.t)}“<cite>${escapeHtml(q.b.title)} · ${escapeHtml(q.b.author || '')}${q.page ? ' · S. ' + escapeHtml(q.page) : ''}</cite></blockquote><button class="td-link" id="tdLibOpen" type="button">Zum Buch</button>`);
+  $('#tdLibOpen').onclick = ()=>{ switchToTab('library'); openBookModal(q.b.id); };
 }
 
 /* Art Institute of Chicago: gemeinfreies Werk zum Thema des Tages (für beide Geräte dasselbe) */
@@ -2502,7 +2820,10 @@ function renderToday(){
   /* 3 — Zitat des Tages */
   const q = tdPick(QUOTES_FACTS, d, 11);
   $('#tdQuote').innerHTML = tdCard('Zitat des Tages',
-    `<div class="td-quote">„${escapeHtml(q.quote)}"</div><div class="td-meta" style="margin-top:8px;"><b style="color:var(--ink);font-weight:600;">${escapeHtml(q.person)}</b> · ${escapeHtml(q.role)}</div><div class="td-src" style="margin-top:4px;">${escapeHtml(q.context)}</div>`);
+    `<div class="td-quote">„${escapeHtml(q.quote)}“</div><div class="td-meta" style="margin-top:8px;"><b style="color:var(--ink);font-weight:600;">${escapeHtml(q.person)}</b> · ${escapeHtml(q.role)}</div><div class="td-src" style="margin-top:4px;">${escapeHtml(q.context)}</div>`);
+
+  /* 3b — Literatur */
+  renderTodayLiterature(d, token, dayWord);
 
   /* 4 — Bild des Tages (Wikimedia Commons) */
   $('#tdPotd').innerHTML = tdCard('Bild des Tages', tdImgHTML('tdPotdImg', 'Bild des Tages') + `<div id="tdPotdText"></div>`);
@@ -2558,7 +2879,7 @@ function renderDailyFact(){
   more.style.display = 'block';
   more.style.color = 'var(--muted)';
   more.style.fontSize = '.78rem';
-  more.textContent = 'Zwei Kunstwerke, zwei Museumsfunde, Zitat, Bild des Tages →';
+  more.textContent = 'Kunst, Zitate, Literatur, Bild des Tages →';
   if(evs && evs.length){
     img.style.display = 'none';
     img.removeAttribute('src');
@@ -2651,6 +2972,7 @@ function applyTheme(key){
   const t = THEMES[key] || THEMES.gezeiten;
   const root = document.documentElement.style;
   root.setProperty('--tide-deep', t.deep);
+  document.documentElement.classList.toggle('tw', key==='schreibmaschine');
   root.setProperty('--heading', key==='nacht' ? t.ink : t.deep);
   root.setProperty('--mq-wood', key==='nacht' ? '#4A4338' : '#EBDCC3');
   root.setProperty('--mq-line', key==='nacht' ? '#9A8566' : '#A88B62');
@@ -2680,8 +3002,9 @@ function renderThemeSwatches(){
   $('#themeSwatches').innerHTML = Object.keys(THEMES).map(key=>{
     const t = THEMES[key];
     const ring = key===current ? `box-shadow:0 0 0 2px #10201E, 0 0 0 4px ${t.mid};` : 'box-shadow:none;';
-    return `<button class="theme-swatch" data-theme="${key}" type="button" title="${t.label}" style="width:36px; height:36px; border-radius:50%; border:none; cursor:pointer; background:linear-gradient(135deg, ${t.deep} 50%, ${t.mid} 50%); ${ring}"></button>`;
-  }).join('');
+    const bg = key==='schreibmaschine' ? `linear-gradient(135deg, ${t.foam} 50%, ${t.mid} 50%)` : `linear-gradient(135deg, ${t.deep} 50%, ${t.mid} 50%)`;
+    return `<button class="theme-swatch" data-theme="${key}" type="button" title="${t.label}" aria-label="Farbschema ${t.label}" aria-pressed="${key===current}" style="width:36px; height:36px; border-radius:50%; border:none; cursor:pointer; background:${bg}; ${ring}"></button>`;
+  }).join('') + `<div style="flex-basis:100%; font-size:.75rem; color:#B9CFC7;">${(THEMES[current] || THEMES.gezeiten).label}</div>`;
   $$('.theme-swatch').forEach(b=>{
     b.onclick = ()=>{ applyTheme(b.dataset.theme); renderThemeSwatches(); };
   });
@@ -2994,73 +3317,6 @@ async function fetchOpenLibrary(isbn){
 function getBookCategories(shelf){
   return [...new Set(books.filter(b=>(b.shelf||'owned')===shelf).map(b=>b.category || 'Weitere'))].sort((a,b)=>a.localeCompare(b,'de'));
 }
-async function searchBook(raw){
-  const text = (raw || '').trim();
-  if(!text){ setLibStatus('Bitte ISBN oder Titel eingeben', true); return; }
-  let digitsOnly = text.replace(/[^0-9Xx]/g, '');
-  /* Barcodes tragen manchmal einen 5-stelligen Zusatz (Preiscode) — abschneiden */
-  if(digitsOnly.length===18 && /^97[89]/.test(digitsOnly)) digitsOnly = digitsOnly.slice(0,13);
-  const looksLikeIsbn = /^(\d{9}[\dXx]|97[89]\d{10})$/.test(digitsOnly);
-  if(looksLikeIsbn && books.some(b=>b.isbn===digitsOnly)){ setLibStatus('Dieses Buch ist schon vorhanden', true); return; }
-  setLibStatus('Suche Buch …');
-  try{
-    let info = null;
-    let usedIsbn = looksLikeIsbn ? digitsOnly : '';
-
-    if(looksLikeIsbn){
-      /* ISBN-10 und ISBN-13 sind unterschiedliche Schreibweisen desselben Buchs —
-         Google kennt mal die eine, mal die andere. Beide probieren. */
-      const variants = [digitsOnly];
-      const alt = digitsOnly.length===13 ? isbn13to10(digitsOnly) : isbn10to13(digitsOnly);
-      if(alt) variants.push(alt);
-      for(const v of variants){
-        const data = await fetchGoogleBooks(`isbn:${v}`);
-        if(data.items && data.items.length){ info = data.items[0].volumeInfo || {}; usedIsbn = digitsOnly; break; }
-      }
-      if(!info){
-        setLibStatus('Bei Google nicht gefunden — versuche Open Library …');
-        for(const v of variants){
-          try{
-            const ol = await fetchOpenLibrary(v);
-            if(ol){ info = ol; usedIsbn = digitsOnly; break; }
-          }catch(_){}
-        }
-      }
-    } else {
-      const data = await fetchGoogleBooks(encodeURIComponent(text));
-      if(data.items && data.items.length){
-        info = data.items[0].volumeInfo || {};
-        const ident = (info.industryIdentifiers || []).find(i=>i.type==='ISBN_13') || (info.industryIdentifiers || []).find(i=>i.type==='ISBN_10');
-        usedIsbn = ident ? ident.identifier : '';
-      }
-    }
-
-    if(!info){
-      setLibStatus('Kein Buch gefunden — mit „Manuell hinzufügen" selbst eintragen', true);
-      return;
-    }
-
-    let cover = normalizeCover(info.imageLinks ? (info.imageLinks.thumbnail || info.imageLinks.smallThumbnail || '') : (info.cover || ''));
-    /* Kein Cover von der Quelle? Open Library liefert Cover direkt als Bild-URL. */
-    if(!cover && usedIsbn) cover = `https://covers.openlibrary.org/b/isbn/${usedIsbn}-M.jpg?default=false`;
-
-    const book = {
-      id: uid(), isbn: usedIsbn,
-      title: info.title || 'Ohne Titel',
-      author: info.author || (info.authors || []).join(', ') || 'Unbekannt',
-      cover,
-      status: 'ungelesen', category: autoCategory(info), shelf: activeShelf,
-      notes: '', addedBy: identity, createdAt: Date.now()
-    };
-    books.unshift(book);
-    $('#isbnInput').value = '';
-    setLibStatus(`„${book.title}" hinzugefügt (${book.category})`);
-    renderLibrary();
-    await storageSet('household-books', JSON.stringify(books), true);
-  }catch(e){
-    setLibStatus(`Suche fehlgeschlagen: ${e.message}`, true);
-  }
-}
 $('#isbnSearchBtn').addEventListener('click', ()=> searchBook($('#isbnInput').value));
 $('#isbnInput').addEventListener('keydown', e=>{ if(e.key==='Enter') searchBook($('#isbnInput').value); });
 $$('#shelfPicker .chip').forEach(c=>c.addEventListener('click', ()=>{
@@ -3071,50 +3327,543 @@ $$('#shelfPicker .chip').forEach(c=>c.addEventListener('click', ()=>{
   $('#manualAddToggle').style.display = addUI==='none' ? 'none' : 'block';
   $('#manualAddForm').style.display = 'none';
   const sb = $('#scanBtn');
-  if(sb && 'BarcodeDetector' in window) sb.style.display = addUI==='none' ? 'none' : 'block';
+  if(sb && scanSupported()) sb.style.display = addUI==='none' ? 'none' : 'block';
+  libResults = []; renderLibResults();
   renderLibrary();
 }));
 
-let scannerStream = null;
-let scannerLoopId = null;
-if('BarcodeDetector' in window){
-  const sb = $('#scanBtn');
-  if(sb) sb.style.display = 'block';
+/* ---------- Bibliothek: Suche über mehrere Quellen (Google Books, Deutsche Nationalbibliothek, Open Library) ---------- */
+function isbnClean(text){
+  let d = String(text || '').replace(/[^0-9Xx]/g, '').toUpperCase();
+  /* Barcodes tragen manchmal einen 2- oder 5-stelligen Zusatz (Preiscode) — abschneiden */
+  if((d.length===15 || d.length===18) && /^97[89]/.test(d)) d = d.slice(0, 13);
+  return d;
+}
+function isbnValid(d){
+  if(/^97[89]\d{10}$/.test(d)){ let s = 0; for(let i=0;i<12;i++) s += +d[i] * (i % 2 ? 3 : 1); return (10 - s % 10) % 10 === +d[12]; }
+  if(/^\d{9}[\dX]$/.test(d)){ let s = 0; for(let i=0;i<10;i++) s += (d[i]==='X' ? 10 : +d[i]) * (10 - i); return s % 11 === 0; }
+  return false;
+}
+function isbnKey(d){ d = isbnClean(d); return d.length===10 ? (isbn10to13(d) || d) : d; }
+function bookExists(isbn){ const k = isbnKey(isbn); return k ? books.find(b=>b.isbn && isbnKey(b.isbn)===k) : null; }
+async function fetchTextViaProxy(url){
+  const proxies = [ `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`, `https://corsproxy.io/?url=${encodeURIComponent(url)}` ];
+  let lastErr;
+  for(const p of proxies){ try{ const res = await fetch(p); if(!res.ok) throw new Error('HTTP ' + res.status); return await res.text(); }catch(e){ lastErr = e; } }
+  throw lastErr || new Error('Proxy nicht erreichbar');
+}
+/* JSON direkt holen, bei CORS-/Netzfehler über den Proxy */
+async function fetchJsonDirectOrProxy(url){
+  try{ return await tdFetchJSON(url, 9000); }catch(_){ return await fetchJsonViaProxy(url); }
+}
+function gbToCand(it){
+  const v = it.volumeInfo || {}, ids = v.industryIdentifiers || [];
+  const i13 = (ids.find(i=>i.type==='ISBN_13') || {}).identifier, i10 = (ids.find(i=>i.type==='ISBN_10') || {}).identifier;
+  return { title:v.title || '', subtitle:v.subtitle || '', author:(v.authors || []).join(', '), year:String(v.publishedDate || '').slice(0, 4),
+    publisher:v.publisher || '', isbn:i13 || (i10 ? (isbn10to13(i10) || i10) : ''), cover:normalizeCover(v.imageLinks ? (v.imageLinks.thumbnail || v.imageLinks.smallThumbnail || '') : ''),
+    categories:v.categories || [], language:v.language || '', src:'Google Books' };
+}
+async function gbSearch(q, max){
+  const data = await fetchGoogleBooks(encodeURIComponent(q) + `&maxResults=${max || 10}&printType=books`);
+  return (data.items || []).map(gbToCand).filter(c=>c.title);
+}
+function olToCand(d){
+  const isbns = (d.isbn || []).map(isbnClean).filter(isbnValid);
+  const isbn13 = isbns.find(x=>x.length===13) || (isbns[0] ? isbnKey(isbns[0]) : '');
+  return { title:d.title || '', subtitle:d.subtitle || '', author:(d.author_name || []).slice(0, 3).join(', '), year:d.first_publish_year ? String(d.first_publish_year) : '',
+    publisher:(d.publisher || [])[0] || '', isbn:isbn13, cover:d.cover_i ? `https://covers.openlibrary.org/b/id/${d.cover_i}-M.jpg` : '',
+    categories:(d.subject || []).slice(0, 8), language:{ ger:'de', eng:'en', fre:'fr', spa:'es', gre:'el' }[(d.language || [])[0]] || '', src:'Open Library' };
+}
+async function olSearch(params){
+  const j = await fetchJsonDirectOrProxy(`https://openlibrary.org/search.json?${params}&fields=title,subtitle,author_name,first_publish_year,publisher,isbn,cover_i,language,subject&limit=10`);
+  return ((j && j.docs) || []).map(olToCand).filter(c=>c.title);
+}
+/* Deutsche Nationalbibliothek (SRU, Dublin Core) — sehr gut für deutsche Bücher */
+async function dnbSearch(cql){
+  const xml = await fetchTextViaProxy(`https://services.dnb.de/sru/dnb?version=1.1&operation=searchRetrieve&query=${encodeURIComponent(cql)}&recordSchema=oai_dc&maximumRecords=10`);
+  const doc = new DOMParser().parseFromString(xml, 'application/xml');
+  const out = [];
+  [...doc.getElementsByTagName('*')].filter(n=>n.localName==='dc').forEach(rec=>{
+    const get = name=>[...rec.getElementsByTagName('*')].filter(n=>n.localName===name).map(n=>n.textContent.trim());
+    let title = (get('title')[0] || '').split(' / ')[0].trim();
+    const parts = title.split(' : '); title = parts[0].trim();
+    const subtitle = parts.slice(1).join(' : ').trim();
+    const authors = get('creator').map(c=>c.replace(/\s*\[.*?\]\s*/g, '').trim()).filter(Boolean).map(c=>{ const m = c.match(/^([^,]+),\s*(.+)$/); return m ? `${m[2]} ${m[1]}` : c; });
+    const isbnRaw = get('identifier').map(i=>(i.match(/97[89][\d-]{10,16}|\b\d[\d-]{8,11}[\dXx]\b/) || [''])[0]).map(isbnClean).find(isbnValid) || '';
+    const isbn = isbnRaw ? isbnKey(isbnRaw) : '';
+    if(!title) return;
+    out.push({ title, subtitle, author:[...new Set(authors)].slice(0, 3).join(', '), year:((get('date')[0] || '').match(/\d{4}/) || [''])[0],
+      publisher:(get('publisher')[0] || '').replace(/^.*?:\s*/, ''), isbn, cover:'', categories:get('subject'), language:{ ger:'de', eng:'en', fre:'fr', spa:'es', gre:'el' }[get('language')[0]] || '', src:'Deutsche Nationalbibliothek' });
+  });
+  return out;
+}
+function candKey(c){ return c.isbn ? 'i' + isbnKey(c.isbn) : 't' + stripDiacritics(c.title + '|' + (c.author || '').split(',')[0]).replace(/[^a-z0-9|]/g, ''); }
+/* Treffer zusammenführen: gleiche ISBN bzw. gleicher Titel+Autor → ein Eintrag, Lücken aus anderen Quellen füllen */
+function mergeCands(lists){
+  const map = new Map(), order = [];
+  lists.forEach(list=>list.forEach(c=>{
+    const k = candKey(c);
+    if(!map.has(k)){ map.set(k, Object.assign({ covers:[] }, c, { srcs:[c.src] })); order.push(k); }
+    const m = map.get(k);
+    ['title','subtitle','author','year','publisher','isbn','language'].forEach(f=>{ if(!m[f] && c[f]) m[f] = c[f]; });
+    if(c.cover) m.covers.push(c.cover);
+    if(!m.srcs.includes(c.src)) m.srcs.push(c.src);
+    m.categories = [...new Set((m.categories || []).concat(c.categories || []))];
+  }));
+  return order.map(k=>map.get(k));
+}
+function coverCandidates(c){
+  const list = (c.covers || []).concat(c.cover ? [c.cover] : []);
+  if(c.isbn){
+    const k = isbnKey(c.isbn);
+    if(/^97[89]3/.test(k)) list.push(`https://portal.dnb.de/opac/mvb/cover?isbn=${k}`);
+    list.push(`https://covers.openlibrary.org/b/isbn/${k}-M.jpg?default=false`);
+  }
+  return [...new Set(list.filter(Boolean))];
+}
+/* erstes Coverbild, das wirklich lädt (Platzhalter von 1 px aussortiert) */
+function pickCover(urls, ms){
+  return new Promise(resolve=>{
+    let i = 0, done = false;
+    const timer = setTimeout(()=>{ done = true; resolve(urls[0] || ''); }, ms || 6000);
+    const next = ()=>{
+      if(done) return;
+      if(i >= urls.length){ done = true; clearTimeout(timer); resolve(''); return; }
+      const u = urls[i++], img = new Image();
+      img.onload = ()=>{ if(done) return; if(img.naturalWidth > 20 && img.naturalHeight > 20){ done = true; clearTimeout(timer); resolve(u); } else next(); };
+      img.onerror = next;
+      img.src = u;
+    };
+    next();
+  });
+}
+let libResults = [];
+function renderLibResults(){
+  const box = $('#libResults'); if(!box) return;
+  if(!libResults.length){ box.innerHTML = ''; return; }
+  box.innerHTML = `<div class="lr-head"><span>${libResults.length} ${libResults.length===1 ? 'Treffer' : 'Treffer'} — antippen zum Hinzufügen</span><button type="button" class="lr-close" aria-label="Trefferliste schließen">✕</button></div>` +
+    libResults.map((c, i)=>{
+      const exists = c.isbn && bookExists(c.isbn);
+      const cov = coverCandidates(c)[0];
+      return `<button class="lr-item" type="button" data-i="${i}"${exists ? ' disabled' : ''}>
+        <span class="lr-cover">${cov ? `<img src="${escapeHtml(cov)}" alt="" loading="lazy" onerror="this.remove()">` : ''}<span>📕</span></span>
+        <span class="lr-main"><b>${escapeHtml(c.title)}</b>${c.subtitle ? `<span class="lr-sub">${escapeHtml(tdShorten(c.subtitle, 80))}</span>` : ''}
+          <span class="lr-meta">${escapeHtml([c.author || 'Autor:in unbekannt', c.year, c.publisher].filter(Boolean).join(' · '))}</span>
+          <span class="lr-src">${escapeHtml(c.srcs.join(', '))}${c.isbn ? ' · ISBN ' + escapeHtml(c.isbn) : ''}</span></span>
+        <span class="lr-add">${exists ? 'schon da' : '+'}</span>
+      </button>`;
+    }).join('') + `<button type="button" class="clear-btn lr-manual" style="width:100%; text-align:center; margin:8px 0 0;">Nichts Passendes? Manuell eintragen</button>`;
+}
+$('#libResults').addEventListener('click', async ev=>{
+  if(ev.target.closest('.lr-close')){ libResults = []; renderLibResults(); return; }
+  if(ev.target.closest('.lr-manual')){ libOpenManual($('#isbnInput').value); return; }
+  const b = ev.target.closest('.lr-item'); if(!b || b.disabled) return;
+  const c = libResults[+b.dataset.i]; if(!c) return;
+  b.disabled = true; b.querySelector('.lr-add').textContent = '…';
+  await addBookFromCand(c);
+  libResults = []; renderLibResults();
+});
+function libOpenManual(prefill){
+  const f = $('#manualAddForm');
+  f.style.display = 'block';
+  $('#manualAddToggle').textContent = 'Formular schließen';
+  const t = String(prefill || '').trim();
+  libManualIsbn = isbnValid(isbnClean(t)) ? isbnKey(t) : '';
+  if(t && !libManualIsbn) $('#manualTitle').value = t;
+  $('#manualTitle').focus();
+}
+let libManualIsbn = '';
+async function addBookFromCand(c){
+  setLibStatus('Suche Cover …');
+  const cover = await pickCover(coverCandidates(c), 6000);
+  const info = { categories:c.categories, language:c.language };
+  const book = {
+    id:uid(), isbn:c.isbn ? isbnKey(c.isbn) : '', title:c.title || 'Ohne Titel', author:c.author || 'Unbekannt', cover,
+    year:c.year || '', publisher:c.publisher || '',
+    status:'ungelesen', category:autoCategory(info), shelf:activeShelf, notes:'', addedBy:identity, createdAt:Date.now()
+  };
+  books.unshift(book);
+  $('#isbnInput').value = '';
+  setLibStatus(`„${book.title}" hinzugefügt (${book.category})${cover ? '' : ' — ohne Cover'}`);
+  renderLibrary();
+  await storageSet('household-books', JSON.stringify(books), true);
+  return book;
+}
+async function searchBook(raw){
+  const text = (raw || '').trim();
+  if(!text){ setLibStatus('Bitte ISBN oder Titel eingeben', true); return; }
+  libResults = []; renderLibResults();
+  const digits = isbnClean(text);
+  const isIsbn = /^(\d{9}[\dX]|97[89]\d{10})$/.test(digits) && text.replace(/[\s\-–]/g, '').length <= 18;
+  if(isIsbn){
+    if(!isbnValid(digits)){ setLibStatus('Diese ISBN hat eine falsche Prüfziffer — bitte nochmal abtippen oder scannen', true); return; }
+    const dup = bookExists(digits);
+    if(dup){ setLibStatus(`„${dup.title}" ist schon ${dup.shelf==='wishlist' ? 'auf der Wunschliste' : 'in der Bibliothek'}`, true); return; }
+    const i13 = isbnKey(digits), i10 = isbn13to10(i13);
+    setLibStatus('Suche in Google Books, Nationalbibliothek und Open Library …');
+    const jobs = [
+      gbSearch(`isbn:${i13}`, 3), i10 ? gbSearch(`isbn:${i10}`, 3) : Promise.resolve([]),
+      dnbSearch(`num=${i13}`), olSearch(`isbn=${i13}`)
+    ].map(p=>p.catch(()=>[]));
+    const res = await Promise.all(jobs);
+    /* alles auf die gesuchte ISBN festnageln, damit die Quellen zusammenfinden */
+    const lists = res.map(list=>list.slice(0, 2).map(c=>Object.assign({}, c, { isbn:i13 })));
+    const merged = mergeCands(lists);
+    if(!merged.length){
+      setLibStatus('In keiner Quelle gefunden — bitte manuell eintragen (ISBN ist schon gemerkt).', true);
+      libOpenManual(i13);
+      return;
+    }
+    await addBookFromCand(merged[0]);
+    return;
+  }
+  setLibStatus('Suche in Google Books, Nationalbibliothek und Open Library …');
+  const words = text.split(/\s+/).filter(w=>w.length > 1).slice(0, 5);
+  const jobs = [
+    gbSearch(text, 12),
+    words.length ? dnbSearch(words.map(w=>`woe=${w.replace(/["=]/g, '')}`).join(' and ')) : Promise.resolve([]),
+    olSearch(`q=${encodeURIComponent(text)}`)
+  ].map(p=>p.catch(()=>[]));
+  const [g, d, o] = await Promise.all(jobs);
+  /* Reihenfolge: abwechselnd aus den Quellen, damit nicht nur eine dominiert */
+  const inter = [];
+  for(let i=0; i<12; i++){ [g, d, o].forEach(l=>{ if(l[i]) inter.push(l[i]); }); }
+  libResults = mergeCands([inter]).slice(0, 14);
+  if(!libResults.length){ setLibStatus('Nichts gefunden — Tippfehler? Sonst manuell eintragen.', true); renderLibResults(); libOpenManual(text); return; }
+  setLibStatus('');
+  renderLibResults();
+}
+
+/* ---------- Barcode-Scanner: BarcodeDetector (Android/Chrome) oder ZXing (iPhone, Firefox) ---------- */
+let scannerStream = null, scannerTimer = 0, scanTrack = null, scanLast = '', scanHits = 0, scanZoomOn = false, scanTorchOn = false, zxing = null;
+const SCAN_FORMATS = ['ean_13','ean_8','upc_a','upc_e'];
+function scanSupported(){ return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia); }
+function setScanStatus(t){ $('#scannerStatus').textContent = t; }
+function loadZXing(){
+  if(window.ZXing) return Promise.resolve(window.ZXing);
+  return loadScript('https://cdn.jsdelivr.net/npm/@zxing/library@0.21.3/umd/index.min.js').then(()=>window.ZXing);
+}
+async function zxingReader(){
+  if(zxing) return zxing;
+  const Z = await loadZXing();
+  const hints = new Map();
+  hints.set(Z.DecodeHintType.POSSIBLE_FORMATS, [Z.BarcodeFormat.EAN_13, Z.BarcodeFormat.EAN_8, Z.BarcodeFormat.UPC_A, Z.BarcodeFormat.UPC_E]);
+  hints.set(Z.DecodeHintType.TRY_HARDER, true);
+  const reader = new Z.MultiFormatReader(); reader.setHints(hints);
+  zxing = { Z, reader };
+  return zxing;
+}
+function zxingDecodeCanvas(canvas){
+  const { Z, reader } = zxing;
+  try{ const bmp = new Z.BinaryBitmap(new Z.HybridBinarizer(new Z.HTMLCanvasElementLuminanceSource(canvas))); return reader.decode(bmp).getText(); }catch(_){ return null; }
+}
+/* zwei gleiche, gültige ISBN-Lesungen hintereinander → übernehmen */
+function scanAccept(raw){
+  const d = isbnClean(raw);
+  if(/^97[89]\d{10}$/.test(d) && isbnValid(d)){
+    if(d===scanLast) scanHits++; else { scanLast = d; scanHits = 1; }
+    if(scanHits >= 2){ scanDone(d); return true; }
+    setScanStatus(`Erkannt: ${d} — kurz ruhig halten …`);
+    return false;
+  }
+  if(/^\d{8,13}$/.test(d)) setScanStatus('Das ist kein ISBN-Strichcode (fängt nicht mit 978/979 an). Meist ist es der größere Code auf der Rückseite.');
+  return false;
+}
+function scanDone(isbn){
+  try{ if(navigator.vibrate) navigator.vibrate(80); }catch(_){}
+  closeScanner();
+  $('#isbnInput').value = isbn;
+  searchBook(isbn);
+}
+/* mittleres Band des Videobilds auf eine Leinwand kopieren (dort sitzt der Rahmen) */
+function scanGrab(video, canvas){
+  const vw = video.videoWidth, vh = video.videoHeight; if(!vw || !vh) return false;
+  const sw = vw * 0.86, sh = vh * 0.46, sx = (vw - sw) / 2, sy = (vh - sh) / 2;
+  const scale = Math.min(1, 1280 / sw);
+  canvas.width = Math.round(sw * scale); canvas.height = Math.round(sh * scale);
+  canvas.getContext('2d', { willReadFrequently:true }).drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
+  return true;
 }
 async function openScanner(){
   $('#scannerOverlay').style.display = 'flex';
-  $('#scannerStatus').textContent = 'Richte die Kamera auf den Barcode…';
+  scanLast = ''; scanHits = 0; scanZoomOn = false; scanTorchOn = false;
+  $('#scanTorch').hidden = true; $('#scanZoom').hidden = true;
+  setScanStatus('Kamera wird gestartet …');
   try{
-    scannerStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode:'environment' } });
-    const video = $('#scannerVideo');
-    video.srcObject = scannerStream;
-    const detector = new BarcodeDetector({ formats:['ean_13','ean_8'] });
-    const loop = async ()=>{
-      if(!scannerStream) return;
-      try{
-        const codes = await detector.detect(video);
-        if(codes.length){
-          const val = codes[0].rawValue;
-          closeScanner();
-          $('#isbnInput').value = val;
-          searchBook(val);
-          return;
-        }
-      }catch(_){}
-      scannerLoopId = requestAnimationFrame(loop);
-    };
-    loop();
+    scannerStream = await navigator.mediaDevices.getUserMedia({ audio:false, video:{ facingMode:{ ideal:'environment' }, width:{ ideal:1920 }, height:{ ideal:1080 } } });
   }catch(e){
-    $('#scannerStatus').textContent = 'Kamera nicht verfügbar: ' + e.message;
+    setScanStatus('Kamera nicht verfügbar (' + (e.name || e.message) + '). Tipp: „Foto vom Strichcode" nutzen oder die ISBN abtippen.');
+    return;
   }
+  const video = $('#scannerVideo');
+  video.srcObject = scannerStream;
+  try{ await video.play(); }catch(_){}
+  scanTrack = scannerStream.getVideoTracks()[0];
+  try{
+    const caps = scanTrack.getCapabilities ? scanTrack.getCapabilities() : {};
+    if(caps.focusMode && caps.focusMode.includes('continuous')) await scanTrack.applyConstraints({ advanced:[{ focusMode:'continuous' }] });
+    if(caps.torch) $('#scanTorch').hidden = false;
+    if(caps.zoom && caps.zoom.max >= 1.5) $('#scanZoom').hidden = false;
+  }catch(_){}
+  setScanStatus('Strichcode mit 978/979 waagerecht in den Rahmen halten …');
+  const canvas = document.createElement('canvas');
+  let detector = null;
+  if('BarcodeDetector' in window){
+    try{
+      let formats = SCAN_FORMATS;
+      try{ const sup = await BarcodeDetector.getSupportedFormats(); formats = SCAN_FORMATS.filter(f=>sup.includes(f)); }catch(_){}
+      if(formats.length) detector = new BarcodeDetector({ formats });
+    }catch(_){ detector = null; }
+  }
+  if(!detector){
+    setScanStatus('Scanner wird geladen …');
+    try{ await zxingReader(); }catch(_){ setScanStatus('Scanner konnte nicht geladen werden — bitte ISBN abtippen.'); return; }
+    if(!scannerStream) return;
+    setScanStatus('Strichcode mit 978/979 waagerecht in den Rahmen halten …');
+  }
+  let flip = false;
+  const tick = async ()=>{
+    if(!scannerStream) return;
+    try{
+      if(video.readyState >= 2){
+        if(detector){
+          /* abwechselnd ganzes Bild und vergrößerter Ausschnitt */
+          flip = !flip;
+          const src = flip && scanGrab(video, canvas) ? canvas : video;
+          const codes = await detector.detect(src);
+          for(const c of codes){ if(scanAccept(c.rawValue)) return; }
+        } else if(scanGrab(video, canvas)){
+          const t = zxingDecodeCanvas(canvas);
+          if(t && scanAccept(t)) return;
+        }
+      }
+    }catch(_){}
+    scannerTimer = setTimeout(tick, detector ? 110 : 160);
+  };
+  tick();
 }
 function closeScanner(){
   $('#scannerOverlay').style.display = 'none';
-  if(scannerLoopId) cancelAnimationFrame(scannerLoopId);
+  clearTimeout(scannerTimer);
   if(scannerStream){ scannerStream.getTracks().forEach(t=>t.stop()); scannerStream = null; }
+  scanTrack = null;
 }
+$('#scanTorch').addEventListener('click', async ()=>{
+  if(!scanTrack) return;
+  scanTorchOn = !scanTorchOn;
+  try{ await scanTrack.applyConstraints({ advanced:[{ torch:scanTorchOn }] }); }catch(_){}
+  $('#scanTorch').classList.toggle('on', scanTorchOn);
+});
+$('#scanZoom').addEventListener('click', async ()=>{
+  if(!scanTrack) return;
+  const caps = scanTrack.getCapabilities ? scanTrack.getCapabilities() : {};
+  scanZoomOn = !scanZoomOn;
+  const z = scanZoomOn ? Math.min(caps.zoom.max, 2) : Math.max(caps.zoom.min || 1, 1);
+  try{ await scanTrack.applyConstraints({ advanced:[{ zoom:z }] }); }catch(_){}
+  $('#scanZoom').classList.toggle('on', scanZoomOn);
+});
+/* Fallback: Foto vom Strichcode auswerten (klappt oft besser bei schwachem Licht oder alten Handys) */
+$('#scanPhoto').addEventListener('change', async ev=>{
+  const file = ev.target.files && ev.target.files[0]; ev.target.value = '';
+  if(!file) return;
+  setScanStatus('Foto wird ausgewertet …');
+  try{
+    const url = URL.createObjectURL(file);
+    const img = await new Promise((res, rej)=>{ const i = new Image(); i.onload = ()=>res(i); i.onerror = rej; i.src = url; });
+    const canvas = document.createElement('canvas');
+    let found = null;
+    for(const rot of [0, 90]){
+      const scale = Math.min(1, 1800 / Math.max(img.naturalWidth, img.naturalHeight));
+      const w = Math.round(img.naturalWidth * scale), h = Math.round(img.naturalHeight * scale);
+      canvas.width = rot ? h : w; canvas.height = rot ? w : h;
+      const ctx = canvas.getContext('2d', { willReadFrequently:true });
+      ctx.save(); if(rot){ ctx.translate(h, 0); ctx.rotate(Math.PI / 2); } ctx.drawImage(img, 0, 0, w, h); ctx.restore();
+      if('BarcodeDetector' in window){ try{ const codes = await new BarcodeDetector({ formats:['ean_13','ean_8','upc_a'] }).detect(canvas); const c = codes.map(x=>isbnClean(x.rawValue)).find(x=>/^97[89]\d{10}$/.test(x) && isbnValid(x)); if(c){ found = c; break; } }catch(_){} }
+      try{ await zxingReader(); const t = zxingDecodeCanvas(canvas); const c = t && isbnClean(t); if(c && /^97[89]\d{10}$/.test(c) && isbnValid(c)){ found = c; break; } }catch(_){}
+    }
+    URL.revokeObjectURL(url);
+    if(found) scanDone(found);
+    else setScanStatus('Auf dem Foto kein ISBN-Strichcode erkannt. Näher ran, scharf stellen, gerade halten — oder ISBN abtippen.');
+  }catch(e){ setScanStatus('Foto konnte nicht gelesen werden.'); }
+});
 $('#scanBtn').addEventListener('click', openScanner);
 $('#scannerClose').addEventListener('click', closeScanner);
+if(scanSupported()){ const sb = $('#scanBtn'); if(sb) sb.style.display = 'block'; }
+
+/* ---------- Buchseite: Kurzzusammenfassung und Zitate (Wikipedia, Wikiquote, Google Books) ---------- */
+const BI_V = 1;
+const biInflight = {};
+function biNorm(s){ return stripDiacritics(String(s || '')).replace(/ß/g, 'ss').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim(); }
+function biMainTitle(t){ return String(t || '').split(/\s[:–—-]\s|[:.(\[]/)[0].trim(); }
+function biAuthorName(a){ const n = String(a || '').split(/,|;| und | & /)[0].trim(); return /unbekannt/i.test(n) ? '' : n; }
+function biAuthorLast(a){ const n = biAuthorName(a).split(/\s+/); return n[n.length - 1] || ''; }
+function biTitleMatch(pageTitle, title){
+  const p = biNorm(String(pageTitle).replace(/\(.*?\)/g, '')), t = biNorm(biMainTitle(title));
+  if(!p || !t) return false;
+  return p===t || (t.length >= 4 && (p.startsWith(t) || t.startsWith(p) && p.length >= 6));
+}
+const BI_BOOKWORDS = /(roman|novel|buch|book|erz[aä]hlung|novelle|sachbuch|essay|drama|theaterst|play\b|gedicht|lyrik|poem|werk|short stor|kinderbuch|comic|graphic novel|memoir|autobiogra|biografie|biography|schrift|manifest|abhandlung|treatise|epos|epic|märchen|fairy tale|trilogie|saga)/i;
+const BI_WRITERWORDS = /(schriftsteller|autor|dichter|lyriker|dramatiker|journalist|philosoph|historiker|soziolog|politolog|ökonom|theoretiker|aktivist|wissenschaftler|writer|novelist|poet|author|playwright|philosopher|essayist|historian|economist|activist|scientist|illustrator|künstler)/i;
+async function biWikiSummary(b, lang){
+  const q = `${biMainTitle(b.title)} ${biAuthorLast(b.author)}`.trim();
+  const j = await tdFetchJSON(`https://${lang}.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(q)}&gsrlimit=6&prop=extracts|description&exintro=1&explaintext=1&exlimit=max&format=json&formatversion=2&origin=*`);
+  const pages = ((j && j.query && j.query.pages) || []).sort((x, y)=>(x.index || 0) - (y.index || 0));
+  const page = pages.find(p=>biTitleMatch(p.title, b.title) && (BI_BOOKWORDS.test(p.description || '') || BI_BOOKWORDS.test(String(p.extract || '').slice(0, 400))));
+  if(!page || !page.extract) return null;
+  return { text:tdShorten(page.extract.replace(/\n+/g, ' '), 950), url:`https://${lang}.wikipedia.org/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}`, label:`Wikipedia${lang==='en' ? ' (englisch)' : ''}` };
+}
+async function biWikiAuthor(b, lang){
+  const name = biAuthorName(b.author); if(!name) return null;
+  const j = await tdFetchJSON(`https://${lang}.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${encodeURIComponent(name)}&gsrlimit=4&prop=extracts|description&exintro=1&explaintext=1&exsentences=3&exlimit=max&format=json&formatversion=2&origin=*`);
+  const pages = ((j && j.query && j.query.pages) || []).sort((x, y)=>(x.index || 0) - (y.index || 0));
+  const n = biNorm(name), last = biNorm(biAuthorLast(b.author));
+  const page = pages.find(p=>{ const t = biNorm(p.title.replace(/\(.*?\)/g, '')); return (t===n || (t.includes(last) && t.split(' ').length <= 4)) && (BI_WRITERWORDS.test(p.description || '') || BI_WRITERWORDS.test(String(p.extract || '').slice(0, 300))); });
+  if(!page || !page.extract) return null;
+  return { name:page.title, text:tdShorten(page.extract.replace(/\n+/g, ' '), 420), url:`https://${lang}.wikipedia.org/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}` };
+}
+async function biGoogleDesc(b){
+  const q = b.isbn ? `isbn:${isbnKey(b.isbn)}` : `intitle:${biMainTitle(b.title)}${biAuthorLast(b.author) ? ' inauthor:' + biAuthorLast(b.author) : ''}`;
+  const data = await fetchGoogleBooks(encodeURIComponent(q) + '&maxResults=3');
+  const it = (data.items || []).find(x=>x.volumeInfo && x.volumeInfo.description);
+  if(!it) return null;
+  return { text:tdShorten(tdStripHtml(it.volumeInfo.description), 900), url:it.volumeInfo.infoLink || '', label:'Klappentext (Google Books)' };
+}
+/* Zitate aus dem Wikitext einer Wikiquote-Seite: oberste Aufzählungsebene = Zitat, darunter Quelle */
+function biParseQuotes(wt, onlyTitle){
+  const lines = String(wt || '').split('\n'), out = [], want = onlyTitle ? biNorm(biMainTitle(onlyTitle)) : '';
+  let section = '', skip = false;
+  for(let i=0; i<lines.length; i++){
+    const L = lines[i];
+    const h = L.match(/^(=+)\s*(.*?)\s*=+\s*$/);
+    if(h){ section = wikiToText(h[2]); skip = /(zugeschrieben|misattribut|disputed|umstritten|über |about|siehe auch|see also|weblinks|external|einzelnachweis|quellen|references|falsch|zitate über|quotes about|cast|darsteller)/i.test(section); continue; }
+    if(skip || !/^\*(?![*:])/.test(L)) continue;
+    let q = wikiToText(L.replace(/^\*\s*/, ''));
+    const srcLine = /^\*[*:]/.test(lines[i + 1] || '') ? wikiToText(lines[i + 1].replace(/^[*:]+\s*/, '')) : '';
+    if(want && !(biNorm(section).includes(want) || biNorm(srcLine).includes(want))) continue;
+    let src = srcLine;
+    const m = q.match(/^[„"»‚'](.+?)[“"«‘'](?:\s*[-–—,]\s*(.*))?$/);
+    if(m){ q = m[1]; if(m[2] && !src) src = m[2]; }
+    q = q.replace(/\s+/g, ' ').trim();
+    if(q.length < 25 || q.length > 420 || /^(siehe|see|quelle|source)/i.test(q)) continue;
+    out.push({ t:q, src:tdShorten(src, 140) });
+    if(out.length >= 6) break;
+  }
+  return out;
+}
+async function biWikiquote(b, lang){
+  const api = `https://${lang}.wikiquote.org/w/api.php`;
+  const search = async q=>{ const j = await tdFetchJSON(`${api}?action=query&list=search&srsearch=${encodeURIComponent(q)}&srlimit=8&format=json&formatversion=2&origin=*`); return ((j && j.query && j.query.search) || []).map(x=>x.title); };
+  const parse = async page=>{ const j = await tdFetchJSON(`${api}?action=parse&page=${encodeURIComponent(page)}&prop=wikitext&redirects=1&format=json&formatversion=2&origin=*`); return (j && j.parse && j.parse.wikitext) || ''; };
+  const link = page=>`https://${lang}.wikiquote.org/wiki/${encodeURIComponent(page.replace(/ /g, '_'))}`;
+  const hits = await search(biMainTitle(b.title));
+  const bookPage = hits.find(t=>biTitleMatch(t, b.title));
+  if(bookPage){ const qs = biParseQuotes(await parse(bookPage)); if(qs.length) return { list:qs, url:link(bookPage), label:`Wikiquote${lang==='en' ? ' (englisch)' : ''}`, scope:'book' }; }
+  const name = biAuthorName(b.author); if(!name) return null;
+  const ahits = await search(name), n = biNorm(name), last = biNorm(biAuthorLast(b.author));
+  const authorPage = ahits.find(t=>{ const x = biNorm(t); return x===n || (x.endsWith(last) && x.split(' ').length <= 4); });
+  if(!authorPage) return null;
+  const wt = await parse(authorPage);
+  let qs = biParseQuotes(wt, b.title), scope = 'book';
+  if(!qs.length){ qs = biParseQuotes(wt).slice(0, 4); scope = 'author'; }
+  if(!qs.length) return null;
+  return { list:qs, url:link(authorPage), label:`Wikiquote${lang==='en' ? ' (englisch)' : ''} · ${scope==='book' ? 'aus diesem Buch' : 'Zitate von ' + authorPage}`, scope };
+}
+function biLangs(b){
+  const en = b.category==='Englisch' || /^97[89][01]/.test(isbnKey(b.isbn || ''));
+  return en ? ['en','de'] : ['de','en'];
+}
+async function bookInsights(b){
+  if(biInflight[b.id]) return biInflight[b.id];
+  const job = (async ()=>{
+    const langs = biLangs(b), info = { v:BI_V, at:Date.now() };
+    const tries = async (fn)=>{ for(const l of langs){ try{ const r = await fn(l); if(r) return r; }catch(_){} } return null; };
+    const [summary, author] = await Promise.all([ tries(l=>biWikiSummary(b, l)), tries(l=>biWikiAuthor(b, l)) ]);
+    if(summary) info.summary = summary;
+    else { try{ const g = await biGoogleDesc(b); if(g) info.summary = g; }catch(_){} }
+    if(author) info.author = author;
+    let best = null;
+    for(const l of langs){ try{ const q = await biWikiquote(b, l); if(q && q.scope==='book'){ best = q; break; } if(q && !best) best = q; }catch(_){} }
+    if(best) info.quotes = best;
+    return info;
+  })();
+  biInflight[b.id] = job;
+  try{ return await job; } finally { delete biInflight[b.id]; }
+}
+function bmInsightsHTML(b){
+  const info = b.info;
+  if(!info) return `<div class="bm-sec"><div class="bm-h">Worum es geht</div><div class="bm-loading">Suche Zusammenfassung und Zitate …</div></div>`;
+  let h = '';
+  if(info.summary){
+    h += `<div class="bm-sec"><div class="bm-h">Worum es geht</div><div class="bm-sum" id="bmSum">${escapeHtml(info.summary.text)}</div>` +
+      `<div class="bm-src">${info.summary.url ? `<a href="${escapeHtml(info.summary.url)}" target="_blank" rel="noopener">${escapeHtml(info.summary.label)}</a>` : escapeHtml(info.summary.label)}</div></div>`;
+  }
+  if(info.quotes && info.quotes.list && info.quotes.list.length){
+    h += `<div class="bm-sec"><div class="bm-h">${info.quotes.scope==='author' ? 'Zitate der Autorin / des Autors' : 'Zitate'}</div>` +
+      info.quotes.list.map(q=>`<blockquote class="bm-quote">„${escapeHtml(q.t)}“${q.src ? `<cite>${escapeHtml(q.src)}</cite>` : ''}</blockquote>`).join('') +
+      `<div class="bm-src"><a href="${escapeHtml(info.quotes.url)}" target="_blank" rel="noopener">${escapeHtml(info.quotes.label)}</a></div></div>`;
+  }
+  if(info.author){
+    h += `<div class="bm-sec"><div class="bm-h">Über ${escapeHtml(info.author.name)}</div><div class="bm-sum">${escapeHtml(info.author.text)}</div><div class="bm-src"><a href="${escapeHtml(info.author.url)}" target="_blank" rel="noopener">Wikipedia</a></div></div>`;
+  }
+  if(!h) h = `<div class="bm-sec"><div class="bm-h">Worum es geht</div><div class="bm-loading">Zu diesem Buch habe ich bei Wikipedia, Wikiquote und Google Books nichts gefunden. Unten könnt ihr eigene Zitate sammeln.</div></div>`;
+  return h + `<button type="button" class="bm-refresh" id="bmRefresh">↻ Neu suchen</button>`;
+}
+function bmMyQuotesHTML(b){
+  const list = b.myQuotes || [];
+  return `<div class="bm-sec"><div class="bm-h">Eure Zitate</div>` +
+    (list.length ? list.map(q=>`<blockquote class="bm-quote mine">„${escapeHtml(q.t)}“<cite>${escapeHtml([q.page ? 'S. ' + q.page : '', q.by].filter(Boolean).join(' · '))}</cite>${q.by===identity ? `<button type="button" class="bm-qdel" data-id="${q.id}" aria-label="Zitat löschen">✕</button>` : ''}</blockquote>`).join('') : `<div class="bm-loading">Noch keine — Lieblingsstellen beim Lesen hier sammeln.</div>`) +
+    `<textarea id="bmQuoteText" rows="2" class="field" placeholder="Zitat abtippen …" style="margin:8px 0 6px;"></textarea>` +
+    `<div style="display:flex; gap:8px;"><input type="text" id="bmQuotePage" class="field" inputmode="numeric" placeholder="Seite" style="max-width:90px; margin:0;"><button type="button" class="clear-btn" id="bmQuoteAdd" style="flex:1; margin:0;">Zitat speichern</button></div></div>`;
+}
+function renderBookInsights(b){
+  const box = $('#bmInsights'); if(!box || currentBookModalId!==b.id) return;
+  box.innerHTML = bmInsightsHTML(b) + bmMyQuotesHTML(b);
+  /* immer das aktuelle Objekt nehmen — die Live-Synchronisierung ersetzt das books-Array */
+  const live = ()=>books.find(x=>x.id===b.id);
+  const r = $('#bmRefresh'); if(r) r.onclick = ()=>{ const c = live(); if(c) loadBookInsights(c, true); };
+  $('#bmQuoteAdd').onclick = async ()=>{
+    const t = $('#bmQuoteText').value.trim(), c = live(); if(!t || !c) return;
+    c.myQuotes = (c.myQuotes || []).concat([{ id:uid(), t:t.slice(0, 1200), page:$('#bmQuotePage').value.trim().slice(0, 12), by:identity, at:Date.now() }]);
+    renderBookInsights(c);
+    await storageSet('household-books', JSON.stringify(books), true);
+  };
+  box.querySelectorAll('.bm-qdel').forEach(x=>{ x.onclick = async ()=>{
+    const c = live(); if(!c || !confirm('Zitat löschen?')) return;
+    c.myQuotes = (c.myQuotes || []).filter(q=>q.id!==x.dataset.id);
+    renderBookInsights(c);
+    await storageSet('household-books', JSON.stringify(books), true);
+  }; });
+}
+async function loadBookInsights(b, force){
+  const fresh = b.info && b.info.v===BI_V && (b.info.summary || b.info.quotes || Date.now() - b.info.at < 14 * 86400000);
+  if(fresh && !force){ renderBookInsights(b); return; }
+  const prev = b.info; b.info = null; renderBookInsights(b);
+  let info = null;
+  try{ info = await bookInsights(b); }catch(_){}
+  const cur = books.find(x=>x.id===b.id);
+  if(!cur) return;
+  cur.info = info || prev || { v:BI_V, at:Date.now() };
+  renderBookInsights(cur);
+  if(info) await storageSet('household-books', JSON.stringify(books), true);
+}
+/* Cover nachträglich suchen */
+async function bmFindCover(b0){
+  const b = books.find(x=>x.id===b0.id) || b0;
+  const btn = $('#bmCoverFind'); if(btn){ btn.disabled = true; btn.textContent = 'Suche …'; }
+  let cands = [];
+  try{
+    if(b.isbn){ cands = coverCandidates({ isbn:b.isbn, covers:[] }); const g = await gbSearch(`isbn:${isbnKey(b.isbn)}`, 2).catch(()=>[]); cands = g.filter(c=>c.cover).map(c=>c.cover).concat(cands); }
+    else { const g = await gbSearch(`intitle:${biMainTitle(b.title)}${biAuthorLast(b.author) ? ' inauthor:' + biAuthorLast(b.author) : ''}`, 4).catch(()=>[]); cands = g.filter(c=>c.cover).map(c=>c.cover); }
+  }catch(_){}
+  const url = await pickCover(cands.filter(u=>u!==b.cover), 7000);
+  if(btn){ btn.disabled = false; btn.textContent = url ? 'Cover gefunden' : 'Kein anderes Cover gefunden'; }
+  if(!url) return;
+  const cur = books.find(x=>x.id===b.id) || b;
+  cur.cover = url;
+  if(currentBookModalId===cur.id) $('#bmCover').src = url;
+  renderLibrary();
+  await storageSet('household-books', JSON.stringify(books), true);
+}
 
 function libraryItemHTML(b){
   const cover = b.cover
@@ -3252,7 +4001,10 @@ function openBookModal(id){
   $$('#bmShelf .chip').forEach(c=>c.classList.toggle('selected', c.dataset.val===(b.shelf||'owned')));
   renderCategoryChipsInModal(b.category || '');
   $('#bmNotes').value = b.notes || '';
+  const cf = $('#bmCoverFind'); cf.disabled = false; cf.textContent = b.cover ? 'Anderes Cover suchen' : 'Cover suchen'; cf.onclick = ()=>bmFindCover(b);
   $('#bookModal').style.display = 'flex';
+  $('#bookModal > div').scrollTop = 0;
+  loadBookInsights(b);
 }
 function closeBookModal(){ $('#bookModal').style.display = 'none'; currentBookModalId = null; }
 $('#bookModalClose').addEventListener('click', closeBookModal);
@@ -3284,7 +4036,10 @@ $('#manualAddSave').addEventListener('click', async ()=>{
   const title = $('#manualTitle').value.trim();
   if(!title){ setLibStatus('Bitte einen Titel eingeben', true); return; }
   const author = $('#manualAuthor').value.trim() || 'Unbekannt';
-  const book = { id:uid(), isbn:'', title, author, cover:'', status:'ungelesen', category:'Weitere', shelf:activeShelf, notes:'', addedBy:identity, createdAt:Date.now() };
+  if(libManualIsbn && bookExists(libManualIsbn)){ setLibStatus('Ein Buch mit dieser ISBN ist schon da', true); return; }
+  const book = { id:uid(), isbn:libManualIsbn || '', title, author, cover:'', status:'ungelesen', category:'Weitere', shelf:activeShelf, notes:'', addedBy:identity, createdAt:Date.now() };
+  libManualIsbn = '';
+  if(book.isbn) pickCover(coverCandidates({ isbn:book.isbn, covers:[] }), 6000).then(async url=>{ if(url){ book.cover = url; renderLibrary(); await storageSet('household-books', JSON.stringify(books), true); } });
   books.unshift(book);
   $('#manualTitle').value = ''; $('#manualAuthor').value = '';
   $('#manualAddForm').style.display = 'none';

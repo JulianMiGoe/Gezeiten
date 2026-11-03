@@ -702,6 +702,7 @@ html.tw .tideline path{ stroke-dasharray:2 5; stroke-linecap:round; }
       <div id="shopList"></div>
       <div id="shopEmpty" class="empty" style="display:none;"><b>Liste ist leer</b>Was braucht ihr als Nächstes?</div>
       <button class="clear-btn" id="shopClear" style="display:none;">Erledigte löschen</button>
+      <div id="shopRescue"></div>
     </section>
 
     <!-- CLEANING -->
@@ -2383,8 +2384,51 @@ async function storageSet(key, value, shared){
     let parsed;
     try{ parsed = JSON.parse(value); }catch(_){ parsed = value; }
     pushOnWrite(path, parsed);
-    await db.ref(path).set(parsed);
+    if(syncMergeable(path, parsed)){
+      /* Listen mit IDs: nur die eigenen Änderungen (neu, geändert, gelöscht) in den Serverstand einarbeiten.
+         So überschreibt ein Gerät, das offline war oder die Liste noch nicht geladen hatte, nichts von der anderen Person. */
+      const base = syncLoaded[path] ? syncBase[path] : [];
+      await db.ref(path).transaction(cur=>syncMerge(cur, base, parsed));
+    } else {
+      await db.ref(path).set(parsed);
+    }
   }catch(e){ setStatus('Speichern fehlgeschlagen — nochmal versuchen', true); }
+}
+/* Firebase liefert Listen manchmal als Objekt (z. B. {0:…, 2:…}) — immer in ein Array verwandeln */
+function toArr(v){
+  if(Array.isArray(v)) return v.filter(x=>x!==null && x!==undefined);
+  if(v && typeof v==='object') return Object.keys(v).sort((a, b)=>(+a) - (+b) || a.localeCompare(b)).map(k=>v[k]).filter(x=>x!==null && x!==undefined);
+  return [];
+}
+const syncBase = {}, syncLoaded = {};
+const SYNC_LISTS = ['tasks','shopping','expenses','cleaning','photos','periods','books','learnArchive','feelings','sport','sportWorkouts'];
+function syncNoteBase(path, arr){ try{ syncBase[path] = JSON.parse(JSON.stringify(arr)); syncLoaded[path] = true; }catch(_){} }
+function syncMergeable(path, arr){
+  if(!SYNC_LISTS.includes(path) || !Array.isArray(arr)) return false;
+  const all = arr.concat(syncBase[path] || []);
+  return all.every(x=>x && typeof x==='object' && x.id!==undefined && x.id!==null);
+}
+function syncMerge(server, base, mine){
+  server = toArr(server); base = base || [];
+  const js = x=>JSON.stringify(x);
+  const same = server.length===base.length && server.every((x, i)=>js(x)===js(base[i]));
+  if(same) return mine;
+  const bMap = new Map(base.map(x=>[x.id, js(x)]));
+  const sMap = new Map(server.filter(x=>x && x.id!==undefined).map(x=>[x.id, x]));
+  const mineIds = new Set(mine.map(x=>x.id));
+  const removedHere = new Set([...bMap.keys()].filter(id=>!mineIds.has(id)));
+  const out = [];
+  mine.forEach(x=>{
+    if(bMap.get(x.id)!==js(x)) out.push(x);              /* hier neu oder geändert → behalten */
+    else if(sMap.has(x.id)) out.push(sMap.get(x.id));     /* unverändert → Serverstand (evtl. dort geändert) */
+    /* sonst: woanders gelöscht */
+  });
+  const outIds = new Set(out.map(x=>x.id));
+  server.forEach((x, i)=>{
+    if(!x || x.id===undefined || outIds.has(x.id) || removedHere.has(x.id) || bMap.has(x.id)) return;
+    out.splice(Math.min(i, out.length), 0, x); outIds.add(x.id);  /* woanders neu hinzugekommen */
+  });
+  return out;
 }
 
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
@@ -6691,23 +6735,25 @@ function refreshCalendarIfActive(){
 }
 function attachLiveSync(){
   pushAttachWatchers();
+  SYNC_LISTS.forEach(p=>db.ref(p).on('value', snap=>syncNoteBase(p, toArr(snap.val()))));
   db.ref('tasks').on('value', snap=>{
-    const v = snap.val() || [];
+    const v = toArr(snap.val());
     notifyNewItems(tasks, v, 'addedBy', t=>`📋 Neue Aufgabe: ${t.text}`);
     tasks = v; renderTasks(); refreshCalendarIfActive();
   });
   db.ref('shopping').on('value', snap=>{
-    const v = snap.val() || [];
+    const v = toArr(snap.val());
     notifyNewItems(shopping, v, 'addedBy', s=>`🛒 Neu auf der Liste: ${s.text}`);
+    shopWatchEmpty(v);
     shopping = v; renderShopping();
   });
   db.ref('expenses').on('value', snap=>{
-    const v = snap.val() || [];
+    const v = toArr(snap.val());
     notifyNewItems(expenses, v, 'paidBy', e=>`💶 Neue Ausgabe: ${e.desc} (${e.amount.toFixed(2)} €)`);
     expenses = v; renderExpenses();
   });
   db.ref('cleaning').on('value', snap=>{
-    const v = (snap.val() || []).map(c=>{ if(!c.history) c.history=[]; return c; });
+    const v = toArr(snap.val()).map(c=>{ if(!c.history) c.history=[]; return c; });
     notifyCleaningCompletions(cleaning, v);
     cleaning = v; renderCleaning(); refreshCalendarIfActive();
   });
@@ -6717,21 +6763,21 @@ function attachLiveSync(){
     renderTasks();
   });
   db.ref('photos').on('value', snap=>{
-    const v = snap.val() || [];
+    const v = toArr(snap.val());
     notifyNewItems(photos, v, 'by', p=>`📷 ${p.by} hat ein Foto geteilt`);
     photos = v; renderPhotos();
   });
   db.ref('periods').on('value', snap=>{
-    periods = snap.val() || [];
+    periods = toArr(snap.val());
     refreshCalendarIfActive();
   });
   db.ref('books').on('value', snap=>{
-    const v = snap.val() || [];
+    const v = toArr(snap.val());
     notifyNewItems(books, v, 'addedBy', b=>`📚 Neues Buch: ${b.title}`);
     books = v; renderLibrary();
   });
   db.ref('learnArchive').on('value', snap=>{
-    learnArchive = snap.val() || [];
+    learnArchive = toArr(snap.val());
     const p = document.querySelector('.panel[data-panel="learn"]');
     if(p && p.classList.contains('active')) renderLearn();
   });
@@ -6741,7 +6787,7 @@ function attachLiveSync(){
     if($('#catModal').style.display==='flex') renderCatModal();
   });
   db.ref('feelings').on('value', snap=>{
-    const v = snap.val() || [];
+    const v = toArr(snap.val());
     notifyNewItems(feelings, v, 'by', f=>`💛 ${f.by} fühlt sich heute ${f.word}`);
     feelings = v;
     const p = document.querySelector('.panel[data-panel="feelings"]');
@@ -7339,7 +7385,54 @@ async function toggleShop(id){
   const s = shopping.find(x=>x.id===id);
   if(s){ s.done=!s.done; renderShopping(); await storageSet('household-shopping', JSON.stringify(shopping), true); }
 }
+/* Papierkorb (auf diesem Gerät): zuletzt entfernte Einträge lassen sich zurückholen */
+function shopTrashGet(){ try{ return JSON.parse(localStorage.getItem('shop-trash') || '[]'); }catch(_){ return []; } }
+function shopTrashAdd(items){
+  if(!items.length) return;
+  try{ const t = items.map(x=>Object.assign({}, x, { trashedAt:Date.now() })).concat(shopTrashGet()).slice(0, 60); localStorage.setItem('shop-trash', JSON.stringify(t)); }catch(_){}
+}
+/* Sicherung des letzten nicht-leeren Stands; wird die Liste plötzlich leer, ohne dass hier gelöscht wurde → Hinweis */
+let shopLocalClear = 0, shopVanished = null;
+function shopWatchEmpty(v){
+  try{
+    if(v.length){ localStorage.setItem('shop-backup', JSON.stringify({ at:Date.now(), list:v })); shopVanished = null; return; }
+    const b = JSON.parse(localStorage.getItem('shop-backup') || 'null');
+    /* nur warnen, wenn mindestens zwei offene (nicht abgehakte) Einträge verschwunden sind */
+    if(b && b.list && b.list.filter(x=>x && !x.done).length >= 2 && Date.now() - shopLocalClear > 15000) shopVanished = b;
+  }catch(_){}
+}
+async function shopRestore(items){
+  const have = new Set(shopping.map(x=>x.id));
+  const add = items.filter(x=>x && x.id && !have.has(x.id)).map(x=>{ const c = Object.assign({}, x); delete c.trashedAt; return c; });
+  if(!add.length) return;
+  shopping = add.concat(shopping);
+  try{ localStorage.setItem('shop-trash', JSON.stringify(shopTrashGet().filter(t=>!add.some(a=>a.id===t.id)))); }catch(_){}
+  shopVanished = null;
+  renderShopping();
+  setStatus(`${add.length} ${add.length===1 ? 'Eintrag' : 'Einträge'} wiederhergestellt`);
+  await storageSet('household-shopping', JSON.stringify(shopping), true);
+}
+let shopTrashOpen = false;
+function renderShopRescue(){
+  const box = $('#shopRescue'); if(!box) return;
+  let h = '';
+  if(shopVanished && !shopping.length){
+    const d = new Date(shopVanished.at);
+    h += `<div class="balance-card" style="border-color:var(--coral);"><div class="label">Liste ist plötzlich leer</div><div class="td-text" style="margin-top:2px;">Auf diesem Gerät war zuletzt (${d.toLocaleDateString('de-DE')} ${d.toLocaleTimeString('de-DE', { hour:'2-digit', minute:'2-digit' })}) noch ${shopVanished.list.length === 1 ? 'ein Eintrag' : shopVanished.list.length + ' Einträge'} gespeichert.</div><button class="btn-wide" id="shopRestoreAll" type="button">Liste wiederherstellen</button></div>`;
+  }
+  const trash = shopTrashGet().filter(t=>!shopping.some(s=>s.id===t.id));
+  if(trash.length){
+    h += `<button class="clear-btn" id="shopTrashToggle" type="button" style="width:100%; text-align:center;">↩ Zuletzt entfernt (${trash.length})</button>`;
+    if(shopTrashOpen) h += `<ul class="list" style="margin-top:8px;">` + trash.slice(0, 30).map(t=>`<li class="item" style="opacity:.75;"><span class="item-text">${escapeHtml(t.text)}</span><button class="clear-btn shop-undo" data-id="${t.id}" type="button" style="margin:0;">zurück</button></li>`).join('') + `</ul>`;
+  }
+  box.innerHTML = h;
+  const ra = $('#shopRestoreAll'); if(ra) ra.onclick = ()=>shopRestore(shopVanished.list);
+  const tt = $('#shopTrashToggle'); if(tt) tt.onclick = ()=>{ shopTrashOpen = !shopTrashOpen; renderShopRescue(); };
+  box.querySelectorAll('.shop-undo').forEach(b=>{ b.onclick = ()=>shopRestore(trash.filter(t=>t.id===b.dataset.id)); });
+}
 async function deleteShop(id){
+  shopTrashAdd(shopping.filter(x=>x.id===id));
+  if(shopping.length===1) shopLocalClear = Date.now();
   shopping = shopping.filter(x=>x.id!==id);
   renderShopping();
   await storageSet('household-shopping', JSON.stringify(shopping), true);
@@ -7382,6 +7475,7 @@ function renderShopping(){
       : '<b>Nichts in dieser Kategorie</b>Wählt „Alle" oder eine andere Kategorie.';
   } else { emptyEl.style.display='none'; }
   $('#shopClear').style.display = shopping.some(s=>s.done) ? 'block' : 'none';
+  renderShopRescue();
   bindListEvents('#shopList', toggleShop, deleteShop);
   $$('#shopList .item-text').forEach(sp=>{ sp.style.cursor = 'pointer'; sp.onclick = ()=> openShopItemModal(sp.closest('.item').dataset.id); });
 }
@@ -7391,6 +7485,8 @@ async function editShopText(id, newVal){
   renderShopping();
 }
 $('#shopClear').addEventListener('click', async ()=>{
+  shopTrashAdd(shopping.filter(s=>s.done));
+  shopLocalClear = Date.now();
   shopping = shopping.filter(s=>!s.done);
   renderShopping();
   await storageSet('household-shopping', JSON.stringify(shopping), true);
